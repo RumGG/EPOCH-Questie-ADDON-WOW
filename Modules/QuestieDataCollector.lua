@@ -74,7 +74,9 @@ function QuestieDataCollector:Initialize()
     
     _initialized = true
     
-    DebugMessage("|cFF00FF00[Questie Data Collector]|r Enabled. Thank you for contributing! |cFFFFFF00Use /qdc for commands|r", 0, 1, 0)
+    -- Show initialization complete message
+    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Questie Data Collector]|r Ready! You can now accept quests for data collection.", 0, 1, 0)
+    DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00Type /qdc for commands|r", 1, 1, 0)
     
     -- Check existing quests in log
     QuestieDataCollector:CheckExistingQuests()
