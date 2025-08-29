@@ -3,6 +3,9 @@
 local QuestieDB = QuestieLoader:ImportModule("QuestieDB");
 
 local epochQuestData = {
+-- Children's Week quests - explicitly hide these for Project Epoch (not part of server events)
+[172] = nil, -- Children's Week (Horde)
+[1468] = nil, -- Children's Week (Alliance)
 [11] = {"Riverpaw Gnoll Bounty",{{963}},{{963}},6,10,77,nil,{"Bring 8 Painted Gnoll Armbands to Deputy Rainer at the Barracks."},nil,{nil,nil,{{782,nil}}},nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil},
 [76] = {"The Jasperlode Mine",{{240}},{{240}},4,10,77,nil,{"Kill 10 Kobold Miners, 5 Kobold Geomancers, and explore the Jasperlode Mine. Return to Marshal Dughan in Goldshire when the task is done."},nil,{{{87,nil},{342,nil},{40,nil},{476,nil}}},nil,nil,{62},nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil},
 [109] = {"Report to Gryan Stoutmantle",{{240,963}},nil,9,10,77,nil,{"Talk to Gryan Stoutmantle. He usually can be found in the stone tower on Sentinel Hill, just off the road, in the middle of Westfall."},nil,nil,nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil},

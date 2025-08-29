@@ -25,7 +25,7 @@ local epochNpcData = {
 [332] = {"[Epoch] NPC 332",2480,2790,62,62,0,{[1519]={{78.3,70.7}}},nil,1519,nil,nil,11,"A",nil,0},
 [338] = {"[Epoch] NPC 338",1760,1980,44,44,0,{[1519]={{51.8,74.3}}},nil,1519,nil,nil,11,"A",nil,0},
 [340] = {"[Epoch] NPC 340",2000,2250,50,50,0,{[1519]={{77.5,52.7}}},nil,1519,nil,nil,11,"A",nil,0},
---[352] = {"[Epoch] NPC 352",2200,2475,55,55,0,{[1519]={{71.0,72.5}}},nil,1519,nil,nil,11,"A",nil,0}, -- Commented: Use Classic DB entry for Dungar Longdrink (Gryphon Master)
+[352] = {"Dungar Longdrink",7842,7842,55,55,1,{[1519]={{70.57,73.51}}},nil,1519,{6285},{6261},12,"A","Gryphon Master",11}, -- Project Epoch coordinates
 [376] = {"[Epoch] NPC 376",2400,2700,60,60,0,{[1519]={{49.5,44.6}}},nil,1519,nil,nil,11,"A",nil,0},
 [377] = {"[Epoch] NPC 377",520,585,13,13,0,{[12]={{41.5,67.9}}},nil,12,nil,nil,11,"A",nil,0},
 [461] = {"[Epoch] NPC 461",2400,2700,60,60,0,{[1519]={{39.2,85.0}}},nil,1519,nil,nil,11,"A",nil,0},
@@ -261,7 +261,7 @@ local epochNpcData = {
 [6267] = {"[Epoch] NPC 6267",800,900,20,20,0,{[1519]={{39.1,83.5}}},nil,1519,nil,nil,11,"A",nil,0},
 [6577] = {"Bingles Blastenheimer",640,720,16,16,0,{[38]={{63.6,47.9}}},nil,38,{2038},{2038},11,"A",nil,0},
 [6579] = {"[Epoch] NPC 6579",680,765,17,17,0,{[1519]={{62.6,34.1}}},nil,1519,nil,nil,11,"A",nil,0},
---[6740] = {"[Epoch] NPC 6740",1200,1350,30,30,0,{[1519]={{60.4,75.3}}},nil,1519,nil,nil,11,"A",nil,0}, -- Commented: Use Classic DB entry for Innkeeper Allison
+[6740] = {"Innkeeper Allison",1003,1003,30,30,0,{[1519]={{60.39,75.28}}},nil,1519,{3790,8356},{8356,8860,9026},65664,"A","Innkeeper",66179}, -- Fixed: Using correct WotLK coordinates and INNKEEPER flag
 [6778] = {"Melika Isenstrider",440,495,11,11,0,{[12]={{38.2,68.6}}},nil,12,{26780},{26779},11,"A",nil,0},
 [6928] = {"[Epoch] NPC 6928",1200,1350,30,30,0,{[14]={{51.4,41.2}}},nil,14,nil,nil,85,"H",nil,0},
 [6946] = {"[Epoch] NPC 6946",1600,1800,40,40,0,{[1519]={{78.3,71.1}}},nil,1519,nil,nil,11,"A",nil,0},
