@@ -6,6 +6,7 @@
 - **Fixed Issue #21**: Runtime stubbed quests (like the new troll starting zone) are now properly detected
 - **Fixed Issue #27**: No more [DATA] message spam - debug messages only show when explicitly enabled
 - Quest ID tracking expanded to ALL Epoch quests (26000+) with no upper limit
+- Also detects modified vanilla quests that Project Epoch has changed (may show as missing if significantly altered)
 - Export window now correctly shows all tracked quests
 
 ### 🚀 Key Improvements
@@ -36,6 +37,7 @@
 - Some Epoch quests still have placeholder data - please use /qdc enable to help collect data
 - Map icons may not appear for quests with incomplete NPC/object data
 - Project Epoch has modified numerous vanilla quests to be cross-faction, causing conflicts with the original database
+- Modified vanilla quests may trigger "missing quest" alerts even though they exist (due to significant changes from original)
 
 ---
 
