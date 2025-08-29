@@ -28,22 +28,40 @@ jobs:
           git add Questie.toc
           git diff --staged --quiet || git commit -m "Bump version to ${{ github.event.inputs.version }}"
       
-      - name: Create Release
-        uses: IdanKoblik/Changelog@production
-        with:
-          version: ${{ github.event.inputs.version }}
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          changelog-file: 'CHANGELOG.md'
-      
+      - name: Extract Changelog
+        id: changelog
+        run: |
+          VERSION="${{ github.event.inputs.version }}"
+          # Extract the changelog section for this version
+          awk -v ver="## [$VERSION]" '
+            $0 ~ ver {flag=1; next}
+            /^## \[/ && flag {exit}
+            flag {print}
+          ' CHANGELOG.md > changelog_content.md
+          
       - name: Prepare addon package
         run: |
+          # Create a clean addon directory
           mkdir -p Questie-Epoch
-          cp -r !(Questie-Epoch|.git*|*.md|.github) Questie-Epoch/
+          
+          # Copy all addon files except dev/git files
+          rsync -av --exclude='.git*' \
+                    --exclude='*.md' \
+                    --exclude='.github' \
+                    --exclude='*.backup*' \
+                    --exclude='PR24_REVIEW.md' \
+                    ./ Questie-Epoch/
+          
+          # Create the zip file
           zip -r Questie-Epoch-${{ github.event.inputs.version }}.zip Questie-Epoch
       
-      - name: Upload addon to release
+      - name: Create Release with Assets
         uses: softprops/action-gh-release@v1
         with:
           tag_name: v${{ github.event.inputs.version }}
+          name: Release v${{ github.event.inputs.version }}
+          body_path: changelog_content.md
+          draft: false
+          prerelease: false
           files: Questie-Epoch-${{ github.event.inputs.version }}.zip
           token: ${{ secrets.GITHUB_TOKEN }}
