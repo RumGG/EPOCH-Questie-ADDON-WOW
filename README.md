@@ -1,10 +1,47 @@
- 💡 Known Issues
+## v1.0.55 - Latest Release
 
-  - Some Epoch quests still have placeholder data - please use /qdc enable to help collect data
-  - Map icons may not appear for quests with incomplete NPC/object data
-  - I've discovered Project Epoch has modified numerous existing vanilla quests with, for example, making them cross faction when originally the were faction exlusive. This is causing major conflicts for the original Questie database from vanilla->wrath, so some quests may behave oddly, but the quest data collection system should still capture relevant info and warn you if you've accepted a quest not in the database.
-  
-v1.0.53
+### 🎯 Major Fixes
+
+#### Data Collection Now Works for ALL Custom Quests! 
+- **Fixed Issue #21**: Runtime stubbed quests (like the new troll starting zone) are now properly detected
+- **Fixed Issue #27**: No more [DATA] message spam - debug messages only show when explicitly enabled
+- Quest ID tracking expanded to ALL Epoch quests (26000+) with no upper limit
+- Export window now correctly shows all tracked quests
+
+### 🚀 Key Improvements
+
+#### Better User Experience
+- Clear "Ready!" message when data collector is initialized
+- Export window shows [COMPLETE] or [INCOMPLETE] status for each quest
+- Partial quest data can now be exported (even incomplete quests are valuable!)
+- Debug messages properly hidden unless `/qdc debug` is used
+
+#### What This Means for Players
+- **New Troll Starting Zone**: Quest 28722 "The Darkspear Tribe" and all other new quests are now tracked
+- **Less Spam**: You won't see constant [DATA] messages unless you want them
+- **All Data Matters**: Even if you don't complete a quest, the partial data helps improve the database
+
+### 📝 How to Use Data Collection
+
+1. Enable data collection: `/qdc enable`
+2. Wait for "Ready!" message after reload
+3. Accept any custom Epoch quest
+4. See "Missing Epoch quest detected!" alert
+5. Export data anytime with `/qdc export`
+
+---
+
+## 💡 Known Issues
+
+- Some Epoch quests still have placeholder data - please use /qdc enable to help collect data
+- Map icons may not appear for quests with incomplete NPC/object data
+- Project Epoch has modified numerous vanilla quests to be cross-faction, causing conflicts with the original database
+
+---
+
+## Previous Releases
+
+### v1.0.53
 New feature!
 
  -Auto Waypoint has been added thanks to @fing3rguns. To enable, /questie -> Tracker -> tick box for Auto Waypoint in Tom Tom section. (must have Tom Tom installed and enabled)
