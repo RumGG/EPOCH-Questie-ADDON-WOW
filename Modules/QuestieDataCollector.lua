@@ -1242,16 +1242,35 @@ function QuestieDataCollector:OnLootOpened()
     else
         -- This is likely an object interaction
         lootSourceType = "object"
-        -- Try to get object name from loot window
-        local lootName = GetLootSourceInfo(1)
+        
+        -- Try multiple methods to get the object name
+        local lootName = nil
+        
+        -- Method 1: Try GetLootSourceInfo (might work for some objects)
+        if GetLootSourceInfo then
+            lootName = GetLootSourceInfo(1)
+        end
+        
         if lootName then
             lootSourceName = lootName
         elseif _lastInteractedObject and (time() - _lastInteractedObject.timestamp < 2) then
             lootSourceName = _lastInteractedObject.name
             lootSourceId = _lastInteractedObject.id
         else
-            lootSourceName = "Unknown Object"
+            -- For ground objects like bananas, we may not have a name
+            -- Mark it as a ground object for later identification
+            lootSourceName = "Ground Object"
         end
+        
+        -- Update _lastInteractedObject for UI_INFO_MESSAGE handler
+        _lastInteractedObject = {
+            name = lootSourceName,
+            id = lootSourceId,
+            coords = coords,
+            zone = zone,
+            subzone = subzone,
+            timestamp = time()
+        }
         
         if coords and coords.x and coords.y then
             DebugMessage("|cFF8888FF[DATA] Looting object: " .. lootSourceName .. 
@@ -1297,8 +1316,10 @@ function QuestieDataCollector:OnLootOpened()
                                 subzone = subzone,
                                 timestamp = time()
                             }
-                            DebugMessage("|cFF00FFFF[DATA] Tracked object '" .. lootSourceName .. 
-                                "' for quest " .. questId .. " at [" .. coords.x .. ", " .. coords.y .. "]|r", 0, 1, 1)
+                            if lootSourceName ~= "Ground Object" then
+                                DebugMessage("|cFF00FFFF[DATA] Tracked object '" .. lootSourceName .. 
+                                    "' for quest " .. questId .. " at [" .. coords.x .. ", " .. coords.y .. "]|r", 0, 1, 1)
+                            end
                         end
                     end
                 end
@@ -1430,6 +1451,11 @@ function QuestieDataCollector:OnItemPush(bagSlot)
 end
 
 function QuestieDataCollector:OnUIInfoMessage(message)
+    -- Debug: Show all UI_INFO_MESSAGE events when collecting data
+    if message and message ~= "" then
+        DebugMessage("|cFFFFFF00[DEBUG] UI_INFO_MESSAGE: " .. message .. "|r", 1, 1, 0)
+    end
+    
     -- Capture exploration and discovery objectives AND quest progress updates
     for questId, _ in pairs(_activeTracking) do
         local questData = QuestieDataCollection.quests[questId]
@@ -1440,7 +1466,7 @@ function QuestieDataCollector:OnUIInfoMessage(message)
             
             -- Check if this message is related to quest progress
             if message and message ~= "" then
-                -- ENHANCED: Detect quest progress patterns like "Bananas looted: 1/10" or "Sharp Tiger Claw: 2/5"
+                -- ENHANCED: Detect quest progress patterns like "Bananas looted: 1/10" or "Sun-Ripened Banana: 2/5"
                 local itemName, current, total = string.match(message, "(.+):%s*(%d+)/(%d+)")
                 if not itemName then
                     -- Try alternate pattern without colon
@@ -1449,7 +1475,7 @@ function QuestieDataCollector:OnUIInfoMessage(message)
                 
                 if itemName and current and total then
                     -- This is a quest progress update! Capture the ground object/container
-                    DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00[Questie] Quest progress detected: " .. itemName .. " " .. current .. "/" .. total .. "|r", 1, 1, 0)
+                    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Questie] Quest progress detected: " .. itemName .. " " .. current .. "/" .. total .. "|r", 0, 1, 0)
                     
                     -- Check if we're currently looting something
                     local objectData = nil
