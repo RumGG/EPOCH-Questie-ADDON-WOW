@@ -750,12 +750,22 @@ function QuestieDataCollector:OnQuestAccepted(questId)
     DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DC]|r Data collection is enabled, continuing...", 0, 1, 0)
     
     -- Ensure we're initialized
+    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DC]|r Checking initialization...", 0, 1, 0)
     if not QuestieDataCollection or not QuestieDataCollection.quests then
+        DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00[DC]|r Initializing QuestieDataCollection...", 1, 1, 0)
         QuestieDataCollector:Initialize()
     end
+    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DC]|r Initialization check complete", 0, 1, 0)
     
     -- Check for ALL custom/Epoch quests, not just 26000-26999 range
-    local questData = QuestieDB.GetQuest(questId)  -- Use dot notation, not colon
+    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DC]|r Getting quest data from DB...", 0, 1, 0)
+    local success, questData = pcall(function() return QuestieDB.GetQuest(questId) end)
+    if not success then
+        DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[DC]|r ERROR calling QuestieDB.GetQuest: " .. tostring(questData), 1, 0, 0)
+        return
+    end
+    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DC]|r questData = " .. tostring(questData), 0, 1, 0)
+    
     local isEpochQuest = (questId >= 26000 and questId < 30000)  -- Expanded range to include 28xxx quests
     
     -- Check for runtime stubs in QuestiePlayer.currentQuestlog
@@ -763,11 +773,9 @@ function QuestieDataCollector:OnQuestAccepted(questId)
     local hasEpochPrefix = false
     local isMissingFromDB = not questData
     
-    -- Debug logging
-    if Questie.db.profile.debugDataCollector then
-        DEFAULT_CHAT_FRAME:AddMessage(string.format("|cFF00FFFF[DataCollector Debug]|r Quest %d: isEpochQuest=%s, isMissingFromDB=%s, hasRuntimeStub=%s", 
-            questId, tostring(isEpochQuest), tostring(isMissingFromDB), tostring(runtimeStub ~= nil)), 0, 1, 1)
-    end
+    -- Debug logging - ALWAYS show this
+    DEFAULT_CHAT_FRAME:AddMessage(string.format("|cFF00FFFF[DC Debug]|r Quest %d: isEpochQuest=%s, isMissingFromDB=%s, hasRuntimeStub=%s", 
+        questId, tostring(isEpochQuest), tostring(isMissingFromDB), tostring(runtimeStub ~= nil)), 0, 1, 1)
     
     -- Check both database quest and runtime stub for [Epoch] prefix
     if questData and questData.name and string.find(questData.name, "%[Epoch%]") then
