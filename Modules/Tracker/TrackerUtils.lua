@@ -80,21 +80,33 @@ local bindTruthTable = {
 function TrackerUtils:GetTomTomAutoTargetQuest()
     if not TomTom or not Questie.db.profile.tomtomAutoTargetMode then return nil end
     
-    -- Temporarily save current sort preference
-    local originalSort = Questie.db.profile.trackerSortObjectives
+    -- Find the closest quest without changing tracker sort order
+    local closestQuest = nil
+    local closestDistance = math.huge
     
-    -- Use proximity sorting to find closest quest
-    Questie.db.profile.trackerSortObjectives = "byProximity"
-    local sorted, details = TrackerUtils:GetSortedQuestIds()
-    
-    -- Restore original sort preference immediately
-    Questie.db.profile.trackerSortObjectives = originalSort
-    
-    if sorted and #sorted > 0 then
-        local quest = details[sorted[1]] and details[sorted[1]].quest and QuestiePlayer.currentQuestlog[details[sorted[1]].quest.Id] 
-        if quest then return quest end
+    -- Check all quests in the current questlog
+    for questId, quest in pairs(QuestiePlayer.currentQuestlog or {}) do
+        if quest and type(quest) == "table" then
+            -- Skip completed quests
+            local isComplete = 0
+            if quest.IsComplete and type(quest.IsComplete) == "function" then
+                isComplete = quest:IsComplete()
+            elseif quest.isComplete ~= nil then
+                isComplete = quest.isComplete and 1 or 0
+            end
+            
+            if isComplete ~= 1 then
+                -- Calculate distance to this quest's objectives
+                local distance = _GetDistanceToClosestObjective(questId)
+                if distance and distance < closestDistance then
+                    closestDistance = distance
+                    closestQuest = quest
+                end
+            end
+        end
     end
-    return nil
+    
+    return closestQuest
 end
 
 
