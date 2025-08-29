@@ -668,39 +668,25 @@ end
 -- Quest Item Button can be switched on and appear in the tracker.
 ---@param text string
 function QuestieTracker:QuestItemLooted(text)
+    -- TEMPORARILY DISABLED: This function is causing tracker state issues
+    -- When looting quest items (like bananas), it triggers UpdateAllQuests which
+    -- somehow toggles quest tracking state. Needs investigation.
+    return
+    
+    --[[
     local playerLoot = strmatch(text, "You receive ") or strmatch(text, "You create")
     local itemId = tonumber(string.match(text, "item:(%d+)"))
 
     if playerLoot and itemId then
-        local _, _, _, _, _, itemType, _, _, _, _, _, classID = GetItemInfo(itemId)
+        local itemName, _, _, _, _, itemType, _, _, _, _, _, classID = GetItemInfo(itemId)
         local usableItem = TrackerUtils:IsQuestItemUsable(itemId)
 
         if (itemType == "Quest" or classID == 12 or QuestieDB.QueryItemSingle(itemId, "class") == 12) and usableItem then
             Questie:Debug(Questie.DEBUG_DEVELOP, "[QuestieTracker] - Quest Item Detected (itemId) - ", itemId)
-            
-            -- Store currently tracked quests before update to preserve tracking state
-            local preserveTracking = {}
-            if Questie.db.profile.autoTrackQuests and Questie.db.char.AutoUntrackedQuests then
-                for questId in pairs(QuestiePlayer.currentQuestlog or {}) do
-                    if not Questie.db.char.AutoUntrackedQuests[questId] then
-                        preserveTracking[questId] = true
-                    end
-                end
-            end
 
             C_Timer.After(0.25, function()
                 _QuestEventHandler:UpdateAllQuests()
                 Questie:Debug(Questie.DEBUG_DEVELOP, "[QuestieTracker] - Callback --> QuestEventHandler:UpdateAllQuests()")
-                
-                -- Restore tracking state for quests that were tracked before
-                if Questie.db.profile.autoTrackQuests and Questie.db.char.AutoUntrackedQuests then
-                    for questId in pairs(preserveTracking) do
-                        if QuestiePlayer.currentQuestlog[questId] then
-                            -- Make sure quest wasn't inadvertently untracked
-                            Questie.db.char.AutoUntrackedQuests[questId] = nil
-                        end
-                    end
-                end
             end)
 
             QuestieCombatQueue:Queue(function()
@@ -710,6 +696,7 @@ function QuestieTracker:QuestItemLooted(text)
             end)
         end
     end
+    --]]
 end
 
 function QuestieTracker:HasQuest()
