@@ -2442,21 +2442,33 @@ function QuestieTracker:AQW_Insert(index, expire)
                 if not Questie.db.char.AutoUntrackedQuests then
                     Questie.db.char.AutoUntrackedQuests = {}
                 end
-                -- Don't auto-untrack runtime stub quests
+                -- Don't auto-untrack runtime stub quests or new Epoch quests
                 local quest = QuestieDB.GetQuest(questId)
-                if not (quest and quest.isRuntimeStub) then
+                local isEpochQuest = questId >= 26000
+                if quest and not quest.isRuntimeStub then
+                    -- Quest exists and is not a runtime stub, can untrack
+                    Questie.db.char.AutoUntrackedQuests[questId] = true
+                elseif not quest and not isEpochQuest then
+                    -- Quest doesn't exist and is not an Epoch quest, can untrack
                     Questie.db.char.AutoUntrackedQuests[questId] = true
                 end
+                -- If quest is nil AND is an Epoch quest, don't untrack it
             else
                 -- Regular click on an already tracked quest - untrack it
                 if not Questie.db.char.AutoUntrackedQuests then
                     Questie.db.char.AutoUntrackedQuests = {}
                 end
-                -- Don't auto-untrack runtime stub quests
+                -- Don't auto-untrack runtime stub quests or new Epoch quests
                 local quest = QuestieDB.GetQuest(questId)
-                if not (quest and quest.isRuntimeStub) then
+                local isEpochQuest = questId >= 26000
+                if quest and not quest.isRuntimeStub then
+                    -- Quest exists and is not a runtime stub, can untrack
+                    Questie.db.char.AutoUntrackedQuests[questId] = true
+                elseif not quest and not isEpochQuest then
+                    -- Quest doesn't exist and is not an Epoch quest, can untrack
                     Questie.db.char.AutoUntrackedQuests[questId] = true
                 end
+                -- If quest is nil AND is an Epoch quest, don't untrack it
             end
         end
 
