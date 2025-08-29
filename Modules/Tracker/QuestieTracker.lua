@@ -677,10 +677,30 @@ function QuestieTracker:QuestItemLooted(text)
 
         if (itemType == "Quest" or classID == 12 or QuestieDB.QueryItemSingle(itemId, "class") == 12) and usableItem then
             Questie:Debug(Questie.DEBUG_DEVELOP, "[QuestieTracker] - Quest Item Detected (itemId) - ", itemId)
+            
+            -- Store currently tracked quests before update to preserve tracking state
+            local preserveTracking = {}
+            if Questie.db.profile.autoTrackQuests and Questie.db.char.AutoUntrackedQuests then
+                for questId in pairs(QuestiePlayer.currentQuestlog or {}) do
+                    if not Questie.db.char.AutoUntrackedQuests[questId] then
+                        preserveTracking[questId] = true
+                    end
+                end
+            end
 
             C_Timer.After(0.25, function()
                 _QuestEventHandler:UpdateAllQuests()
                 Questie:Debug(Questie.DEBUG_DEVELOP, "[QuestieTracker] - Callback --> QuestEventHandler:UpdateAllQuests()")
+                
+                -- Restore tracking state for quests that were tracked before
+                if Questie.db.profile.autoTrackQuests and Questie.db.char.AutoUntrackedQuests then
+                    for questId in pairs(preserveTracking) do
+                        if QuestiePlayer.currentQuestlog[questId] then
+                            -- Make sure quest wasn't inadvertently untracked
+                            Questie.db.char.AutoUntrackedQuests[questId] = nil
+                        end
+                    end
+                end
             end)
 
             QuestieCombatQueue:Queue(function()

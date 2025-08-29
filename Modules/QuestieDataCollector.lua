@@ -1430,7 +1430,7 @@ function QuestieDataCollector:OnItemPush(bagSlot)
 end
 
 function QuestieDataCollector:OnUIInfoMessage(message)
-    -- Capture exploration and discovery objectives
+    -- Capture exploration and discovery objectives AND quest progress updates
     for questId, _ in pairs(_activeTracking) do
         local questData = QuestieDataCollection.quests[questId]
         if questData then
@@ -1439,8 +1439,76 @@ function QuestieDataCollector:OnUIInfoMessage(message)
             local subzone = GetSubZoneText()
             
             -- Check if this message is related to quest progress
-            -- Common patterns: "Explored X", "Discovered X", "X Explored", "X Discovered", location names
             if message and message ~= "" then
+                -- ENHANCED: Detect quest progress patterns like "Bananas looted: 1/10" or "Sharp Tiger Claw: 2/5"
+                local itemName, current, total = string.match(message, "(.+):%s*(%d+)/(%d+)")
+                if not itemName then
+                    -- Try alternate pattern without colon
+                    itemName, current, total = string.match(message, "(.+)%s+(%d+)/(%d+)")
+                end
+                
+                if itemName and current and total then
+                    -- This is a quest progress update! Capture the ground object/container
+                    DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00[Questie] Quest progress detected: " .. itemName .. " " .. current .. "/" .. total .. "|r", 1, 1, 0)
+                    
+                    -- Check if we're currently looting something
+                    local objectData = nil
+                    if _lastInteractedObject and (time() - _lastInteractedObject.timestamp < 3) then
+                        objectData = {
+                            name = _lastInteractedObject.name,
+                            id = _lastInteractedObject.id,
+                            coords = coords,
+                            zone = zone,
+                            subzone = subzone
+                        }
+                        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Questie] Captured container: " .. (_lastInteractedObject.name or "Unknown") .. " at [" .. coords.x .. ", " .. coords.y .. "]|r", 0, 1, 0)
+                    end
+                    
+                    -- Store this as a quest objective update with the container info
+                    for objIndex, objective in ipairs(questData.objectives or {}) do
+                        -- Check if this objective matches the item name
+                        if string.find(string.lower(objective.text or ""), string.lower(itemName)) or
+                           string.find(string.lower(itemName), string.lower(objective.text or "")) then
+                            
+                            -- Store container/object information
+                            if objectData then
+                                objective.containers = objective.containers or {}
+                                -- Check if we already have this container
+                                local found = false
+                                for _, container in ipairs(objective.containers) do
+                                    if container.name == objectData.name and 
+                                       container.coords and objectData.coords and
+                                       math.abs(container.coords.x - objectData.coords.x) < 1 and
+                                       math.abs(container.coords.y - objectData.coords.y) < 1 then
+                                        found = true
+                                        break
+                                    end
+                                end
+                                if not found then
+                                    table.insert(objective.containers, objectData)
+                                    DebugMessage("|cFF00FF00[DATA] Quest item container captured: " .. objectData.name .. 
+                                        " at [" .. coords.x .. ", " .. coords.y .. "]|r", 0, 1, 0)
+                                end
+                            end
+                            
+                            -- Update progress
+                            objective.current = tonumber(current)
+                            objective.total = tonumber(total)
+                            
+                            -- Store progress location
+                            objective.progressLocations = objective.progressLocations or {}
+                            table.insert(objective.progressLocations, {
+                                coords = coords,
+                                zone = zone,
+                                subzone = subzone,
+                                progress = current .. "/" .. total,
+                                container = objectData,
+                                timestamp = time()
+                            })
+                        end
+                    end
+                end
+                
                 -- Initialize explorations table if needed
                 questData.explorations = questData.explorations or {}
                 

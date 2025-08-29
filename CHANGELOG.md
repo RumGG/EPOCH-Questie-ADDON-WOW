@@ -6,11 +6,26 @@
 - **Party Tooltips**: Fixed party member quest progress not showing in tooltips
   - Properly access remoteQuestLogs structure for fallback mechanism
   - Shows party progress even when no per-mob tooltip cache exists
+- **Tracker Issues**: Fixed multiple tracker update issues
+  - Fixed tracker showing completed quests after accepting new ones
+  - Fixed tracker not refreshing properly when completing and accepting quests
+  - Completed quests are now properly cleaned from QuestiePlayer.currentQuestlog
+- **TomTom Integration**: Fixed TomTom auto-waypoint permanently changing tracker sort
+  - TomTom now finds closest quest independently without modifying tracker sort preference
+  - User's chosen sort order (proximity, level, etc.) is no longer overridden
+- **Quest Item Tracking**: Fixed tracker hiding quests when looting quest items
+  - Preserves quest tracking state when items are looted from ground objects
+  - Prevents quests from being inadvertently untracked during objective updates
+- **Data Collection**: Enhanced ground object and container tracking
+  - Now detects quest progress from system messages (e.g., "Bananas looted: 1/10")
+  - Captures container/object data when quest progress is detected
+  - Links ground objects to quest objectives for proper map placement
 
 ### Added
 - **Quest Data**: Added new troll starting zone quests
   - Quest 28722 "The Darkspear Tribe" with quest giver and turn-in NPC
   - Quest 28723 "Thievin' Crabs" level 2 quest
+  - Quest 28757 "Banana Bonanza" with ground object collection
   - NPC 46834 "Joz'jarz" in Durotar
 - **Ready Message**: Added "Questie Ready!" message after full initialization
   - Shows when quest tracking and map icons are fully active
