@@ -2433,12 +2433,14 @@ function QuestieTracker:AQW_Insert(index, expire)
                 Questie.db.char.TrackedQuests[questId] = true
             end
         else
+            -- Determine if quest is currently tracked
+            local isCurrentlyTracked = true -- Default to tracked in auto-track mode
             if Questie.db.char.AutoUntrackedQuests and Questie.db.char.AutoUntrackedQuests[questId] then
-                -- Regular click on an untracked quest - track it
-                Questie.db.char.AutoUntrackedQuests[questId] = nil
-                -- The quest will now be tracked because it's not in AutoUntrackedQuests
-            elseif IsShiftKeyDown() and QuestLogFrame:IsShown() then
-                -- Shift-click to untrack
+                isCurrentlyTracked = false
+            end
+            
+            if IsShiftKeyDown() and QuestLogFrame:IsShown() then
+                -- Shift-click always untracks (if allowed)
                 if not Questie.db.char.AutoUntrackedQuests then
                     Questie.db.char.AutoUntrackedQuests = {}
                 end
@@ -2453,8 +2455,11 @@ function QuestieTracker:AQW_Insert(index, expire)
                     Questie.db.char.AutoUntrackedQuests[questId] = true
                 end
                 -- If quest is nil AND is an Epoch quest, don't untrack it
+            elseif not isCurrentlyTracked then
+                -- Regular click on untracked quest - track it
+                Questie.db.char.AutoUntrackedQuests[questId] = nil
             else
-                -- Regular click on an already tracked quest - untrack it
+                -- Regular click on tracked quest - untrack it
                 if not Questie.db.char.AutoUntrackedQuests then
                     Questie.db.char.AutoUntrackedQuests = {}
                 end
