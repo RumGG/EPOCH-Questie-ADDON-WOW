@@ -3,6 +3,22 @@
 ## [Unreleased]
 
 ### Fixed
+- **Data Collection - Container Names**: Major fixes to ground object/container tracking (Fixes #32)
+  - Fixed container names being lost when they match item names (e.g., "Sun-Ripened Banana") 
+  - Fixed container names being overwritten with placeholders like "Unidentified Container"
+  - Container names now properly captured from GameTooltip during mouseover
+  - Removed 5-second timestamp restriction that prevented using cached container names
+  - Container names preserved even when loot window doesn't show the name
+  - Export now includes proper container data for ground object quests
+  - Confirmed working: "Sun-Ripened Banana" containers now properly captured for quest 28757
+- **Data Collection - Quest Progress Detection**: Enhanced automatic tracking
+  - Now detects quest progress from system messages (e.g., "Sun-Ripened Banana: 7/10")
+  - Automatically captures container/object data when quest progress is detected
+  - Links ground objects to quest objectives for proper map icon placement
+  - Added automatic rescan 1 second after initialization (no more manual `/qdc rescan` needed)
+- **Data Collection - Debug Commands**: Added new debugging tools
+  - Added `/qdc check <questId>` command to inspect specific quest data
+  - Added `/qdc save` command to force save data to SavedVariables
 - **Party Tooltips**: Fixed party member quest progress not showing in tooltips
   - Properly access remoteQuestLogs structure for fallback mechanism
   - Shows party progress even when no per-mob tooltip cache exists
@@ -16,19 +32,6 @@
 - **Quest Item Tracking**: Fixed tracker hiding quests when looting quest items
   - Preserves quest tracking state when items are looted from ground objects
   - Prevents quests from being inadvertently untracked during objective updates
-- **Data Collection**: Enhanced ground object and container tracking
-  - Now detects quest progress from system messages (e.g., "Bananas looted: 1/10")
-  - Captures container/object data when quest progress is detected
-  - Links ground objects to quest objectives for proper map placement
-  - Fixed container names being lost when they match item names (e.g., "Sun-Ripened Banana")
-  - Fixed export not including container data for ground object quests
-  - Container names now properly captured from GameTooltip during interaction
-  - Added `/qdc check <questId>` command to inspect specific quest data
-  - Added `/qdc save` command to force save data to SavedVariables
-  - Added automatic rescan 1 second after initialization (no more manual `/qdc rescan` needed)
-  - Fixed container names being overwritten with placeholders like "Unidentified Container"
-  - Removed timestamp restriction that prevented using valid container names
-  - Container names now preserved even when loot window doesn't show the name
 
 ### Added
 - **Quest Data**: Added new troll starting zone quests
