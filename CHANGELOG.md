@@ -5,7 +5,7 @@
 ### Fixed
 - **Data Collection**: Fixed missing quest detection for runtime stubbed quests
   - Now properly detects quests created as runtime stubs (e.g., new troll starting zone quests)
-  - Expanded Epoch quest ID range from 26000-26999 to 26000-29999 to include quest 28722 and similar
+  - Removed upper limit on Epoch quest IDs (now tracks all quests 26000+)
   - Fixed detection of [Epoch] prefix in questData.name for placeholder quests
   - Now correctly identifies and tracks quest 28722 "The Darkspear Tribe" and similar new quests
 - **Data Collection Spam**: Fixed [DATA] messages being shown to all users (Issue #27)

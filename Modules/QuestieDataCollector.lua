@@ -140,7 +140,7 @@ function QuestieDataCollector:CheckExistingQuests()
                         -- Now process the quest data
                         local needsTracking = false
                         local trackReason = nil
-                        local isEpochQuest = (questID >= 26000 and questID < 30000)
+                        local isEpochQuest = (questID >= 26000)  -- All custom Epoch quests
                         
                         if isEpochQuest then
                             if not questData then
@@ -729,7 +729,7 @@ function QuestieDataCollector:OnQuestAccepted(questId)
     -- Check for ALL custom/Epoch quests, not just 26000-26999 range
     local questData = QuestieDB.GetQuest(questId)  -- Use dot notation, not colon
     
-    local isEpochQuest = (questId >= 26000 and questId < 30000)  -- Expanded range to include 28xxx quests
+    local isEpochQuest = (questId >= 26000)  -- All custom Epoch quests start at 26000+
     
     -- Check for runtime stubs in QuestiePlayer.currentQuestlog
     local runtimeStub = QuestiePlayer and QuestiePlayer.currentQuestlog and QuestiePlayer.currentQuestlog[questId]
@@ -1966,8 +1966,8 @@ function QuestieDataCollector:ShowExportWindow(questId)
         -- Export ALL quests
         local questList = {}
         for qId, _ in pairs(QuestieDataCollection.quests) do
-            -- Include all Epoch quests (expanded range for new zones)
-            if qId >= 26000 and qId < 30000 then
+            -- Include all Epoch quests (26000+)
+            if qId >= 26000 then
                 table.insert(questList, qId)
             end
         end
@@ -2345,7 +2345,7 @@ SlashCmdList["QUESTIEDATACOLLECTOR"] = function(msg)
             local title, level, suggestedGroup, isHeader, isCollapsed, isComplete, frequency, questID = QuestieCompat.GetQuestLogTitle(i)
             if not isHeader and questID and questID > 0 then
                 local color = "|cFFFFFFFF"
-                if questID >= 26000 and questID < 30000 then
+                if questID >= 26000 then  -- All Epoch quests
                     color = "|cFFFF00FF" -- Magenta for Epoch quests
                 end
                 DEFAULT_CHAT_FRAME:AddMessage(string.format("%s  %d: %s (Level %d)|r", color, questID, title or "Unknown", level or 0), 1, 1, 1)
