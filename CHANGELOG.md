@@ -26,6 +26,9 @@
   - Added `/qdc check <questId>` command to inspect specific quest data
   - Added `/qdc save` command to force save data to SavedVariables
   - Added automatic rescan 1 second after initialization (no more manual `/qdc rescan` needed)
+  - Fixed container names being overwritten with placeholders like "Unidentified Container"
+  - Removed timestamp restriction that prevented using valid container names
+  - Container names now preserved even when loot window doesn't show the name
 
 ### Added
 - **Quest Data**: Added new troll starting zone quests

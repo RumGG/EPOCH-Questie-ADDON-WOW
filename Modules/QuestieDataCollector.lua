@@ -1234,7 +1234,7 @@ end
 
 function QuestieDataCollector:SetupObjectTracking()
     -- Track when player interacts with game objects
-    _lastInteractedObject = nil
+    -- Don't clear _lastInteractedObject here as it may have valid data
     
     -- Hook the tooltip to capture object names and IDs when mousing over
     GameTooltip:HookScript("OnShow", function(self)
@@ -1351,17 +1351,20 @@ function QuestieDataCollector:OnLootOpened()
         
         if lootName then
             lootSourceName = lootName
-        elseif _lastInteractedObject and (time() - _lastInteractedObject.timestamp < 5) then
-            -- Use the last interacted object if it's recent
+        elseif _lastInteractedObject then
+            -- Use the last interacted object regardless of age
             -- This should have the container name from when we moused over it
             lootSourceName = _lastInteractedObject.name
             lootSourceId = _lastInteractedObject.id
             
-            DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00[DEBUG] Using _lastInteractedObject: '" .. (lootSourceName or "nil") .. 
-                "' (age: " .. (time() - _lastInteractedObject.timestamp) .. "s)|r", 1, 1, 0)
+            if Questie.db.profile.debugDataCollector then
+                local age = _lastInteractedObject.timestamp and (time() - _lastInteractedObject.timestamp) or "unknown"
+                DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00[DEBUG] Using _lastInteractedObject: '" .. (lootSourceName or "nil") .. 
+                    "' (age: " .. tostring(age) .. "s)|r", 1, 1, 0)
+            end
             
             -- Don't accept placeholder names
-            if not lootSourceName or lootSourceName == "Ground Object" or lootSourceName == "Unknown Container" then
+            if not lootSourceName or lootSourceName == "Ground Object" or lootSourceName == "Unknown Container" or lootSourceName == "Unidentified Container" then
                 -- Make one more attempt to get a meaningful name
                 DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00[DATA] Container detected but name unknown. |r|cFF00FF00TIP: Mouse over before looting!|r", 1, 1, 0)
                 
@@ -1392,17 +1395,36 @@ function QuestieDataCollector:OnLootOpened()
         end
         
         -- Update _lastInteractedObject for UI_INFO_MESSAGE handler
-        -- Store the loot source for container tracking
-        _lastInteractedObject = {
-            name = lootSourceName,
-            id = lootSourceId,
-            coords = coords,
-            zone = zone,
-            subzone = subzone,
-            timestamp = time()
-        }
-        if Questie.db.profile.debugDataCollector then
-            DebugMessage("|cFFFF00FF[DEBUG] Setting _lastInteractedObject from LOOT_OPENED: " .. lootSourceName .. "|r", 1, 0, 1)
+        -- Only update if we have a meaningful name (not a placeholder)
+        local isPlaceholder = (lootSourceName == "Ground Object" or 
+                              lootSourceName == "Unknown Container" or 
+                              lootSourceName == "Unidentified Container" or
+                              string.find(lootSourceName, "Container$"))
+        
+        if not isPlaceholder or not _lastInteractedObject then
+            -- Store the loot source for container tracking
+            _lastInteractedObject = {
+                name = lootSourceName,
+                id = lootSourceId,
+                coords = coords,
+                zone = zone,
+                subzone = subzone,
+                timestamp = time()
+            }
+            if Questie.db.profile.debugDataCollector then
+                DebugMessage("|cFFFF00FF[DEBUG] Setting _lastInteractedObject from LOOT_OPENED: " .. lootSourceName .. "|r", 1, 0, 1)
+            end
+        else
+            -- Keep the existing _lastInteractedObject but update coords if better
+            if _lastInteractedObject and coords and coords.x and coords.y then
+                _lastInteractedObject.coords = coords
+                _lastInteractedObject.zone = zone
+                _lastInteractedObject.subzone = subzone
+            end
+            if Questie.db.profile.debugDataCollector then
+                DebugMessage("|cFFFF00FF[DEBUG] Keeping existing _lastInteractedObject: " .. (_lastInteractedObject and _lastInteractedObject.name or "nil") .. 
+                    " (not overwriting with placeholder: " .. lootSourceName .. ")|r", 1, 0, 1)
+            end
         end
         
         if coords and coords.x and coords.y then
