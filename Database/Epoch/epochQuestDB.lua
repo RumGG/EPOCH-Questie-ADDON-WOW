@@ -751,5 +751,28 @@ epochQuestData[26289] = {"Renegade Naga",{{45190}},{{7877}},nil,42,nil,nil,nil,n
 epochQuestData[26594] = {"WANTED: Scorchmaw",nil,nil,nil,45,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26863] = {"The Shadowforge Librarian",nil,nil,nil,45,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 
+-- Issue #37: Remaining Troll/Orc starting area quests (incomplete data)
+epochQuestData[27201] = {"The Triad Scrolls",nil,nil,nil,30,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[28550] = {"Commission for Aranae Venomblood",nil,nil,nil,30,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[28628] = {"Commission for Motega Firemane",nil,nil,nil,10,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[28750] = {"Captain Garran Vimes",{{3263}},{{47097}},nil,2,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[28751] = {"Westfall Stew",{{47097}},{{47097}},nil,2,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[28752] = {"Mage-tastic Gizmonitor",{{1669}},{{1669}},nil,2,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[28753] = {"Poor Old Blanchy",{{3263}},{{3263}},nil,2,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[28754] = {"The Escape",{{1669}},nil,nil,2,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[28755] = {"Red Leather Bandanas",{{47097}},{{47097}},nil,2,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[28757] = {"Banana Bonanza",{{46718}},{{46718}},nil,3,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[28758] = {"A Fight to the Death",{{46718}},{{46718}},nil,3,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[28759] = {"Empowered Runes",{{46718}},{{47171}},nil,3,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[28760] = {"The Shadow Figure",{{47171}},{{47171}},nil,3,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[28761] = {"Jailor Marlgen",{{47171}},{{47171}},nil,3,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[28762] = {"The Escape",{{47171}},{{46718}},nil,3,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[28763] = {"Healing the Wounded",{{46718}},{{46718}},nil,4,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[28764] = {"Vanquish the Invaders",{{46718}},{{46718}},nil,4,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[28765] = {"Onwards to Razor Hill",{{46718}},{{3337}},nil,4,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[28766] = {"Report to Sen'jin Village",{{3337}},{{14051}},nil,4,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[28767] = {"An Ancient Enemy",{{14051}},{{46718}},nil,4,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[28769] = {"The Basics: Hitting Things",{{3153}},{{3153}},nil,1,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+
 -- Stage the Epoch questData for later merge during compilation
 QuestieDB._epochQuestData = epochQuestData

@@ -34,12 +34,12 @@
   - Prevents quests from being inadvertently untracked during objective updates
 
 ### Added
-- **Quest Data**: Added 70+ new Epoch quests from GitHub submissions (#32-#37)
+- **Quest Data**: Added 90+ new Epoch quests from GitHub submissions (#32-#38)
   - Issue #35: Quest 26892 "Beastial Allies" with NPCs (Stranglethorn Vale)
   - Issue #34: 18 quests including Ironforge Airfield chain (26202, 26205, 26208, 26663-26696, 26987, 26998, 28087, 28375)
   - Issue #33: 6 Hinterlands quests (26209-26212, 27322, 28536)
   - Issue #32: 18 Gnome starting area quests with complete NPC data
-  - Issue #37: 21 additional Troll/Orc starting area quests (partial data)
+  - Issue #37: Complete - All 21 remaining Troll/Orc starting area quests added (27201, 28550, 28628, 28750-28755, 28757-28767, 28769)
   - Issue #38: 3 additional quests (26289 "Renegade Naga", 26594 "WANTED: Scorchmaw", 26863 "The Shadowforge Librarian")
   - Added corresponding NPCs for all quests with location data
 - **Quest Data**: Troll starting zone improvements
