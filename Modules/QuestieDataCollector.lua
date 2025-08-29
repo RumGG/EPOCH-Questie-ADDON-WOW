@@ -850,15 +850,41 @@ function QuestieDataCollector:OnQuestAccepted(questId)
             local _, level = QuestieCompat.GetQuestLogTitle(questLogIndex)
             QuestieDataCollection.quests[questId].level = level
             
-            -- Get objectives
+            -- Get objectives (with retry for text that might not be loaded yet)
             local numObjectives = GetNumQuestLeaderBoards(questLogIndex)
             for i = 1, numObjectives do
                 local text, objectiveType, finished = GetQuestLogLeaderBoard(i, questLogIndex)
+                
+                -- If text is empty, try to get it from quest description
+                if not text or text == "" then
+                    -- Try getting full quest text
+                    local questDescription, questObjectives = GetQuestLogQuestText()
+                    -- Extract objective from objectives text if available
+                    if questObjectives and questObjectives ~= "" then
+                        -- Parse out individual objectives (usually separated by newlines)
+                        local objNum = 1
+                        for line in string.gmatch(questObjectives, "[^\n]+") do
+                            if objNum == i then
+                                text = line
+                                break
+                            end
+                            objNum = objNum + 1
+                        end
+                    end
+                    
+                    -- If still no text, use a placeholder that will be updated later
+                    if not text or text == "" then
+                        text = "Objective " .. i .. " (loading...)"
+                    end
+                end
+                
                 table.insert(QuestieDataCollection.quests[questId].objectives, {
                     text = text,
-                    type = objectiveType,
+                    type = objectiveType or "unknown",
                     index = i,
-                    completed = finished
+                    completed = finished or false,
+                    progressLocations = {},
+                    lastText = text  -- Track for changes
                 })
             end
         end
@@ -985,22 +1011,36 @@ function QuestieDataCollector:OnQuestLogUpdate()
                     local text, objectiveType, finished = GetQuestLogLeaderBoard(i, questLogIndex)
                     local objData = QuestieDataCollection.quests[questId].objectives[i]
                     
-                    if objData and objData.lastText ~= text then
-                        -- Objective has changed
+                    -- Update objective text if it was a placeholder
+                    if objData and (not objData.text or objData.text == "" or string.find(objData.text, "loading")) then
+                        objData.text = text or ("Objective " .. i)
                         objData.lastText = text
                         objData.type = objectiveType
+                    end
+                    
+                    -- Check for actual progress (not just text updates)
+                    if objData and objData.lastText ~= text and text and text ~= "" then
+                        -- Parse progress numbers to see if there's actual progress
+                        local oldNum = tonumber(string.match(objData.lastText or "", "(%d+)/") or "0")
+                        local newNum = tonumber(string.match(text or "", "(%d+)/") or "0")
                         
-                        if not objData.progressLocations then
-                            objData.progressLocations = {}
-                        end
-                        
-                        local locData = {
-                            coords = QuestieDataCollector:GetPlayerCoords(),
-                            zone = GetRealZoneText(),
-                            subzone = GetSubZoneText(),
-                            text = text,
-                            timestamp = time()
-                        }
+                        -- Only record if there's actual numerical progress or completion change
+                        if newNum > oldNum or (finished and not objData.completed) then
+                            objData.lastText = text
+                            objData.type = objectiveType
+                            objData.completed = finished
+                            
+                            if not objData.progressLocations then
+                                objData.progressLocations = {}
+                            end
+                            
+                            local locData = {
+                                coords = QuestieDataCollector:GetPlayerCoords(),
+                                zone = GetRealZoneText(),
+                                subzone = GetSubZoneText(),
+                                text = text,
+                                timestamp = time()
+                            }
                         
                         -- Special handling for exploration objectives
                         if objectiveType == "event" or objectiveType == "area" then
@@ -1070,13 +1110,14 @@ function QuestieDataCollector:OnQuestLogUpdate()
                             end
                         end
                         
-                        table.insert(objData.progressLocations, locData)
-                        
-                        -- Objective progress tracked silently
-                        if locData.action then
-                            DebugMessage("|cFF00FF00  Action: " .. locData.action .. "|r", 0, 1, 0)
+                            table.insert(objData.progressLocations, locData)
+                            
+                            -- Objective progress tracked silently
+                            if locData.action then
+                                DebugMessage("|cFF00FF00  Action: " .. locData.action .. "|r", 0, 1, 0)
+                            end
+                            DebugMessage("|cFF00FF00  Location: [" .. locData.coords.x .. ", " .. locData.coords.y .. "] in " .. locData.zone .. "|r", 0, 1, 0)
                         end
-                        DebugMessage("|cFF00FF00  Location: [" .. locData.coords.x .. ", " .. locData.coords.y .. "] in " .. locData.zone .. "|r", 0, 1, 0)
                     end
                 end
             end
