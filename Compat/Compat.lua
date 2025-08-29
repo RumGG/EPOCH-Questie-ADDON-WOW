@@ -888,9 +888,27 @@ end
 
 -- handle tooltip based on the parent frame
 function QuestieCompat.SetupTooltip(frame, OnHide)
-    if (frame:GetParent() == WorldMapFrame) then
+    -- Check full ancestry, not just direct parent
+    local onWorldMap = false
+    local p = frame
+    while p do
+        if p == WorldMapFrame then
+            onWorldMap = true
+            break
+        end
+        if p.GetParent then
+            p = p:GetParent()
+        else
+            p = nil
+        end
+    end
+
+    if onWorldMap then
         WorldMapPOIFrame.allowBlobTooltip = OnHide and true or false
         QuestieCompat.Tooltip = WorldMapTooltip
+        if QuestieCompat.Tooltip.SetClampedToScreen then
+            QuestieCompat.Tooltip:SetClampedToScreen(true)
+        end
     else
         QuestieCompat.Tooltip = GameTooltip
     end
