@@ -115,6 +115,7 @@ Modules\QuestieShutUp.lua
 Modules\Sounds.lua
 Modules\TaskQueue.lua
 Modules\QuestiePlayer.lua
+
 #Modules\QuestieDebugOffer.lua
 Modules\WorldMapButton\WorldMapButton.lua
 #Modules\WorldMapButton\QuestieWorldMapButtonTemplate.xml
@@ -191,6 +192,9 @@ Modules\Tracker\TrackerHeaderFrame.lua
 Modules\Tracker\TrackerQuestFrame.lua
 Modules\Tracker\TrackerQuestTimers.lua
 Modules\Tracker\TrackerLinePool.lua
+
+#TomTom
+Modules\TomTom\TomTomAuto.lua
 
 # Tutorial
 Modules\Tutorial\ChooseObjectiveType.lua
