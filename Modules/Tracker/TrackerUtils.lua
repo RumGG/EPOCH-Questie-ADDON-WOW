@@ -785,11 +785,7 @@ function TrackerUtils:GetSortedQuestIds()
     local questDetails = {}
     local sortObj = Questie.db.profile.trackerSortObjectives
     -- Update quest objectives
-    Questie:Print("[GetSortedQuestIds] Checking QuestiePlayer.currentQuestlog:")
-    local questCount = 0
     for questId, quest in pairs(QuestiePlayer.currentQuestlog) do
-        questCount = questCount + 1
-        Questie:Print("  Quest", questId, "type=", type(quest), quest and quest.name or "Unknown")
         -- Skip if quest is just a number (happens when QuestieDB.GetQuest fails)
         if quest and type(quest) == "table" then
             -- Insert Quest Ids into sortedQuestIds table

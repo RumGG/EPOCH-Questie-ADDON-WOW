@@ -669,30 +669,18 @@ local hordeTournamentMarkerQuests = {[13691] = true, [13693] = true, [13694] = t
 
 ---@param questId number
 function QuestieQuest:AcceptQuest(questId)
-    Questie:Print("[QuestieQuest:AcceptQuest] Called for questId:", questId)
-    
     -- ALWAYS clear auto-untracked status when accepting ANY quest
     -- This must happen for both database quests AND runtime stubs
     if Questie.db.char.AutoUntrackedQuests and Questie.db.char.AutoUntrackedQuests[questId] then
         Questie.db.char.AutoUntrackedQuests[questId] = nil
-        Questie:Print("[QuestieQuest:AcceptQuest] Removed quest from AutoUntrackedQuests:", questId)
-    else
-        Questie:Print("[QuestieQuest:AcceptQuest] Quest not in AutoUntrackedQuests:", questId)
-    end
-    
-    -- Check what's currently in currentQuestlog
-    local currentQuest = QuestiePlayer.currentQuestlog[questId]
-    if currentQuest then
-        Questie:Print("[QuestieQuest:AcceptQuest] Quest already in currentQuestlog:", questId, currentQuest.name or "Unknown", "isRuntimeStub=", currentQuest.__isRuntimeStub)
-    else
-        Questie:Print("[QuestieQuest:AcceptQuest] Quest NOT in currentQuestlog:", questId)
+        Questie:Debug(Questie.DEBUG_INFO, "[QuestieQuest:AcceptQuest] Removed quest from AutoUntrackedQuests:", questId)
     end
     
     -- IMPORTANT: Check if we already have a good runtime stub BEFORE calling GetQuest
     -- GetQuest creates a generic stub that would replace our good stub with correct name
     local existingStub = QuestiePlayer.currentQuestlog[questId]
     if existingStub and existingStub.__isRuntimeStub then
-        Questie:Print("[QuestieQuest:AcceptQuest] Using existing runtime stub:", questId, existingStub.name or "Unknown")
+        Questie:Debug(Questie.DEBUG_INFO, "[QuestieQuest:AcceptQuest] Using existing runtime stub:", questId, existingStub.name or "Unknown")
         -- For runtime stubs, trigger the tracker update
         QuestieCombatQueue:Queue(function()
             QuestieTracker:Update()
@@ -702,12 +690,8 @@ function QuestieQuest:AcceptQuest(questId)
     end
     
     local quest = QuestieDB.GetQuest(questId)
-    if quest then
-        Questie:Print("[QuestieQuest:AcceptQuest] Found quest in database:", questId, quest.name or "Unknown")
-    else
-        Questie:Print("[QuestieQuest:AcceptQuest] Quest NOT in database:", questId)
-        -- No database quest and no existing stub - shouldn't happen
-        Questie:Print("[AcceptQuest] ERROR: No quest data found for", questId)
+    if not quest then
+        Questie:Debug(Questie.DEBUG_INFO, "[QuestieQuest:AcceptQuest] No quest data found for", questId)
         return
     end
 
