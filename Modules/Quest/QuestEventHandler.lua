@@ -485,6 +485,42 @@ function _QuestEventHandler:HandleQuestAccepted(questId)
         QuestieQuest:AcceptQuest(questId)
         -- Force tracker to show immediately when accepting a quest
         QuestieTracker:ForceShow()
+        
+        -- Clean up any completed quests that might still be in the tracker
+        -- This fixes the issue where completed quests show when accepting new ones
+        local toRemove = {}
+        for qId, quest in pairs(QuestiePlayer.currentQuestlog or {}) do
+            if quest and type(quest) == "table" then
+                local isComplete = 0
+                if quest.IsComplete and type(quest.IsComplete) == "function" then
+                    isComplete = quest:IsComplete()
+                elseif quest.isComplete ~= nil then
+                    isComplete = quest.isComplete and 1 or 0
+                end
+                
+                -- Check if quest is marked complete but not in quest log
+                if isComplete == 1 then
+                    local stillInLog = false
+                    for i = 1, GetNumQuestLogEntries() do
+                        local _, _, _, _, _, _, _, logQuestId = GetQuestLogTitle(i)
+                        if logQuestId == qId then
+                            stillInLog = true
+                            break
+                        end
+                    end
+                    if not stillInLog then
+                        toRemove[qId] = true
+                    end
+                end
+            end
+        end
+        
+        -- Remove any completed quests that are no longer in the log
+        for qId in pairs(toRemove) do
+            Questie:Debug(Questie.DEBUG_INFO, "[HandleQuestAccepted] Removing completed quest from tracker:", qId)
+            QuestiePlayer.currentQuestlog[qId] = nil
+        end
+        
         QuestieTracker:Update()
         -- Also queue for combat safety
         QuestieCombatQueue:Queue(function()
