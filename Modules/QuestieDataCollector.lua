@@ -78,8 +78,27 @@ function QuestieDataCollector:Initialize()
     DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Questie Data Collector]|r Ready! You can now accept quests for data collection.", 0, 1, 0)
     DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00Type /qdc for commands|r", 1, 1, 0)
     
-    -- Check existing quests in log
+    -- Check existing quests in log immediately
     QuestieDataCollector:CheckExistingQuests()
+    
+    -- Also do a delayed rescan to ensure everything is properly loaded
+    -- This fixes the issue where _activeTracking isn't populated after reload
+    local C_Timer = QuestieCompat.C_Timer
+    C_Timer.After(1.0, function()
+        -- Clear and rescan to ensure we're tracking all necessary quests
+        _activeTracking = {}
+        QuestieDataCollector:CheckExistingQuests()
+        
+        -- Count how many quests we're tracking
+        local count = 0
+        for _ in pairs(_activeTracking) do
+            count = count + 1
+        end
+        
+        if count > 0 then
+            DebugMessage(string.format("|cFF00FF00[Data Collector] Auto-rescan complete: Tracking %d quest(s)|r", count), 0, 1, 0)
+        end
+    end)
 end
 
 function QuestieDataCollector:CheckExistingQuests()

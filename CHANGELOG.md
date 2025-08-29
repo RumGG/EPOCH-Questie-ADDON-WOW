@@ -25,6 +25,7 @@
   - Container names now properly captured from GameTooltip during interaction
   - Added `/qdc check <questId>` command to inspect specific quest data
   - Added `/qdc save` command to force save data to SavedVariables
+  - Added automatic rescan 1 second after initialization (no more manual `/qdc rescan` needed)
 
 ### Added
 - **Quest Data**: Added new troll starting zone quests
