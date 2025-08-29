@@ -41,6 +41,8 @@ local QuestieDB = QuestieLoader:ImportModule("QuestieDB")
 local l10n = QuestieLoader:ImportModule("l10n")
 ---@type QuestieDebugOffer
 local QuestieDebugOffer = QuestieLoader:ImportModule("QuestieDebugOffer")
+---@type TomTomAuto
+local TomTomAuto = QuestieLoader:ImportModule("TomTomAuto")
 
 --- COMPATIBILITY ---
 local C_Timer = QuestieCompat.C_Timer
@@ -174,15 +176,15 @@ function QuestieTracker.Initialize()
     end
     -- Questie:Print("[QuestieTracker] Quest frame initialized") -- Removed to reduce login spam
 
-    if Questie.db.profile.tomtomAutoTargetMode then
+    if TomTom and Questie.db.profile.tomtomAutoTargetMode then
         success, err = pcall(function()
-            TrackerUtils:StartTomTomAutoTracking()
+            TomTomAuto:StartTomTomAutoTracking()
         end)
         if not success then
-            Questie:Print("|cFFFF0000[QuestieTracker] ERROR: Failed to start TomTom auto tracking: " .. tostring(err) .. "|r")
+            Questie:Print("|cFFFF0000[TomTom] ERROR: Failed to start TomTom Auto tracking: " .. tostring(err) .. "|r")
             return
         end
-        Questie:Print("[QuestieTracker] TomTom auto tracking started")
+        Questie:Print("[TomTom] TomTom Auto tracking started")
     end
 
     -- Initialize tracker functions

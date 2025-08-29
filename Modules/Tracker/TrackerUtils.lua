@@ -77,70 +77,6 @@ local bindTruthTable = {
 }
 
 
-function TrackerUtils:GetTomTomAutoTargetQuest()
-    if not TomTom or not Questie.db.profile.tomtomAutoTargetMode then return nil end
-    
-    -- Find the closest quest without changing tracker sort order
-    local closestQuest = nil
-    local closestDistance = math.huge
-    
-    -- Check all quests in the current questlog
-    for questId, quest in pairs(QuestiePlayer.currentQuestlog or {}) do
-        if quest and type(quest) == "table" then
-            -- Skip completed quests
-            local isComplete = 0
-            if quest.IsComplete and type(quest.IsComplete) == "function" then
-                isComplete = quest:IsComplete()
-            elseif quest.isComplete ~= nil then
-                isComplete = quest.isComplete and 1 or 0
-            end
-            
-            if isComplete ~= 1 then
-                -- Calculate distance to this quest's objectives
-                local distance = _GetDistanceToClosestObjective(questId)
-                if distance and distance < closestDistance then
-                    closestDistance = distance
-                    closestQuest = quest
-                end
-            end
-        end
-    end
-    
-    return closestQuest
-end
-
-
-function TrackerUtils:StartTomTomAutoTracking()
-    if not TomTom or not TomTom.AddWaypoint or not Questie.db.profile.tomtomAutoTargetMode then return end
-    
-    if tomtomAutoTrackTimer then
-        tomtomAutoTrackTimer:Cancel()
-        tomtomAutoTrackTimer = nil
-    end
-
-    tomtomAutoTrackTimer = C_Timer.NewTicker(5.0, function()
-        local quest = TrackerUtils:GetTomTomAutoTargetQuest()
-        if quest then
-            local questId = quest.Id or tostring(quest)   
-            local spawn, zone, name = QuestieMap:GetNearestQuestSpawn(quest)
-            if (not spawn) and quest.objective ~= nil then
-                spawn, zone, name = QuestieMap:GetNearestSpawn(quest.objective)
-            end
-            if spawn then
-                TrackerUtils:SetTomTomTarget(name, zone, spawn[1], spawn[2])
-            end
-        end
-    end)
-end
-
-function TrackerUtils:StopTomTomAutoTracking()
-    if tomtomAutoTrackTimer then
-        tomtomAutoTrackTimer:Cancel()
-        tomtomAutoTrackTimer = nil
-    end
-    lastWaypoint = nil
-end
-
 local _QuestLogScrollBar = QuestLogScrollFrameScrollBar or QuestLogListScrollFrame.ScrollBar or QuestLogListScrollFrameScrollBar
 
 ---@param quest table The table provided by QuestieDB.GetQuest(questId)
@@ -695,6 +631,10 @@ local function _GetDistanceToClosestObjective(questId)
     end
 
     return closestDistance
+end
+
+function TrackerUtils:GetDistanceToClosestObjective(questId)
+    return _GetDistanceToClosestObjective(questId)
 end
 
 ---@param uiMapId number Continent ID number
