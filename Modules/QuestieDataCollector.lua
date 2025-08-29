@@ -1288,9 +1288,11 @@ function QuestieDataCollector:SetupObjectTracking()
                     subzone = GetSubZoneText(),
                     timestamp = time()
                 }
-                -- Always show this for container tracking
-                DEFAULT_CHAT_FRAME:AddMessage("|cFF00FFFF[DEBUG] Captured object from tooltip: '" .. name .. "'" .. 
-                    (objectId and " (ID: " .. objectId .. ")" or "") .. "|r", 0, 1, 1)
+                -- Only show this in debug mode
+                if Questie.db.profile.debugDataCollector then
+                    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FFFF[DEBUG] Captured object from tooltip: '" .. name .. "'" .. 
+                        (objectId and " (ID: " .. objectId .. ")" or "") .. "|r", 0, 1, 1)
+                end
                 
                 if objectId then
                     DebugMessage("|cFF8888FF[DATA] Hovering object: " .. name .. " (ID: " .. objectId .. ")|r", 0.5, 0.5, 1)
