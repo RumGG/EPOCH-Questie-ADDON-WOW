@@ -706,7 +706,11 @@ function QuestieDataCollector:GetPlayerCoords()
 end
 
 function QuestieDataCollector:OnQuestAccepted(questId)
-    if not questId then return end
+    DEFAULT_CHAT_FRAME:AddMessage("|cFFFF00FF[DC]|r OnQuestAccepted START - questId type: " .. type(questId) .. ", value: " .. tostring(questId), 1, 0, 1)
+    if not questId then 
+        DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[DC]|r questId is nil, returning", 1, 0, 0)
+        return 
+    end
     
     -- Ensure questId is a number (sometimes it comes as a table)
     if type(questId) == "table" then
@@ -738,12 +742,12 @@ function QuestieDataCollector:OnQuestAccepted(questId)
     end
     
     -- Double-check that data collection is enabled
+    DEFAULT_CHAT_FRAME:AddMessage("|cFFFF00FF[DC]|r Checking enableDataCollection: " .. tostring(Questie.db.profile.enableDataCollection), 1, 0, 1)
     if not Questie.db.profile.enableDataCollection then
-        if Questie.db.profile.debugDataCollector then
-            DebugMessage("|cFFFFFF00[DataCollector Debug]|r Data collection is disabled, skipping quest " .. tostring(questId), 1, 1, 0)
-        end
+        DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00[DC]|r Data collection is disabled, skipping quest " .. tostring(questId), 1, 1, 0)
         return
     end
+    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DC]|r Data collection is enabled, continuing...", 0, 1, 0)
     
     -- Ensure we're initialized
     if not QuestieDataCollection or not QuestieDataCollection.quests then
@@ -823,7 +827,11 @@ function QuestieDataCollector:OnQuestAccepted(questId)
     
     -- Track if it's an Epoch quest (by ID range) OR any quest that's missing from the database
     -- This will catch ALL custom quests including new starting zones
+    DEFAULT_CHAT_FRAME:AddMessage(string.format("|cFFFF00FF[DC]|r FINAL CHECK - Quest %d: isEpochQuest=%s, isMissingFromDB=%s, hasEpochPrefix=%s, hasIncompleteData=%s", 
+        questId, tostring(isEpochQuest), tostring(isMissingFromDB), tostring(hasEpochPrefix), tostring(hasIncompleteData)), 1, 0, 1)
+    
     if (isEpochQuest or isMissingFromDB or hasEpochPrefix) and (isMissingFromDB or hasEpochPrefix or hasIncompleteData) then
+        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DC]|r CONDITIONS MET - SHOWING ALERT!", 0, 1, 0)
         -- ALERT! Missing quest detected!
         local questTitle = QuestieCompat.GetQuestLogTitle(QuestieDataCollector:GetQuestLogIndexById(questId))
         
@@ -887,7 +895,11 @@ function QuestieDataCollector:OnQuestAccepted(questId)
         DEFAULT_CHAT_FRAME:AddMessage("===========================================", 0, 1, 1)
         
         _activeTracking[questId] = true
+        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DC]|r Quest " .. questId .. " is now being tracked!", 0, 1, 0)
+    else
+        DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[DC]|r Quest " .. questId .. " did NOT meet conditions for tracking", 1, 0, 0)
     end
+    DEFAULT_CHAT_FRAME:AddMessage("|cFFFF00FF[DC]|r OnQuestAccepted END", 1, 0, 1)
 end
 
 function QuestieDataCollector:GetQuestLogIndexById(questId)
