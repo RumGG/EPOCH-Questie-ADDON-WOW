@@ -269,26 +269,35 @@ function QuestieTooltips:GetTooltip(key)
     local playerName = UnitName("player")
     
     -- Fallback: enrich tooltip data from remote quest logs when no per-mob tooltip cache exists
-    if IsInGroup() then
-        local me = UnitName("player")
-        for questId, qdata in pairs(tooltipData) do
-            local rq = QuestieComms.remoteQuestLogs and QuestieComms.remoteQuestLogs[questId]
-            if rq and qdata.objectivesText then
-                -- Check each objective slot
-                for objectiveIndex, objectiveData in pairs(qdata.objectivesText) do
-                    -- Check if we need to add remote player data
-                    for remoteName, remoteData in pairs(rq) do
-                        if remoteName ~= me then
+    -- This handles cases where party members have the quest but there's no cached tooltip data for this specific mob
+    if IsInGroup() and QuestieComms.remoteQuestLogs then
+        for questId, questData in pairs(tooltipData) do
+            local remoteQuestData = QuestieComms.remoteQuestLogs[questId]
+            if remoteQuestData and questData.objectivesText then
+                -- For each objective in the current tooltip
+                for objectiveIndex, playersForObjective in pairs(questData.objectivesText) do
+                    -- Check each party member's quest data
+                    for remoteName, remotePlayerData in pairs(remoteQuestData) do
+                        if remoteName ~= playerName then
                             local playerInfo = QuestiePlayer:GetPartyMemberByName(remoteName)
                             -- Only add if player is in party and not already in tooltip
-                            if playerInfo and (not objectiveData[remoteName]) then
-                                local remoteObjective = remoteData[objectiveIndex]
-                                if remoteObjective then
-                                    objectiveData[remoteName] = {
-                                        text = remoteObjective.text or remoteObjective.description or "",
-                                        color = remoteObjective.color or "|cFFFFFFFF"
-                                    }
+                            if playerInfo and (not playersForObjective[remoteName]) and remotePlayerData[objectiveIndex] then
+                                local remoteObjective = remotePlayerData[objectiveIndex]
+                                
+                                -- Build the objective text similar to how it's done in _FetchTooltipsForGroupMembers
+                                local color = QuestieLib:GetRGBForObjective(remoteObjective)
+                                local text
+                                if remoteObjective.required then
+                                    text = "   " .. color .. tostring(remoteObjective.fulfilled or 0) .. "/" .. tostring(remoteObjective.required) .. " " .. (remoteObjective.text or "")
+                                else
+                                    text = "   " .. color .. (remoteObjective.text or "")
                                 end
+                                
+                                playersForObjective[remoteName] = {
+                                    color = color,
+                                    text = text
+                                }
+                                anotherPlayer = true
                             end
                         end
                     end
