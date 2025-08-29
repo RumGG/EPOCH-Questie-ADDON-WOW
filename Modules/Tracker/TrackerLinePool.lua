@@ -720,6 +720,7 @@ function TrackerLinePool.ResetLinesForChange()
     end
 
     if InCombatLockdown() or not Questie.db.profile.trackerEnabled then
+        Questie:Print("[TrackerLinePool] Reset skipped - combat or disabled. lineIndex was", lineIndex)
         return
     end
 
@@ -747,6 +748,7 @@ function TrackerLinePool.ResetLinesForChange()
     end
 
     lineIndex = 0
+    Questie:Print("[TrackerLinePool] Reset complete. lineIndex reset to 0")
 end
 
 function TrackerLinePool.ResetButtonsForChange()
@@ -798,9 +800,11 @@ end
 function TrackerLinePool.GetNextLine()
     lineIndex = lineIndex + 1
     if not linePool[lineIndex] then
+        Questie:Print("[TrackerLinePool] Hit line limit! lineIndex=", lineIndex, "linePoolSize=", linePoolSize)
         return nil -- past the line limit
     end
-
+    
+    Questie:Print("[TrackerLinePool] Getting line", lineIndex, "of", linePoolSize)
     return linePool[lineIndex]
 end
 
