@@ -281,11 +281,15 @@ function QuestieTracker.Initialize()
                         toRemove[untrackedQuestId] = true
                     else
                         -- Check if this is a runtime stub quest that shouldn't be untracked
-                        local quest = QuestieDB.GetQuest(untrackedQuestId)
-                        if quest and quest.isRuntimeStub then
+                        local quest = QuestiePlayer.currentQuestlog[untrackedQuestId]
+                        if quest and quest.__isRuntimeStub then
                             -- Runtime stub quests should be tracked by default when autoTrackQuests is on
                             toRemove[untrackedQuestId] = true
                             Questie:Debug(Questie.DEBUG_INFO, "[QuestieTracker] Re-tracking runtime stub quest:", untrackedQuestId)
+                        elseif untrackedQuestId >= 26000 then
+                            -- Epoch quests should also be tracked by default
+                            toRemove[untrackedQuestId] = true
+                            Questie:Debug(Questie.DEBUG_INFO, "[QuestieTracker] Re-tracking Epoch quest:", untrackedQuestId)
                         end
                     end
                 end
@@ -895,6 +899,21 @@ function QuestieTracker:Update()
 
     -- Begin populating the Tracker with Quests
     local _UpdateQuests = function()
+        -- Debug: Log tracking status for all quests
+        if Questie.db.profile.autoTrackQuests then
+            local trackedCount = 0
+            local untrackedCount = 0
+            for _, qId in pairs(sortedQuestIds) do
+                if Questie.db.char.AutoUntrackedQuests and Questie.db.char.AutoUntrackedQuests[qId] then
+                    untrackedCount = untrackedCount + 1
+                    Questie:Debug(Questie.DEBUG_INFO, "[Tracker] Quest", qId, "is in AutoUntrackedQuests")
+                else
+                    trackedCount = trackedCount + 1
+                end
+            end
+            Questie:Debug(Questie.DEBUG_INFO, "[Tracker] Auto-track mode: Tracked=", trackedCount, "Untracked=", untrackedCount)
+        end
+        
         for _, questId in pairs(sortedQuestIds) do
             if not questId then break end
 
@@ -2367,7 +2386,13 @@ function QuestieTracker:UntrackQuestId(questId)
         if not Questie.db.char.AutoUntrackedQuests then
             Questie.db.char.AutoUntrackedQuests = {}
         end
+        -- Don't untrack Epoch quests in auto-track mode
+        if questId >= 26000 then
+            Questie:Debug(Questie.DEBUG_INFO, "[UntrackQuestId] Ignoring untrack request for Epoch quest:", questId)
+            return
+        end
         Questie.db.char.AutoUntrackedQuests[questId] = true
+        Questie:Debug(Questie.DEBUG_INFO, "[UntrackQuestId] Added quest to AutoUntrackedQuests:", questId)
     end
 
     if Questie.db.profile.hideUntrackedQuestsMapIcons then
