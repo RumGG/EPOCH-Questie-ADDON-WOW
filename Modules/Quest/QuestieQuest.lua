@@ -688,30 +688,27 @@ function QuestieQuest:AcceptQuest(questId)
         Questie:Print("[QuestieQuest:AcceptQuest] Quest NOT in currentQuestlog:", questId)
     end
     
+    -- IMPORTANT: Check if we already have a good runtime stub BEFORE calling GetQuest
+    -- GetQuest creates a generic stub that would replace our good stub with correct name
+    local existingStub = QuestiePlayer.currentQuestlog[questId]
+    if existingStub and existingStub.__isRuntimeStub then
+        Questie:Print("[QuestieQuest:AcceptQuest] Using existing runtime stub:", questId, existingStub.name or "Unknown")
+        -- For runtime stubs, trigger the tracker update
+        QuestieCombatQueue:Queue(function()
+            QuestieTracker:Update()
+            QuestieTracker:ForceShow()
+        end)
+        return
+    end
+    
     local quest = QuestieDB.GetQuest(questId)
     if quest then
         Questie:Print("[QuestieQuest:AcceptQuest] Found quest in database:", questId, quest.name or "Unknown")
     else
         Questie:Print("[QuestieQuest:AcceptQuest] Quest NOT in database:", questId)
-    end
-    
-    -- For quests not in database (like Epoch quests), check if we have a runtime stub
-    if not quest then
-        quest = QuestiePlayer.currentQuestlog[questId]
-        if quest then
-            Questie:Print("[AcceptQuest] Using existing runtime stub for quest", questId, quest.name or "Unknown")
-            -- For runtime stubs, we still need to trigger the tracker update
-            -- Skip the database-specific logic below but ensure tracker gets notified
-            QuestieCombatQueue:Queue(function()
-                QuestieTracker:Update()
-                QuestieTracker:ForceShow()
-            end)
-            return
-        else
-            -- No quest data at all - this shouldn't happen as the event handler creates stubs
-            Questie:Print("[AcceptQuest] ERROR: No quest data found for", questId)
-            return
-        end
+        -- No database quest and no existing stub - shouldn't happen
+        Questie:Print("[AcceptQuest] ERROR: No quest data found for", questId)
+        return
     end
 
     if quest then
