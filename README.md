@@ -1,26 +1,39 @@
-## v1.0.55 - Latest Release
+## v1.0.56 - Latest Release
+
+### 🎉 Massive Quest Database Update!
+
+#### 90+ New Epoch Quests Added
+- **Complete Starting Zones**: Gnome and Troll/Orc starting areas now fully supported
+- **GitHub Issues #32-38**: All community-submitted quest data integrated
+- **700+ Total Epoch Quests**: The most comprehensive Epoch quest database available
 
 ### 🎯 Major Fixes
 
-#### Data Collection Now Works for ALL Custom Quests! 
-- **Fixed Issue #21**: Runtime stubbed quests (like the new troll starting zone) are now properly detected
-- **Fixed Issue #27**: No more [DATA] message spam - debug messages only show when explicitly enabled
-- Quest ID tracking expanded to ALL Epoch quests (26000+) with no upper limit
-- Also detects modified vanilla quests that Project Epoch has changed (may show as missing if significantly altered)
-- Export window now correctly shows all tracked quests
+#### Container Names Finally Fixed! (Issue #32)
+- **Sun-Ripened Banana** containers now properly identified (not "Unknown Container")
+- Container names preserved even when they match the item name
+- Ground object collection quests now show accurate map pins
+- Auto-rescan after reload - no more manual `/qdc rescan` needed
 
-### 🚀 Key Improvements
+#### Data Collection Improvements
+- Runtime stubbed quests properly detected (Issue #21)
+- No more [DATA] message spam (Issue #27)
+- Quest ID tracking expanded to ALL Epoch quests (26000+)
+- Export window shows [COMPLETE] or [INCOMPLETE] status
 
-#### Better User Experience
-- Clear "Ready!" message when data collector is initialized
-- Export window shows [COMPLETE] or [INCOMPLETE] status for each quest
-- Partial quest data can now be exported (even incomplete quests are valuable!)
-- Debug messages properly hidden unless `/qdc debug` is used
+### 📊 Quest Additions by Zone
+- **Stranglethorn Vale**: "Beastial Allies" quest chain
+- **Ironforge**: Airfield quest chain (18 quests)
+- **Hinterlands**: 6 new quests including "Wildhammer Bones"
+- **Dun Morogh**: Complete gnome starting experience
+- **Durotar**: Complete troll/orc starting experience including "Banana Bonanza"
+- **Feralas**: "Renegade Naga" and related quests
 
-#### What This Means for Players
-- **New Troll Starting Zone**: Quest 28722 "The Darkspear Tribe" and all other new quests are now tracked
-- **Less Spam**: You won't see constant [DATA] messages unless you want them
-- **All Data Matters**: Even if you don't complete a quest, the partial data helps improve the database
+### 🚀 What This Means for Players
+- **Better Leveling**: Starting zones now have complete quest tracking
+- **Accurate Map Pins**: Container locations properly named and positioned
+- **Less Manual Work**: Automatic tracking initialization after reload
+- **Community Power**: Your data submissions are making the addon better daily
 
 ### 📝 How to Use Data Collection
 
