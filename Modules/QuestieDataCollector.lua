@@ -2543,6 +2543,15 @@ SlashCmdList["QUESTIEDATACOLLECTOR"] = function(msg)
         QuestieDataCollection = {quests = {}, version = 1, sessionStart = date("%Y-%m-%d %H:%M:%S")}
         _activeTracking = {} -- Also clear active tracking
         DebugMessage("|cFF00FF00[DATA COLLECTOR] All quest data cleared.|r", 0, 1, 0)
+        -- Automatically rescan to re-initialize tracking for current quests
+        QuestieDataCollector:CheckExistingQuests()
+        local count = 0
+        for questId, _ in pairs(_activeTracking or {}) do
+            count = count + 1
+        end
+        if count > 0 then
+            DebugMessage("|cFF00FF00[DATA COLLECTOR] Re-initialized tracking for " .. count .. " quests in your log|r", 0, 1, 0)
+        end
         DebugMessage("|cFFFFFF00Do /reload to save the cleared state.|r", 1, 1, 0)
         
     elseif cmd == "rescan" then
@@ -2550,7 +2559,11 @@ SlashCmdList["QUESTIEDATACOLLECTOR"] = function(msg)
         DebugMessage("|cFFFFFF00[QuestieDataCollector] Starting rescan...|r", 1, 1, 0)
         _activeTracking = {} -- Clear current tracking
         QuestieDataCollector:CheckExistingQuests()
-        DebugMessage("|cFF00FF00[QuestieDataCollector] Re-scanned quest log for missing quests|r", 0, 1, 0)
+        local count = 0
+        for questId, _ in pairs(_activeTracking or {}) do
+            count = count + 1
+        end
+        DebugMessage("|cFF00FF00[QuestieDataCollector] Re-scanned quest log. Now tracking " .. count .. " quests|r", 0, 1, 0)
     elseif cmd == "test" then
         DebugMessage("|cFFFFFF00[QDC Test] Checking if collector is working...|r", 1, 1, 0)
         DEFAULT_CHAT_FRAME:AddMessage("  Initialized: " .. tostring(_initialized), 1, 1, 1)
