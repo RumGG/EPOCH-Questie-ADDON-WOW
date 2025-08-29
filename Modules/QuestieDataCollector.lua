@@ -140,7 +140,7 @@ function QuestieDataCollector:CheckExistingQuests()
                         -- Now process the quest data
                         local needsTracking = false
                         local trackReason = nil
-                        local isEpochQuest = (questID >= 26000 and questID < 27000)
+                        local isEpochQuest = (questID >= 26000 and questID < 30000)
                         
                         if isEpochQuest then
                             if not questData then
@@ -1966,8 +1966,8 @@ function QuestieDataCollector:ShowExportWindow(questId)
         -- Export ALL quests
         local questList = {}
         for qId, _ in pairs(QuestieDataCollection.quests) do
-            -- Only include Epoch quests
-            if qId >= 26000 and qId < 27000 then
+            -- Include all Epoch quests (expanded range for new zones)
+            if qId >= 26000 and qId < 30000 then
                 table.insert(questList, qId)
             end
         end
@@ -1976,7 +1976,7 @@ function QuestieDataCollector:ShowExportWindow(questId)
         table.sort(questList)
         
         if #questList == 0 then
-            DebugMessage("|cFFFF0000[QUESTIE] No Epoch quest data to export!|r", 1, 0, 0)
+            DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[QUESTIE] No Epoch quest data to export!|r", 1, 0, 0)
             return
         end
         
@@ -2345,7 +2345,7 @@ SlashCmdList["QUESTIEDATACOLLECTOR"] = function(msg)
             local title, level, suggestedGroup, isHeader, isCollapsed, isComplete, frequency, questID = QuestieCompat.GetQuestLogTitle(i)
             if not isHeader and questID and questID > 0 then
                 local color = "|cFFFFFFFF"
-                if questID >= 26000 and questID < 27000 then
+                if questID >= 26000 and questID < 30000 then
                     color = "|cFFFF00FF" -- Magenta for Epoch quests
                 end
                 DEFAULT_CHAT_FRAME:AddMessage(string.format("%s  %d: %s (Level %d)|r", color, questID, title or "Unknown", level or 0), 1, 1, 1)
