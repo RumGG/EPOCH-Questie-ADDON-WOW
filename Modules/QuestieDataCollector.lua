@@ -765,11 +765,24 @@ function QuestieDataCollector:OnQuestAccepted(questId)
         return
     end
     DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DC]|r questData = " .. tostring(questData), 0, 1, 0)
+    if questData then
+        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DC]|r questData.name = " .. tostring(questData.name), 0, 1, 0)
+        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DC]|r questData.__isRuntimeStub = " .. tostring(questData.__isRuntimeStub), 0, 1, 0)
+    end
     
     local isEpochQuest = (questId >= 26000 and questId < 30000)  -- Expanded range to include 28xxx quests
+    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DC]|r isEpochQuest = " .. tostring(isEpochQuest), 0, 1, 0)
     
     -- Check for runtime stubs in QuestiePlayer.currentQuestlog
-    local runtimeStub = QuestiePlayer.currentQuestlog and QuestiePlayer.currentQuestlog[questId]
+    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DC]|r Checking QuestiePlayer...", 0, 1, 0)
+    local runtimeStub = nil
+    if QuestiePlayer and QuestiePlayer.currentQuestlog then
+        runtimeStub = QuestiePlayer.currentQuestlog[questId]
+        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DC]|r runtimeStub = " .. tostring(runtimeStub), 0, 1, 0)
+    else
+        DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[DC]|r QuestiePlayer or currentQuestlog is nil!", 1, 0, 0)
+    end
+    
     local hasEpochPrefix = false
     local isMissingFromDB = not questData
     
