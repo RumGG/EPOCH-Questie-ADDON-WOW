@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [1.0.56] - 2025-08-29
+
 ### Fixed
 - **Data Collection - Container Names**: Major fixes to ground object/container tracking (Fixes #32)
   - Fixed container names being lost when they match item names (e.g., "Sun-Ripened Banana") 
