@@ -1222,7 +1222,7 @@ function QuestieDataCollector:SetupObjectTracking()
         if Questie.db.profile.enableDataCollection then
             local name = GameTooltipTextLeft1:GetText()
             if name and not UnitExists("mouseover") then
-                -- This might be a game object
+                -- This might be a game object - capture its name!
                 -- Look for object ID in the tooltip lines
                 local objectId = nil
                 for i = 1, self:NumLines() do
@@ -1237,6 +1237,30 @@ function QuestieDataCollector:SetupObjectTracking()
                     end
                 end
                 
+                -- IMPORTANT: Don't overwrite _lastInteractedObject if we're currently in a loot window
+                -- Check if loot window is open to preserve the container name
+                if _lastInteractedObject and 
+                   (time() - _lastInteractedObject.timestamp) < 2 and
+                   GetNumLootItems and GetNumLootItems() > 0 then
+                    -- We're in the middle of looting, don't overwrite unless it's a better name
+                    if _lastInteractedObject.name ~= "Ground Object" or name == "Ground Object" then
+                        -- We already have a good name, or the new name is no better
+                        if Questie.db.profile.debugDataCollector then
+                            DebugMessage("|cFFFFFF00[DEBUG] Preserving loot source '" .. _lastInteractedObject.name .. 
+                                "', ignoring tooltip: " .. name .. "|r", 1, 1, 0)
+                        end
+                        return
+                    end
+                    -- If we currently have "Ground Object" and tooltip has a better name, use it
+                    if _lastInteractedObject.name == "Ground Object" and name ~= "Ground Object" then
+                        _lastInteractedObject.name = name
+                        if Questie.db.profile.debugDataCollector then
+                            DebugMessage("|cFF00FF00[DEBUG] Updating Ground Object with better name: " .. name .. "|r", 0, 1, 0)
+                        end
+                        return
+                    end
+                end
+                
                 _lastInteractedObject = {
                     name = name,
                     id = objectId,
@@ -1245,6 +1269,9 @@ function QuestieDataCollector:SetupObjectTracking()
                     subzone = GetSubZoneText(),
                     timestamp = time()
                 }
+                -- Always show this for container tracking
+                DEFAULT_CHAT_FRAME:AddMessage("|cFF00FFFF[DEBUG] Captured object from tooltip: '" .. name .. "'" .. 
+                    (objectId and " (ID: " .. objectId .. ")" or "") .. "|r", 0, 1, 1)
                 
                 if objectId then
                     DebugMessage("|cFF8888FF[DATA] Hovering object: " .. name .. " (ID: " .. objectId .. ")|r", 0.5, 0.5, 1)
@@ -1292,18 +1319,61 @@ function QuestieDataCollector:OnLootOpened()
             lootName = GetLootSourceInfo(1)
         end
         
+        -- Method 2: Try to get from loot frame title
+        if not lootName and LootFrame and LootFrame:IsVisible() and LootFrameTitle then
+            local title = LootFrameTitle:GetText()
+            if title and title ~= "" and title ~= "Loot" then
+                lootName = title
+                if Questie.db.profile.debugDataCollector then
+                    DebugMessage("|cFF00FF00[DEBUG] Got container name from loot frame: " .. title .. "|r", 0, 1, 0)
+                end
+            end
+        end
+        
         if lootName then
             lootSourceName = lootName
-        elseif _lastInteractedObject and (time() - _lastInteractedObject.timestamp < 2) then
+        elseif _lastInteractedObject and (time() - _lastInteractedObject.timestamp < 5) then
+            -- Use the last interacted object if it's recent
+            -- This should have the container name from when we moused over it
             lootSourceName = _lastInteractedObject.name
             lootSourceId = _lastInteractedObject.id
+            
+            DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00[DEBUG] Using _lastInteractedObject: '" .. (lootSourceName or "nil") .. 
+                "' (age: " .. (time() - _lastInteractedObject.timestamp) .. "s)|r", 1, 1, 0)
+            
+            -- Don't accept placeholder names
+            if not lootSourceName or lootSourceName == "Ground Object" or lootSourceName == "Unknown Container" then
+                -- Make one more attempt to get a meaningful name
+                DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00[DATA] Container detected but name unknown. |r|cFF00FF00TIP: Mouse over before looting!|r", 1, 1, 0)
+                
+                -- For known quest items, we can make educated guesses
+                local numItems = GetNumLootItems()
+                for i = 1, numItems do
+                    local _, itemName = GetLootSlotInfo(i)
+                    if itemName then
+                        if string.find(itemName, "Banana") then
+                            lootSourceName = "Banana Bunch"  -- Common name for banana containers
+                        elseif string.find(itemName, "Apple") then
+                            lootSourceName = "Apple Tree"
+                        elseif string.find(itemName, "Herb") then
+                            lootSourceName = "Herb Node"
+                        else
+                            -- Generic but better than nothing
+                            lootSourceName = itemName .. " Container"
+                        end
+                        break
+                    end
+                end
+            end
         else
-            -- For ground objects like bananas, we may not have a name
-            -- Mark it as a ground object for later identification
-            lootSourceName = "Ground Object"
+            -- We don't have the container name - provide helpful message
+            DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00[DATA] Container location saved but name unknown.|r", 1, 1, 0) 
+            DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00TIP: For best results, hover your mouse over containers before right-clicking!|r", 0, 1, 0)
+            lootSourceName = "Unidentified Container"
         end
         
         -- Update _lastInteractedObject for UI_INFO_MESSAGE handler
+        -- Store the loot source for container tracking
         _lastInteractedObject = {
             name = lootSourceName,
             id = lootSourceId,
@@ -1312,6 +1382,9 @@ function QuestieDataCollector:OnLootOpened()
             subzone = subzone,
             timestamp = time()
         }
+        if Questie.db.profile.debugDataCollector then
+            DebugMessage("|cFFFF00FF[DEBUG] Setting _lastInteractedObject from LOOT_OPENED: " .. lootSourceName .. "|r", 1, 0, 1)
+        end
         
         if coords and coords.x and coords.y then
             DebugMessage("|cFF8888FF[DATA] Looting object: " .. lootSourceName .. 
@@ -1487,15 +1560,32 @@ function QuestieDataCollector:OnUIInfoMessage(message)
     -- Check if we're currently looting something (for ground objects)
     local objectData = nil
     if _lastInteractedObject and (time() - _lastInteractedObject.timestamp < 3) then
-        -- Don't use the item name as container name
-        if _lastInteractedObject.name ~= itemName then
-            objectData = {
-                name = _lastInteractedObject.name,
-                id = _lastInteractedObject.id,
-                coords = coords,
-                zone = zone,
-                subzone = subzone
-            }
+        -- Debug: Show what we're comparing
+        if Questie.db.profile.debugDataCollector then
+            DebugMessage("|cFFFFFF00[DEBUG] Checking container: _lastInteractedObject.name='" .. 
+                (_lastInteractedObject.name or "nil") .. "' vs itemName='" .. itemName .. "'|r", 1, 1, 0)
+        end
+        
+        -- Use the container name even if it matches the item name
+        -- (Some containers like bananas are named the same as their contents!)
+        objectData = {
+            name = _lastInteractedObject.name,
+            id = _lastInteractedObject.id,
+            coords = coords,
+            zone = zone,
+            subzone = subzone
+        }
+        if Questie.db.profile.debugDataCollector then
+            DebugMessage("|cFF00FF00[DEBUG] Container data prepared: " .. objectData.name .. "|r", 0, 1, 0)
+        end
+    else
+        if Questie.db.profile.debugDataCollector then
+            if not _lastInteractedObject then
+                DebugMessage("|cFFFF0000[DEBUG] No _lastInteractedObject|r", 1, 0, 0)
+            else
+                DebugMessage("|cFFFF0000[DEBUG] _lastInteractedObject too old: " .. 
+                    (time() - _lastInteractedObject.timestamp) .. " seconds|r", 1, 0, 0)
+            end
         end
     end
     
@@ -1527,8 +1617,13 @@ function QuestieDataCollector:OnUIInfoMessage(message)
                         end
                         if not found then
                             table.insert(objective.containers, objectData)
-                            DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DATA] Container captured: " .. objectData.name .. 
-                                " at [" .. coords.x .. ", " .. coords.y .. "]|r", 0, 1, 0)
+                            if objectData.name ~= "Unknown Container" then
+                                DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DATA] Container captured: '" .. objectData.name .. 
+                                    "' at [" .. coords.x .. ", " .. coords.y .. "]|r", 0, 1, 0)
+                            else
+                                DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[DATA] Container location captured but name unknown at [" .. 
+                                    coords.x .. ", " .. coords.y .. "]. Mouse over objects before looting!|r", 1, 0, 0)
+                            end
                         end
                     end
                     
@@ -2245,6 +2340,18 @@ function QuestieDataCollector:GenerateExportText(questId, data, skipInstructions
                 end
             end
             
+            -- Show containers/objects for collection objectives
+            if obj.containers and #obj.containers > 0 then
+                text = text .. "     |cFF00FF00Containers/Objects:|r\n"
+                for _, cont in ipairs(obj.containers) do
+                    text = text .. "       - " .. cont.name
+                    if cont.id then
+                        text = text .. " (ID: " .. cont.id .. ")"
+                    end
+                    text = text .. " at [" .. cont.coords.x .. ", " .. cont.coords.y .. "] in " .. cont.zone .. "\n"
+                end
+            end
+            
             -- Show progress locations
             if obj.progressLocations and #obj.progressLocations > 0 then
                 text = text .. "     Progress locations:\n"
@@ -2302,6 +2409,38 @@ function QuestieDataCollector:GenerateExportText(questId, data, skipInstructions
             end
             text = text .. "\n"
         end
+    end
+    
+    -- Show objects/containers at quest level (legacy format)
+    if data.objects and next(data.objects) then
+        text = text .. "GROUND OBJECTS/CONTAINERS:\n"
+        for objName, objData in pairs(data.objects) do
+            text = text .. "  " .. objName
+            if objData.id then
+                text = text .. " (ID: " .. objData.id .. ")"
+            end
+            
+            -- Handle both old format (coords) and new format (locations table)
+            if objData.coords then
+                text = text .. " at [" .. objData.coords.x .. ", " .. objData.coords.y .. "]"
+                if objData.zone then
+                    text = text .. " in " .. objData.zone
+                end
+            elseif objData.locations then
+                -- New format with multiple locations
+                local first = true
+                for locKey, locData in pairs(objData.locations) do
+                    if first then
+                        text = text .. " at [" .. locData.coords.x .. ", " .. locData.coords.y .. "] in " .. (locData.zone or "Unknown")
+                        first = false
+                    else
+                        text = text .. "\n       Additional location: [" .. locData.coords.x .. ", " .. locData.coords.y .. "] in " .. (locData.zone or "Unknown")
+                    end
+                end
+            end
+            text = text .. "\n"
+        end
+        text = text .. "\n"
     end
     
     if data.turnInNpc then
@@ -2605,6 +2744,93 @@ SlashCmdList["QUESTIEDATACOLLECTOR"] = function(msg)
             count = count + 1
         end
         DebugMessage("|cFF00FF00[QuestieDataCollector] Re-scanned quest log. Now tracking " .. count .. " quests|r", 0, 1, 0)
+    elseif cmd == "save" then
+        -- Force save data to SavedVariables
+        DebugMessage("|cFFFFFF00[DATA COLLECTOR] Forcing save of quest data...|r", 1, 1, 0)
+        
+        -- Ensure the global is accessible
+        if not _G.QuestieDataCollection then
+            _G.QuestieDataCollection = {}
+        end
+        if not _G.QuestieDataCollection.quests then
+            _G.QuestieDataCollection.quests = {}
+        end
+        
+        -- Count quests
+        local count = 0
+        for questId, questData in pairs(QuestieDataCollection.quests or {}) do
+            count = count + 1
+            -- Force write to global
+            _G.QuestieDataCollection.quests[questId] = questData
+        end
+        
+        DebugMessage("|cFF00FF00[DATA COLLECTOR] Saved " .. count .. " quests to SavedVariables|r", 0, 1, 0)
+        DebugMessage("|cFFFFFF00Use /reload to persist to disk|r", 1, 1, 0)
+        
+    elseif cmd == "check" and args then
+        -- Check specific quest data (e.g., /qdc check 28757 for banana quest)
+        local questId = tonumber(args)
+        if questId then
+            local data = QuestieDataCollection.quests[questId]
+            if data then
+                DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DATA] Quest " .. questId .. " data found:|r", 0, 1, 0)
+                DEFAULT_CHAT_FRAME:AddMessage("  Name: " .. (data.name or "Unknown"), 1, 1, 1)
+                DEFAULT_CHAT_FRAME:AddMessage("  Level: " .. (data.level or "?"), 1, 1, 1)
+                
+                -- Check objectives
+                if data.objectives and #data.objectives > 0 then
+                    DEFAULT_CHAT_FRAME:AddMessage("  Objectives:", 1, 1, 1)
+                    for i, obj in ipairs(data.objectives) do
+                        DEFAULT_CHAT_FRAME:AddMessage("    " .. i .. ": " .. (obj.text or "Unknown"), 0.8, 0.8, 0.8)
+                        if obj.containers and #obj.containers > 0 then
+                            DEFAULT_CHAT_FRAME:AddMessage("      |cFF00FF00Containers: " .. #obj.containers .. " found|r", 0, 1, 0)
+                            for _, cont in ipairs(obj.containers) do
+                                DEFAULT_CHAT_FRAME:AddMessage(string.format("        %s at [%.1f, %.1f]", 
+                                    cont.name, cont.coords.x, cont.coords.y), 0.6, 0.6, 1)
+                            end
+                        else
+                            DEFAULT_CHAT_FRAME:AddMessage("      |cFFFF0000No containers captured yet|r", 1, 0, 0)
+                        end
+                    end
+                else
+                    DEFAULT_CHAT_FRAME:AddMessage("  |cFFFF0000Objectives: None captured yet|r", 1, 0.5, 0)
+                end
+                
+                -- Check NPCs
+                if data.npcs then
+                    local npcCount = 0
+                    for _ in pairs(data.npcs) do npcCount = npcCount + 1 end
+                    DEFAULT_CHAT_FRAME:AddMessage("  NPCs: " .. npcCount .. " tracked", 1, 1, 1)
+                end
+                
+                -- Check objects/containers at quest level
+                if data.objects then
+                    local objCount = 0
+                    for objName, objData in pairs(data.objects) do 
+                        objCount = objCount + 1
+                        DEFAULT_CHAT_FRAME:AddMessage("  Object: " .. objName, 0.6, 0.6, 1)
+                    end
+                    if objCount > 0 then
+                        DEFAULT_CHAT_FRAME:AddMessage("  |cFF00FF00Objects: " .. objCount .. " tracked|r", 0, 1, 0)
+                    end
+                end
+                
+                DEFAULT_CHAT_FRAME:AddMessage("  |cFFFFFF00Tracked: " .. (_activeTracking[questId] and "YES" or "NO") .. "|r", 1, 1, 0)
+                
+                -- Show if quest was already accepted
+                if data.wasAlreadyAccepted then
+                    DEFAULT_CHAT_FRAME:AddMessage("  |cFFFF0000WARNING: Quest was already in log when tracking started|r", 1, 0, 0)
+                    DEFAULT_CHAT_FRAME:AddMessage("  |cFFFF0000Missing quest giver data. Abandon and re-accept for complete data.|r", 1, 0, 0)
+                end
+            else
+                DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[DATA] Quest " .. questId .. " not found in data collection|r", 1, 0, 0)
+                DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00Is data collection enabled? Try: /qdc enable|r", 1, 1, 0)
+            end
+        else
+            DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000Usage: /qdc check <questId>|r", 1, 0, 0)
+            DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00Example: /qdc check 28757 (for banana quest)|r", 1, 1, 0)
+        end
+        
     elseif cmd == "test" then
         DebugMessage("|cFFFFFF00[QDC Test] Checking if collector is working...|r", 1, 1, 0)
         DEFAULT_CHAT_FRAME:AddMessage("  Initialized: " .. tostring(_initialized), 1, 1, 1)

@@ -20,6 +20,11 @@
   - Now detects quest progress from system messages (e.g., "Bananas looted: 1/10")
   - Captures container/object data when quest progress is detected
   - Links ground objects to quest objectives for proper map placement
+  - Fixed container names being lost when they match item names (e.g., "Sun-Ripened Banana")
+  - Fixed export not including container data for ground object quests
+  - Container names now properly captured from GameTooltip during interaction
+  - Added `/qdc check <questId>` command to inspect specific quest data
+  - Added `/qdc save` command to force save data to SavedVariables
 
 ### Added
 - **Quest Data**: Added new troll starting zone quests
@@ -27,6 +32,13 @@
   - Quest 28723 "Thievin' Crabs" level 2 quest
   - Quest 28757 "Banana Bonanza" with ground object collection
   - NPC 46834 "Joz'jarz" in Durotar
+- **Quest Data**: Added multiple new Epoch quests from GitHub submissions
+  - Quest 26277 "Shaman of the Flame" in Azshara (kill 12 Flamescale Naga)
+  - Quest 27484 "Purifying the Essence" in The Barrens (defeat Undead Champion)
+  - Quest 27400 "Mirkfallon Bracers" in Stonetalon Mountains (partial data)
+  - Quest placeholders for 26285, 26884, 26906, 27499 (incomplete submissions)
+  - Added NPCs: Lord Aithalis (45143), Kolkar Waylayer (3610), Tammra Windfield (11864), Undead Champion (62026)
+  - Added item: Tainted Essence (63509)
 - **Ready Message**: Added "Questie Ready!" message after full initialization
   - Shows when quest tracking and map icons are fully active
   - Appears after all initialization stages complete

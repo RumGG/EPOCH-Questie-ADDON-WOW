@@ -792,6 +792,10 @@ local epochNpcData = {
 [45607] = {"Torthrak",2200,2475,55,55,0,{[4]={{73.6,34.6}}},nil,4,{26627},{26627},85,"H",nil,0},
 [45631] = {"Liam the Dockmaster",2000,2250,50,50,0,{[4]={{73,48.2}}},nil,4,{26603},{26603,26622},85,"H",nil,0},
 [46834] = {"Joz'jarz",nil,nil,2,2,0,{[85]={{70.1,42.0}}},nil,85,{28722,28723},{28722},nil,nil,nil,0},
+[3610] = {"Kolkar Waylayer",nil,nil,60,60,0,{[17]={{55.9,59.2}}},nil,17,{27484},{27484},35,"AH",nil,0},
+[11864] = {"Tammra Windfield",nil,nil,60,60,0,{[405]={{66.9,35.1}}},nil,405,nil,{27400},11,"A",nil,0},
+[45143] = {"Lord Aithalis",nil,nil,51,51,0,{[16]={{44.3,10.4}}},nil,16,{26277},{26277},35,"AH",nil,0},
+[62026] = {"Undead Champion",nil,nil,60,60,0,{[17]={{55,59}}},nil,17,nil,nil,nil,nil,nil,0},
 }
 
 -- Stage the Epoch npcData for later merge during compilation

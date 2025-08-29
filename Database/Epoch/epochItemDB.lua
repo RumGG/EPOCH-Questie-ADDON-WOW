@@ -317,6 +317,7 @@ local epochItemData = {
 [62385] = {"Elaborate Timepiece",{6008},nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,{26611}},
 [62386] = {"Magic Drum",{6009},nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,{26611}},
 [62387] = {"Twisted Staff",{6010},nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,{26611}},
+[63509] = {"Tainted Essence",{62026},nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,{27484}},
 }
 
 -- Stage the Epoch itemData for later merge during compilation
