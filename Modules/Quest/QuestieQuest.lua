@@ -669,6 +669,13 @@ local hordeTournamentMarkerQuests = {[13691] = true, [13693] = true, [13694] = t
 
 ---@param questId number
 function QuestieQuest:AcceptQuest(questId)
+    -- ALWAYS clear auto-untracked status when accepting ANY quest
+    -- This must happen for both database quests AND runtime stubs
+    if Questie.db.char.AutoUntrackedQuests and Questie.db.char.AutoUntrackedQuests[questId] then
+        Questie.db.char.AutoUntrackedQuests[questId] = nil
+        Questie:Debug(Questie.DEBUG_INFO, "[QuestieQuest:AcceptQuest] Removed quest from AutoUntrackedQuests:", questId)
+    end
+    
     local quest = QuestieDB.GetQuest(questId)
 
     if quest then
@@ -695,13 +702,6 @@ function QuestieQuest:AcceptQuest(questId)
             Questie:Debug(Questie.DEBUG_INFO, "[QuestieQuest] Accepted Quest:", questId)
 
             QuestiePlayer.currentQuestlog[questId] = quest
-            
-            -- Clear auto-untracked status IMMEDIATELY when accepting a quest
-            -- This needs to happen before tracker update, not in TaskQueue
-            if Questie.db.char.AutoUntrackedQuests and Questie.db.char.AutoUntrackedQuests[questId] then
-                Questie.db.char.AutoUntrackedQuests[questId] = nil
-                Questie:Debug(Questie.DEBUG_INFO, "[QuestieQuest] Removed quest from AutoUntrackedQuests:", questId)
-            end
             
             -- Re-accepted quest can be collapsed. Expand it immediately.
             if Questie.db.char.collapsedQuests and Questie.db.char.collapsedQuests[questId] then

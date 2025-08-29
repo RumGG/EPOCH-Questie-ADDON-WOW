@@ -903,15 +903,19 @@ function QuestieTracker:Update()
         if Questie.db.profile.autoTrackQuests then
             local trackedCount = 0
             local untrackedCount = 0
+            local untrackedList = {}
             for _, qId in pairs(sortedQuestIds) do
                 if Questie.db.char.AutoUntrackedQuests and Questie.db.char.AutoUntrackedQuests[qId] then
                     untrackedCount = untrackedCount + 1
-                    Questie:Debug(Questie.DEBUG_INFO, "[Tracker] Quest", qId, "is in AutoUntrackedQuests")
+                    table.insert(untrackedList, qId)
                 else
                     trackedCount = trackedCount + 1
                 end
             end
-            Questie:Debug(Questie.DEBUG_INFO, "[Tracker] Auto-track mode: Tracked=", trackedCount, "Untracked=", untrackedCount)
+            if untrackedCount > 0 then
+                Questie:Debug(Questie.DEBUG_INFO, "[Tracker Update] Total quests:", #sortedQuestIds, "Tracked:", trackedCount, "Untracked:", untrackedCount)
+                Questie:Debug(Questie.DEBUG_INFO, "[Tracker Update] Untracked quest IDs:", unpack(untrackedList))
+            end
         end
         
         for _, questId in pairs(sortedQuestIds) do
@@ -922,10 +926,16 @@ function QuestieTracker:Update()
             local zoneName = questDetails[questId].zoneName
             local remainingSeconds = TrackerQuestTimers:GetRemainingTime(quest, nil, true)
             local timedQuest = (quest.trackTimedQuest or quest.timedBlizzardQuest)
-
-            if (complete ~= 1 or Questie.db.profile.trackerShowCompleteQuests or timedQuest)
+            
+            local shouldShow = (complete ~= 1 or Questie.db.profile.trackerShowCompleteQuests or timedQuest)
                 and ((Questie.db.profile.autoTrackQuests and not Questie.db.char.AutoUntrackedQuests[questId])
-                or (not Questie.db.profile.autoTrackQuests and Questie.db.char.TrackedQuests[questId])) then
+                or (not Questie.db.profile.autoTrackQuests and Questie.db.char.TrackedQuests[questId]))
+            
+            if not shouldShow and Questie.db.profile.autoTrackQuests then
+                Questie:Debug(Questie.DEBUG_INFO, "[Tracker] Quest", questId, quest.name or "Unknown", "filtered out. Complete=", complete, "InAutoUntracked=", Questie.db.char.AutoUntrackedQuests[questId] or false)
+            end
+
+            if shouldShow then
                 -- Add Quest Zones
                 if zoneCheck ~= zoneName then
                     firstQuestInZone = true
@@ -2474,17 +2484,22 @@ function QuestieTracker:AQW_Insert(index, expire)
                 Questie.db.char.TrackedQuests[questId] = true
             end
         else
-            -- Determine if quest is currently tracked
-            local isCurrentlyTracked = true -- Default to tracked in auto-track mode
-            if Questie.db.char.AutoUntrackedQuests and Questie.db.char.AutoUntrackedQuests[questId] then
-                isCurrentlyTracked = false
+            -- Auto-track mode
+            -- For newly accepted quests, ensure they're tracked
+            -- This function is called both when accepting quests AND when manually clicking tracker checkbox
+            
+            -- Check if this is a manual tracking toggle (quest log is open and not shift-clicking)
+            local isManualToggle = QuestLogFrame and QuestLogFrame:IsShown() and not IsShiftKeyDown()
+            
+            if not Questie.db.char.AutoUntrackedQuests then
+                Questie.db.char.AutoUntrackedQuests = {}
             end
+            
+            -- Determine if quest is currently tracked
+            local isCurrentlyTracked = not Questie.db.char.AutoUntrackedQuests[questId]
             
             if IsShiftKeyDown() and QuestLogFrame:IsShown() then
                 -- Shift-click always untracks (if allowed)
-                if not Questie.db.char.AutoUntrackedQuests then
-                    Questie.db.char.AutoUntrackedQuests = {}
-                end
                 -- Don't auto-untrack runtime stub quests or new Epoch quests
                 local quest = QuestieDB.GetQuest(questId)
                 local isEpochQuest = questId >= 26000
@@ -2496,25 +2511,28 @@ function QuestieTracker:AQW_Insert(index, expire)
                     Questie.db.char.AutoUntrackedQuests[questId] = true
                 end
                 -- If quest is nil AND is an Epoch quest, don't untrack it
-            elseif not isCurrentlyTracked then
-                -- Regular click on untracked quest - track it
-                Questie.db.char.AutoUntrackedQuests[questId] = nil
+            elseif isManualToggle then
+                -- Manual toggle from quest log checkbox
+                if isCurrentlyTracked then
+                    -- Currently tracked, untrack it (unless it's an Epoch quest)
+                    local isEpochQuest = questId >= 26000
+                    if not isEpochQuest then
+                        Questie.db.char.AutoUntrackedQuests[questId] = true
+                        Questie:Debug(Questie.DEBUG_INFO, "[AQW_Insert] Manual untrack:", questId)
+                    end
+                else
+                    -- Currently untracked, track it
+                    Questie.db.char.AutoUntrackedQuests[questId] = nil
+                    Questie:Debug(Questie.DEBUG_INFO, "[AQW_Insert] Manual track:", questId)
+                end
             else
-                -- Regular click on tracked quest - untrack it
-                if not Questie.db.char.AutoUntrackedQuests then
-                    Questie.db.char.AutoUntrackedQuests = {}
+                -- Quest acceptance or other automatic tracking
+                -- In auto-track mode, new quests should be tracked by default
+                -- Remove from untracked list if it's there
+                if Questie.db.char.AutoUntrackedQuests[questId] then
+                    Questie.db.char.AutoUntrackedQuests[questId] = nil
+                    Questie:Debug(Questie.DEBUG_INFO, "[AQW_Insert] Auto-tracking newly accepted quest:", questId)
                 end
-                -- Don't auto-untrack runtime stub quests or new Epoch quests
-                local quest = QuestieDB.GetQuest(questId)
-                local isEpochQuest = questId >= 26000
-                if quest and not quest.isRuntimeStub then
-                    -- Quest exists and is not a runtime stub, can untrack
-                    Questie.db.char.AutoUntrackedQuests[questId] = true
-                elseif not quest and not isEpochQuest then
-                    -- Quest doesn't exist and is not an Epoch quest, can untrack
-                    Questie.db.char.AutoUntrackedQuests[questId] = true
-                end
-                -- If quest is nil AND is an Epoch quest, don't untrack it
             end
         end
 

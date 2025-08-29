@@ -363,6 +363,13 @@ function _QuestEventHandler:QuestAccepted(questLogIndex, questId)
             
             QuestiePlayer.currentQuestlog = QuestiePlayer.currentQuestlog or {}
             QuestiePlayer.currentQuestlog[questId] = immediateStub
+            
+            -- Clear from AutoUntrackedQuests when creating stub
+            if Questie.db.char.AutoUntrackedQuests and Questie.db.char.AutoUntrackedQuests[questId] then
+                Questie.db.char.AutoUntrackedQuests[questId] = nil
+                Questie:Debug(Questie.DEBUG_INFO, "[QuestAccepted] Removed runtime stub quest from AutoUntrackedQuests:", questId)
+            end
+            
             if Questie.db.profile.debugEnabled then
                 Questie:Debug(Questie.DEBUG_DEVELOP, "[QuestAccepted] Immediate runtime stub created with zone:", currentZoneName or "Unknown Zone")
             end
