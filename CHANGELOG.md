@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## [1.0.54] - 2025-08-29
 
 ### Fixed
 - **World Map Tooltips**: Fixed tooltips not showing on vanilla fullscreen world map (merged PR #25 from @virtiz)
@@ -10,8 +10,14 @@
   - Now silently skips missing data or logs at debug level only
   - Prevents spam for missing object ID 6445625 and similar
 
+### Added
+- **Release Automation**: GitHub Actions workflow for automated releases
+- **Documentation**: Added CHANGELOG.md and RELEASE_PROCESS.md
+- **Map Scaling Fix**: Improved coordinate calculation for different map modes
+
 ### Changed
 - Improved error handling for missing quest objective data
+- Updated .gitignore to properly track important documentation files
 
 ## [1.0.4] - 2025-08-27
 
