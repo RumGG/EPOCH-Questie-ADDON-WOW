@@ -6,12 +6,19 @@
 - **Data Collection**: Fixed missing quest detection for runtime stubbed quests
   - Now properly detects quests created as runtime stubs (e.g., new troll starting zone quests)
   - Expanded Epoch quest ID range from 26000-26999 to 26000-29999 to include quest 28722 and similar
-  - Fixed detection of [Epoch] prefix in runtime stubs stored in QuestiePlayer.currentQuestlog
-  - Added debug logging to help diagnose data collection issues
-- **Data Collection Spam**: Fixed [DATA] messages being shown to all users
+  - Fixed detection of [Epoch] prefix in questData.name for placeholder quests
+  - Now correctly identifies and tracks quest 28722 "The Darkspear Tribe" and similar new quests
+- **Data Collection Spam**: Fixed [DATA] messages being shown to all users (Issue #27)
   - All [DATA] tracking messages now only show when debug mode is enabled
   - Important alerts (missing quest detection, completion notices) still show to users
   - Added helper function to properly handle debug-only messages
+  - Removed excessive initialization and event logging
+
+### Changed
+- **Data Export**: All quest data can now be exported, even incomplete quests
+  - Partial data is valuable - shows quest givers, objectives, NPCs even without turn-in
+  - Export window now shows [COMPLETE] or [INCOMPLETE] status for each quest
+  - Export format clearly indicates if quest data is incomplete
 
 ## [1.0.54] - 2025-08-29
 

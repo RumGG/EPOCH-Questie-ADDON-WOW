@@ -35,15 +35,11 @@ end
 function QuestieDataCollector:Initialize()
     -- Prevent double initialization
     if _initialized then
-        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DataCollector]|r Already initialized", 0, 1, 0)
         return
     end
     
-    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DataCollector]|r Initializing...", 0, 1, 0)
-    
     -- Only initialize if explicitly enabled
     if not Questie or not Questie.db or not Questie.db.profile.enableDataCollection then
-        DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[DataCollector]|r Not enabled, skipping initialization", 1, 0, 0)
         return
     end
     
@@ -200,18 +196,14 @@ end
 function QuestieDataCollector:RegisterEvents()
     -- Only create event frame if it doesn't exist
     if QuestieDataCollector.eventFrame then
-        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DataCollector]|r Event frame already exists", 0, 1, 0)
         return -- Already registered
     end
-    
-    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DataCollector]|r Creating event frame and registering events...", 0, 1, 0)
     
     local eventFrame = CreateFrame("Frame")
     QuestieDataCollector.eventFrame = eventFrame
     
     -- Register all needed events
     eventFrame:RegisterEvent("QUEST_ACCEPTED")
-    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DataCollector]|r QUEST_ACCEPTED event registered!", 0, 1, 0)
     eventFrame:RegisterEvent("QUEST_TURNED_IN")
     eventFrame:RegisterEvent("QUEST_COMPLETE")
     eventFrame:RegisterEvent("QUEST_LOG_UPDATE")
@@ -401,25 +393,12 @@ function QuestieDataCollector:CaptureTooltipNPCData(npcId, name)
 end
 
 function QuestieDataCollector:HandleEvent(event, ...)
-    -- Debug: Log ALL events to see if we're getting them
     if event == "QUEST_ACCEPTED" then
-        DEFAULT_CHAT_FRAME:AddMessage("|cFFFF00FF[DataCollector]|r QUEST_ACCEPTED event fired!", 1, 0, 1)
-        
         local questLogIndex, questId = ...
-        DEFAULT_CHAT_FRAME:AddMessage("|cFFFF00FF[DataCollector]|r questLogIndex=" .. tostring(questLogIndex) .. ", questId=" .. tostring(questId), 1, 0, 1)
-        
         -- In 3.3.5a, second param might be questId or nil
         if not questId or questId == 0 then
             questId = QuestieDataCollector:GetQuestIdFromLogIndex(questLogIndex)
-            DEFAULT_CHAT_FRAME:AddMessage("|cFFFF00FF[DataCollector]|r Got questId from log: " .. tostring(questId), 1, 0, 1)
         end
-        
-        -- Check if data collection is enabled BEFORE calling OnQuestAccepted
-        if not Questie.db.profile.enableDataCollection then
-            DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[DataCollector]|r Data collection is DISABLED! Use /qdc enable", 1, 0, 0)
-            return
-        end
-        
         QuestieDataCollector:OnQuestAccepted(questId)
         
     elseif event == "QUEST_TURNED_IN" then
@@ -706,11 +685,7 @@ function QuestieDataCollector:GetPlayerCoords()
 end
 
 function QuestieDataCollector:OnQuestAccepted(questId)
-    DEFAULT_CHAT_FRAME:AddMessage("|cFFFF00FF[DC]|r OnQuestAccepted START - questId type: " .. type(questId) .. ", value: " .. tostring(questId), 1, 0, 1)
-    if not questId then 
-        DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[DC]|r questId is nil, returning", 1, 0, 0)
-        return 
-    end
+    if not questId then return end
     
     -- Ensure questId is a number (sometimes it comes as a table)
     if type(questId) == "table" then
@@ -742,53 +717,31 @@ function QuestieDataCollector:OnQuestAccepted(questId)
     end
     
     -- Double-check that data collection is enabled
-    DEFAULT_CHAT_FRAME:AddMessage("|cFFFF00FF[DC]|r Checking enableDataCollection: " .. tostring(Questie.db.profile.enableDataCollection), 1, 0, 1)
     if not Questie.db.profile.enableDataCollection then
-        DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00[DC]|r Data collection is disabled, skipping quest " .. tostring(questId), 1, 1, 0)
         return
     end
-    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DC]|r Data collection is enabled, continuing...", 0, 1, 0)
     
     -- Ensure we're initialized
-    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DC]|r Checking initialization...", 0, 1, 0)
     if not QuestieDataCollection or not QuestieDataCollection.quests then
-        DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00[DC]|r Initializing QuestieDataCollection...", 1, 1, 0)
         QuestieDataCollector:Initialize()
     end
-    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DC]|r Initialization check complete", 0, 1, 0)
     
     -- Check for ALL custom/Epoch quests, not just 26000-26999 range
-    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DC]|r Getting quest data from DB...", 0, 1, 0)
-    local success, questData = pcall(function() return QuestieDB.GetQuest(questId) end)
-    if not success then
-        DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[DC]|r ERROR calling QuestieDB.GetQuest: " .. tostring(questData), 1, 0, 0)
-        return
-    end
-    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DC]|r questData = " .. tostring(questData), 0, 1, 0)
-    if questData then
-        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DC]|r questData.name = " .. tostring(questData.name), 0, 1, 0)
-        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DC]|r questData.__isRuntimeStub = " .. tostring(questData.__isRuntimeStub), 0, 1, 0)
-    end
+    local questData = QuestieDB.GetQuest(questId)  -- Use dot notation, not colon
     
     local isEpochQuest = (questId >= 26000 and questId < 30000)  -- Expanded range to include 28xxx quests
-    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DC]|r isEpochQuest = " .. tostring(isEpochQuest), 0, 1, 0)
     
     -- Check for runtime stubs in QuestiePlayer.currentQuestlog
-    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DC]|r Checking QuestiePlayer...", 0, 1, 0)
-    local runtimeStub = nil
-    if QuestiePlayer and QuestiePlayer.currentQuestlog then
-        runtimeStub = QuestiePlayer.currentQuestlog[questId]
-        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DC]|r runtimeStub = " .. tostring(runtimeStub), 0, 1, 0)
-    else
-        DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[DC]|r QuestiePlayer or currentQuestlog is nil!", 1, 0, 0)
-    end
+    local runtimeStub = QuestiePlayer and QuestiePlayer.currentQuestlog and QuestiePlayer.currentQuestlog[questId]
     
     local hasEpochPrefix = false
     local isMissingFromDB = not questData
     
-    -- Debug logging - ALWAYS show this
-    DEFAULT_CHAT_FRAME:AddMessage(string.format("|cFF00FFFF[DC Debug]|r Quest %d: isEpochQuest=%s, isMissingFromDB=%s, hasRuntimeStub=%s", 
-        questId, tostring(isEpochQuest), tostring(isMissingFromDB), tostring(runtimeStub ~= nil)), 0, 1, 1)
+    -- Debug logging
+    if Questie.db.profile.debugDataCollector then
+        DEFAULT_CHAT_FRAME:AddMessage(string.format("|cFF00FFFF[DataCollector Debug]|r Quest %d: isEpochQuest=%s, isMissingFromDB=%s, hasRuntimeStub=%s", 
+            questId, tostring(isEpochQuest), tostring(isMissingFromDB), tostring(runtimeStub ~= nil)), 0, 1, 1)
+    end
     
     -- Check both database quest and runtime stub for [Epoch] prefix
     if questData and questData.name and string.find(questData.name, "%[Epoch%]") then
@@ -848,11 +801,7 @@ function QuestieDataCollector:OnQuestAccepted(questId)
     
     -- Track if it's an Epoch quest (by ID range) OR any quest that's missing from the database
     -- This will catch ALL custom quests including new starting zones
-    DEFAULT_CHAT_FRAME:AddMessage(string.format("|cFFFF00FF[DC]|r FINAL CHECK - Quest %d: isEpochQuest=%s, isMissingFromDB=%s, hasEpochPrefix=%s, hasIncompleteData=%s", 
-        questId, tostring(isEpochQuest), tostring(isMissingFromDB), tostring(hasEpochPrefix), tostring(hasIncompleteData)), 1, 0, 1)
-    
     if (isEpochQuest or isMissingFromDB or hasEpochPrefix) and (isMissingFromDB or hasEpochPrefix or hasIncompleteData) then
-        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DC]|r CONDITIONS MET - SHOWING ALERT!", 0, 1, 0)
         -- ALERT! Missing quest detected!
         local questTitle = QuestieCompat.GetQuestLogTitle(QuestieDataCollector:GetQuestLogIndexById(questId))
         
@@ -916,11 +865,7 @@ function QuestieDataCollector:OnQuestAccepted(questId)
         DEFAULT_CHAT_FRAME:AddMessage("===========================================", 0, 1, 1)
         
         _activeTracking[questId] = true
-        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DC]|r Quest " .. questId .. " is now being tracked!", 0, 1, 0)
-    else
-        DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[DC]|r Quest " .. questId .. " did NOT meet conditions for tracking", 1, 0, 0)
     end
-    DEFAULT_CHAT_FRAME:AddMessage("|cFFFF00FF[DC]|r OnQuestAccepted END", 1, 0, 1)
 end
 
 function QuestieDataCollector:GetQuestLogIndexById(questId)
@@ -1721,9 +1666,13 @@ function QuestieDataCollector:ShowExportableQuests()
     
     -- Separate active and completed quests
     for questId, data in pairs(QuestieDataCollection.quests or {}) do
-        if _activeTracking and _activeTracking[questId] then
-            table.insert(activeQuests, {id = questId, data = data})
+        -- All quests are valuable, even incomplete ones!
+        -- Just mark them differently based on completion status
+        if data.turnInNpc then
+            -- Has turn-in data, so it's fully complete
+            table.insert(completedQuests, {id = questId, data = data})
         else
+            -- Partial data is still useful - may have quest giver, objectives, NPCs, etc.
             table.insert(completedQuests, {id = questId, data = data})
         end
     end
@@ -1738,17 +1687,18 @@ function QuestieDataCollector:ShowExportableQuests()
     DebugMessage("|cFF00FF00[QUESTIE] Captured Quest Data:|r", 0, 1, 0)
     DEFAULT_CHAT_FRAME:AddMessage("===========================================", 0, 1, 1)
     
-    -- Show completed quests first (ready for export)
+    -- Show all quests (all data is valuable!)
     if #completedQuests > 0 then
-        DebugMessage("|cFF00FF00COMPLETED QUESTS (Ready for Export):|r", 0, 1, 0)
+        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00QUESTS WITH DATA (All Can Be Exported):|r", 0, 1, 0)
         table.sort(completedQuests, function(a, b) return a.id < b.id end)
         
         for _, quest in ipairs(completedQuests) do
             local questName = quest.data.name or "Unknown Quest"
             local questId = quest.id
             
-            -- Show quest with clickable export link
-            DEFAULT_CHAT_FRAME:AddMessage(string.format("|cFFFFFF00%d: %s - |r" .. CreateQuestDataLink(questId, "[Export]"), questId, questName), 1, 1, 0)
+            -- Show quest with clickable export link and completion status
+            local status = quest.data.turnInNpc and "|cFF00FF00[COMPLETE]|r" or "|cFFFFAA00[INCOMPLETE]|r"
+            DEFAULT_CHAT_FRAME:AddMessage(string.format("|cFFFFFF00%d: %s %s - |r" .. CreateQuestDataLink(questId, "[Export]"), questId, questName, status), 1, 1, 0)
             
             -- Show data summary inline
             local hasGiver = quest.data.questGiver and "Giver" or ""
@@ -2090,6 +2040,10 @@ function QuestieDataCollector:GenerateExportText(questId, data, skipInstructions
         text = text .. "This quest was already in the quest log when the addon was installed.\n"
         text = text .. "Quest giver NPC information is missing.\n"
         text = text .. "Please abandon and re-accept this quest for complete data.\n\n"
+    elseif not data.turnInNpc then
+        text = text .. "📝 NOTE: QUEST NOT YET COMPLETED 📝\n"
+        text = text .. "Turn-in NPC data is missing (quest still in progress).\n"
+        text = text .. "This partial data is still valuable and can be submitted!\n\n"
     end
     
     text = text .. "Quest ID: " .. questId .. "\n"
