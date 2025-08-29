@@ -796,6 +796,27 @@ local epochNpcData = {
 [11864] = {"Tammra Windfield",nil,nil,60,60,0,{[405]={{66.9,35.1}}},nil,405,nil,{27400},11,"A",nil,0},
 [45143] = {"Lord Aithalis",nil,nil,51,51,0,{[16]={{44.3,10.4}}},nil,16,{26277},{26277},35,"AH",nil,0},
 [62026] = {"Undead Champion",nil,nil,60,60,0,{[17]={{55,59}}},nil,17,nil,nil,nil,nil,nil,0},
+
+-- Issue #35: NPCs for Beastial Allies quest
+[1557] = {"Elder Mistvale Gorilla",nil,nil,41,41,0,{[33]={{33.8,64.3}}},nil,33,{26892},nil,nil,nil,nil,0},
+[46121] = {"Cys Craftcharge",nil,nil,41,41,0,{[15]={{53.7,56.5}}},nil,15,nil,{26892},nil,nil,nil,0},
+
+-- Issue #34: NPCs for various quests
+[1573] = {"Gryth Thurden",nil,nil,55,55,0,{[1537]={{55.5,47.8}}},nil,1537,{26663},nil,11,"A",nil,0},
+[45670] = {"Girda Thunderbrew",nil,nil,17,17,0,{[1537]={{55.5,47.8}}},nil,1537,nil,{26663},11,"A",nil,0},
+[45673] = {"Nonere Duskdigger",nil,nil,17,17,0,{[1537]={{48.6,44.5}}},nil,1537,nil,{26664},11,"A",nil,0},
+
+-- Issue #32: NPCs for gnome starting area  
+[46836] = {"Tinker Captain Whistlescrew",nil,nil,5,5,0,{[1]={{53.0,65.9}}},nil,1,{27034,27035,27036},{27034,27035},11,"A",nil,0},
+[47084] = {"Felix Whindlebolt",nil,nil,3,3,0,{[1]={{52.8,39.2}}},nil,1,{28726},nil,11,"A",nil,0},
+[47085] = {"Caris Sunlancer",nil,nil,4,4,0,{[1]={{33.4,72.1}}},nil,1,{28727},nil,11,"A",nil,0},
+[47086] = {"Sergeant Ralston",nil,nil,4,4,0,{[1]={{22.1,73.5}}},nil,1,nil,{28727},11,"A",nil,0},
+[47087] = {"Guard Captain Cragtar",nil,nil,5,5,0,{[1]={{23.4,75.0}}},nil,1,{28728,28729,28730},{28728,28729},11,"A",nil,0},
+[47090] = {"Corporal Ruffleton",nil,nil,5,5,0,{[1]={{35.5,66.3}}},nil,1,{28731},nil,11,"A",nil,0},
+[47091] = {"Captain Danuvin",nil,nil,5,5,0,{[1]={{56.2,71.9}}},nil,1,{28732,28733},{28732},11,"A",nil,0},
+[47092] = {"Layla Sprocketspark",nil,nil,5,5,0,{[1]={{47.5,52.3}}},nil,1,{28734},nil,11,"A",nil,0},
+[47093] = {"Hands Springsprocket",nil,nil,5,5,0,{[1]={{59.8,51.6}}},nil,1,{28746,28747},{28734,28746,28747},11,"A",nil,0},
+[45999] = {"Elise Brightletter",nil,nil,5,5,0,{[1]={{53.7,52.1}}},nil,1,nil,{28756},11,"A",nil,0},
 }
 
 -- Stage the Epoch npcData for later merge during compilation

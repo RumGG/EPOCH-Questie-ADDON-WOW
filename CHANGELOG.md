@@ -34,10 +34,17 @@
   - Prevents quests from being inadvertently untracked during objective updates
 
 ### Added
-- **Quest Data**: Added new troll starting zone quests
-  - Quest 28722 "The Darkspear Tribe" with quest giver and turn-in NPC
+- **Quest Data**: Added 70+ new Epoch quests from GitHub submissions (#32-#37)
+  - Issue #35: Quest 26892 "Beastial Allies" with NPCs (Stranglethorn Vale)
+  - Issue #34: 18 quests including Ironforge Airfield chain (26202, 26205, 26208, 26663-26696, 26987, 26998, 28087, 28375)
+  - Issue #33: 6 Hinterlands quests (26209-26212, 27322, 28536)
+  - Issue #32: 18 Gnome starting area quests with complete NPC data
+  - Issue #37: 21 additional Troll/Orc starting area quests (in progress)
+  - Added corresponding NPCs for all quests with location data
+- **Quest Data**: Troll starting zone improvements
+  - Quest 28722 "The Darkspear Tribe" with quest giver and turn-in NPC  
   - Quest 28723 "Thievin' Crabs" level 2 quest
-  - Quest 28757 "Banana Bonanza" with ground object collection
+  - Quest 28757 "Banana Bonanza" with working ground object collection
   - NPC 46834 "Joz'jarz" in Durotar
 - **Quest Data**: Added multiple new Epoch quests from GitHub submissions
   - Quest 26277 "Shaman of the Flame" in Azshara (kill 12 Flamescale Naga)
