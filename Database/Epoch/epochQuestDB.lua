@@ -685,7 +685,8 @@ epochQuestData[26383] = {"Call to Skirmish: Tanaris",nil,nil,nil,41,nil,nil,nil,
 epochQuestData[26401] = {"Call to Skirmish: Feralas",nil,nil,nil,41,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26405] = {"Call to Skirmish: Dustwallow Marsh",nil,nil,nil,41,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26905] = {"The Janky Helmet",nil,nil,nil,42,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[28722] = {"The Darkspear Tribe",{{46834}},nil,nil,1,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[28722] = {"The Darkspear Tribe",{{46834}},{{46834}},nil,1,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[28723] = {"Thievin' Crabs",{{46834}},nil,nil,2,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 
 -- Stage the Epoch questData for later merge during compilation
 QuestieDB._epochQuestData = epochQuestData

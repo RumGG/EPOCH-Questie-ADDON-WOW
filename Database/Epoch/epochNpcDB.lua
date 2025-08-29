@@ -791,7 +791,7 @@ local epochNpcData = {
 [45606] = {"Scout Morgria",2200,2475,55,55,0,{[4]={{73.4,34.2}}},nil,4,{26626},{26626},85,"H",nil,0},
 [45607] = {"Torthrak",2200,2475,55,55,0,{[4]={{73.6,34.6}}},nil,4,{26627},{26627},85,"H",nil,0},
 [45631] = {"Liam the Dockmaster",2000,2250,50,50,0,{[4]={{73,48.2}}},nil,4,{26603},{26603,26622},85,"H",nil,0},
-[46834] = {"Joz'jarz",nil,nil,1,1,0,{[85]={{70.1,42.0}}},nil,85,{28722},nil,nil,nil,nil,0},
+[46834] = {"Joz'jarz",nil,nil,2,2,0,{[85]={{70.1,42.0}}},nil,85,{28722,28723},{28722},nil,nil,nil,0},
 }
 
 -- Stage the Epoch npcData for later merge during compilation
