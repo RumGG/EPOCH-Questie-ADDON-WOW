@@ -2,6 +2,20 @@
 
 ## [Unreleased]
 
+### Fixed
+- **Party Tooltips**: Fixed party member quest progress not showing in tooltips
+  - Properly access remoteQuestLogs structure for fallback mechanism
+  - Shows party progress even when no per-mob tooltip cache exists
+
+### Added
+- **Quest Data**: Added new troll starting zone quests
+  - Quest 28722 "The Darkspear Tribe" with quest giver and turn-in NPC
+  - Quest 28723 "Thievin' Crabs" level 2 quest
+  - NPC 46834 "Joz'jarz" in Durotar
+- **Ready Message**: Added "Questie Ready!" message after full initialization
+  - Shows when quest tracking and map icons are fully active
+  - Appears after all initialization stages complete
+
 ## [1.0.55] - 2025-08-29
 
 ### Fixed
