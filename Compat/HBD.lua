@@ -538,21 +538,11 @@ end
 local function UpdateWorldMap()
     if not WorldMapFrame:IsVisible() then return end
 
-    -- Fix for vanilla map scaling issues
-    -- Check if map is in fullscreen mode (button width > 900 typically indicates fullscreen)
-    local buttonWidth = WorldMapButton:GetWidth()
-    local scale = WorldMapButton:GetScale()
-    
-    -- In fullscreen vanilla map, the effective scale might be different
-    if buttonWidth > 900 then
-        -- Fullscreen mode - use actual dimensions without extra scaling
-        worldmapWidth  = WorldMapButton:GetWidth()
-        worldmapHeight = WorldMapButton:GetHeight()
-    else
-        -- Windowed/modified mode - apply scale normally
-        worldmapWidth  = WorldMapButton:GetWidth()*scale
-        worldmapHeight = WorldMapButton:GetHeight()*scale
-    end
+    -- Get map dimensions directly without conditional scaling
+    -- Testing shows WorldMapButton:GetWidth() always returns 1002 in both modes
+    -- so the previous conditional logic was unnecessary (Issue #39)
+    worldmapWidth  = WorldMapButton:GetWidth()
+    worldmapHeight = WorldMapButton:GetHeight()
 
     local mapScale = QuestieMap.GetScaleValue()
 

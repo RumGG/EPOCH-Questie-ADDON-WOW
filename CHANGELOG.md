@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+### Fixed
+- **Map Scaling**: Simplified world map dimension calculations (Fixes #39)
+  - Removed unnecessary conditional scaling logic that was never triggered
+  - WorldMapButton width consistently returns 1002 in both fullscreen and windowed modes
+  - Map icons should now position correctly regardless of map mode
+
 ## [1.0.56] - 2025-08-29
 
 ### Fixed
