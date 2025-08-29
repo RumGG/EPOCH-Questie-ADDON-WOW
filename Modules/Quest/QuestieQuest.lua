@@ -679,6 +679,25 @@ function QuestieQuest:AcceptQuest(questId)
     end
     
     local quest = QuestieDB.GetQuest(questId)
+    
+    -- For quests not in database (like Epoch quests), check if we have a runtime stub
+    if not quest then
+        quest = QuestiePlayer.currentQuestlog[questId]
+        if quest then
+            Questie:Print("[AcceptQuest] Using existing runtime stub for quest", questId, quest.name or "Unknown")
+            -- For runtime stubs, we still need to trigger the tracker update
+            -- Skip the database-specific logic below but ensure tracker gets notified
+            QuestieCombatQueue:Queue(function()
+                QuestieTracker:Update()
+                QuestieTracker:ForceShow()
+            end)
+            return
+        else
+            -- No quest data at all - this shouldn't happen as the event handler creates stubs
+            Questie:Print("[AcceptQuest] ERROR: No quest data found for", questId)
+            return
+        end
+    end
 
     if quest then
         local complete = quest:IsComplete()
