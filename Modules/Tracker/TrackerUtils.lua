@@ -79,9 +79,17 @@ local bindTruthTable = {
 
 function TrackerUtils:GetTomTomAutoTargetQuest()
     if not TomTom or not Questie.db.profile.tomtomAutoTargetMode then return nil end
-    -- Always use proximity sorting for closest quest
+    
+    -- Temporarily save current sort preference
+    local originalSort = Questie.db.profile.trackerSortObjectives
+    
+    -- Use proximity sorting to find closest quest
     Questie.db.profile.trackerSortObjectives = "byProximity"
     local sorted, details = TrackerUtils:GetSortedQuestIds()
+    
+    -- Restore original sort preference immediately
+    Questie.db.profile.trackerSortObjectives = originalSort
+    
     if sorted and #sorted > 0 then
         local quest = details[sorted[1]] and details[sorted[1]].quest and QuestiePlayer.currentQuestlog[details[sorted[1]].quest.Id] 
         if quest then return quest end
