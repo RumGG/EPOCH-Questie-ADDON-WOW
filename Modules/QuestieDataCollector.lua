@@ -704,8 +704,16 @@ function QuestieDataCollector:OnQuestAccepted(questId)
         if not questId then return end
     end
     
+    -- Debug: Log quest acceptance
+    if Questie.db.profile.debugDataCollector then
+        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FFFF[DataCollector Debug]|r OnQuestAccepted called for questId: " .. tostring(questId), 0, 1, 1)
+    end
+    
     -- Double-check that data collection is enabled
     if not Questie.db.profile.enableDataCollection then
+        if Questie.db.profile.debugDataCollector then
+            DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00[DataCollector Debug]|r Data collection is disabled, skipping quest " .. tostring(questId), 1, 1, 0)
+        end
         return
     end
     
@@ -714,11 +722,30 @@ function QuestieDataCollector:OnQuestAccepted(questId)
         QuestieDataCollector:Initialize()
     end
     
-    -- Only track Epoch quests (26000-26999) or quests with [Epoch] prefix
+    -- Check for ALL custom/Epoch quests, not just 26000-26999 range
     local questData = QuestieDB.GetQuest(questId)  -- Use dot notation, not colon
-    local isEpochQuest = (questId >= 26000 and questId < 27000)
-    local hasEpochPrefix = questData and questData.name and string.find(questData.name, "%[Epoch%]")
+    local isEpochQuest = (questId >= 26000 and questId < 30000)  -- Expanded range to include 28xxx quests
+    
+    -- Check for runtime stubs in QuestiePlayer.currentQuestlog
+    local runtimeStub = QuestiePlayer.currentQuestlog and QuestiePlayer.currentQuestlog[questId]
+    local hasEpochPrefix = false
     local isMissingFromDB = not questData
+    
+    -- Debug logging
+    if Questie.db.profile.debugDataCollector then
+        DEFAULT_CHAT_FRAME:AddMessage(string.format("|cFF00FFFF[DataCollector Debug]|r Quest %d: isEpochQuest=%s, isMissingFromDB=%s, hasRuntimeStub=%s", 
+            questId, tostring(isEpochQuest), tostring(isMissingFromDB), tostring(runtimeStub ~= nil)), 0, 1, 1)
+    end
+    
+    -- Check both database quest and runtime stub for [Epoch] prefix
+    if questData and questData.name and string.find(questData.name, "%[Epoch%]") then
+        hasEpochPrefix = true
+    elseif runtimeStub and runtimeStub.name and string.find(runtimeStub.name, "%[Epoch%]") then
+        hasEpochPrefix = true
+    elseif runtimeStub and runtimeStub.__isRuntimeStub then
+        -- All runtime stubs are missing quests that need data collection
+        hasEpochPrefix = true
+    end
     
     -- Check if quest has incomplete data (missing quest givers or objectives)
     local hasIncompleteData = false
@@ -760,8 +787,15 @@ function QuestieDataCollector:OnQuestAccepted(questId)
     end
     
     
-    -- Track if it's an Epoch quest that's missing, has placeholder data, or has incomplete data
-    if isEpochQuest and (isMissingFromDB or hasEpochPrefix or hasIncompleteData) then
+    -- Debug: Log the final decision factors
+    if Questie.db.profile.debugDataCollector then
+        DEFAULT_CHAT_FRAME:AddMessage(string.format("|cFF00FFFF[DataCollector Debug]|r Final check - isEpochQuest=%s, isMissingFromDB=%s, hasEpochPrefix=%s, hasIncompleteData=%s", 
+            tostring(isEpochQuest), tostring(isMissingFromDB), tostring(hasEpochPrefix), tostring(hasIncompleteData)), 0, 1, 1)
+    end
+    
+    -- Track if it's an Epoch quest (by ID range) OR any quest that's missing from the database
+    -- This will catch ALL custom quests including new starting zones
+    if (isEpochQuest or isMissingFromDB or hasEpochPrefix) and (isMissingFromDB or hasEpochPrefix or hasIncompleteData) then
         -- ALERT! Missing quest detected!
         local questTitle = QuestieCompat.GetQuestLogTitle(QuestieDataCollector:GetQuestLogIndexById(questId))
         

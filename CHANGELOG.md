@@ -1,5 +1,14 @@
 # Changelog
 
+## [Unreleased]
+
+### Fixed
+- **Data Collection**: Fixed missing quest detection for runtime stubbed quests
+  - Now properly detects quests created as runtime stubs (e.g., new troll starting zone quests)
+  - Expanded Epoch quest ID range from 26000-26999 to 26000-29999 to include quest 28722 and similar
+  - Fixed detection of [Epoch] prefix in runtime stubs stored in QuestiePlayer.currentQuestlog
+  - Added debug logging to help diagnose data collection issues
+
 ## [1.0.54] - 2025-08-29
 
 ### Fixed
