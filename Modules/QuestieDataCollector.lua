@@ -25,14 +25,25 @@ local _trackAllEpochQuests = true -- Track all Epoch quests (26xxx range) by def
 -- Forward declaration of helper function for creating clickable quest data links
 local CreateQuestDataLink
 
+-- Helper function for debug messages
+local function DebugMessage(msg, r, g, b)
+    if Questie.db.profile.debugDataCollector then
+        DEFAULT_CHAT_FRAME:AddMessage(msg, r or 1, g or 1, b or 1)
+    end
+end
+
 function QuestieDataCollector:Initialize()
     -- Prevent double initialization
     if _initialized then
+        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DataCollector]|r Already initialized", 0, 1, 0)
         return
     end
     
+    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DataCollector]|r Initializing...", 0, 1, 0)
+    
     -- Only initialize if explicitly enabled
     if not Questie or not Questie.db or not Questie.db.profile.enableDataCollection then
+        DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[DataCollector]|r Not enabled, skipping initialization", 1, 0, 0)
         return
     end
     
@@ -67,7 +78,7 @@ function QuestieDataCollector:Initialize()
     
     _initialized = true
     
-    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Questie Data Collector]|r Enabled. Thank you for contributing! |cFFFFFF00Use /qdc for commands|r", 0, 1, 0)
+    DebugMessage("|cFF00FF00[Questie Data Collector]|r Enabled. Thank you for contributing! |cFFFFFF00Use /qdc for commands|r", 0, 1, 0)
     
     -- Check existing quests in log
     QuestieDataCollector:CheckExistingQuests()
@@ -96,7 +107,7 @@ function QuestieDataCollector:CheckExistingQuests()
                     for k,v in pairs(safeQuestID) do
                         table.insert(fields, tostring(k) .. "=" .. tostring(v))
                     end
-                    DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[DataCollector Debug]|r questID is table with fields: " .. table.concat(fields, ", "), 1, 0, 0)
+                    DebugMessage("|cFFFF0000[DataCollector Debug]|r questID is table with fields: " .. table.concat(fields, ", "), 1, 0, 0)
                 end
                 
                 -- Try to extract ID from table
@@ -116,7 +127,7 @@ function QuestieDataCollector:CheckExistingQuests()
                 questID = safeQuestID  -- Reassign to the safe copy (don't redeclare)
                 -- Final safety check before calling GetQuest
                 if type(questID) ~= "number" then
-                    DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[DataCollector ERROR]|r questID passed check but is still " .. type(questID), 1, 0, 0)
+                    DebugMessage("|cFFFF0000[DataCollector ERROR]|r questID passed check but is still " .. type(questID), 1, 0, 0)
                     -- Continue to next iteration instead of return
                 else
                     -- Use pcall to catch any errors from GetQuest
@@ -127,7 +138,7 @@ function QuestieDataCollector:CheckExistingQuests()
                     if not success then
                         -- GetQuest failed, skip this quest silently
                         if Questie.db.profile.debugDataCollector then
-                            DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[DataCollector]|r GetQuest failed for questID: " .. tostring(questID), 1, 0, 0)
+                            DebugMessage("|cFFFF0000[DataCollector]|r GetQuest failed for questID: " .. tostring(questID), 1, 0, 0)
                         end
                     else
                         -- Now process the quest data
@@ -189,14 +200,18 @@ end
 function QuestieDataCollector:RegisterEvents()
     -- Only create event frame if it doesn't exist
     if QuestieDataCollector.eventFrame then
+        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DataCollector]|r Event frame already exists", 0, 1, 0)
         return -- Already registered
     end
+    
+    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DataCollector]|r Creating event frame and registering events...", 0, 1, 0)
     
     local eventFrame = CreateFrame("Frame")
     QuestieDataCollector.eventFrame = eventFrame
     
     -- Register all needed events
     eventFrame:RegisterEvent("QUEST_ACCEPTED")
+    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DataCollector]|r QUEST_ACCEPTED event registered!", 0, 1, 0)
     eventFrame:RegisterEvent("QUEST_TURNED_IN")
     eventFrame:RegisterEvent("QUEST_COMPLETE")
     eventFrame:RegisterEvent("QUEST_LOG_UPDATE")
@@ -386,12 +401,25 @@ function QuestieDataCollector:CaptureTooltipNPCData(npcId, name)
 end
 
 function QuestieDataCollector:HandleEvent(event, ...)
+    -- Debug: Log ALL events to see if we're getting them
     if event == "QUEST_ACCEPTED" then
+        DEFAULT_CHAT_FRAME:AddMessage("|cFFFF00FF[DataCollector]|r QUEST_ACCEPTED event fired!", 1, 0, 1)
+        
         local questLogIndex, questId = ...
+        DEFAULT_CHAT_FRAME:AddMessage("|cFFFF00FF[DataCollector]|r questLogIndex=" .. tostring(questLogIndex) .. ", questId=" .. tostring(questId), 1, 0, 1)
+        
         -- In 3.3.5a, second param might be questId or nil
         if not questId or questId == 0 then
             questId = QuestieDataCollector:GetQuestIdFromLogIndex(questLogIndex)
+            DEFAULT_CHAT_FRAME:AddMessage("|cFFFF00FF[DataCollector]|r Got questId from log: " .. tostring(questId), 1, 0, 1)
         end
+        
+        -- Check if data collection is enabled BEFORE calling OnQuestAccepted
+        if not Questie.db.profile.enableDataCollection then
+            DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[DataCollector]|r Data collection is DISABLED! Use /qdc enable", 1, 0, 0)
+            return
+        end
+        
         QuestieDataCollector:OnQuestAccepted(questId)
         
     elseif event == "QUEST_TURNED_IN" then
@@ -402,7 +430,7 @@ function QuestieDataCollector:HandleEvent(event, ...)
         QuestieDataCollector:OnQuestComplete()
         
     elseif event == "GOSSIP_SHOW" or event == "QUEST_DETAIL" then
-        DEFAULT_CHAT_FRAME:AddMessage("|cFFCCCCCC[DEBUG] " .. event .. " event fired!|r", 0.8, 0.8, 0.8)
+        DebugMessage("|cFFCCCCCC[DEBUG] " .. event .. " event fired!|r", 0.8, 0.8, 0.8)
         QuestieDataCollector:CaptureNPCData("target")
         
     elseif event == "CHAT_MSG_LOOT" then
@@ -517,7 +545,7 @@ function QuestieDataCollector:TrackQuestItemUsage(itemId, unit)
                                 itemUsed = itemId
                             })
                             
-                            DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DATA] Tracked quest item " .. itemId .. " used on " .. name .. " (ID: " .. npcId .. ") at " .. coords.x .. ", " .. coords.y .. "|r", 0, 1, 0)
+                            DebugMessage("|cFF00FF00[DATA] Tracked quest item " .. itemId .. " used on " .. name .. " (ID: " .. npcId .. ") at " .. coords.x .. ", " .. coords.y .. "|r", 0, 1, 0)
                         end
                     end
                 end
@@ -596,7 +624,7 @@ function QuestieDataCollector:TrackMob(unit)
                                         level = UnitLevel(unit)
                                     })
                                     
-                                    DEFAULT_CHAT_FRAME:AddMessage("|cFF00AA00[DATA] Linked " .. name .. " to objective: " .. objective.text .. "|r", 0, 0.7, 0)
+                                    DebugMessage("|cFF00AA00[DATA] Linked " .. name .. " to objective: " .. objective.text .. "|r", 0, 0.7, 0)
                                 end
                             end
                         end
@@ -607,10 +635,10 @@ function QuestieDataCollector:TrackMob(unit)
             -- Show consolidated message for all quests that tracked this mob
             if isNewMob and #trackedForQuests > 0 then
                 if #trackedForQuests > 3 then
-                    DEFAULT_CHAT_FRAME:AddMessage("|cFF888800[DATA] Tracked " .. name .. " (ID: " .. npcId .. 
+                    DebugMessage("|cFF888800[DATA] Tracked " .. name .. " (ID: " .. npcId .. 
                         ") for " .. #trackedForQuests .. " quests at [" .. (coords.x or 0) .. ", " .. (coords.y or 0) .. "]|r", 0.5, 0.5, 0)
                 else
-                    DEFAULT_CHAT_FRAME:AddMessage("|cFF888800[DATA] Tracked " .. name .. " (ID: " .. npcId .. 
+                    DebugMessage("|cFF888800[DATA] Tracked " .. name .. " (ID: " .. npcId .. 
                         ") for quests: " .. table.concat(trackedForQuests, ", ") .. " at [" .. (coords.x or 0) .. ", " .. (coords.y or 0) .. "]|r", 0.5, 0.5, 0)
                 end
             end
@@ -620,25 +648,25 @@ end
 
 function QuestieDataCollector:CaptureNPCData(unit)
     if not UnitExists(unit) then 
-        DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[DEBUG] Unit doesn't exist: " .. tostring(unit) .. "|r", 1, 0, 0)
+        DebugMessage("|cFFFF0000[DEBUG] Unit doesn't exist: " .. tostring(unit) .. "|r", 1, 0, 0)
         return 
     end
     
     if UnitIsPlayer(unit) then 
-        DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[DEBUG] Unit is a player, not an NPC|r", 1, 0, 0)
+        DebugMessage("|cFFFF0000[DEBUG] Unit is a player, not an NPC|r", 1, 0, 0)
         return 
     end
     
     local name = UnitName(unit)
     local guid = UnitGUID(unit)
-    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FFFF[DEBUG] Capturing NPC: " .. (name or "nil") .. " GUID: " .. (guid or "nil") .. "|r", 0, 1, 1)
+    DebugMessage("|cFF00FFFF[DEBUG] Capturing NPC: " .. (name or "nil") .. " GUID: " .. (guid or "nil") .. "|r", 0, 1, 1)
     
     if guid then
         -- WoW 3.3.5 GUID format: 0xF13000085800126C
         -- Use same extraction as QuestieCompat.UnitGUID
         local npcId = tonumber(guid:sub(6, 12), 16)
         
-        DEFAULT_CHAT_FRAME:AddMessage("|cFFCCCCCC[DEBUG] Extracted NPC ID: " .. (npcId or "nil") .. " from GUID: " .. guid .. "|r", 0.8, 0.8, 0.8)
+        DebugMessage("|cFFCCCCCC[DEBUG] Extracted NPC ID: " .. (npcId or "nil") .. " from GUID: " .. guid .. "|r", 0.8, 0.8, 0.8)
         
         if npcId then
             local coords = QuestieDataCollector:GetPlayerCoords()
@@ -688,7 +716,7 @@ function QuestieDataCollector:OnQuestAccepted(questId)
             for k,v in pairs(questId) do
                 table.insert(fields, tostring(k) .. "=" .. tostring(v))
             end
-            DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[DataCollector Debug]|r OnQuestAccepted questId is table with fields: " .. table.concat(fields, ", "), 1, 0, 0)
+            DebugMessage("|cFFFF0000[DataCollector Debug]|r OnQuestAccepted questId is table with fields: " .. table.concat(fields, ", "), 1, 0, 0)
         end
         
         -- Try to extract ID from table
@@ -706,13 +734,13 @@ function QuestieDataCollector:OnQuestAccepted(questId)
     
     -- Debug: Log quest acceptance
     if Questie.db.profile.debugDataCollector then
-        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FFFF[DataCollector Debug]|r OnQuestAccepted called for questId: " .. tostring(questId), 0, 1, 1)
+        DebugMessage("|cFF00FFFF[DataCollector Debug]|r OnQuestAccepted called for questId: " .. tostring(questId), 0, 1, 1)
     end
     
     -- Double-check that data collection is enabled
     if not Questie.db.profile.enableDataCollection then
         if Questie.db.profile.debugDataCollector then
-            DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00[DataCollector Debug]|r Data collection is disabled, skipping quest " .. tostring(questId), 1, 1, 0)
+            DebugMessage("|cFFFFFF00[DataCollector Debug]|r Data collection is disabled, skipping quest " .. tostring(questId), 1, 1, 0)
         end
         return
     end
@@ -832,7 +860,7 @@ function QuestieDataCollector:OnQuestAccepted(questId)
             QuestieDataCollection.quests[questId].questGiver = _lastQuestGiver
             -- Quest giver captured
         else
-            DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00Tip: Target the quest giver when accepting to capture their location|r", 1, 1, 0)
+            DebugMessage("|cFFFFFF00Tip: Target the quest giver when accepting to capture their location|r", 1, 1, 0)
         end
         
         -- Get quest details from log
@@ -882,7 +910,7 @@ function QuestieDataCollector:OnQuestTurnedIn(questId)
     if _lastQuestGiver and (time() - _lastQuestGiver.timestamp < 5) then
         QuestieDataCollection.quests[questId].turnInNpc = _lastQuestGiver
         
-        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DATA] Turn-in NPC Captured: " .. _lastQuestGiver.name .. " (ID: " .. _lastQuestGiver.npcId .. ")|r", 0, 1, 0)
+        DebugMessage("|cFF00FF00[DATA] Turn-in NPC Captured: " .. _lastQuestGiver.name .. " (ID: " .. _lastQuestGiver.npcId .. ")|r", 0, 1, 0)
         
         -- Show hyperlink notification
         local questName = QuestieDataCollection.quests[questId].name or "Unknown Quest"
@@ -921,12 +949,12 @@ function QuestieDataCollector:OnQuestComplete()
         if _lastQuestGiver and (time() - _lastQuestGiver.timestamp < 5) then
             QuestieDataCollection.quests[questId].turnInNpc = _lastQuestGiver
             
-            DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DATA] Turn-in NPC Captured: " .. _lastQuestGiver.name .. " (ID: " .. _lastQuestGiver.npcId .. ")|r", 0, 1, 0)
+            DebugMessage("|cFF00FF00[DATA] Turn-in NPC Captured: " .. _lastQuestGiver.name .. " (ID: " .. _lastQuestGiver.npcId .. ")|r", 0, 1, 0)
             
             -- Show hyperlink notification instead of auto-popup
             DEFAULT_CHAT_FRAME:AddMessage("===========================================" , 0, 1, 1)
-            DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[QUESTIE] Quest completed! Please " .. CreateQuestDataLink(questId, "[Export]") .. " your captured data to GitHub!|r", 0, 1, 0)
-            DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00Quest: " .. questName .. " (ID: " .. questId .. ")|r", 1, 1, 0)
+            DebugMessage("|cFF00FF00[QUESTIE] Quest completed! Please " .. CreateQuestDataLink(questId, "[Export]") .. " your captured data to GitHub!|r", 0, 1, 0)
+            DebugMessage("|cFFFFFF00Quest: " .. questName .. " (ID: " .. questId .. ")|r", 1, 1, 0)
             DEFAULT_CHAT_FRAME:AddMessage("===========================================" , 0, 1, 1)
             
             -- Play a subtle sound to notify completion
@@ -997,7 +1025,7 @@ function QuestieDataCollector:OnQuestLogUpdate()
                         -- Special handling for exploration objectives
                         if objectiveType == "event" or objectiveType == "area" then
                             locData.action = "Explored area"
-                            DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DATA] Exploration objective captured at [" .. 
+                            DebugMessage("|cFF00FF00[DATA] Exploration objective captured at [" .. 
                                 (locData.coords and locData.coords.x or 0) .. ", " .. 
                                 (locData.coords and locData.coords.y or 0) .. "] in " .. 
                                 (locData.subzone or locData.zone or "Unknown") .. "|r", 0, 1, 0)
@@ -1055,10 +1083,10 @@ function QuestieDataCollector:OnQuestLogUpdate()
                                     timestamp = time()
                                 }
                                 
-                                DEFAULT_CHAT_FRAME:AddMessage("|cFF00FFFF[DATA] DISCOVERY POINT CAPTURED!|r", 0, 1, 1)
-                                DEFAULT_CHAT_FRAME:AddMessage("|cFF00FFFF  Objective: " .. text .. "|r", 0, 1, 1)
-                                DEFAULT_CHAT_FRAME:AddMessage("|cFF00FFFF  Exact coords: [" .. locData.coords.x .. ", " .. locData.coords.y .. "]|r", 0, 1, 1)
-                                DEFAULT_CHAT_FRAME:AddMessage("|cFF00FFFF  Zone: " .. locData.zone .. (locData.subzone ~= "" and " (" .. locData.subzone .. ")" or "") .. "|r", 0, 1, 1)
+                                DebugMessage("|cFF00FFFF[DATA] DISCOVERY POINT CAPTURED!|r", 0, 1, 1)
+                                DebugMessage("|cFF00FFFF  Objective: " .. text .. "|r", 0, 1, 1)
+                                DebugMessage("|cFF00FFFF  Exact coords: [" .. locData.coords.x .. ", " .. locData.coords.y .. "]|r", 0, 1, 1)
+                                DebugMessage("|cFF00FFFF  Zone: " .. locData.zone .. (locData.subzone ~= "" and " (" .. locData.subzone .. ")" or "") .. "|r", 0, 1, 1)
                             end
                         end
                         
@@ -1066,9 +1094,9 @@ function QuestieDataCollector:OnQuestLogUpdate()
                         
                         -- Objective progress tracked silently
                         if locData.action then
-                            DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00  Action: " .. locData.action .. "|r", 0, 1, 0)
+                            DebugMessage("|cFF00FF00  Action: " .. locData.action .. "|r", 0, 1, 0)
                         end
-                        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00  Location: [" .. locData.coords.x .. ", " .. locData.coords.y .. "] in " .. locData.zone .. "|r", 0, 1, 0)
+                        DebugMessage("|cFF00FF00  Location: [" .. locData.coords.x .. ", " .. locData.coords.y .. "] in " .. locData.zone .. "|r", 0, 1, 0)
                     end
                 end
             end
@@ -1121,10 +1149,10 @@ function QuestieDataCollector:OnLootReceived(message)
                                 })
                                 
                                 if _currentLootSource.type == "mob" then
-                                    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DATA] Confirmed: '" .. itemName .. 
+                                    DebugMessage("|cFF00FF00[DATA] Confirmed: '" .. itemName .. 
                                         "' (ID: " .. itemId .. ") from mob " .. _currentLootSource.name .. "|r", 0, 1, 0)
                                 else
-                                    DEFAULT_CHAT_FRAME:AddMessage("|cFF00AAFF[DATA] Confirmed: '" .. itemName .. 
+                                    DebugMessage("|cFF00AAFF[DATA] Confirmed: '" .. itemName .. 
                                         "' (ID: " .. itemId .. ") from object " .. _currentLootSource.name .. "|r", 0, 0.67, 1)
                                 end
                             end
@@ -1150,7 +1178,7 @@ function QuestieDataCollector:OnLootReceived(message)
                                     subzone = mostRecentKill.subzone
                                 })
                                 
-                                DEFAULT_CHAT_FRAME:AddMessage("|cFF00AA00[DATA] Quest item '" .. itemName .. 
+                                DebugMessage("|cFF00AA00[DATA] Quest item '" .. itemName .. 
                                     "' likely from " .. mostRecentKill.name .. " (ID: " .. mostRecentKill.npcId .. ")|r", 0, 0.7, 0)
                             end
                         end
@@ -1198,7 +1226,7 @@ function QuestieDataCollector:SetupObjectTracking()
                 }
                 
                 if objectId then
-                    DEFAULT_CHAT_FRAME:AddMessage("|cFF8888FF[DATA] Hovering object: " .. name .. " (ID: " .. objectId .. ")|r", 0.5, 0.5, 1)
+                    DebugMessage("|cFF8888FF[DATA] Hovering object: " .. name .. " (ID: " .. objectId .. ")|r", 0.5, 0.5, 1)
                 end
             end
         end
@@ -1225,10 +1253,10 @@ function QuestieDataCollector:OnLootOpened()
         end
         
         if coords and coords.x and coords.y then
-            DEFAULT_CHAT_FRAME:AddMessage("|cFFAA8800[DATA] Looting mob: " .. lootSourceName .. 
+            DebugMessage("|cFFAA8800[DATA] Looting mob: " .. lootSourceName .. 
                 " (ID: " .. (lootSourceId or "unknown") .. ") at [" .. coords.x .. ", " .. coords.y .. "]|r", 0.67, 0.53, 0)
         else
-            DEFAULT_CHAT_FRAME:AddMessage("|cFFAA8800[DATA] Looting mob: " .. lootSourceName .. 
+            DebugMessage("|cFFAA8800[DATA] Looting mob: " .. lootSourceName .. 
                 " (ID: " .. (lootSourceId or "unknown") .. ") - location unknown|r", 0.67, 0.53, 0)
         end
     else
@@ -1246,10 +1274,10 @@ function QuestieDataCollector:OnLootOpened()
         end
         
         if coords and coords.x and coords.y then
-            DEFAULT_CHAT_FRAME:AddMessage("|cFF8888FF[DATA] Looting object: " .. lootSourceName .. 
+            DebugMessage("|cFF8888FF[DATA] Looting object: " .. lootSourceName .. 
                 " at [" .. coords.x .. ", " .. coords.y .. "]|r", 0.5, 0.5, 1)
         else
-            DEFAULT_CHAT_FRAME:AddMessage("|cFF8888FF[DATA] Looting object: " .. lootSourceName .. 
+            DebugMessage("|cFF8888FF[DATA] Looting object: " .. lootSourceName .. 
                 " - location unknown|r", 0.5, 0.5, 1)
         end
         
@@ -1260,7 +1288,7 @@ function QuestieDataCollector:OnLootOpened()
         end
         
         if activeCount == 0 then
-            DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[DATA] Warning: No quests being tracked! Use /qdc rescan|r", 1, 0, 0)
+            DebugMessage("|cFFFF0000[DATA] Warning: No quests being tracked! Use /qdc rescan|r", 1, 0, 0)
         else
             for questId, _ in pairs(_activeTracking or {}) do
                 local questData = QuestieDataCollection.quests[questId]
@@ -1289,7 +1317,7 @@ function QuestieDataCollector:OnLootOpened()
                                 subzone = subzone,
                                 timestamp = time()
                             }
-                            DEFAULT_CHAT_FRAME:AddMessage("|cFF00FFFF[DATA] Tracked object '" .. lootSourceName .. 
+                            DebugMessage("|cFF00FFFF[DATA] Tracked object '" .. lootSourceName .. 
                                 "' for quest " .. questId .. " at [" .. coords.x .. ", " .. coords.y .. "]|r", 0, 1, 1)
                         end
                     end
@@ -1373,10 +1401,10 @@ function QuestieDataCollector:OnLootOpened()
                         table.insert(questData.items[itemId].sources, lootEntry)
                         
                         if lootSourceType == "mob" then
-                            DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DATA] Quest item '" .. lootName .. 
+                            DebugMessage("|cFF00FF00[DATA] Quest item '" .. lootName .. 
                                 "' (ID: " .. itemId .. ") from mob: " .. lootSourceName .. "|r", 0, 1, 0)
                         else
-                            DEFAULT_CHAT_FRAME:AddMessage("|cFF00AAFF[DATA] Quest item '" .. lootName .. 
+                            DebugMessage("|cFF00AAFF[DATA] Quest item '" .. lootName .. 
                                 "' (ID: " .. itemId .. ") from object: " .. lootSourceName .. "|r", 0, 0.67, 1)
                         end
                     end
@@ -1409,7 +1437,7 @@ function QuestieDataCollector:OnItemPush(bagSlot)
                                         subzone = _lastInteractedObject.subzone
                                     })
                                     
-                                    DEFAULT_CHAT_FRAME:AddMessage("|cFF00AAFF[DATA] Quest item '" .. itemName .. 
+                                    DebugMessage("|cFF00AAFF[DATA] Quest item '" .. itemName .. 
                                         "' obtained from object: " .. _lastInteractedObject.name .. "|r", 0, 0.7, 1)
                                 end
                             end
@@ -1475,8 +1503,8 @@ function QuestieDataCollector:OnUIInfoMessage(message)
                             timestamp = time()
                         })
                         
-                        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FFFF[DATA] Discovery objective progress: " .. message .. "|r", 0, 1, 1)
-                        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FFFF  Location: [" .. coords.x .. ", " .. coords.y .. "] in " .. zone .. 
+                        DebugMessage("|cFF00FFFF[DATA] Discovery objective progress: " .. message .. "|r", 0, 1, 1)
+                        DebugMessage("|cFF00FFFF  Location: [" .. coords.x .. ", " .. coords.y .. "] in " .. zone .. 
                             (subzone ~= "" and " (" .. subzone .. ")" or "") .. "|r", 0, 1, 1)
                     end
                 end
@@ -1484,7 +1512,7 @@ function QuestieDataCollector:OnUIInfoMessage(message)
                 -- Always log exploration messages for Epoch quests
                 if string.find(message, "Explored") or string.find(message, "Discovered") or 
                    string.find(message, "Reached") or string.find(message, "Found") then
-                    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DATA] Exploration captured: " .. message .. " at [" .. 
+                    DebugMessage("|cFF00FF00[DATA] Exploration captured: " .. message .. " at [" .. 
                         string.format("%.1f, %.1f", coords.x, coords.y) .. "]|r", 0, 1, 0)
                 end
             end
@@ -1634,7 +1662,7 @@ function QuestieDataCollector:ShowTrackedQuests()
         completeCount + incompleteCount, completeCount, incompleteCount), 1, 1, 0)
     
     if incompleteCount > 0 then
-        DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000To get complete data: Abandon and re-accept quests marked as INCOMPLETE|r", 1, 0.5, 0)
+        DebugMessage("|cFFFF0000To get complete data: Abandon and re-accept quests marked as INCOMPLETE|r", 1, 0.5, 0)
     end
 end
 
@@ -1654,7 +1682,7 @@ function QuestieDataCollector:ShowExportableQuests()
     end
     
     if totalCount == 0 then
-        DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[QUESTIE] No quest data found! Try /qdc debug to check status.|r", 1, 0, 0)
+        DebugMessage("|cFFFF0000[QUESTIE] No quest data found! Try /qdc debug to check status.|r", 1, 0, 0)
         return
     end
     
@@ -1668,18 +1696,18 @@ function QuestieDataCollector:ShowExportableQuests()
     end
     
     if #activeQuests == 0 and #completedQuests == 0 then
-        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[QUESTIE] No quest data captured yet.|r", 0, 1, 0)
-        DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00Accept and complete some [Epoch] quests to collect data!|r", 1, 1, 0)
+        DebugMessage("|cFF00FF00[QUESTIE] No quest data captured yet.|r", 0, 1, 0)
+        DebugMessage("|cFFFFFF00Accept and complete some [Epoch] quests to collect data!|r", 1, 1, 0)
         return
     end
     
     DEFAULT_CHAT_FRAME:AddMessage("===========================================", 0, 1, 1)
-    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[QUESTIE] Captured Quest Data:|r", 0, 1, 0)
+    DebugMessage("|cFF00FF00[QUESTIE] Captured Quest Data:|r", 0, 1, 0)
     DEFAULT_CHAT_FRAME:AddMessage("===========================================", 0, 1, 1)
     
     -- Show completed quests first (ready for export)
     if #completedQuests > 0 then
-        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00COMPLETED QUESTS (Ready for Export):|r", 0, 1, 0)
+        DebugMessage("|cFF00FF00COMPLETED QUESTS (Ready for Export):|r", 0, 1, 0)
         table.sort(completedQuests, function(a, b) return a.id < b.id end)
         
         for _, quest in ipairs(completedQuests) do
@@ -1722,7 +1750,7 @@ function QuestieDataCollector:ShowExportableQuests()
     
     -- Show active quests (still being tracked)
     if #activeQuests > 0 then
-        DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00ACTIVE QUESTS (Still Tracking):|r", 1, 1, 0)
+        DebugMessage("|cFFFFFF00ACTIVE QUESTS (Still Tracking):|r", 1, 1, 0)
         table.sort(activeQuests, function(a, b) return a.id < b.id end)
         
         for _, quest in ipairs(activeQuests) do
@@ -1754,7 +1782,7 @@ function QuestieDataCollector:ShowExportableQuests()
     end
     
     DEFAULT_CHAT_FRAME:AddMessage("===========================================", 0, 1, 1)
-    DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00Click [Export] links to submit quest data to GitHub|r", 1, 1, 0)
+    DebugMessage("|cFFFFFF00Click [Export] links to submit quest data to GitHub|r", 1, 1, 0)
 end
 
 -- Community contribution popup
@@ -1768,13 +1796,13 @@ function QuestieDataCollector:ShowContributionPopup()
             Questie.db.profile.dataCollectionPrompted = true
             QuestieDataCollector:Initialize()
             QuestieDataCollector:EnableTooltipIDs()
-            DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Questie] Thank you for contributing! Data collection is now active.|r", 0, 1, 0)
-            DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00Tooltip IDs have been enabled to help with data collection.|r", 1, 1, 0)
-            DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00When you complete a missing quest, we'll show you the data to submit.|r", 1, 1, 0)
+            DebugMessage("|cFF00FF00[Questie] Thank you for contributing! Data collection is now active.|r", 0, 1, 0)
+            DebugMessage("|cFFFFFF00Tooltip IDs have been enabled to help with data collection.|r", 1, 1, 0)
+            DebugMessage("|cFFFFFF00When you complete a missing quest, we'll show you the data to submit.|r", 1, 1, 0)
         end,
         OnCancel = function()
             Questie.db.profile.dataCollectionPrompted = true
-            DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00[Questie] Data collection disabled. You can enable it later in Advanced settings.|r", 1, 1, 0)
+            DebugMessage("|cFFFFFF00[Questie] Data collection disabled. You can enable it later in Advanced settings.|r", 1, 1, 0)
         end,
         timeout = 0,
         whileDead = true,
@@ -1790,19 +1818,19 @@ function QuestieDataCollector:ShowExportWindow(questId)
     if not questId then
         -- Check if we have any data at all
         if not QuestieDataCollection or not QuestieDataCollection.quests or not next(QuestieDataCollection.quests) then
-            DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[QUESTIE] No quest data to export. Complete some Epoch quests first!|r", 1, 0, 0)
+            DebugMessage("|cFFFF0000[QUESTIE] No quest data to export. Complete some Epoch quests first!|r", 1, 0, 0)
             return
         end
     else
         -- Specific quest requested
         if not QuestieDataCollection or not QuestieDataCollection.quests then
-            DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[QUESTIE] No quest data available!|r", 1, 0, 0)
+            DebugMessage("|cFFFF0000[QUESTIE] No quest data available!|r", 1, 0, 0)
             return
         end
         
         local data = QuestieDataCollection.quests[questId]
         if not data then 
-            DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[QUESTIE] No data for quest " .. questId .. "!|r", 1, 0, 0)
+            DebugMessage("|cFFFF0000[QUESTIE] No data for quest " .. questId .. "!|r", 1, 0, 0)
             return 
         end
     end
@@ -1900,7 +1928,7 @@ function QuestieDataCollector:ShowExportWindow(questId)
         copyButton:SetScript("OnClick", function()
             editBox:SetFocus()
             editBox:HighlightText()
-            DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00Text selected! Now press Ctrl+C to copy.|r", 0, 1, 0)
+            DebugMessage("|cFF00FF00Text selected! Now press Ctrl+C to copy.|r", 0, 1, 0)
         end)
         
         -- Help text about keybind conflicts
@@ -1931,8 +1959,8 @@ function QuestieDataCollector:ShowExportWindow(questId)
                 db.dataCollectionQuests = {}
             end
             
-            DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[QUESTIE] Thank you for contributing! All collected quest data has been purged.|r", 0, 1, 0)
-            DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00Your local quest data storage has been cleared to free up memory.|r", 1, 1, 0)
+            DebugMessage("|cFF00FF00[QUESTIE] Thank you for contributing! All collected quest data has been purged.|r", 0, 1, 0)
+            DebugMessage("|cFFFFFF00Your local quest data storage has been cleared to free up memory.|r", 1, 1, 0)
             f:Hide()
         end)
         
@@ -1965,7 +1993,7 @@ function QuestieDataCollector:ShowExportWindow(questId)
         table.sort(questList)
         
         if #questList == 0 then
-            DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[QUESTIE] No Epoch quest data to export!|r", 1, 0, 0)
+            DebugMessage("|cFFFF0000[QUESTIE] No Epoch quest data to export!|r", 1, 0, 0)
             return
         end
         
@@ -2240,10 +2268,10 @@ autoInitFrame:SetScript("OnEvent", function(self, event, arg1)
         C_Timer.After(0.5, function()
             if Questie and Questie.db and Questie.db.profile.enableDataCollection then
                 if not _initialized then
-                    DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00[DATA COLLECTOR] Auto-initializing after login...|r", 1, 1, 0)
+                    DebugMessage("|cFFFFFF00[DATA COLLECTOR] Auto-initializing after login...|r", 1, 1, 0)
                     QuestieDataCollector:Initialize()
                 else
-                    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DATA COLLECTOR] Already initialized|r", 0, 1, 0)
+                    DebugMessage("|cFF00FF00[DATA COLLECTOR] Already initialized|r", 0, 1, 0)
                 end
             end
         end)
@@ -2258,6 +2286,11 @@ SlashCmdList["QUESTIEDATACOLLECTOR"] = function(msg)
     if cmd == "enable" then
         Questie.db.profile.enableDataCollection = true
         Questie.db.profile.dataCollectionPrompted = true
+        
+        -- Force re-initialization even if already initialized
+        _initialized = false
+        QuestieDataCollector.eventFrame = nil
+        
         QuestieDataCollector:Initialize()
         QuestieDataCollector:EnableTooltipIDs()
         DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DATA COLLECTOR] ENABLED!|r", 0, 1, 0)
@@ -2276,6 +2309,16 @@ SlashCmdList["QUESTIEDATACOLLECTOR"] = function(msg)
             DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000Status: DISABLED|r", 1, 0, 0)
         end
         
+        -- Check initialization status
+        DEFAULT_CHAT_FRAME:AddMessage("Initialized: " .. (_initialized and "|cFF00FF00YES|r" or "|cFFFF0000NO|r"))
+        DEFAULT_CHAT_FRAME:AddMessage("Event Frame: " .. (QuestieDataCollector.eventFrame and "|cFF00FF00EXISTS|r" or "|cFFFF0000MISSING|r"))
+        
+        -- Check if QUEST_ACCEPTED is registered
+        if QuestieDataCollector.eventFrame then
+            local registered = QuestieDataCollector.eventFrame:IsEventRegistered("QUEST_ACCEPTED")
+            DEFAULT_CHAT_FRAME:AddMessage("QUEST_ACCEPTED registered: " .. (registered and "|cFF00FF00YES|r" or "|cFFFF0000NO|r"))
+        end
+        
         if QuestieDataCollection and QuestieDataCollection.quests then
             local count = 0
             for _ in pairs(QuestieDataCollection.quests) do count = count + 1 end
@@ -2291,7 +2334,7 @@ SlashCmdList["QUESTIEDATACOLLECTOR"] = function(msg)
         
     elseif cmd == "active" then
         -- Show actively tracked quests
-        DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00=== Actively Tracked Quests ===|r", 1, 1, 0)
+        DebugMessage("|cFFFFFF00=== Actively Tracked Quests ===|r", 1, 1, 0)
         local count = 0
         for questId, _ in pairs(_activeTracking or {}) do
             count = count + 1
@@ -2303,14 +2346,14 @@ SlashCmdList["QUESTIEDATACOLLECTOR"] = function(msg)
             end
         end
         if count == 0 then
-            DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000No quests currently being tracked! Use /qdc rescan|r", 1, 0, 0)
+            DebugMessage("|cFFFF0000No quests currently being tracked! Use /qdc rescan|r", 1, 0, 0)
         else
             DEFAULT_CHAT_FRAME:AddMessage(string.format("Total: %d quest(s) being tracked", count), 0.7, 0.7, 0.7)
         end
     
     elseif cmd == "questlog" then
         -- Show all quests in quest log
-        DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00=== Quest Log ===|r", 1, 1, 0)
+        DebugMessage("|cFFFFFF00=== Quest Log ===|r", 1, 1, 0)
         for i = 1, GetNumQuestLogEntries() do
             local title, level, suggestedGroup, isHeader, isCollapsed, isComplete, frequency, questID = QuestieCompat.GetQuestLogTitle(i)
             if not isHeader and questID and questID > 0 then
@@ -2354,12 +2397,12 @@ SlashCmdList["QUESTIEDATACOLLECTOR"] = function(msg)
                         sessionStart = date("%Y-%m-%d %H:%M:%S")
                     }
                 end
-                DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DATA] Now tracking quest " .. questId .. ": " .. (questTitle or "Unknown") .. "|r", 0, 1, 0)
+                DebugMessage("|cFF00FF00[DATA] Now tracking quest " .. questId .. ": " .. (questTitle or "Unknown") .. "|r", 0, 1, 0)
             else
-                DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[DATA] Quest " .. questId .. " not found in your quest log|r", 1, 0, 0)
+                DebugMessage("|cFFFF0000[DATA] Quest " .. questId .. " not found in your quest log|r", 1, 0, 0)
             end
         else
-            DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00Usage: /qdc track <questId>|r", 1, 1, 0)
+            DebugMessage("|cFFFFFF00Usage: /qdc track <questId>|r", 1, 1, 0)
         end
         
     elseif string.sub(cmd, 1, 6) == "export" then
@@ -2368,7 +2411,7 @@ SlashCmdList["QUESTIEDATACOLLECTOR"] = function(msg)
         -- DEBUG: Export command received
         if questId then
             -- Export specific quest: /qdc export 26934
-            DEFAULT_CHAT_FRAME:AddMessage("|cFFCCCCCC[DEBUG] Calling ShowExportWindow with questId: " .. questId .. "|r", 0.8, 0.8, 0.8)
+            DebugMessage("|cFFCCCCCC[DEBUG] Calling ShowExportWindow with questId: " .. questId .. "|r", 0.8, 0.8, 0.8)
             QuestieDataCollector:ShowExportWindow(questId)
         else
             -- No quest ID specified, show selection window
@@ -2401,32 +2444,32 @@ SlashCmdList["QUESTIEDATACOLLECTOR"] = function(msg)
                         timestamp = time()
                     }
                     
-                    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DATA] Turn-in NPC manually captured: " .. name .. " (ID: " .. npcId .. ")|r", 0, 1, 0)
-                    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00Quest " .. questId .. " now has complete data!|r", 0, 1, 0)
+                    DebugMessage("|cFF00FF00[DATA] Turn-in NPC manually captured: " .. name .. " (ID: " .. npcId .. ")|r", 0, 1, 0)
+                    DebugMessage("|cFF00FF00Quest " .. questId .. " now has complete data!|r", 0, 1, 0)
                 else
-                    DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[DATA] Error: Could not get NPC ID from target|r", 1, 0, 0)
+                    DebugMessage("|cFFFF0000[DATA] Error: Could not get NPC ID from target|r", 1, 0, 0)
                 end
             else
-                DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[DATA] Error: Target an NPC first|r", 1, 0, 0)
+                DebugMessage("|cFFFF0000[DATA] Error: Target an NPC first|r", 1, 0, 0)
             end
         else
-            DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[DATA] Usage: /qdc turnin <questId> (while targeting the turn-in NPC)|r", 1, 0, 0)
+            DebugMessage("|cFFFF0000[DATA] Usage: /qdc turnin <questId> (while targeting the turn-in NPC)|r", 1, 0, 0)
         end
         
     elseif cmd == "clear" then
         QuestieDataCollection = {quests = {}, version = 1, sessionStart = date("%Y-%m-%d %H:%M:%S")}
         _activeTracking = {} -- Also clear active tracking
-        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DATA COLLECTOR] All quest data cleared.|r", 0, 1, 0)
-        DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00Do /reload to save the cleared state.|r", 1, 1, 0)
+        DebugMessage("|cFF00FF00[DATA COLLECTOR] All quest data cleared.|r", 0, 1, 0)
+        DebugMessage("|cFFFFFF00Do /reload to save the cleared state.|r", 1, 1, 0)
         
     elseif cmd == "rescan" then
         -- Re-scan quest log for missing quests
-        DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00[QuestieDataCollector] Starting rescan...|r", 1, 1, 0)
+        DebugMessage("|cFFFFFF00[QuestieDataCollector] Starting rescan...|r", 1, 1, 0)
         _activeTracking = {} -- Clear current tracking
         QuestieDataCollector:CheckExistingQuests()
-        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[QuestieDataCollector] Re-scanned quest log for missing quests|r", 0, 1, 0)
+        DebugMessage("|cFF00FF00[QuestieDataCollector] Re-scanned quest log for missing quests|r", 0, 1, 0)
     elseif cmd == "test" then
-        DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00[QDC Test] Checking if collector is working...|r", 1, 1, 0)
+        DebugMessage("|cFFFFFF00[QDC Test] Checking if collector is working...|r", 1, 1, 0)
         DEFAULT_CHAT_FRAME:AddMessage("  Initialized: " .. tostring(_initialized), 1, 1, 1)
         DEFAULT_CHAT_FRAME:AddMessage("  Enabled: " .. tostring(Questie and Questie.db and Questie.db.profile.enableDataCollection), 1, 1, 1)
         local count = 0
@@ -2437,10 +2480,10 @@ SlashCmdList["QUESTIEDATACOLLECTOR"] = function(msg)
         -- Toggle debug mode
         if not Questie.db.profile.debugDataCollector then
             Questie.db.profile.debugDataCollector = true
-            DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[Questie Data Collector]|r Debug mode ENABLED - will show table quest IDs", 1, 0, 0)
+            DebugMessage("|cFFFF0000[Questie Data Collector]|r Debug mode ENABLED - will show table quest IDs", 1, 0, 0)
         else
             Questie.db.profile.debugDataCollector = false
-            DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[Questie Data Collector]|r Debug mode DISABLED", 1, 0, 0)
+            DebugMessage("|cFFFF0000[Questie Data Collector]|r Debug mode DISABLED", 1, 0, 0)
         end
         DEFAULT_CHAT_FRAME:AddMessage("QuestieDataCollection table:", 0, 1, 1)
         if QuestieDataCollection then
@@ -2459,7 +2502,7 @@ SlashCmdList["QUESTIEDATACOLLECTOR"] = function(msg)
         end
         
     else
-        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FFFF=== QUESTIE DATA COLLECTOR ===|r", 0, 1, 1)
+        DebugMessage("|cFF00FFFF=== QUESTIE DATA COLLECTOR ===|r", 0, 1, 1)
         DEFAULT_CHAT_FRAME:AddMessage("/qdc enable - Enable data collection", 1, 1, 1)
         DEFAULT_CHAT_FRAME:AddMessage("/qdc disable - Disable data collection", 1, 1, 1)
         DEFAULT_CHAT_FRAME:AddMessage("/qdc status - Check current status", 1, 1, 1)

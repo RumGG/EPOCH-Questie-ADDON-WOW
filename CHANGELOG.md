@@ -8,6 +8,10 @@
   - Expanded Epoch quest ID range from 26000-26999 to 26000-29999 to include quest 28722 and similar
   - Fixed detection of [Epoch] prefix in runtime stubs stored in QuestiePlayer.currentQuestlog
   - Added debug logging to help diagnose data collection issues
+- **Data Collection Spam**: Fixed [DATA] messages being shown to all users
+  - All [DATA] tracking messages now only show when debug mode is enabled
+  - Important alerts (missing quest detection, completion notices) still show to users
+  - Added helper function to properly handle debug-only messages
 
 ## [1.0.54] - 2025-08-29
 
