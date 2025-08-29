@@ -3,10 +3,73 @@
 ## [Unreleased]
 
 ### Fixed
+- **Stormwind NPCs**: Restored Innkeeper Allison and Dungar Longdrink (flight master) on map tracker
+  - Removed placeholder entries in epochNpcDB.lua that were overriding Classic database
+  - NPCs now show with proper names and service flags when tracked
+
+### Added
+- **Quest Data**: Added 10 new Epoch quests from GitHub issues (#68, #70)
+  - The Hinterlands: 5 Alliance quests including "A Sticky Situation", "Can't Make An Omelette Without...", "Falling Up To Grace", "Parts From Afar", "Stalking the Stalkers"
+  - Westfall: 5 Alliance quests including "Hand of Azora" chain, "Homecoming", "The Killing Fields"
+- **NPCs**: Added 9 new NPCs with proper locations
+  - The Hinterlands: Truk Wildbeard, Kerr Ironsight, Tizzie Sparkcraft, Chief Engineer Urul, Gryphon Master Stonemace, Gryphon Master Talonaxe
+  - Westfall: Karlain, Revil Kost, Quartermaster Lewis
+- **Objects**: Added ground objects for quest item collection
+  - Sack of Oats in Westfall (3 spawn points)
+  - Fishing Bobber in Stormwind City
+
+### Fixed
+- **POI Markers**: Fixed service NPCs not appearing on Stormwind map (Fixes #42)
+  - Added proper npcFlags to flight master, innkeeper, auctioneers, bankers, trainers, and repair vendors
+  - Updated epochStormwindFixes.lua with service flags for 30+ NPCs
+- **Mailbox Locations**: Fixed misplaced mailboxes throughout Stormwind (Fixes #42)
+  - Updated 10 mailbox coordinates based on actual WotLK positions
+  - Added mailboxes in Trade District, Cathedral Square, Park District, Mage Quarter, Old Town, and Dwarven District
+
+## [1.0.57] - 2025-08-29
+
+### Added
+- **Quest Data**: Added 100+ Epoch quests from GitHub issues (#40-67)
+  - Elwynn Forest: Hunter training quests, Tattered Letter, Soaked Barrel chain
+  - Darkshore: Twilight's Hammer, Welcome to Auberdine, Commission for Archaeologist Everit
+  - Duskwood: Riders In The Night chain, Life In Death chain, Until Death Do Us Part chain, Wanted: Plagued Shambler
+  - Stranglethorn Vale: Kaldorei Lune, Looting the Looters, Call to Skirmish
+  - Hillsbrad Foothills: Threats from Abroad
+  - The Barrens: Burning Blade Signets, WANTED: Deepskin
+  - Ashenvale: Heart of the Ancient
+  - Stonetalon Mountains: Attack on the Mine, Ore for Sun Rock, Twilight Fangs
+  - Thousand Needles: Fresh Water Delivery, Podium Finish, racing quests
+  - Westfall: Barroom Blitz chain, The Venture to Sentinel Hill
+  - Mulgore: In Favor of the Sun, Grimtotem Encroachment, Finding Mone
+  - Arathi Highlands: Commission for Indon Cliffreach
+  - Badlands: Primitive Relic, Trapped Miners chain, The Strange Ore
+  - Swamp of Sorrows: Deathstrike Remedy, Horrors of the Swamp
+  - Multiple zones: Various level 1-60 quests with NPCs and objectives
+- **NPCs**: Added 30+ Epoch NPCs with proper locations and quest associations
+  - Quest givers and turn-in NPCs for all new quest chains
+  - Mob spawns for quest objectives
+  - Proper coordinates for all NPC locations
+
+### Fixed
+- **Debug Spam Cleanup**: Removed excessive debug messages shown to users
+  - Fixed "GetQuest failed" errors appearing on startup by waiting for full initialization
+  - Moved all [DATA] container tracking messages to debug mode only
+  - Container detection tips now only show when debug mode is enabled
+  - Quest progress tracking messages moved to debug output
 - **Map Scaling**: Simplified world map dimension calculations (Fixes #39)
   - Removed unnecessary conditional scaling logic that was never triggered
   - WorldMapButton width consistently returns 1002 in both fullscreen and windowed modes
   - Map icons should now position correctly regardless of map mode
+- **Available Quests**: Fixed nil NPC/GameObject errors when drawing quest starters (Fixes #43, #46, #52)
+  - Added defensive nil checks when NPCs or GameObjects are missing from database
+  - Quest markers now gracefully handle incomplete quest data
+  - Debug messages logged when starter data is missing instead of crashing
+- **Quest Level Filtering**: Fixed quest level filtering and improved usability (Fixes #41)
+  - Quests with "[Epoch] Quest XXXXX" placeholder names are now hidden from the map
+  - Epoch quests with missing/zero requiredLevel now properly respect level filters
+  - Changed "Show only quests granting experience" to hide red quests (5+ levels above player)
+  - Now shows green, yellow, and orange quests but hides red quests that clutter the map
+  - Properly handles Epoch quests like 26332 (level 60), 27470 (level 44) that had requiredLevel = 0
 
 ## [1.0.56] - 2025-08-29
 

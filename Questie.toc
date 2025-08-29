@@ -2,7 +2,7 @@
 ## Title: Questie|cFF00FF00 Project Epoch|r
 ## Author: trav346 (fork of esurm/Questie)
 ## Notes: Quest helper for Project Epoch (WotLK client)
-## Version: 1.0.56
+## Version: 1.0.57
 ## RequiredDeps:
 ## OptionalDeps: Ace3, CallbackHandler-1.0, HereBeDragons, LibDataBroker-1.1, LibDBIcon-1.0, LibSharedMedia-3.0, LibStub, LibUIDropDownMenu
 ## SavedVariables: QuestieConfig, QuestieDataCollection
@@ -71,7 +71,7 @@ Database\Corrections\classicItemFixes.lua
 Database\Corrections\classicObjectFixes.lua
 
 # Epoch Corrections
-Database\Corrections\epochStormwindFixes.lua
+#Database\Corrections\epochStormwindFixes.lua -- Disabled: causing issues with seasonal NPCs and incorrect positions
 Database\Corrections\epochStormwindObjectFixes.lua
 Database\Corrections\epochElwynnFixes.lua
 
@@ -166,6 +166,12 @@ Modules\QuestieDataCollector.lua
 Modules\Network\QuestieComms.lua
 Modules\Network\QuestieCommsData.lua
 
+# Debug
+debug_check.lua
+debug_pins.lua
+debug_map_test.lua
+debug_mapdata.lua
+
 # Journey
 Modules\Journey\QuestieJourney.lua
 Modules\Journey\QuestieJourneyPrivates.lua
@@ -220,6 +226,10 @@ Modules\QuestieCleanup.lua
 
 # Profiler
 Modules\QuestieProfiler.lua
+
+# Test files (temporary for debugging)
+debug_mailbox.lua
+check_other_addons.lua
 
 # Main
 Questie.lua

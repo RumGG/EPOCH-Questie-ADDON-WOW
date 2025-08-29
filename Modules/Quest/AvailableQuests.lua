@@ -60,16 +60,22 @@ function AvailableQuests.DrawAvailableQuest(quest) -- prevent recursion
         local gameObjects = quest.Starts["GameObject"]
         for i = 1, #gameObjects do
             local obj = QuestieDB:GetObject(gameObjects[i])
-
-            _AddStarter(obj, quest, "o_" .. obj.id)
+            if obj then
+                _AddStarter(obj, quest, "o_" .. obj.id)
+            else
+                Questie:Debug(Questie.DEBUG_DEVELOP, "[AvailableQuests] Missing GameObject data for ID:", gameObjects[i], "in quest", quest.Id)
+            end
         end
     end
     if (quest.Starts["NPC"]) then
         local npcs = quest.Starts["NPC"]
         for i = 1, #npcs do
             local npc = QuestieDB:GetNPC(npcs[i])
-
-            _AddStarter(npc, quest, "m_" .. npc.id)
+            if npc then
+                _AddStarter(npc, quest, "m_" .. npc.id)
+            else
+                Questie:Debug(Questie.DEBUG_DEVELOP, "[AvailableQuests] Missing NPC data for ID:", npcs[i], "in quest", quest.Id)
+            end
         end
     end
 end
@@ -91,6 +97,12 @@ _CalculateAvailableQuests = function()
     local playerLevel = QuestiePlayer.GetPlayerLevel()
     local minLevel = playerLevel - GetQuestGreenRange("player")
     local maxLevel = playerLevel
+    
+    -- With "Show only quests granting experience" setting, allow up to orange quests (+4 levels)
+    -- but not red quests (+5 and above) which clutter the map
+    if Questie.db.profile.lowLevelStyle == Questie.LOWLEVEL_NONE then
+        maxLevel = playerLevel + 4
+    end
 
     if Questie.db.profile.lowLevelStyle == Questie.LOWLEVEL_RANGE then
         minLevel = Questie.db.profile.minLevelFilter
@@ -127,6 +139,38 @@ _CalculateAvailableQuests = function()
             activeChildQuests[questId]      -- We already drew this quest in a previous loop iteration
         ) then
             return
+        end
+        
+        -- Don't show placeholder Epoch quests with "[Epoch] Quest XXXXX" names on the map
+        -- Also hide Epoch quests with missing or incorrect level data
+        local questName = QuestieDB.QueryQuestSingle(questId, "name")
+        if questName and string.find(questName, "^%[Epoch%] Quest %d+$") then
+            return
+        end
+        
+        -- Fix Epoch quests (26000+) with missing/incorrect requiredLevel data
+        if questId >= 26000 then
+            local requiredLevel = QuestieDB.QueryQuestSingle(questId, "requiredLevel")
+            local questLevel = QuestieDB.QueryQuestSingle(questId, "questLevel")
+            
+            -- If requiredLevel is missing/0, use questLevel for filtering
+            if not requiredLevel or requiredLevel == 0 then
+                requiredLevel = questLevel or 1
+            end
+            
+            -- Apply level filtering based on current settings
+            if Questie.db.profile.lowLevelStyle == Questie.LOWLEVEL_NONE then
+                -- "Show only quests granting experience" - hide red quests (5+ levels above player)
+                -- This allows yellow/orange quests (up to +4) but not red quests that clutter the map
+                if requiredLevel > (playerLevel + 4) then
+                    return
+                end
+            elseif Questie.db.profile.lowLevelStyle ~= Questie.LOWLEVEL_ALL then
+                -- For other filtering modes, apply the configured limits
+                if requiredLevel > maxLevel or (questLevel and questLevel > maxLevel) then
+                    return
+                end
+            end
         end
 
         if currentQuestlog[questId] then

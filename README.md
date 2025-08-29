@@ -1,11 +1,30 @@
-## v1.0.56 - Latest Release
+## v1.0.58 - Latest Release (Unreleased)
+
+### 🎉 New Quests and Fixes!
+
+#### Stormwind POI Markers Fixed! (Issue #42)
+- **Service NPCs Now Visible**: Flight master, innkeeper, auctioneers, bankers, trainers all show on map
+- **Mailbox Locations Fixed**: 10 accurate mailbox positions throughout Stormwind
+- **30+ NPCs Updated**: Added proper service flags for all important Stormwind NPCs
+
+#### 10+ New Quests Added (Issues #68, #70)
+- **The Hinterlands**: 5 new Alliance quests (levels 45-48)
+  - "A Sticky Situation", "Can't Make An Omelette Without...", "Falling Up To Grace"
+  - "Parts From Afar", "Stalking the Stalkers"
+- **Westfall**: 5 new Alliance quests (levels 10-14)
+  - "Hand of Azora" quest chain
+  - "Homecoming", "The Killing Fields"
+
+---
+
+## v1.0.57 - Previous Release
 
 ### 🎉 Massive Quest Database Update!
 
-#### 90+ New Epoch Quests Added
-- **Complete Starting Zones**: Gnome and Troll/Orc starting areas now fully supported
-- **GitHub Issues #32-38**: All community-submitted quest data integrated
-- **700+ Total Epoch Quests**: The most comprehensive Epoch quest database available
+#### 100+ New Epoch Quests Added
+- **Complete Quest Chains**: Major storylines in Duskwood, Westfall, and Badlands fully supported
+- **GitHub Issues #40-67**: All community-submitted quest data integrated  
+- **760+ Total Epoch Quests**: The most comprehensive Epoch quest database available
 
 ### 🎯 Major Fixes
 
@@ -20,14 +39,6 @@
 - No more [DATA] message spam (Issue #27)
 - Quest ID tracking expanded to ALL Epoch quests (26000+)
 - Export window shows [COMPLETE] or [INCOMPLETE] status
-
-### 📊 Quest Additions by Zone
-- **Stranglethorn Vale**: "Beastial Allies" quest chain
-- **Ironforge**: Airfield quest chain (18 quests)
-- **Hinterlands**: 6 new quests including "Wildhammer Bones"
-- **Dun Morogh**: Complete gnome starting experience
-- **Durotar**: Complete troll/orc starting experience including "Banana Bonanza"
-- **Feralas**: "Renegade Naga" and related quests
 
 ### 🚀 What This Means for Players
 - **Better Leveling**: Starting zones now have complete quest tracking

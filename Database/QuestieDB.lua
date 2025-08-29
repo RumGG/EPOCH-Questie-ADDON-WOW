@@ -1208,7 +1208,8 @@ function QuestieDB.GetQuest(questId) -- /dump QuestieDB.GetQuest(867)
     end)
     
     if not success then
-        Questie:Print("|cFFFF0000[ERROR] GetQuest failed: " .. tostring(result) .. "|r")
+        -- Only show error in debug mode to avoid spam
+        Questie:Debug(Questie.DEBUG_CRITICAL, "[QuestieDB.GetQuest] GetQuest failed:", tostring(result))
         return nil
     end
     

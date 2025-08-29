@@ -318,6 +318,17 @@ local epochItemData = {
 [62386] = {"Magic Drum",{6009},nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,{26611}},
 [62387] = {"Twisted Staff",{6010},nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,{26611}},
 [63509] = {"Tainted Essence",{62026},nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,{27484}},
+
+-- Issue #70: The Hinterlands quest items
+[8684] = {"Hinterlands Honey Ripple",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,{26167}},
+[60081] = {"Shadraspawn Egg",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,{26168}},
+[60083] = {"Witherbark Shawl Scrap",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,{26171}},
+[60084] = {"Perfect Broodguard Silk",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,{26171}},
+
+-- Issue #68: Westfall quest items
+[3575] = {"Cask of Merlot",nil,{400001},nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,{26697}}, -- From Sack of Oats object
+[13926] = {"Golden Scale Gauntlets",nil,{400002},nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,{26699}}, -- From Fishing Bobber object
+[62859] = {"Nancy Eastworth's Braid",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,{26987}},
 }
 
 -- Stage the Epoch itemData for later merge during compilation

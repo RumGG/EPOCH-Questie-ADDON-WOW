@@ -172,6 +172,10 @@ local epochObjectData = {
 [4001069] = {"Aru-Talis Site Four",nil,nil,{[490]={{45.8,94.2}}},490},
 [4001070] = {"Comfortably Large Crate",{26733},{26732},{[85]={{67.0,78.4}},[281]={{27.73,1.32}},[28]={{9.53,65.98}},[130]={{81.98,6.83}}},85},
 [4001071] = {"Blackrock Mountain Lava",nil,nil,{[1445]={{47.3,68.8}}},1445},
+
+-- Issue #68: Westfall quest objects
+[400001] = {"Sack of Oats",nil,{3575},{[40]={{45.9,38.3},{46.5,37.7},{46,38.1}}},40}, -- For Hand of Azora quest
+[400002] = {"Fishing Bobber",nil,{13926},{[1519]={{54.8,69}}},1519}, -- For Hand of Azora quest in Stormwind
 }
 
 -- Stage the Epoch objectData for later merge during compilation

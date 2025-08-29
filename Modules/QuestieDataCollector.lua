@@ -27,7 +27,8 @@ local CreateQuestDataLink
 
 -- Helper function for debug messages
 local function DebugMessage(msg, r, g, b)
-    if Questie.db.profile.debugDataCollector then
+    -- Extra safety check to ensure db is loaded and debug is truly enabled
+    if Questie.db and Questie.db.profile and Questie.db.profile.debugDataCollector then
         DEFAULT_CHAT_FRAME:AddMessage(msg, r or 1, g or 1, b or 1)
     end
 end
@@ -78,16 +79,15 @@ function QuestieDataCollector:Initialize()
     DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Questie Data Collector]|r Ready! You can now accept quests for data collection.", 0, 1, 0)
     DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00Type /qdc for commands|r", 1, 1, 0)
     
-    -- Check existing quests in log immediately
-    QuestieDataCollector:CheckExistingQuests()
-    
-    -- Also do a delayed rescan to ensure everything is properly loaded
-    -- This fixes the issue where _activeTracking isn't populated after reload
+    -- Wait for Questie to be fully initialized before checking quests
+    -- This prevents GetQuest failures during startup
     local C_Timer = QuestieCompat.C_Timer
-    C_Timer.After(1.0, function()
-        -- Clear and rescan to ensure we're tracking all necessary quests
-        _activeTracking = {}
-        QuestieDataCollector:CheckExistingQuests()
+    C_Timer.After(2.0, function()
+        -- Only check existing quests after Questie is fully loaded
+        if QuestieDB and QuestieDB.GetQuest then
+            _activeTracking = {}
+            QuestieDataCollector:CheckExistingQuests()
+        end
         
         -- Count how many quests we're tracking
         local count = 0
@@ -153,9 +153,12 @@ function QuestieDataCollector:CheckExistingQuests()
                     end)
                     
                     if not success then
-                        -- GetQuest failed, skip this quest silently
-                        if Questie.db.profile.debugDataCollector then
-                            DebugMessage("|cFFFF0000[DataCollector]|r GetQuest failed for questID: " .. tostring(questID), 1, 0, 0)
+                        -- GetQuest failed, skip this quest silently - no messages at all
+                        -- This is expected for vanilla quests that were modified by Epoch
+                        -- Only log in debug mode if explicitly requested
+                        if Questie.db and Questie.db.profile and Questie.db.profile.debugDataCollector then
+                            -- Even in debug mode, don't show these as they're too spammy
+                            -- DebugMessage("|cFFFF0000[DataCollector]|r GetQuest failed for questID: " .. tostring(questID), 1, 0, 0)
                         end
                     else
                         -- Now process the quest data
@@ -1288,11 +1291,14 @@ function QuestieDataCollector:SetupObjectTracking()
                     subzone = GetSubZoneText(),
                     timestamp = time()
                 }
-                -- Only show this in debug mode
-                if Questie.db.profile.debugDataCollector then
+                -- Only show this in debug mode - disabled due to spam issues
+                -- The db.profile isn't always loaded when tooltips are processed
+                --[[
+                if Questie.db and Questie.db.profile and Questie.db.profile.debugDataCollector then
                     DEFAULT_CHAT_FRAME:AddMessage("|cFF00FFFF[DEBUG] Captured object from tooltip: '" .. name .. "'" .. 
                         (objectId and " (ID: " .. objectId .. ")" or "") .. "|r", 0, 1, 1)
                 end
+                --]]
                 
                 if objectId then
                     DebugMessage("|cFF8888FF[DATA] Hovering object: " .. name .. " (ID: " .. objectId .. ")|r", 0.5, 0.5, 1)
@@ -1359,16 +1365,19 @@ function QuestieDataCollector:OnLootOpened()
             lootSourceName = _lastInteractedObject.name
             lootSourceId = _lastInteractedObject.id
             
-            if Questie.db.profile.debugDataCollector then
+            -- Disabled due to spam issues
+            --[[
+            if Questie.db and Questie.db.profile and Questie.db.profile.debugDataCollector then
                 local age = _lastInteractedObject.timestamp and (time() - _lastInteractedObject.timestamp) or "unknown"
                 DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00[DEBUG] Using _lastInteractedObject: '" .. (lootSourceName or "nil") .. 
                     "' (age: " .. tostring(age) .. "s)|r", 1, 1, 0)
             end
+            --]]
             
             -- Don't accept placeholder names
             if not lootSourceName or lootSourceName == "Ground Object" or lootSourceName == "Unknown Container" or lootSourceName == "Unidentified Container" then
                 -- Make one more attempt to get a meaningful name
-                DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00[DATA] Container detected but name unknown. |r|cFF00FF00TIP: Mouse over before looting!|r", 1, 1, 0)
+                DebugMessage("|cFFFFFF00[DATA] Container detected but name unknown. TIP: Mouse over before looting!|r", 1, 1, 0)
                 
                 -- For known quest items, we can make educated guesses
                 local numItems = GetNumLootItems()
@@ -1391,8 +1400,7 @@ function QuestieDataCollector:OnLootOpened()
             end
         else
             -- We don't have the container name - provide helpful message
-            DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00[DATA] Container location saved but name unknown.|r", 1, 1, 0) 
-            DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00TIP: For best results, hover your mouse over containers before right-clicking!|r", 0, 1, 0)
+            DebugMessage("|cFFFFFF00[DATA] Container location saved but name unknown. TIP: Mouse over before looting!|r", 1, 1, 0)
             lootSourceName = "Unidentified Container"
         end
         
@@ -1661,10 +1669,10 @@ function QuestieDataCollector:OnUIInfoMessage(message)
                         if not found then
                             table.insert(objective.containers, objectData)
                             if objectData.name ~= "Unknown Container" then
-                                DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DATA] Container captured: '" .. objectData.name .. 
+                                DebugMessage("|cFF00FF00[DATA] Container captured: '" .. objectData.name .. 
                                     "' at [" .. coords.x .. ", " .. coords.y .. "]|r", 0, 1, 0)
                             else
-                                DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[DATA] Container location captured but name unknown at [" .. 
+                                DebugMessage("|cFFFF0000[DATA] Container location captured but name unknown at [" .. 
                                     coords.x .. ", " .. coords.y .. "]. Mouse over objects before looting!|r", 1, 0, 0)
                             end
                         end
@@ -1699,7 +1707,7 @@ function QuestieDataCollector:OnUIInfoMessage(message)
                         })
                         
                         -- Only show progress message once per update
-                        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DATA] Progress: " .. itemName .. " " .. current .. "/" .. total .. "|r", 0, 1, 0)
+                        DebugMessage("|cFF00FF00[DATA] Progress: " .. itemName .. " " .. current .. "/" .. total .. "|r", 0, 1, 0)
                     end
                     
                     break -- Stop checking objectives once we found a match
@@ -2816,8 +2824,8 @@ SlashCmdList["QUESTIEDATACOLLECTOR"] = function(msg)
         if questId then
             local data = QuestieDataCollection.quests[questId]
             if data then
-                DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DATA] Quest " .. questId .. " data found:|r", 0, 1, 0)
-                DEFAULT_CHAT_FRAME:AddMessage("  Name: " .. (data.name or "Unknown"), 1, 1, 1)
+                DebugMessage("|cFF00FF00[DATA] Quest " .. questId .. " data found:|r", 0, 1, 0)
+                DebugMessage("  Name: " .. (data.name or "Unknown"), 1, 1, 1)
                 DEFAULT_CHAT_FRAME:AddMessage("  Level: " .. (data.level or "?"), 1, 1, 1)
                 
                 -- Check objectives
@@ -2826,13 +2834,13 @@ SlashCmdList["QUESTIEDATACOLLECTOR"] = function(msg)
                     for i, obj in ipairs(data.objectives) do
                         DEFAULT_CHAT_FRAME:AddMessage("    " .. i .. ": " .. (obj.text or "Unknown"), 0.8, 0.8, 0.8)
                         if obj.containers and #obj.containers > 0 then
-                            DEFAULT_CHAT_FRAME:AddMessage("      |cFF00FF00Containers: " .. #obj.containers .. " found|r", 0, 1, 0)
+                            DebugMessage("      |cFF00FF00Containers: " .. #obj.containers .. " found|r", 0, 1, 0)
                             for _, cont in ipairs(obj.containers) do
                                 DEFAULT_CHAT_FRAME:AddMessage(string.format("        %s at [%.1f, %.1f]", 
                                     cont.name, cont.coords.x, cont.coords.y), 0.6, 0.6, 1)
                             end
                         else
-                            DEFAULT_CHAT_FRAME:AddMessage("      |cFFFF0000No containers captured yet|r", 1, 0, 0)
+                            DebugMessage("      |cFFFF0000No containers captured yet|r", 1, 0, 0)
                         end
                     end
                 else
@@ -2866,8 +2874,8 @@ SlashCmdList["QUESTIEDATACOLLECTOR"] = function(msg)
                     DEFAULT_CHAT_FRAME:AddMessage("  |cFFFF0000Missing quest giver data. Abandon and re-accept for complete data.|r", 1, 0, 0)
                 end
             else
-                DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[DATA] Quest " .. questId .. " not found in data collection|r", 1, 0, 0)
-                DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00Is data collection enabled? Try: /qdc enable|r", 1, 1, 0)
+                DebugMessage("|cFFFF0000[DATA] Quest " .. questId .. " not found in data collection|r", 1, 0, 0)
+                DebugMessage("|cFFFFFF00Is data collection enabled? Try: /qdc enable|r", 1, 1, 0)
             end
         else
             DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000Usage: /qdc check <questId>|r", 1, 0, 0)
