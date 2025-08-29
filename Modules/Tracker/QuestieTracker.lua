@@ -899,23 +899,18 @@ function QuestieTracker:Update()
 
     -- Begin populating the Tracker with Quests
     local _UpdateQuests = function()
-        -- Debug: Log tracking status for all quests
-        if Questie.db.profile.autoTrackQuests then
-            local trackedCount = 0
-            local untrackedCount = 0
-            local untrackedList = {}
-            for _, qId in pairs(sortedQuestIds) do
-                if Questie.db.char.AutoUntrackedQuests and Questie.db.char.AutoUntrackedQuests[qId] then
-                    untrackedCount = untrackedCount + 1
-                    table.insert(untrackedList, qId)
-                else
-                    trackedCount = trackedCount + 1
-                end
+        -- Debug: Dump entire AutoUntrackedQuests table
+        if Questie.db.profile.autoTrackQuests and Questie.db.char.AutoUntrackedQuests then
+            Questie:Print("[Tracker Update] Dumping AutoUntrackedQuests table:")
+            local count = 0
+            for qId, value in pairs(Questie.db.char.AutoUntrackedQuests) do
+                Questie:Print("  Quest", qId, "=", tostring(value))
+                count = count + 1
             end
-            if untrackedCount > 0 then
-                Questie:Debug(Questie.DEBUG_INFO, "[Tracker Update] Total quests:", #sortedQuestIds, "Tracked:", trackedCount, "Untracked:", untrackedCount)
-                Questie:Debug(Questie.DEBUG_INFO, "[Tracker Update] Untracked quest IDs:", unpack(untrackedList))
+            if count == 0 then
+                Questie:Print("  (empty)")
             end
+            Questie:Print("[Tracker Update] Total quests in log:", #sortedQuestIds)
         end
         
         for _, questId in pairs(sortedQuestIds) do
@@ -927,12 +922,24 @@ function QuestieTracker:Update()
             local remainingSeconds = TrackerQuestTimers:GetRemainingTime(quest, nil, true)
             local timedQuest = (quest.trackTimedQuest or quest.timedBlizzardQuest)
             
-            local shouldShow = (complete ~= 1 or Questie.db.profile.trackerShowCompleteQuests or timedQuest)
-                and ((Questie.db.profile.autoTrackQuests and not Questie.db.char.AutoUntrackedQuests[questId])
-                or (not Questie.db.profile.autoTrackQuests and Questie.db.char.TrackedQuests[questId]))
+            -- Debug all conditions
+            local isNotComplete = (complete ~= 1)
+            local showComplete = Questie.db.profile.trackerShowCompleteQuests
+            local isAutoTrack = Questie.db.profile.autoTrackQuests
+            local inAutoUntracked = Questie.db.char.AutoUntrackedQuests and Questie.db.char.AutoUntrackedQuests[questId]
+            local inTracked = Questie.db.char.TrackedQuests and Questie.db.char.TrackedQuests[questId]
             
-            if not shouldShow and Questie.db.profile.autoTrackQuests then
-                Questie:Debug(Questie.DEBUG_INFO, "[Tracker] Quest", questId, quest.name or "Unknown", "filtered out. Complete=", complete, "InAutoUntracked=", Questie.db.char.AutoUntrackedQuests[questId] or false)
+            -- Log every quest's tracking state
+            Questie:Print(string.format("[Tracker] Quest %d (%s): complete=%s, autoTrack=%s, inAutoUntracked=%s, inTracked=%s",
+                questId, quest.name or "Unknown", tostring(complete), tostring(isAutoTrack), tostring(inAutoUntracked), tostring(inTracked)))
+            
+            local shouldShow = (complete ~= 1 or Questie.db.profile.trackerShowCompleteQuests or timedQuest)
+                and ((Questie.db.profile.autoTrackQuests and not inAutoUntracked)
+                or (not Questie.db.profile.autoTrackQuests and inTracked))
+            
+            if not shouldShow then
+                Questie:Print(string.format("[FILTERED OUT] Quest %d (%s) - complete=%s, inAutoUntracked=%s",
+                    questId, quest.name or "Unknown", tostring(complete), tostring(inAutoUntracked)))
             end
 
             if shouldShow then
@@ -2419,8 +2426,9 @@ function QuestieTracker:UntrackQuestId(questId)
 end
 
 function QuestieTracker:AQW_Insert(index, expire)
-    Questie:Debug(Questie.DEBUG_DEVELOP, "[QuestieTracker:AQW_Insert]")
+    Questie:Print("[AQW_Insert] Called with index=", index, "expire=", expire)
     if (not Questie.db.profile.trackerEnabled) or (index == 0) or (index == nil) then
+        Questie:Print("[AQW_Insert] Early return - tracker disabled or invalid index")
         return
     end
 
@@ -2438,13 +2446,16 @@ function QuestieTracker:AQW_Insert(index, expire)
     RemoveQuestWatch(index, true)
 
     local questId = select(8, GetQuestLogTitle(index))
+    Questie:Print("[AQW_Insert] GetQuestLogTitle returned questId=", questId)
     if questId == 0 then
         -- When an objective progresses in TBC "index" is the questId, but when a quest is manually added to the quest watch
         -- (e.g. shift clicking it in the quest log) "index" is the questLogIndex.
         questId = index
+        Questie:Print("[AQW_Insert] Using index as questId=", questId)
     end
 
     if questId > 0 then
+        Questie:Print("[AQW_Insert] Processing questId=", questId)
         -- FIRST: Ensure we have quest data (create runtime stub if needed)
         local quest = QuestiePlayer.currentQuestlog[questId] or QuestieDB.GetQuest(questId)
         
@@ -2518,12 +2529,14 @@ function QuestieTracker:AQW_Insert(index, expire)
                     local isEpochQuest = questId >= 26000
                     if not isEpochQuest then
                         Questie.db.char.AutoUntrackedQuests[questId] = true
-                        Questie:Debug(Questie.DEBUG_INFO, "[AQW_Insert] Manual untrack:", questId)
+                        Questie:Print("[AQW_Insert] Manual untrack added to AutoUntrackedQuests:", questId)
+                    else
+                        Questie:Print("[AQW_Insert] Blocked untrack of Epoch quest:", questId)
                     end
                 else
                     -- Currently untracked, track it
                     Questie.db.char.AutoUntrackedQuests[questId] = nil
-                    Questie:Debug(Questie.DEBUG_INFO, "[AQW_Insert] Manual track:", questId)
+                    Questie:Print("[AQW_Insert] Manual track - removed from AutoUntrackedQuests:", questId)
                 end
             else
                 -- Quest acceptance or other automatic tracking
@@ -2531,7 +2544,9 @@ function QuestieTracker:AQW_Insert(index, expire)
                 -- Remove from untracked list if it's there
                 if Questie.db.char.AutoUntrackedQuests[questId] then
                     Questie.db.char.AutoUntrackedQuests[questId] = nil
-                    Questie:Debug(Questie.DEBUG_INFO, "[AQW_Insert] Auto-tracking newly accepted quest:", questId)
+                    Questie:Print("[AQW_Insert] Quest acceptance - removed from AutoUntrackedQuests:", questId)
+                else
+                    Questie:Print("[AQW_Insert] Quest acceptance - quest not in AutoUntrackedQuests:", questId)
                 end
             end
         end

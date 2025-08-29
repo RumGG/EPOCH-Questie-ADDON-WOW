@@ -673,7 +673,9 @@ function QuestieQuest:AcceptQuest(questId)
     -- This must happen for both database quests AND runtime stubs
     if Questie.db.char.AutoUntrackedQuests and Questie.db.char.AutoUntrackedQuests[questId] then
         Questie.db.char.AutoUntrackedQuests[questId] = nil
-        Questie:Debug(Questie.DEBUG_INFO, "[QuestieQuest:AcceptQuest] Removed quest from AutoUntrackedQuests:", questId)
+        Questie:Print("[QuestieQuest:AcceptQuest] Removed quest from AutoUntrackedQuests:", questId)
+    else
+        Questie:Print("[QuestieQuest:AcceptQuest] Quest not in AutoUntrackedQuests:", questId)
     end
     
     local quest = QuestieDB.GetQuest(questId)
