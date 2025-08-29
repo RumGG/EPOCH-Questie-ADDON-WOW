@@ -1416,126 +1416,126 @@ function QuestieDataCollector:OnLootOpened()
 end
 
 function QuestieDataCollector:OnItemPush(bagSlot)
-    -- Track when quest items are received from objects
-    if _lastInteractedObject and (time() - _lastInteractedObject.timestamp < 3) then
-        -- Get item info from the bag slot
-        C_Timer.After(0.1, function()
-            for bag = 0, 4 do
-                for slot = 1, GetContainerNumSlots(bag) do
-                    local itemLink = GetContainerItemLink(bag, slot)
-                    if itemLink then
-                        local itemName = string.match(itemLink, "%[(.-)%]")
-                        -- Check if this is a quest item
-                        for questId, questData in pairs(QuestieDataCollection.quests or {}) do
-                            for _, objective in ipairs(questData.objectives or {}) do
-                                if objective.type == "item" and string.find(objective.text or "", itemName or "") then
-                                    objective.objectSources = objective.objectSources or {}
-                                    table.insert(objective.objectSources, {
-                                        objectName = _lastInteractedObject.name,
-                                        itemName = itemName,
-                                        coords = _lastInteractedObject.coords,
-                                        zone = _lastInteractedObject.zone,
-                                        subzone = _lastInteractedObject.subzone
-                                    })
-                                    
-                                    DebugMessage("|cFF00AAFF[DATA] Quest item '" .. itemName .. 
-                                        "' obtained from object: " .. _lastInteractedObject.name .. "|r", 0, 0.7, 1)
-                                end
-                            end
-                        end
-                    end
-                end
-            end
-        end)
-    end
+    -- Disabled - we capture this data via UI_INFO_MESSAGE now to avoid duplicates
+    -- The UI_INFO_MESSAGE handler captures container data when quest progress updates
 end
 
 function QuestieDataCollector:OnUIInfoMessage(message)
-    -- Debug: Show all UI_INFO_MESSAGE events when collecting data
-    if message and message ~= "" then
-        DebugMessage("|cFFFFFF00[DEBUG] UI_INFO_MESSAGE: " .. message .. "|r", 1, 1, 0)
+    -- Only process if we have a message
+    if not message or message == "" then return end
+    
+    -- Debug: Show UI_INFO_MESSAGE only when debug mode is on
+    DebugMessage("|cFFFFFF00[DEBUG] UI_INFO_MESSAGE: " .. message .. "|r", 1, 1, 0)
+    
+    -- Check if this is a quest progress message (pattern: "Item Name: X/Y")
+    local itemName, current, total = string.match(message, "(.+):%s*(%d+)/(%d+)")
+    if not itemName then
+        -- Try alternate pattern without colon
+        itemName, current, total = string.match(message, "(.+)%s+(%d+)/(%d+)")
     end
     
-    -- Capture exploration and discovery objectives AND quest progress updates
+    -- If it's not a progress message, we're done
+    if not (itemName and current and total) then return end
+    
+    -- We have a quest progress update!
+    local coords = QuestieDataCollector:GetPlayerCoords()
+    local zone = GetRealZoneText()
+    local subzone = GetSubZoneText()
+    local foundMatch = false
+    
+    -- Check if we're currently looting something (for ground objects)
+    local objectData = nil
+    if _lastInteractedObject and (time() - _lastInteractedObject.timestamp < 3) then
+        -- Don't use the item name as container name
+        if _lastInteractedObject.name ~= itemName then
+            objectData = {
+                name = _lastInteractedObject.name,
+                id = _lastInteractedObject.id,
+                coords = coords,
+                zone = zone,
+                subzone = subzone
+            }
+        end
+    end
+    
+    -- Find which quest this progress belongs to
     for questId, _ in pairs(_activeTracking) do
         local questData = QuestieDataCollection.quests[questId]
-        if questData then
-            local coords = QuestieDataCollector:GetPlayerCoords()
-            local zone = GetRealZoneText()
-            local subzone = GetSubZoneText()
-            
-            -- Check if this message is related to quest progress
-            if message and message ~= "" then
-                -- ENHANCED: Detect quest progress patterns like "Bananas looted: 1/10" or "Sun-Ripened Banana: 2/5"
-                local itemName, current, total = string.match(message, "(.+):%s*(%d+)/(%d+)")
-                if not itemName then
-                    -- Try alternate pattern without colon
-                    itemName, current, total = string.match(message, "(.+)%s+(%d+)/(%d+)")
-                end
-                
-                if itemName and current and total then
-                    -- This is a quest progress update! Capture the ground object/container
-                    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Questie] Quest progress detected: " .. itemName .. " " .. current .. "/" .. total .. "|r", 0, 1, 0)
+        if questData and not foundMatch then
+            -- Check objectives for matching item
+            for objIndex, objective in ipairs(questData.objectives or {}) do
+                -- Check if this objective matches the item name
+                if string.find(string.lower(objective.text or ""), string.lower(itemName)) or
+                   string.find(string.lower(itemName), string.lower(objective.text or "")) then
                     
-                    -- Check if we're currently looting something
-                    local objectData = nil
-                    if _lastInteractedObject and (time() - _lastInteractedObject.timestamp < 3) then
-                        objectData = {
-                            name = _lastInteractedObject.name,
-                            id = _lastInteractedObject.id,
-                            coords = coords,
-                            zone = zone,
-                            subzone = subzone
-                        }
-                        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Questie] Captured container: " .. (_lastInteractedObject.name or "Unknown") .. " at [" .. coords.x .. ", " .. coords.y .. "]|r", 0, 1, 0)
-                    end
-                    
-                    -- Store this as a quest objective update with the container info
-                    for objIndex, objective in ipairs(questData.objectives or {}) do
-                        -- Check if this objective matches the item name
-                        if string.find(string.lower(objective.text or ""), string.lower(itemName)) or
-                           string.find(string.lower(itemName), string.lower(objective.text or "")) then
+                    foundMatch = true -- Found the matching quest/objective
                             
-                            -- Store container/object information
-                            if objectData then
-                                objective.containers = objective.containers or {}
-                                -- Check if we already have this container
-                                local found = false
-                                for _, container in ipairs(objective.containers) do
-                                    if container.name == objectData.name and 
-                                       container.coords and objectData.coords and
-                                       math.abs(container.coords.x - objectData.coords.x) < 1 and
-                                       math.abs(container.coords.y - objectData.coords.y) < 1 then
-                                        found = true
-                                        break
-                                    end
-                                end
-                                if not found then
-                                    table.insert(objective.containers, objectData)
-                                    DebugMessage("|cFF00FF00[DATA] Quest item container captured: " .. objectData.name .. 
-                                        " at [" .. coords.x .. ", " .. coords.y .. "]|r", 0, 1, 0)
-                                end
+                    -- Store container/object information
+                    if objectData then
+                        objective.containers = objective.containers or {}
+                        -- Check if we already have this container at this location
+                        local found = false
+                        for _, container in ipairs(objective.containers) do
+                            if container.name == objectData.name and 
+                               container.coords and objectData.coords and
+                               math.abs(container.coords.x - objectData.coords.x) < 1 and
+                               math.abs(container.coords.y - objectData.coords.y) < 1 then
+                                found = true
+                                break
                             end
-                            
-                            -- Update progress
-                            objective.current = tonumber(current)
-                            objective.total = tonumber(total)
-                            
-                            -- Store progress location
-                            objective.progressLocations = objective.progressLocations or {}
-                            table.insert(objective.progressLocations, {
-                                coords = coords,
-                                zone = zone,
-                                subzone = subzone,
-                                progress = current .. "/" .. total,
-                                container = objectData,
-                                timestamp = time()
-                            })
+                        end
+                        if not found then
+                            table.insert(objective.containers, objectData)
+                            DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DATA] Container captured: " .. objectData.name .. 
+                                " at [" .. coords.x .. ", " .. coords.y .. "]|r", 0, 1, 0)
                         end
                     end
+                    
+                    -- Update progress
+                    objective.current = tonumber(current)
+                    objective.total = tonumber(total)
+                    
+                    -- Store progress location (limit to prevent spam)
+                    objective.progressLocations = objective.progressLocations or {}
+                    -- Only add if the progress changed or location is significantly different
+                    local shouldAdd = true
+                    if #objective.progressLocations > 0 then
+                        local last = objective.progressLocations[#objective.progressLocations]
+                        if last.progress == current .. "/" .. total and 
+                           last.coords and coords and
+                           math.abs(last.coords.x - coords.x) < 2 and
+                           math.abs(last.coords.y - coords.y) < 2 then
+                            shouldAdd = false -- Same progress at nearby location
+                        end
+                    end
+                    
+                    if shouldAdd then
+                        table.insert(objective.progressLocations, {
+                            coords = coords,
+                            zone = zone,
+                            subzone = subzone,
+                            progress = current .. "/" .. total,
+                            container = objectData,
+                            timestamp = time()
+                        })
+                        
+                        -- Only show progress message once per update
+                        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DATA] Progress: " .. itemName .. " " .. current .. "/" .. total .. "|r", 0, 1, 0)
+                    end
+                    
+                    break -- Stop checking objectives once we found a match
                 end
-                
-                -- Initialize explorations table if needed
+            end
+            
+            if foundMatch then break end -- Stop checking quests once we found a match
+        end
+    end
+    
+    -- Store general exploration messages for all tracked quests (but not progress messages)
+    if not foundMatch then
+        for questId, _ in pairs(_activeTracking) do
+            local questData = QuestieDataCollection.quests[questId]
+            if questData then
                 questData.explorations = questData.explorations or {}
                 
                 -- Store the exploration event
@@ -1548,7 +1548,7 @@ function QuestieDataCollector:OnUIInfoMessage(message)
                 }
                 table.insert(questData.explorations, explorationData)
                 
-                -- Also check objectives for exploration/event types
+                -- Check objectives for exploration/event types
                 for objIndex, objective in ipairs(questData.objectives or {}) do
                     if objective.type == "event" or objective.type == "object" or 
                        string.find(string.lower(objective.text or ""), "explore") or
