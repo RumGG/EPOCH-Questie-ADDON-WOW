@@ -2423,6 +2423,35 @@ function QuestieTracker:AQW_Insert(index, expire)
     end
 
     if questId > 0 then
+        -- FIRST: Ensure we have quest data (create runtime stub if needed)
+        local quest = QuestiePlayer.currentQuestlog[questId] or QuestieDB.GetQuest(questId)
+        
+        -- If quest not found anywhere, try to create a runtime stub BEFORE making tracking decisions
+        if not quest then
+            local qli = GetQuestLogIndexByID and GetQuestLogIndexByID(questId)
+            if not qli then
+                -- Try using the index directly if GetQuestLogIndexByID doesn't exist
+                qli = index
+            end
+            
+            if qli then
+                -- Create runtime stub for missing quest
+                local title, _, _, isHeader = GetQuestLogTitle(qli)
+                if not isHeader and title and title ~= "" then
+                    -- Create a basic stub so tracking logic can work
+                    Questie:Debug(Questie.DEBUG_INFO, "[QuestieTracker] Creating runtime stub for quest", questId, "before tracking")
+                    -- This will be enhanced later, but we need something in currentQuestlog NOW
+                    QuestiePlayer.currentQuestlog[questId] = {
+                        Id = questId,
+                        name = title,
+                        __isRuntimeStub = true,
+                        Objectives = {}
+                    }
+                end
+            end
+        end
+        
+        -- THEN: Handle tracking logic with quest data available
         -- These checks makes sure the only way to track a quest is through the Blizzard Quest Log
         -- or another Addon hooked into the Blizzard Quest Log that replaces the default Quest Log.
         if not Questie.db.profile.autoTrackQuests then
@@ -2477,10 +2506,10 @@ function QuestieTracker:AQW_Insert(index, expire)
             end
         end
 
-        -- Check for runtime stubs first, then fall back to QuestieDB
-        local quest = QuestiePlayer.currentQuestlog[questId] or QuestieDB.GetQuest(questId)
+        -- Re-check for quest after potential stub creation
+        quest = QuestiePlayer.currentQuestlog[questId] or QuestieDB.GetQuest(questId)
         
-        -- If quest not found anywhere, try to create a runtime stub on the spot
+        -- If still not found (shouldn't happen now), create a more detailed stub
         if not quest then
             local qli = GetQuestLogIndexByID and GetQuestLogIndexByID(questId)
             if qli then
