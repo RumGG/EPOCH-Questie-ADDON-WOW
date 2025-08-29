@@ -669,6 +669,8 @@ local hordeTournamentMarkerQuests = {[13691] = true, [13693] = true, [13694] = t
 
 ---@param questId number
 function QuestieQuest:AcceptQuest(questId)
+    Questie:Print("[QuestieQuest:AcceptQuest] Called for questId:", questId)
+    
     -- ALWAYS clear auto-untracked status when accepting ANY quest
     -- This must happen for both database quests AND runtime stubs
     if Questie.db.char.AutoUntrackedQuests and Questie.db.char.AutoUntrackedQuests[questId] then
@@ -678,7 +680,20 @@ function QuestieQuest:AcceptQuest(questId)
         Questie:Print("[QuestieQuest:AcceptQuest] Quest not in AutoUntrackedQuests:", questId)
     end
     
+    -- Check what's currently in currentQuestlog
+    local currentQuest = QuestiePlayer.currentQuestlog[questId]
+    if currentQuest then
+        Questie:Print("[QuestieQuest:AcceptQuest] Quest already in currentQuestlog:", questId, currentQuest.name or "Unknown", "isRuntimeStub=", currentQuest.__isRuntimeStub)
+    else
+        Questie:Print("[QuestieQuest:AcceptQuest] Quest NOT in currentQuestlog:", questId)
+    end
+    
     local quest = QuestieDB.GetQuest(questId)
+    if quest then
+        Questie:Print("[QuestieQuest:AcceptQuest] Found quest in database:", questId, quest.name or "Unknown")
+    else
+        Questie:Print("[QuestieQuest:AcceptQuest] Quest NOT in database:", questId)
+    end
     
     -- For quests not in database (like Epoch quests), check if we have a runtime stub
     if not quest then
