@@ -1,0 +1,49 @@
+name: Create Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release (e.g., 1.0.5)'
+        required: true
+        type: string
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Update version in .toc file
+        run: |
+          sed -i "s/## Version: .*/## Version: ${{ github.event.inputs.version }}/" Questie.toc
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add Questie.toc
+          git diff --staged --quiet || git commit -m "Bump version to ${{ github.event.inputs.version }}"
+      
+      - name: Create Release
+        uses: IdanKoblik/Changelog@production
+        with:
+          version: ${{ github.event.inputs.version }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          changelog-file: 'CHANGELOG.md'
+      
+      - name: Prepare addon package
+        run: |
+          mkdir -p Questie-Epoch
+          cp -r !(Questie-Epoch|.git*|*.md|.github) Questie-Epoch/
+          zip -r Questie-Epoch-${{ github.event.inputs.version }}.zip Questie-Epoch
+      
+      - name: Upload addon to release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ github.event.inputs.version }}
+          files: Questie-Epoch-${{ github.event.inputs.version }}.zip
+          token: ${{ secrets.GITHUB_TOKEN }}

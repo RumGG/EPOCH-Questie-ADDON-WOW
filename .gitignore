@@ -8,15 +8,19 @@
 Thumbs.db
 
 # Documentation files we don't want
-*.md
-!README.md
 CLAUDE.md
 CURRENT_WORK_STATUS.md
 EPOCH_QUEST_TRACKER.md
 BUG_TRACKER.md
 TRACKING.md
 GITHUB_ISSUE.md
-PR_*.md
+PR_REVIEW.md
+PR_DESCRIPTION.md
+CHAT_HISTORY.md
+# Keep important documentation
+!CHANGELOG.md
+!RELEASE_PROCESS.md
+!README.md
 
 # Images
 *.jpg
