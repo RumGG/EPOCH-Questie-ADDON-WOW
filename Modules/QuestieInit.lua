@@ -493,6 +493,8 @@ function _QuestieInit.StartStageCoroutine()
         QuestieInit.Stages[i]()
         Questie:Debug(Questie.DEBUG_INFO, "[QuestieInit:StartStageCoroutine] Stage " .. i .. " done.")
     end
+    -- Show ready message after all initialization stages complete
+    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Questie]|r Ready! Quest tracking and map icons are now active.", 0, 1, 0)
 end
 
 -- called by the PLAYER_LOGIN event handler
