@@ -41,8 +41,8 @@ jobs:
           
       - name: Prepare addon package
         run: |
-          # Create a clean addon directory
-          mkdir -p Questie-Epoch
+          # Create a clean addon directory named "Questie" (required for WoW)
+          mkdir -p Questie
           
           # Copy all addon files except dev/git files
           rsync -av --exclude='.git*' \
@@ -50,10 +50,10 @@ jobs:
                     --exclude='.github' \
                     --exclude='*.backup*' \
                     --exclude='PR24_REVIEW.md' \
-                    ./ Questie-Epoch/
+                    ./ Questie/
           
-          # Create the zip file
-          zip -r Questie-Epoch-${{ github.event.inputs.version }}.zip Questie-Epoch
+          # Create the zip file (filename indicates Epoch version, but folder inside is "Questie")
+          zip -r Questie-Epoch-${{ github.event.inputs.version }}.zip Questie
       
       - name: Create Release with Assets
         uses: softprops/action-gh-release@v1
