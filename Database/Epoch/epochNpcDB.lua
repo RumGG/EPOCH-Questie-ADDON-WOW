@@ -817,6 +817,9 @@ local epochNpcData = {
 [47092] = {"Layla Sprocketspark",nil,nil,5,5,0,{[1]={{47.5,52.3}}},nil,1,{28734},nil,11,"A",nil,0},
 [47093] = {"Hands Springsprocket",nil,nil,5,5,0,{[1]={{59.8,51.6}}},nil,1,{28746,28747},{28734,28746,28747},11,"A",nil,0},
 [45999] = {"Elise Brightletter",nil,nil,5,5,0,{[1]={{53.7,52.1}}},nil,1,nil,{28756},11,"A",nil,0},
+
+-- Issue #38: NPCs
+[7877] = {"Latronicus Moonspear",nil,nil,42,42,0,{[357]={{30.3,46.1}}},nil,357,nil,{26289},11,"A",nil,0},
 }
 
 -- Stage the Epoch npcData for later merge during compilation

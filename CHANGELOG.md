@@ -39,7 +39,8 @@
   - Issue #34: 18 quests including Ironforge Airfield chain (26202, 26205, 26208, 26663-26696, 26987, 26998, 28087, 28375)
   - Issue #33: 6 Hinterlands quests (26209-26212, 27322, 28536)
   - Issue #32: 18 Gnome starting area quests with complete NPC data
-  - Issue #37: 21 additional Troll/Orc starting area quests (in progress)
+  - Issue #37: 21 additional Troll/Orc starting area quests (partial data)
+  - Issue #38: 3 additional quests (26289 "Renegade Naga", 26594 "WANTED: Scorchmaw", 26863 "The Shadowforge Librarian")
   - Added corresponding NPCs for all quests with location data
 - **Quest Data**: Troll starting zone improvements
   - Quest 28722 "The Darkspear Tribe" with quest giver and turn-in NPC  
