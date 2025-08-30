@@ -109,7 +109,13 @@ epochQuestData[28767] = {"Proving Pit",nil,nil,nil,5,nil,nil,nil,nil,nil,nil,nil
 
 -- Issue #73: Missing quest batch submission
 epochQuestData[26126] = {"Springsocket Eels",{{45549}},{{45549}},nil,36,nil,nil,{"Collect 10 Raw Springsocket Eels."},nil,{nil,nil,{{110001,10}}},nil,nil,nil,nil,nil,nil,3,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26282] = {"An Old Debt",nil,{{45575}},nil,42,nil,nil,{"Complete the task given by Joakim Sparkroot."},nil,nil,nil,nil,nil,nil,nil,nil,3,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+
+-- Issue #91: Additional missing quests
+epochQuestData[26282] = {"An Old Debt",nil,nil,nil,42,nil,nil,{"Find Joakim Sparkroot in Westfall."},nil,nil,nil,nil,nil,nil,nil,nil,40,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26283] = {"Azothan Relic",nil,nil,nil,43,nil,nil,{"Locate a historian in Ironforge."},nil,nil,nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26284] = {"Azothan Relics",{{2916}},{{2916}},nil,43,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,1537,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26285] = {"Deeg's Lost Pipe",{{2488}},{{2488}},nil,40,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26286] = {"Kill the Foreman",{{2498}},{{2498}},nil,43,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26377] = {"Call to Skirmish: Badlands",nil,nil,nil,43,nil,nil,{"Kill 5 Horde."},nil,nil,nil,nil,nil,nil,nil,nil,3,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26381] = {"Call to Skirmish: Stranglethorn Vale",nil,nil,nil,43,nil,nil,{"Kill 5 Horde."},nil,nil,nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26383] = {"Call to Skirmish: Tanaris",{{7823}},{{7823}},nil,42,nil,nil,{"Kill 5 Horde."},nil,nil,nil,nil,nil,nil,nil,nil,440,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
