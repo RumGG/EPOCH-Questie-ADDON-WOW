@@ -205,8 +205,10 @@ function QuestieTracker.Initialize()
 
     -- Insures all other data we're getting from other addons and WoW is loaded. There are edge
     -- cases where Questie loads too fast before everything else is available.
+    -- IMPORTANT: This must run AFTER QuestieQuest:GetAllQuestIds() populates currentQuestlog
+    -- On initial login, we need to wait longer for the quest log to be populated
 
-    C_Timer.After(1.0, function()
+    C_Timer.After(2.0, function()
         -- Hide frames during startup
         if QuestieTracker.alreadyHooked then
             if Questie.db.profile.stickyDurabilityFrame then DurabilityFrame:Hide() end
@@ -280,7 +282,16 @@ function QuestieTracker.Initialize()
             -- Look for any QuestID's that don't belong in the Questie.db.char.TrackedQuests or
             -- the Questie.db.char.AutoUntrackedQuests tables. They can get out of sync.
             -- Also ensure runtime stub quests aren't incorrectly untracked.
-            if Questie.db.profile.autoTrackQuests and Questie.db.char.AutoUntrackedQuests then
+            -- IMPORTANT: Only clean up if quest log is populated, otherwise we'll wrongly remove valid entries
+            local questLogCount = 0
+            if QuestiePlayer and QuestiePlayer.currentQuestlog then
+                for _ in pairs(QuestiePlayer.currentQuestlog) do
+                    questLogCount = questLogCount + 1
+                    break -- Just need to know if it has any entries
+                end
+            end
+            
+            if Questie.db.profile.autoTrackQuests and Questie.db.char.AutoUntrackedQuests and questLogCount > 0 then
                 local toRemove = {}
                 for untrackedQuestId in pairs(Questie.db.char.AutoUntrackedQuests) do
                     if not QuestiePlayer.currentQuestlog[untrackedQuestId] then
@@ -303,7 +314,7 @@ function QuestieTracker.Initialize()
                 for questId in pairs(toRemove) do
                     Questie.db.char.AutoUntrackedQuests[questId] = nil
                 end
-            elseif Questie.db.char.TrackedQuests then
+            elseif Questie.db.char.TrackedQuests and questLogCount > 0 then
                 for trackedQuestId in pairs(Questie.db.char.TrackedQuests) do
                     if not QuestiePlayer.currentQuestlog[trackedQuestId] then
                         Questie.db.char.TrackedQuests[trackedQuestId] = nil
