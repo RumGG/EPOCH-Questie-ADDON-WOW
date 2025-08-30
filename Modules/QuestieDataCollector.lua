@@ -1006,6 +1006,43 @@ function QuestieDataCollector:OnQuestAccepted(questId)
         DEFAULT_CHAT_FRAME:AddMessage("|cFFFF8000Quest not in database. This quest is now being tracked by Data Collector!|r", 1, 0.5, 0)
         
         _activeTracking[questId] = true
+        
+        -- Schedule an update to get proper objective text after a short delay
+        -- Sometimes the quest log isn't fully updated when QUEST_ACCEPTED fires
+        C_Timer.After(0.5, function()
+            QuestieDataCollector:UpdateQuestObjectives(questId)
+        end)
+    end
+end
+
+-- Helper function to update quest objectives from the quest log
+function QuestieDataCollector:UpdateQuestObjectives(questId)
+    if not questId or not QuestieDataCollection.quests[questId] then return end
+    
+    local questLogIndex = QuestieDataCollector:GetQuestLogIndexById(questId)
+    if questLogIndex then
+        SelectQuestLogEntry(questLogIndex)
+        local numObjectives = GetNumQuestLeaderBoards(questLogIndex)
+        
+        for i = 1, numObjectives do
+            local text, objectiveType, finished = GetQuestLogLeaderBoard(i, questLogIndex)
+            if QuestieDataCollection.quests[questId].objectives[i] then
+                -- Update the objective with current text
+                if text and text ~= "" then
+                    QuestieDataCollection.quests[questId].objectives[i].text = text
+                    QuestieDataCollection.quests[questId].objectives[i].lastText = text
+                    QuestieDataCollection.quests[questId].objectives[i].type = objectiveType or QuestieDataCollection.quests[questId].objectives[i].type
+                    QuestieDataCollection.quests[questId].objectives[i].completed = finished or false
+                    
+                    -- Parse progress
+                    local current, total = string.match(text, "(%d+)/(%d+)")
+                    if current and total then
+                        QuestieDataCollection.quests[questId].objectives[i].current = tonumber(current)
+                        QuestieDataCollection.quests[questId].objectives[i].total = tonumber(total)
+                    end
+                end
+            end
+        end
     end
 end
 
@@ -1120,11 +1157,14 @@ function QuestieDataCollector:OnQuestLogUpdate()
                     local text, objectiveType, finished = GetQuestLogLeaderBoard(i, questLogIndex)
                     local objData = QuestieDataCollection.quests[questId].objectives[i]
                     
-                    -- Update objective text if it was a placeholder
-                    if objData and (not objData.text or objData.text == "" or string.find(objData.text, "loading")) then
-                        objData.text = text or ("Objective " .. i)
-                        objData.lastText = text
-                        objData.type = objectiveType
+                    -- Always update objective text to keep it current
+                    if objData then
+                        if text and text ~= "" then
+                            objData.text = text
+                            objData.type = objectiveType
+                        elseif not objData.text or objData.text == "" or string.find(objData.text, "loading") then
+                            objData.text = text or ("Objective " .. i)
+                        end
                     end
                     
                     -- Check for actual progress (not just text updates)
