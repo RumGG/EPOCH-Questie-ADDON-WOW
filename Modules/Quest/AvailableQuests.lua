@@ -154,33 +154,35 @@ _CalculateAvailableQuests = function()
             return
         end
         
-        -- Fix Epoch quests (26000+) with missing/incorrect requiredLevel data
-        if questId >= 26000 then
-            local requiredLevel = QuestieDB.QueryQuestSingle(questId, "requiredLevel")
-            local questLevel = QuestieDB.QueryQuestSingle(questId, "questLevel")
-            
-            -- If requiredLevel is missing/0, use questLevel for filtering
-            if not requiredLevel or requiredLevel == 0 then
-                requiredLevel = questLevel or 1
-            end
-            
-            -- Apply level filtering based on current settings
-            -- Be more lenient with Epoch quests since many have placeholder/incorrect level data
-            if Questie.db.profile.lowLevelStyle == Questie.LOWLEVEL_NONE then
-                -- For Epoch quests, allow a wider range since level data may be incorrect
-                -- Allow up to +10 levels for Epoch quests instead of +4
-                if requiredLevel > (playerLevel + 10) then
-                    return
-                end
-            elseif Questie.db.profile.lowLevelStyle ~= Questie.LOWLEVEL_ALL then
-                -- For other filtering modes, be more lenient with Epoch quests
-                -- Add 6 levels to the max threshold for Epoch quests
-                local epochMaxLevel = maxLevel + 6
-                if requiredLevel > epochMaxLevel or (questLevel and questLevel > epochMaxLevel) then
-                    return
-                end
-            end
-        end
+        -- TEMPORARILY DISABLED: Special Epoch quest filtering was preventing ALL quests from showing
+        -- This needs to be reworked to not interfere with normal quest display
+        -- -- Fix Epoch quests (26000+) with missing/incorrect requiredLevel data
+        -- if questId >= 26000 then
+        --     local requiredLevel = QuestieDB.QueryQuestSingle(questId, "requiredLevel")
+        --     local questLevel = QuestieDB.QueryQuestSingle(questId, "questLevel")
+        --     
+        --     -- If requiredLevel is missing/0, use questLevel for filtering
+        --     if not requiredLevel or requiredLevel == 0 then
+        --         requiredLevel = questLevel or 1
+        --     end
+        --     
+        --     -- Apply level filtering based on current settings
+        --     -- Be more lenient with Epoch quests since many have placeholder/incorrect level data
+        --     if Questie.db.profile.lowLevelStyle == Questie.LOWLEVEL_NONE then
+        --         -- For Epoch quests, allow a wider range since level data may be incorrect
+        --         -- Allow up to +10 levels for Epoch quests instead of +4
+        --         if requiredLevel > (playerLevel + 10) then
+        --             return
+        --         end
+        --     elseif Questie.db.profile.lowLevelStyle ~= Questie.LOWLEVEL_ALL then
+        --         -- For other filtering modes, be more lenient with Epoch quests
+        --         -- Add 6 levels to the max threshold for Epoch quests
+        --         local epochMaxLevel = maxLevel + 6
+        --         if requiredLevel > epochMaxLevel or (questLevel and questLevel > epochMaxLevel) then
+        --             return
+        --         end
+        --     end
+        -- end
 
         if currentQuestlog[questId] then
             _DrawChildQuests(questId, currentQuestlog, completedQuests)
