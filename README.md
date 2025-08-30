@@ -1,19 +1,24 @@
-## v1.0.58 - Latest Release (Unreleased)
+## v1.0.58 - Latest Release
 
-### 🎉 New Quests and Fixes!
+### 🎉 Critical Map Pin Fix + 35 New Quests!
 
-#### Stormwind POI Markers Fixed! (Issue #42)
-- **Service NPCs Now Visible**: Flight master, innkeeper, auctioneers, bankers, trainers all show on map
-- **Mailbox Locations Fixed**: 10 accurate mailbox positions throughout Stormwind
-- **30+ NPCs Updated**: Added proper service flags for all important Stormwind NPCs
+#### All Service NPCs Now Working! 
+- **WotLK Database Imported**: Fixed version detection for 3.3.5 client
+- **All Cities Fixed**: Innkeepers, bankers, auctioneers, trainers now show everywhere
+- **Stormwind Fully Functional**: All service NPCs at correct Project Epoch locations
+- **No More Placeholders**: Removed 274 "[Epoch] NPC XXXXX" entries from Stormwind
 
-#### 10+ New Quests Added (Issues #68, #70)
-- **The Hinterlands**: 5 new Alliance quests (levels 45-48)
-  - "A Sticky Situation", "Can't Make An Omelette Without...", "Falling Up To Grace"
-  - "Parts From Afar", "Stalking the Stalkers"
-- **Westfall**: 5 new Alliance quests (levels 10-14)
-  - "Hand of Azora" quest chain
-  - "Homecoming", "The Killing Fields"
+#### 35+ New Quests Added (Issues #78, #79, #80, #81)
+- **Silverpine Forest**: "Lost in the Lake", "Wreck of the Kestrel", "Arugal Ambush"
+- **Ashenvale**: "Fight for Warsong Gulch" battleground introduction
+- **Hillsbrad Foothills**: "Who Likes Apples?", "Fresh Water Delivery", "The Ghost of the Flats"
+- **Westfall**: "Commission for Protector Gariel", "The Killing Fields" (fixed)
+- **Multiple Zones**: 8 "Call to Skirmish" PvP quests
+- **18 New NPCs**: Quest givers and turn-in NPCs with proper locations
+
+#### Children's Week Removed
+- Seasonal quest no longer shows year-round
+- NPCs properly blacklisted
 
 ---
 
@@ -46,13 +51,17 @@
 - **Less Manual Work**: Automatic tracking initialization after reload
 - **Community Power**: Your data submissions are making the addon better daily
 
-### 📝 How to Use Data Collection
+### 📝 Want to Help? Easy Data Collection!
 
-1. Enable data collection: `/qdc enable`
-2. Wait for "Ready!" message after reload
-3. Accept any custom Epoch quest
-4. See "Missing Epoch quest detected!" alert
-5. Export data anytime with `/qdc export`
+**New to data collection?** Check out our **[Simple Guide](DATA_COLLECTION_GUIDE.md)** - it explains everything in plain English!
+
+**Quick Start:**
+1. Type `/qdc enable` to turn on collection
+2. Quest normally - Questie learns as you play
+3. Type `/qdc export [questID]` when done with a quest
+4. Share on [GitHub](https://github.com/trav346/Questie/issues/new)
+
+**Don't want to help?** No problem! Just use Questie normally.
 
 ---
 

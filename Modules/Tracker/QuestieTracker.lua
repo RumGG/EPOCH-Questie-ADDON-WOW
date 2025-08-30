@@ -906,6 +906,11 @@ function QuestieTracker:Update()
             if not questId then break end
 
             local quest = questDetails[questId].quest
+            -- Check if quest has IsComplete method (defensive check for malformed quests)
+            if not quest or type(quest) ~= "table" or not quest.IsComplete then
+                Questie:Debug(Questie.DEBUG_CRITICAL, "[QuestieTracker] Skipping malformed quest:", questId)
+                break
+            end
             local complete = quest:IsComplete()
             local zoneName = questDetails[questId].zoneName
             local remainingSeconds = TrackerQuestTimers:GetRemainingTime(quest, nil, true)

@@ -598,7 +598,8 @@ function QuestieMap:DrawWorldIcon(data, areaID, x, y, showFlag)
         end
 
         if (not parentMapId) then
-            error("No UiMapID or fitting parentAreaId for areaId : " .. areaID .. " - " .. tostring(data.Name))
+            -- Log as warning instead of error for unknown zones (like custom Project Epoch zones)
+            Questie:Warning("No UiMapID or fitting parentAreaId for areaId : " .. areaID .. " - " .. tostring(data.Name))
             return nil, nil
         else
             areaID = parentMapId

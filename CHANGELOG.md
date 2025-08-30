@@ -1,24 +1,95 @@
 # Changelog
 
-## [Unreleased]
+## [1.0.60] - 2025-08-30
 
 ### Fixed
+- **AvailableQuests Error**: Fixed "attempt to index local 'npc' (a nil value)" error when quest starters are single IDs instead of tables
+  - Now properly handles quests with single NPC or GameObject starters
+  - Converts single IDs to tables before processing
+- **QuestieTracker Error**: Fixed "IsComplete() nil value" error when tracking malformed quests
+  - Added defensive check for quest objects missing the IsComplete method
+  - Prevents tracker crash when encountering incomplete quest data
+- **QuestieShutUp Filter**: Fixed chat filter not blocking Questie messages from party members (Fixes #55)
+  - Corrected pattern mismatch between filter and actual message format
+  - Filter now properly matches locale-specific message formats
+- **Critical Map Pin Fix**: Imported WotLK database to fix all service NPC detection
+  - Project Epoch was using Classic-era NPC flags (INNKEEPER=128) but needed WotLK flags (INNKEEPER=65536)
+  - Fixed version detection to properly identify 3.3.5 client and use correct flag values
+  - All service NPCs (innkeepers, bankers, auctioneers, trainers, etc.) now show correctly on maps
+- **Stormwind Service NPCs**: Fixed bankers, auctioneers, and weapon master not showing on map
+  - Updated 3 bankers (Olivia, Newton, John Burnside) with correct coordinates and flags from WotLK database
+  - Updated 3 auctioneers (Chilton, Fitch, Jaxon) with correct coordinates and flags from WotLK database
+  - Fixed Woo Ping (weapon master) location from wrong coordinates (57.13,57.71) to correct position (63.88,69.09)
+  - All NPCs now use proper service flags (131073 for bankers, 2097152 for auctioneers, 81 for weapon master)
 - **Stormwind NPCs**: Restored Innkeeper Allison and Dungar Longdrink (flight master) on map tracker
   - Removed placeholder entries in epochNpcDB.lua that were overriding Classic database
   - NPCs now show with proper names and service flags when tracked
+- **Children's Week**: Permanently removed seasonal quest from showing year-round
+  - Removed quest 1468 from event system overrides
+  - Blacklisted NPCs 14305 (Human Orphan) and 14450 (Orphan Matron Nightingale)
+  - Quest will no longer appear even during May 1-7 event dates
+- **Quest Database**: Fixed duplicate and incorrect quest entries (Fixes #78, #79, #80, #81)
+  - Consolidated duplicate quest entries for quests 26285, 26286, 26287, 26288, 26289, 26292, 26907
+  - Removed conflicting epochQuestData stub entries that were overwriting complete quest data
+  - Updated quest 26285 "Deeg's Lost Pipe" with proper quest giver and objective data
+  - Added missing quest entries 26286-26292 to main database array with proper data structure
+  - Added missing NPC 2488 (Deeg) to support "Deeg's Lost Pipe" quest
+  - Removed duplicate entry for quest 26987 "Homecoming" with wrong quest giver (NPC 491)
+  - Removed incorrect entry for quest 26987 with wrong title "Moving Up"
+  - Fixed Innkeeper Allison coordinates in Stormwind (was 60.39,75.28, now 52.62,65.7)
+  - Fixed quest 26993 "The Killing Fields" with proper objectives and mob targets (Riverpaw Gnolls and Scouts)
+  - Cleaned up quest data integrity in epochQuestDB.lua
+- **Data Collector Improvements**: Removed all chat spam messages 
+  - Silently tracks quest data without printing to chat
+  - Removed duplicate alert messages when accepting quests
+- **Map Error Handling**: Fixed error for unknown zones like custom Project Epoch areas
+  - Changed hard error to warning for unmapped zones (e.g., areaId 178 "Deeg")
+  - Allows addon to continue functioning with custom server zones
 
 ### Added
-- **Quest Data**: Added 10 new Epoch quests from GitHub issues (#68, #70)
+- **Quest Items**: Added 10+ quest items with proper drop sources
+  - Raw Springsocket Eel, Pinch of Bone Marrow, Vial of Vulture Blood, Kratok's Horn, Slaver's Records
+  - Commission items for various quests
+- **WotLK Database**: Imported complete WotLK database files for proper 3.3.5 support
+  - Added wotlkQuestDB.lua, wotlkNpcDB.lua, wotlkObjectDB.lua, wotlkItemDB.lua
+  - Fixes all service NPC flag detection issues
+  - Provides correct NPC data for WotLK expansion content
+- **Quest Data**: Added 90+ new Epoch quests from GitHub issues (#71-87)
   - The Hinterlands: 5 Alliance quests including "A Sticky Situation", "Can't Make An Omelette Without...", "Falling Up To Grace", "Parts From Afar", "Stalking the Stalkers"
   - Westfall: 5 Alliance quests including "Hand of Azora" chain, "Homecoming", "The Killing Fields"
-- **NPCs**: Added 9 new NPCs with proper locations
+  - Silverpine Forest: 2 Horde quests "Lost in the Lake", "Wreck of the Kestrel"
+  - Ashenvale: Added quest 27880 "Fight for Warsong Gulch" (level 14 battleground introduction quest)
+  - Westfall: Added quest 28495 "Commission for Protector Gariel" (level 5 collection quest)
+  - Various zones: 8 Call to Skirmish quests for Thousand Needles, Alterac Mountains, Desolace, Arathi Highlands and other content
+  - Hillsbrad Foothills: "Who Likes Apples?", "Fresh Water Delivery", "The Ghost of the Flats", "Threats from Abroad", "To The Hills"
+  - Badlands: "Springsocket Eels", "An Old Debt", multiple commission quests
+  - Tanaris: "Call to Skirmish" PvP quests
+  - Winterspring/EPL: High-level Horde quests including "Nightmare Seeds", "Hero Worship"
+  - Desolace: "The Argus Wake" 5-quest chain (42-44)
+  - Searing Gorge: Thorium Brotherhood quests
+  - Elwynn Forest: "Barroom Blitz" series, commission quests
+  - Updated existing quests with complete data: "Arugal Ambush", "The Killing Fields"
+- **NPCs**: Added 35+ new NPCs with proper locations
   - The Hinterlands: Truk Wildbeard, Kerr Ironsight, Tizzie Sparkcraft, Chief Engineer Urul, Gryphon Master Stonemace, Gryphon Master Talonaxe
   - Westfall: Karlain, Revil Kost, Quartermaster Lewis
+  - Silverpine Forest: Ainslie Yance, Edwin Harly, Dalar Dawnweaver, Kor
+  - Ashenvale: Added NPC 44806 "Warsong Gulch Battlemaster" for battleground quest access
+  - Hillsbrad/Thousand Needles: Jason Lemieux, Pozzik, Deeg, Commander Strongborn
+  - Badlands: Zeemo, Dirk Windrattle, Joakim Sparkroot
+  - Searing Gorge: Merida Stoutforge, Bhurind Stoutforge, Grampy Stoutforge, Lookout Captain Lolo Longstriker
+  - Desolace: Felicity Perenolde, Zala'thria, Kratok
+  - Eastern Plaguelands: Engineer Flikswitch, Harbinger Balthazad
+  - Elwynn Forest: Jason Mathers
 - **Objects**: Added ground objects for quest item collection
   - Sack of Oats in Westfall (3 spawn points)
   - Fishing Bobber in Stormwind City
 
-### Fixed
+### Changed
+- **epochStormwindFixes.lua**: Disabled due to causing issues with seasonal NPCs and incorrect positions
+  - Was adding 546 NPC entries, many with wrong coordinates or inappropriate seasonal content
+  - Service NPCs now properly handled by WotLK database
+
+### Removed
 - **POI Markers**: Fixed service NPCs not appearing on Stormwind map (Fixes #42)
   - Added proper npcFlags to flight master, innkeeper, auctioneers, bankers, trainers, and repair vendors
   - Updated epochStormwindFixes.lua with service flags for 30+ NPCs

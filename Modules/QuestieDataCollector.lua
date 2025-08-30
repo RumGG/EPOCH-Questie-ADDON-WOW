@@ -829,11 +829,8 @@ function QuestieDataCollector:OnQuestAccepted(questId)
         -- ALERT! Missing quest detected!
         local questTitle = QuestieCompat.GetQuestLogTitle(QuestieDataCollector:GetQuestLogIndexById(questId))
         
-        -- Alert player about missing quest
-        DEFAULT_CHAT_FRAME:AddMessage("===========================================", 0, 1, 1)
-        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[QUESTIE] Missing Epoch quest detected!|r", 0, 1, 0)
-        DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00Quest: " .. (questTitle or "Unknown") .. " (ID: " .. questId .. ")|r", 1, 1, 0)
-        DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00Please complete this quest to help us improve the database!|r", 1, 1, 0)
+        -- Silently track the quest without alert messages
+        -- User requested to remove all printing
         
         -- Initialize collection data for this quest
         if not QuestieDataCollection.quests[questId] then

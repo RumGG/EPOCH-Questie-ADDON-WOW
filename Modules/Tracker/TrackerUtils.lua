@@ -710,9 +710,17 @@ local function _GetZoneName(zoneOrSort, questId)
         elseif sortObj == "byLevelReversed" then
             zoneName = "Quests (By Level Reversed)"
         elseif sortObj == "byProximity" then
-            zoneName = "Quests (By Proximity)"
+            if Questie.db.profile.tomtomAutoTargetMode and TomTom then
+                zoneName = "Quests (TomTom Autoway)"
+            else
+                zoneName = "Quests (By Proximity)"
+            end
         elseif sortObj == "byProximityReversed" then
-            zoneName = "Quests (By Proximity Reversed)"
+            if Questie.db.profile.tomtomAutoTargetMode and TomTom then
+                zoneName = "Quests (TomTom Autoway Rev)"
+            else
+                zoneName = "Quests (By Proximity Reversed)"
+            end
         end
     end
     return zoneName

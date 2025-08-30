@@ -58,6 +58,9 @@ function AvailableQuests.DrawAvailableQuest(quest) -- prevent recursion
 
     if quest.Starts["GameObject"] then
         local gameObjects = quest.Starts["GameObject"]
+        if type(gameObjects) ~= "table" then
+            gameObjects = {gameObjects}  -- Convert single ID to table
+        end
         for i = 1, #gameObjects do
             local obj = QuestieDB:GetObject(gameObjects[i])
             if obj then
@@ -69,6 +72,9 @@ function AvailableQuests.DrawAvailableQuest(quest) -- prevent recursion
     end
     if (quest.Starts["NPC"]) then
         local npcs = quest.Starts["NPC"]
+        if type(npcs) ~= "table" then
+            npcs = {npcs}  -- Convert single ID to table
+        end
         for i = 1, #npcs do
             local npc = QuestieDB:GetNPC(npcs[i])
             if npc then

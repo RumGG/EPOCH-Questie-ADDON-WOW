@@ -28,6 +28,10 @@ local epochItemData = {
 [60102] = {"[Epoch] Item 60102",{},nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,{26942}},
 [60111] = {"Case of Ore",nil,{4000003}},
 [60113] = {"Felstalker Blood",{3102},nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,{27267}},
+-- Issue #86: The Argus Wake quest items
+[62691] = {"Pinch of Bone Marrow",{4872,4873,4874},nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,{26529}}, -- From skeletons in Kodo Graveyard
+[62692] = {"Vial of Vulture Blood",{4158,4159},nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,{26530}}, -- From vultures in Kodo Graveyard
+[62693] = {"Kratok's Horn",{45531},nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,{26533}}, -- From Kratok
 [60114] = {"Bloodtalon Claw",{46124},nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,{27267}},
 [60115] = {"Thistleweed",nil,{4001006},nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,{27267}},
 [60117] = {"Venture Co. Debris",nil,{4001008},nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,{27346}},
@@ -329,6 +333,14 @@ local epochItemData = {
 [3575] = {"Cask of Merlot",nil,{400001},nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,{26697}}, -- From Sack of Oats object
 [13926] = {"Golden Scale Gauntlets",nil,{400002},nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,{26699}}, -- From Fishing Bobber object
 [62859] = {"Nancy Eastworth's Braid",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,{26987}},
+[62823] = {"A Tattered Acceptance Letter",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,{26953}},
+
+-- Issue #75: Missing quest items
+[110000] = {"Commission Item",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,{28535,28618}},
+
+-- Issue #73: Missing quest batch submission items
+[110001] = {"Raw Springsocket Eel",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,{26126}},
+[63195] = {"Slaver's Records",{5844,5846,5843},nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,{26864}}, -- Dark Iron Taskmasters drop
 }
 
 -- Stage the Epoch itemData for later merge during compilation
