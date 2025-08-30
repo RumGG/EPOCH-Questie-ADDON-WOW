@@ -215,10 +215,28 @@ function QuestieDataCollector:CheckExistingQuests()
                                         wasAlreadyAccepted = true,  -- Flag that this quest was in log when addon loaded
                                         incompleteData = true  -- We don't have quest giver info
                                     }
+                                else
+                                    -- Quest already exists in collection, but we need to ensure objectives are current
+                                    -- Update name and level if they were placeholders
+                                    if title and (not QuestieDataCollection.quests[questID].name or 
+                                       string.find(QuestieDataCollection.quests[questID].name, "Quest %d+")) then
+                                        QuestieDataCollection.quests[questID].name = title
+                                    end
+                                    if level then
+                                        QuestieDataCollection.quests[questID].level = level
+                                    end
+                                end
+                                
+                                -- Always refresh objectives from quest log (they might have changed or be missing)
+                                SelectQuestLogEntry(i)
+                                local numObjectives = GetNumQuestLeaderBoards(i)
+                                
+                                -- Only update objectives if we don't have them or if the count is different
+                                if not QuestieDataCollection.quests[questID].objectives or 
+                                   #QuestieDataCollection.quests[questID].objectives ~= numObjectives or
+                                   #QuestieDataCollection.quests[questID].objectives == 0 then
                                     
-                                    -- Populate objectives for this quest
-                                    SelectQuestLogEntry(i)
-                                    local numObjectives = GetNumQuestLeaderBoards(i)
+                                    QuestieDataCollection.quests[questID].objectives = {}
                                     for objIdx = 1, numObjectives do
                                         local text, objectiveType, finished = GetQuestLogLeaderBoard(objIdx, i)
                                         table.insert(QuestieDataCollection.quests[questID].objectives, {
@@ -230,7 +248,27 @@ function QuestieDataCollector:CheckExistingQuests()
                                             lastText = text
                                         })
                                     end
-                                    -- Silently track quest
+                                else
+                                    -- Update existing objectives with current text (might have progress changes)
+                                    for objIdx = 1, numObjectives do
+                                        local text, objectiveType, finished = GetQuestLogLeaderBoard(objIdx, i)
+                                        if QuestieDataCollection.quests[questID].objectives[objIdx] then
+                                            -- Update the text to reflect current progress
+                                            if text then
+                                                QuestieDataCollection.quests[questID].objectives[objIdx].text = text
+                                                QuestieDataCollection.quests[questID].objectives[objIdx].lastText = text
+                                            end
+                                            QuestieDataCollection.quests[questID].objectives[objIdx].type = objectiveType or QuestieDataCollection.quests[questID].objectives[objIdx].type
+                                            QuestieDataCollection.quests[questID].objectives[objIdx].completed = finished or false
+                                            
+                                            -- Parse current progress from text (e.g., "Sun-Ripened Banana: 3/10")
+                                            local current, total = string.match(text or "", "(%d+)/(%d+)")
+                                            if current and total then
+                                                QuestieDataCollection.quests[questID].objectives[objIdx].current = tonumber(current)
+                                                QuestieDataCollection.quests[questID].objectives[objIdx].total = tonumber(total)
+                                            end
+                                        end
+                                    end
                                 end
                             end
                         end
