@@ -954,10 +954,8 @@ function QuestieDataCollector:OnQuestTurnedIn(questId)
         
         -- Show hyperlink notification
         local questName = QuestieDataCollection.quests[questId].name or "Unknown Quest"
-        DEFAULT_CHAT_FRAME:AddMessage("===========================================" , 0, 1, 1)
-        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[QUESTIE] Quest completed! Please " .. CreateQuestDataLink(questId, "[Export]") .. " your captured data to GitHub!|r", 0, 1, 0)
+        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[QUESTIE] Epoch quest completed! Please " .. CreateQuestDataLink(questId) .. "|r", 0, 1, 0)
         DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00Quest: " .. questName .. " (ID: " .. questId .. ")|r", 1, 1, 0)
-        DEFAULT_CHAT_FRAME:AddMessage("===========================================" , 0, 1, 1)
         
         PlaySound("QUESTCOMPLETED")
     end
@@ -992,10 +990,8 @@ function QuestieDataCollector:OnQuestComplete()
             DebugMessage("|cFF00FF00[DATA] Turn-in NPC Captured: " .. _lastQuestGiver.name .. " (ID: " .. _lastQuestGiver.npcId .. ")|r", 0, 1, 0)
             
             -- Show hyperlink notification instead of auto-popup
-            DEFAULT_CHAT_FRAME:AddMessage("===========================================" , 0, 1, 1)
-            DebugMessage("|cFF00FF00[QUESTIE] Quest completed! Please " .. CreateQuestDataLink(questId, "[Export]") .. " your captured data to GitHub!|r", 0, 1, 0)
-            DebugMessage("|cFFFFFF00Quest: " .. questName .. " (ID: " .. questId .. ")|r", 1, 1, 0)
-            DEFAULT_CHAT_FRAME:AddMessage("===========================================" , 0, 1, 1)
+            DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[QUESTIE] Epoch quest completed! Please " .. CreateQuestDataLink(questId) .. "|r", 0, 1, 0)
+            DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00Quest: " .. questName .. " (ID: " .. questId .. ")|r", 1, 1, 0)
             
             -- Play a subtle sound to notify completion
             PlaySound("QUESTCOMPLETED")
@@ -1894,7 +1890,7 @@ end
 
 -- Helper function for creating clickable quest data links
 CreateQuestDataLink = function(questId, questName)
-    local linkText = "|cFF00FF00|Hquestiedata:" .. questId .. "|h[Click here to submit quest data for: " .. (questName or "Quest " .. questId) .. "]|h|r"
+    local linkText = "|cFF00FF00|Hquestiedata:" .. questId .. "|h[Click here to submit quest data]|h|r"
     return linkText
 end
 
@@ -1993,7 +1989,7 @@ function QuestieDataCollector:ShowExportableQuests()
             
             -- Show quest with clickable export link and completion status
             local status = quest.data.turnInNpc and "|cFF00FF00[COMPLETE]|r" or "|cFFFFAA00[INCOMPLETE]|r"
-            DEFAULT_CHAT_FRAME:AddMessage(string.format("|cFFFFFF00%d: %s %s - |r" .. CreateQuestDataLink(questId, "[Export]"), questId, questName, status), 1, 1, 0)
+            DEFAULT_CHAT_FRAME:AddMessage(string.format("|cFFFFFF00%d: %s %s - |r" .. CreateQuestDataLink(questId), questId, questName, status), 1, 1, 0)
             
             -- Show data summary inline
             local hasGiver = quest.data.questGiver and "Giver" or ""
@@ -2612,10 +2608,8 @@ function QuestieDataCollector:OnQuestTurnedIn(questId)
         PlaySound("QUESTCOMPLETED")
         
         -- Print hyperlink notification in chat (no auto-popup)
-        DEFAULT_CHAT_FRAME:AddMessage("===========================================", 0, 1, 1)
-        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[QUESTIE] Quest completed! Please " .. CreateQuestDataLink(questId, "[Export]") .. " your captured data to GitHub!|r", 0, 1, 0)
+        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[QUESTIE] Epoch quest completed! Please " .. CreateQuestDataLink(questId) .. "|r", 0, 1, 0)
         DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00Quest: " .. questName .. " (ID: " .. questId .. ")|r", 1, 1, 0)
-        DEFAULT_CHAT_FRAME:AddMessage("===========================================", 0, 1, 1)
     end
 end
 
