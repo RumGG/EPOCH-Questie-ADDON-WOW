@@ -2379,11 +2379,8 @@ function QuestieTracker:UntrackQuestId(questId)
         if not Questie.db.char.AutoUntrackedQuests then
             Questie.db.char.AutoUntrackedQuests = {}
         end
-        -- Don't untrack Epoch quests in auto-track mode
-        if questId >= 26000 then
-            Questie:Debug(Questie.DEBUG_INFO, "[UntrackQuestId] Ignoring untrack request for Epoch quest:", questId)
-            return
-        end
+        -- Allow users to untrack any quest, including Epoch quests
+        -- Data collection happens separately and doesn't depend on tracker visibility
         Questie.db.char.AutoUntrackedQuests[questId] = true
     end
 
@@ -2481,27 +2478,17 @@ function QuestieTracker:AQW_Insert(index, expire)
             local isCurrentlyTracked = not Questie.db.char.AutoUntrackedQuests[questId]
             
             if IsShiftKeyDown() and QuestLogFrame:IsShown() then
-                -- Shift-click always untracks (if allowed)
-                -- Don't auto-untrack runtime stub quests or new Epoch quests
-                local quest = QuestieDB.GetQuest(questId)
-                local isEpochQuest = questId >= 26000
-                if quest and not quest.isRuntimeStub then
-                    -- Quest exists and is not a runtime stub, can untrack
-                    Questie.db.char.AutoUntrackedQuests[questId] = true
-                elseif not quest and not isEpochQuest then
-                    -- Quest doesn't exist and is not an Epoch quest, can untrack
-                    Questie.db.char.AutoUntrackedQuests[questId] = true
-                end
-                -- If quest is nil AND is an Epoch quest, don't untrack it
+                -- Shift-click always untracks any quest
+                -- Allow users to untrack any quest including Epoch quests
+                Questie.db.char.AutoUntrackedQuests[questId] = true
+                Questie:Debug(Questie.DEBUG_INFO, "[AQW_Insert] Shift+Click untrack:", questId)
             elseif isManualToggle then
                 -- Manual toggle from quest log checkbox
                 if isCurrentlyTracked then
-                    -- Currently tracked, untrack it (unless it's an Epoch quest)
-                    local isEpochQuest = questId >= 26000
-                    if not isEpochQuest then
-                        Questie.db.char.AutoUntrackedQuests[questId] = true
-                        Questie:Debug(Questie.DEBUG_INFO, "[AQW_Insert] Manual untrack:", questId)
-                    end
+                    -- Currently tracked, untrack it
+                    -- Allow untracking any quest including Epoch quests
+                    Questie.db.char.AutoUntrackedQuests[questId] = true
+                    Questie:Debug(Questie.DEBUG_INFO, "[AQW_Insert] Manual untrack:", questId)
                 else
                     -- Currently untracked, track it
                     Questie.db.char.AutoUntrackedQuests[questId] = nil
