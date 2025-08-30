@@ -114,9 +114,10 @@ function QuestieDataCollector:Initialize()
             count = count + 1
         end
         
-        if count > 0 then
-            DebugMessage(string.format("|cFF00FF00[Data Collector] Auto-rescan complete: Tracking %d quest(s)|r", count), 0, 1, 0)
-        end
+        -- Silently complete the auto-rescan (no chat message)
+        -- if count > 0 then
+        --     DebugMessage(string.format("|cFF00FF00[Data Collector] Auto-rescan complete: Tracking %d quest(s)|r", count), 0, 1, 0)
+        -- end
     end)
 end
 
