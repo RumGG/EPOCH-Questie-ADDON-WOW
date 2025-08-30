@@ -11,7 +11,7 @@ If you find this version of Questie with data collection helpful, consider [buyi
 1. Type `/qdc enable` to turn on collection - this should persist through log in/out
 2. Quest normally - Questie automatically detects if a quest is not in the database and begins collecting data for it!
 3. **NEW**: Left-click Questie minimap icon → "Export Quest Data" for quick access!
-4. Share on [GitHub](https://github.com/trav346/Questie/issues/new)
+4. Share on [GitHub](https://github.com/trav346/Questie-Epoch/issues/new)
 
 **Not feeling up to it?** No problem! Just use Questie normally. `/qdc disable`
 
