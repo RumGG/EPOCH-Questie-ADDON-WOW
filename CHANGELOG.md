@@ -19,6 +19,17 @@
   - Fixed quest giver/turn-in NPCs with accurate coordinates from data collection
   - Added quest objectives for all troll quests
 
+- **Blasted Lands Quests** (GitHub #97): Added 22 quests from user data submission
+  - Added quests 26277, 26598-26602, 26614-26619, 26621, 26626, 26628-26632, 27076
+  - Added Commission quests 27659 and 28647
+  - Added 5 NPCs with coordinates: Nina Lightbrew, Quartermaster Lungertz, Watcher Mahar Ba, Eunna, Spirit of the Exorcist
+  - Quest levels range from 50-54
+
+- **Westfall Quests** (GitHub #94): Added 4 quests from user data submission
+  - Three "The Killing Fields" quests (26994, 26995, 26996) - levels 10, 12, 14
+  - "Commission for Protector Gariel" (28495) - level 5
+  - Uses existing classic NPCs: Farmer Furlbrow, Farmer Saldean, Protector Gariel
+
 ### Fixed
 - **Quest 26723 Compilation Error**: Fixed incorrect table structure in epochQuestDB.lua
 - **Quest 28764 Objectives Error**: Fixed "Second Tablet Read" tooltip error for event/script objectives

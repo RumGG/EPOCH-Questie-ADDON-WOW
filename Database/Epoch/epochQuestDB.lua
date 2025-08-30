@@ -182,6 +182,12 @@ epochQuestData[27076] = {"Descendants of Exiles",nil,nil,nil,51,nil,nil,nil,nil,
 epochQuestData[27659] = {"Commission for High Chief Ungarl",nil,{{5385}},nil,50,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,19,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Turn-in: Watcher Mahar Ba
 epochQuestData[28647] = {"Commission for Strumner Flintheel",nil,{{14634}},nil,50,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,51,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Turn-in: Lookout Captain Lolo Longstriker, Searing Gorge
 
+-- Issue #94: Westfall quests from user data submission
+epochQuestData[26994] = {"The Killing Fields",{{237}},{{233}},nil,10,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,40,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Quest giver: Farmer Furlbrow, Turn-in: Farmer Saldean
+epochQuestData[26995] = {"The Killing Fields",{{233}},{{233}},nil,12,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,40,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Quest giver and turn-in: Farmer Saldean
+epochQuestData[26996] = {"The Killing Fields",{{233}},nil,nil,14,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,40,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Quest giver: Farmer Saldean
+epochQuestData[28495] = {"Commission for Protector Gariel",{{490}},nil,nil,5,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,40,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Quest giver: Protector Gariel
+
 --[[  
 EPOCH QUEST DATABASE STRUCTURE ANALYSIS
 
