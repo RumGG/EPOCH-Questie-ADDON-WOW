@@ -893,7 +893,8 @@ epochNpcData[45953] = {"Corporal Mountainview",nil,nil,30,30,0,{[11]={{26.6,59.6
 -- Issue #96: Troll starting zone NPCs (Durotar)
 epochNpcData[46718] = {"Daz'tiro",nil,nil,5,5,0,{[14]={{70,42}}},nil,14,nil,nil,0,"H","Quest Giver",0} -- Durotar, coordinates approximate
 epochNpcData[46834] = {"Joz'jarz",nil,nil,5,5,0,{[14]={{70,42}}},nil,14,nil,nil,0,"H","Quest Giver",0} -- Durotar, coordinates from issue
-epochNpcData[46934] = {"Uwa",nil,nil,5,5,0,nil,nil,14,nil,nil,0,"H","Quest Giver",0} -- Durotar, WRONG COORDINATES - needs data collection
+epochNpcData[46835] = {"Amethyst Crab",nil,nil,2,2,0,nil,nil,14,nil,nil,0,nil,nil,0} -- Durotar, needs spawn coordinates
+epochNpcData[46934] = {"Uwa",nil,nil,5,5,0,nil,nil,14,nil,nil,0,"H","Quest Giver",0} -- Durotar, needs coordinates
 
 -- Stage the Epoch npcData for later merge during compilation
 QuestieDB._epochNpcData = epochNpcData

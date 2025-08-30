@@ -91,7 +91,7 @@ epochQuestData[28618] = {"Commission for Joakim Sparkroot",{{45575}},{{45575}},n
 -- Troll/Orc Starting Zone Quests (Durotar / Echo Isles area) - From issue #96
 -- Quests with correct names from data submission
 epochQuestData[28722] = {"The Darkspear Tribe",{{46834}},nil,nil,1,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Quest giver: Joz'jarz at [70, 42]
-epochQuestData[28723] = {"Thievin' Crabs",{{46718}},nil,nil,2,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Quest giver: Daz'tiro, needs Amethyst Crab creature ID for spawn locations
+epochQuestData[28723] = {"Thievin' Crabs",{{46718}},nil,nil,2,nil,nil,{"Slay 10 Amethyst Crabs."},nil,{{{46835,10}}},nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Quest giver: Daz'tiro, Amethyst Crab ID: 46835
 epochQuestData[28739] = {"Azsharan Idols",{{46934}},nil,nil,4,nil,nil,{"Collect 3 idols."},nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Quest giver: Uwa, needs item ID
 epochQuestData[28740] = {"Tainted Tablet",{{46718}},{{46934}},nil,1,nil,nil,{"Read Tainted Tablet and speak to Uwa."},nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Quest giver: Daz'tiro, turn-in: Uwa
 
