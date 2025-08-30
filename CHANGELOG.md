@@ -3,6 +3,11 @@
 ## [Unreleased]
 
 ### Added
+- **Data Collection Enhancement** - Export now includes addon version and timestamp
+  - Helps identify if data was collected with buggy or fixed version
+  - Shows exact date/time when data was collected or exported
+  - Critical for debugging data collection issues
+  - Removed emojis from export text as they don't work in plain text submissions
 - **Massive Quest Data Import** - Added 100+ quests from user data submissions
   - Issue #151: "Solarsal Report" (27053) - Wetlands
   - Issue #150/149: "Azshara's Legacy" (27091) - Azshara

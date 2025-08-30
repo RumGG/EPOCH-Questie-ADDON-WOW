@@ -2542,7 +2542,9 @@ function QuestieDataCollector:ShowExportWindow(questId)
         
         -- Generate combined export text
         exportText = "=== BATCH QUEST DATA SUBMISSION ===\n"
-        exportText = exportText .. "Total Quests: " .. #questList .. "\n\n"
+        exportText = exportText .. "Total Quests: " .. #questList .. "\n"
+        exportText = exportText .. "Addon Version: " .. (QuestieLib and QuestieLib:GetAddonVersionString() or "Unknown") .. "\n"
+        exportText = exportText .. "Data Exported: " .. date("%Y-%m-%d %H:%M:%S") .. "\n\n"
         -- Create comma-separated list of quest IDs for the title
         local questIdList = table.concat(questList, ", ")
         exportText = exportText .. "=== GITHUB ISSUE TITLE ===\n"
@@ -2582,14 +2584,18 @@ function QuestieDataCollector:GenerateExportText(questId, data, skipInstructions
     
     text = text .. "=== QUEST DATA ===\n\n"
     
+    -- Add addon version and collection date for debugging
+    text = text .. "Addon Version: " .. (QuestieLib and QuestieLib:GetAddonVersionString() or "Unknown") .. "\n"
+    text = text .. "Data Collected: " .. date("%Y-%m-%d %H:%M:%S") .. "\n\n"
+    
     -- Add warning if quest has incomplete data
     if data.wasAlreadyAccepted or data.incompleteData then
-        text = text .. "⚠️ WARNING: INCOMPLETE DATA ⚠️\n"
+        text = text .. "WARNING: INCOMPLETE DATA\n"
         text = text .. "This quest was already in the quest log when the addon was installed.\n"
         text = text .. "Quest giver NPC information is missing.\n"
         text = text .. "Please abandon and re-accept this quest for complete data.\n\n"
     elseif not data.turnInNpc then
-        text = text .. "📝 NOTE: QUEST NOT YET COMPLETED 📝\n"
+        text = text .. "NOTE: QUEST NOT YET COMPLETED\n"
         text = text .. "Turn-in NPC data is missing (quest still in progress).\n"
         text = text .. "This partial data is still valuable and can be submitted!\n\n"
     end
