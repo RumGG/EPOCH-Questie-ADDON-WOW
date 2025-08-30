@@ -890,5 +890,10 @@ epochNpcData[45942] = {"Mayor Oakmaster",nil,nil,30,30,0,{[11]={{27.9,66.6}}},ni
 epochNpcData[45943] = {"Scout Barleybrew",nil,nil,30,30,0,{[11]={{39.1,55.4}}},nil,11,nil,nil,0,"A","Quest Giver",0} -- Wetlands
 epochNpcData[45953] = {"Corporal Mountainview",nil,nil,30,30,0,{[11]={{26.6,59.6}}},nil,11,nil,nil,0,"A","Quest Giver",0} -- Wetlands
 
+-- Issue #96: Troll starting zone NPCs (Durotar)
+epochNpcData[46718] = {"Daz'tiro",nil,nil,5,5,0,{[14]={{70,42}}},nil,14,nil,nil,0,"H","Quest Giver",0} -- Durotar
+epochNpcData[46834] = {"Joz'jarz",nil,nil,5,5,0,{[14]={{70,42}}},nil,14,nil,nil,0,"H","Quest Giver",0} -- Durotar
+epochNpcData[46934] = {"Uwa",nil,nil,5,5,0,{[14]={{70,42}}},nil,14,nil,nil,0,"H","Quest Giver",0} -- Durotar
+
 -- Stage the Epoch npcData for later merge during compilation
 QuestieDB._epochNpcData = epochNpcData

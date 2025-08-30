@@ -88,8 +88,14 @@ epochQuestData[28077] = {"Commission for Dirk Windrattle",{{45604}},{{45604}},ni
 epochQuestData[28535] = {"Commission for Joakim Sparkroot",{{45575}},{{45575}},nil,50,nil,nil,{"Bring 20 Purple Lotus to Joakim Sparkroot."},nil,{nil,nil,{{8831,20}}},nil,nil,nil,nil,nil,nil,3,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[28618] = {"Commission for Joakim Sparkroot",{{45575}},{{45575}},nil,40,nil,nil,{"Bring 5 Worn Dragonscale to Joakim Sparkroot at Springsocket."},nil,{nil,nil,{{8165,5}}},nil,nil,nil,nil,nil,nil,3,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 
--- Troll Starting Zone Quests (Valley of Trials / Echo Isles area)
--- Basic placeholder entries with proper structure - awaiting full data collection
+-- Troll/Orc Starting Zone Quests (Durotar / Echo Isles area) - From issue #96
+-- Quests with correct names from data submission
+epochQuestData[28722] = {"The Darkspear Tribe",{{46834}},nil,nil,1,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Quest giver: Joz'jarz at [70, 42]
+epochQuestData[28723] = {"Thievin' Crabs",{{46718}},nil,nil,2,nil,nil,{"Slay 10 Amethyst Crabs."},nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Quest giver: Daz'tiro, needs creature ID
+epochQuestData[28739] = {"Azsharan Idols",{{46934}},nil,nil,4,nil,nil,{"Collect 3 idols."},nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Quest giver: Uwa, needs item ID
+epochQuestData[28740] = {"Tainted Tablet",{{46718}},{{46934}},nil,1,nil,nil,{"Read Tainted Tablet and speak to Uwa."},nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Quest giver: Daz'tiro, turn-in: Uwa
+
+-- Additional troll quests with corrected names from issue #96
 epochQuestData[28750] = {"Return of the King",nil,nil,nil,1,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[28751] = {"Recovery Work",nil,nil,nil,1,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[28752] = {"Your Seat Awaits",nil,nil,nil,1,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
@@ -97,16 +103,16 @@ epochQuestData[28753] = {"Island Troll-kin",nil,nil,nil,2,nil,nil,nil,nil,nil,ni
 epochQuestData[28754] = {"Troll Skull Poker",nil,nil,nil,2,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[28755] = {"Smoked Boar Meat",nil,nil,nil,2,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[28757] = {"Banana Bonanza",nil,nil,nil,3,nil,nil,{"Collect 10 Sun-Ripened Bananas."},nil,{nil,nil,{{110002,10}}},nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[28758] = {"Tiki Target Practice",nil,nil,nil,3,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[28759] = {"Lost Crocolisk Pups",nil,nil,nil,3,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[28758] = {"Shell Collection",nil,nil,nil,3,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[28759] = {"Claws of the Cat",nil,nil,nil,3,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[28760] = {"Jinxed Trolls",nil,nil,nil,3,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[28761] = {"Moraya",nil,nil,nil,3,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[28762] = {"The Truth Behind the Fissure",nil,nil,nil,4,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[28763] = {"Lost Honor",nil,nil,nil,4,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[28761] = {"Source of the Jinx",nil,nil,nil,3,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[28762] = {"Report to Master Gadrin",nil,nil,nil,4,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[28763] = {"Report to Razor Hill",nil,nil,nil,4,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[28764] = {"The Loa of Death",nil,nil,nil,4,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Troll starting zone, interact with Second Tablet of Bwonsamdi at [73.4, 54.7] (needs object ID)
 epochQuestData[28765] = {"Tidal Menace",nil,nil,nil,5,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[28766] = {"The Echo Isles",nil,nil,nil,5,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[28767] = {"Proving Pit",nil,nil,nil,5,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[28766] = {"Pouch of Strange Shells",nil,nil,nil,5,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[28767] = {"The Naga Menace",nil,nil,nil,5,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[28756] = {"Missing Quest 28756",nil,nil,nil,2,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Gap in troll sequence
 
 -- Issue #73: Springsocket fishing quest - Barrens
