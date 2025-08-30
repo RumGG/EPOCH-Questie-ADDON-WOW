@@ -828,7 +828,7 @@ local epochNpcData = {
 
 -- Issue #35: NPCs for Beastial Allies quest
 [1557] = {"Elder Mistvale Gorilla",nil,nil,41,41,0,{[33]={{33.8,64.3}}},nil,33,{26892},nil,nil,nil,nil,0},
-[46121] = {"Cys Craftcharge",nil,nil,41,41,0,{[15]={{53.7,56.5}}},nil,15,nil,{26892},nil,nil,nil,0},
+[46121] = {"Cys Craftcharge",nil,nil,41,41,0,{[15]={{53.7,56.6}}},nil,15,{27299,27302},{26892,27300},1,"A",nil,0},
 
 -- Issue #34: NPCs for various quests
 [1573] = {"Gryth Thurden",nil,nil,55,55,0,{[1537]={{55.5,47.8}}},nil,1537,{26663},nil,11,"A",nil,0},
@@ -1052,6 +1052,14 @@ epochNpcData[45940] = {"Nancy Eastworth",nil,nil,13,13,0,{[40]={{56.7,50.4}}},ni
 -- Issue #177: Azshara NPC
 -- Note: NPC ID 46019 conflicts with "Randal Alestone" in zone 45, but this is Lemaira for Azshara quest 27094
 epochNpcData[46019] = {"Lemaira",nil,nil,54,54,0,{[16]={{63.4,86.1}}},nil,16,nil,{27094},nil,nil,nil,0} -- Azshara
+
+-- Issue #174: Batch quest data submission NPCs
+epochNpcData[5411] = {"Krinkle Goodsteel",nil,nil,43,43,0,{[440]={{56.6,81.5}}},nil,440,nil,{26288},1,"A",nil,0} -- Tanaris
+epochNpcData[1261] = {"Veron Amberstill",nil,nil,9,9,0,{[1]={{63.4,50.6}}},nil,1,{26680},nil,1,"A",nil,0} -- Dun Morogh
+epochNpcData[4772] = {"Ultham Ironhorn",nil,nil,40,40,0,{[1]={{63.9,50.1}}},nil,1,{26684},nil,1,"A",nil,0} -- Dun Morogh
+epochNpcData[46120] = {"Beezil Linkspanner",nil,nil,41,41,0,{[15]={{52.1,66.0}}},nil,15,{27300},{27443},1,"A",nil,0} -- Dustwallow Marsh
+epochNpcData[46123] = {"Watcher Wallace",nil,nil,41,41,0,{[15]={{66.9,53.2}}},nil,15,nil,{27302},1,"A",nil,0} -- Dustwallow Marsh
+epochNpcData[46228] = {"Kranz",nil,nil,41,41,0,{[440]={{56.6,81.1}}},nil,440,{27443},nil,1,"A",nil,0} -- Tanaris
 
 -- Stage the Epoch npcData for later merge during compilation
 QuestieDB._epochNpcData = epochNpcData
