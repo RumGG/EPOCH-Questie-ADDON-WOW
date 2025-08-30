@@ -27,6 +27,14 @@ local CreateQuestDataLink
 
 -- Helper function for debug messages
 local function DebugMessage(msg, r, g, b)
+    -- Check if this is a [DEBUG] or [DataCollector Debug] message
+    if string.find(msg, "%[DEBUG%]") or string.find(msg, "%[DataCollector Debug%]") then
+        if Questie.db and Questie.db.profile and Questie.db.profile.showDataCollectionMessages then
+            DEFAULT_CHAT_FRAME:AddMessage(msg, r or 1, g or 1, b or 1)
+        end
+        return
+    end
+    
     -- Check if this is a [DATA] message
     if string.find(msg, "%[DATA%]") then
         -- [DATA] messages only show if showDataCollectionMessages is enabled
@@ -771,7 +779,7 @@ function QuestieDataCollector:OnQuestAccepted(questId)
     
     -- Debug logging
     if Questie.db.profile.debugDataCollector then
-        DEFAULT_CHAT_FRAME:AddMessage(string.format("|cFF00FFFF[DataCollector Debug]|r Quest %d: isEpochQuest=%s, isMissingFromDB=%s, hasRuntimeStub=%s", 
+        DebugMessage(string.format("|cFF00FFFF[DataCollector Debug]|r Quest %d: isEpochQuest=%s, isMissingFromDB=%s, hasRuntimeStub=%s", 
             questId, tostring(isEpochQuest), tostring(isMissingFromDB), tostring(runtimeStub ~= nil)), 0, 1, 1)
     end
     
@@ -827,7 +835,7 @@ function QuestieDataCollector:OnQuestAccepted(questId)
     
     -- Debug: Log the final decision factors
     if Questie.db.profile.debugDataCollector then
-        DEFAULT_CHAT_FRAME:AddMessage(string.format("|cFF00FFFF[DataCollector Debug]|r Final check - isEpochQuest=%s, isMissingFromDB=%s, hasEpochPrefix=%s, hasIncompleteData=%s", 
+        DebugMessage(string.format("|cFF00FFFF[DataCollector Debug]|r Final check - isEpochQuest=%s, isMissingFromDB=%s, hasEpochPrefix=%s, hasIncompleteData=%s", 
             tostring(isEpochQuest), tostring(isMissingFromDB), tostring(hasEpochPrefix), tostring(hasIncompleteData)), 0, 1, 1)
     end
     
@@ -916,8 +924,8 @@ function QuestieDataCollector:OnQuestAccepted(questId)
             end
         end
         
-        DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00When complete, submit data at: https://github.com/trav346/Questie-Epoch/issues|r", 1, 1, 0)
-        DEFAULT_CHAT_FRAME:AddMessage("===========================================", 0, 1, 1)
+        -- Simple one-line message as requested by user
+        DEFAULT_CHAT_FRAME:AddMessage("|cFFFF8000Quest not in database. This quest is now being tracked by Data Collector!|r", 1, 0.5, 0)
         
         _activeTracking[questId] = true
     end
@@ -1300,7 +1308,7 @@ function QuestieDataCollector:SetupObjectTracking()
                 -- The db.profile isn't always loaded when tooltips are processed
                 --[[
                 if Questie.db and Questie.db.profile and Questie.db.profile.debugDataCollector then
-                    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FFFF[DEBUG] Captured object from tooltip: '" .. name .. "'" .. 
+                    DebugMessage("|cFF00FFFF[DEBUG] Captured object from tooltip: '" .. name .. "'" .. 
                         (objectId and " (ID: " .. objectId .. ")" or "") .. "|r", 0, 1, 1)
                 end
                 --]]
@@ -1374,7 +1382,7 @@ function QuestieDataCollector:OnLootOpened()
             --[[
             if Questie.db and Questie.db.profile and Questie.db.profile.debugDataCollector then
                 local age = _lastInteractedObject.timestamp and (time() - _lastInteractedObject.timestamp) or "unknown"
-                DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00[DEBUG] Using _lastInteractedObject: '" .. (lootSourceName or "nil") .. 
+                DebugMessage("|cFFFFFF00[DEBUG] Using _lastInteractedObject: '" .. (lootSourceName or "nil") .. 
                     "' (age: " .. tostring(age) .. "s)|r", 1, 1, 0)
             end
             --]]
