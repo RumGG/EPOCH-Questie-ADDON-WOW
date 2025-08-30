@@ -66,11 +66,10 @@
 - **Fixed GitHub repository link** (GitHub #161)
   - Updated link from esurm/Questie to trav346/Questie in Advanced settings
   - Fixed all localization strings to use correct repository
-- **Disabled Wrath quest database loading** (GitHub #125)
-  - Wrath quests don't exist on Project Epoch server
-  - Saves ~2.3MB of memory by not loading 9086 non-existent quests
-  - Keeps Wrath NPC/Item/Object databases as Epoch uses similar NPC placements
-  - Any actual Wrath quest found on Epoch should be added to epochQuestDB.lua instead
+- **Reverted Wrath quest database change** 
+  - Disabling wotlkQuestDB.lua caused map pins to disappear after database recompile
+  - The file must be loaded for the compiler to work properly
+  - Will investigate a better solution to reduce memory usage
 
 ### Fixed
 - **CRITICAL FIX**: Fixed data collection bug causing all quest objectives to be mixed up (GitHub #151)
