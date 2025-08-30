@@ -135,7 +135,7 @@ epochQuestData[26541] = {"Threats from Abroad",nil,nil,nil,32,nil,nil,nil,nil,ni
 epochQuestData[26547] = {"To The Hills",nil,nil,nil,37,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 -- Issue #93: Multiple Wetlands and Duskwood quests
 epochQuestData[26570] = {"Waterlogged Journal",nil,{{311}},nil,37,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,10,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Duskwood
-epochQuestData[26723] = {"Wanted: Plagued Shambler",nil,nil,nil,30,nil,nil,{"Slay the Plagued Shambler."},nil,{{{nil,1}}},nil,nil,nil,nil,nil,nil,10,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Duskwood
+epochQuestData[26723] = {"Wanted: Plagued Shambler",nil,nil,nil,30,nil,nil,{"Slay the Plagued Shambler."},nil,nil,nil,nil,nil,nil,nil,nil,10,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Duskwood, missing creature ID
 epochQuestData[27000] = {"A Temporary Victory",nil,{{45953}},nil,31,nil,nil,{"Deliver news of the Burndural Victory to Captain Stoutfist."},nil,nil,nil,nil,nil,nil,nil,nil,11,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Wetlands, turn-in to Corporal Mountainview
 epochQuestData[27001] = {"Guldar Gamble",nil,nil,nil,28,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[27002] = {"Report to the Front Lines",nil,{{45946}},nil,28,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,11,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
