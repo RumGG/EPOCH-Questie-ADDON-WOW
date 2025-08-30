@@ -198,10 +198,10 @@ function QuestieDataCollector:CheckExistingQuests()
                             
                             -- Populate objectives for the quest
                             SelectQuestLogEntry(i)
-                            local numObjectives = GetNumQuestLeaderBoards(i)
+                            local numObjectives = GetNumQuestLeaderBoards()  -- WoW 3.3.5: no parameter needed
                             if numObjectives > 0 and #QuestieDataCollection.quests[questID].objectives == 0 then
                                 for objIdx = 1, numObjectives do
-                                    local text, objectiveType, finished = GetQuestLogLeaderBoard(objIdx, i)
+                                    local text, objectiveType, finished = GetQuestLogLeaderBoard(objIdx)  -- WoW 3.3.5: only needs objective index
                                     table.insert(QuestieDataCollection.quests[questID].objectives, {
                                         text = text or ("Objective " .. objIdx),
                                         type = objectiveType or "unknown",
@@ -268,7 +268,7 @@ function QuestieDataCollector:CheckExistingQuests()
                                 
                                 -- Always refresh objectives from quest log (they might have changed or be missing)
                                 SelectQuestLogEntry(i)
-                                local numObjectives = GetNumQuestLeaderBoards(i)
+                                local numObjectives = GetNumQuestLeaderBoards()  -- WoW 3.3.5: no parameter needed
                                 
                                 -- Only update objectives if we don't have them or if the count is different
                                 if not QuestieDataCollection.quests[questID].objectives or 
@@ -291,7 +291,7 @@ function QuestieDataCollector:CheckExistingQuests()
                                     
                                     QuestieDataCollection.quests[questID].objectives = {}
                                     for objIdx = 1, numObjectives do
-                                        local text, objectiveType, finished = GetQuestLogLeaderBoard(objIdx, i)
+                                        local text, objectiveType, finished = GetQuestLogLeaderBoard(objIdx)  -- WoW 3.3.5: only needs objective index
                                         
                                         -- Parse current progress from text
                                         local current, total = 0, 0
@@ -316,7 +316,7 @@ function QuestieDataCollector:CheckExistingQuests()
                                 else
                                     -- Update existing objectives with current text (might have progress changes)
                                     for objIdx = 1, numObjectives do
-                                        local text, objectiveType, finished = GetQuestLogLeaderBoard(objIdx, i)
+                                        local text, objectiveType, finished = GetQuestLogLeaderBoard(objIdx)  -- WoW 3.3.5: only needs objective index
                                         if QuestieDataCollection.quests[questID].objectives[objIdx] then
                                             -- Update the text to reflect current progress
                                             if text then
@@ -512,10 +512,10 @@ function QuestieDataCollector:CaptureItemData(itemId, name, link)
             local questLogIndex = QuestieDataCollector:GetQuestLogIndexById(questId)
             if questLogIndex then
                 SelectQuestLogEntry(questLogIndex)
-                local numObjectives = GetNumQuestLeaderBoards(questLogIndex)
+                local numObjectives = GetNumQuestLeaderBoards()  -- WoW 3.3.5: no parameter needed
                 
                 for i = 1, numObjectives do
-                    local text, objectiveType, finished = GetQuestLogLeaderBoard(i, questLogIndex)
+                    local text, objectiveType, finished = GetQuestLogLeaderBoard(i)  -- WoW 3.3.5: only needs objective index
                     if objectiveType == "item" and string.find(text, name) then
                         QuestieDataCollection.quests[questId].items[itemId] = {
                             name = name,
@@ -1013,9 +1013,9 @@ function QuestieDataCollector:OnQuestAccepted(questId)
             QuestieDataCollection.quests[questId].level = level
             
             -- Get objectives (with retry for text that might not be loaded yet)
-            local numObjectives = GetNumQuestLeaderBoards(questLogIndex)
+            local numObjectives = GetNumQuestLeaderBoards()  -- WoW 3.3.5: no parameter needed
             for i = 1, numObjectives do
-                local text, objectiveType, finished = GetQuestLogLeaderBoard(i, questLogIndex)
+                local text, objectiveType, finished = GetQuestLogLeaderBoard(i)  -- WoW 3.3.5: only needs objective index
                 
                 -- If text is empty, try to get it from quest description
                 if not text or text == "" then
@@ -1071,10 +1071,10 @@ function QuestieDataCollector:UpdateQuestObjectives(questId)
     local questLogIndex = QuestieDataCollector:GetQuestLogIndexById(questId)
     if questLogIndex then
         SelectQuestLogEntry(questLogIndex)
-        local numObjectives = GetNumQuestLeaderBoards(questLogIndex)
+        local numObjectives = GetNumQuestLeaderBoards()  -- WoW 3.3.5: no parameter needed
         
         for i = 1, numObjectives do
-            local text, objectiveType, finished = GetQuestLogLeaderBoard(i, questLogIndex)
+            local text, objectiveType, finished = GetQuestLogLeaderBoard(i)  -- WoW 3.3.5: only needs objective index
             if QuestieDataCollection.quests[questId].objectives[i] then
                 -- Update the objective with current text
                 if text and text ~= "" then
@@ -1211,10 +1211,10 @@ function QuestieDataCollector:OnQuestLogUpdate()
             local questLogIndex = QuestieDataCollector:GetQuestLogIndexById(questId)
             if questLogIndex then
                 SelectQuestLogEntry(questLogIndex)
-                local numObjectives = GetNumQuestLeaderBoards(questLogIndex)
+                local numObjectives = GetNumQuestLeaderBoards()  -- WoW 3.3.5: no parameter needed
                 
                 for i = 1, numObjectives do
-                    local text, objectiveType, finished = GetQuestLogLeaderBoard(i, questLogIndex)
+                    local text, objectiveType, finished = GetQuestLogLeaderBoard(i)  -- WoW 3.3.5: only needs objective index
                     local objData = QuestieDataCollection.quests[questId].objectives[i]
                     
                     -- Always update objective text to keep it current

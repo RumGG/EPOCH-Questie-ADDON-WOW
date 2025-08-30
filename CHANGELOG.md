@@ -37,6 +37,10 @@
   - Added 30+ NPCs with coordinates for quest givers and turn-ins
 
 ### Fixed
+- **CRITICAL FIX**: Fixed data collection bug causing all quest objectives to be mixed up (GitHub #151)
+  - Fixed incorrect WoW 3.3.5 API usage where GetNumQuestLeaderBoards() and GetQuestLogLeaderBoard() were being passed parameters they don't accept
+  - This was causing all tracked quests to receive the same objectives from whatever quest was last selected
+  - Data collected before this fix may have incorrect objective assignments
 - Fixed Lua errors when hovering over invalid quest rewards in the quest log (GitHub #154)
   - Added QuestRewardTooltipFix module to hook and validate SetQuestLogItem calls
   - Prevents crashes with invalid reward indices for Epoch quests with placeholder data
