@@ -184,6 +184,7 @@ function QuestieOptionsDefaults:Load()
             debugLevel = 0,
             skipValidation = false,
             enableDataCollection = false, -- Developer feature for capturing missing quest data
+            showDataCollectionMessages = false, -- Show [DATA] messages in chat when collecting
             dataCollectionPrompted = nil, -- nil = not prompted, true = prompted
         },
         char = {

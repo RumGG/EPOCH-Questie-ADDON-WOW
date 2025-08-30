@@ -450,6 +450,24 @@ function QuestieOptions.tabs.advanced:Initialize()
                     end
                 end,
             },
+            showDataCollectionMessages = {
+                type = "toggle",
+                order = 6.03,
+                name = function() return "Show Collection Messages"; end,
+                desc = function() return "Show [DATA] messages in chat when collecting quest data.\n\n|cFFFFFF00Disable this to collect data silently without chat spam.|r"; end,
+                descStyle = "inline",
+                width = "full",
+                disabled = function() return not Questie.db.profile.enableDataCollection; end,
+                get = function() return Questie.db.profile.showDataCollectionMessages; end,
+                set = function(_, value)
+                    Questie.db.profile.showDataCollectionMessages = value
+                    if value then
+                        DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00[Questie] Data collection messages ENABLED|r", 1, 1, 0)
+                    else
+                        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Questie] Data collection messages DISABLED - collecting silently|r", 0, 1, 0)
+                    end
+                end,
+            },
             dataCollectionInfo = {
                 type = "description",
                 order = 6.03,

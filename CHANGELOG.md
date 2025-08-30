@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.0.60-hotfix] - 2025-08-30
+
+### Fixed
+- **Load Order Error**: Fixed epochQuestDB.lua causing "attempt to index global QuestieDB (a nil value)" error
+  - Added missing QuestieDB import at top of file
+  - Other Epoch database files already had proper imports
+
+### Added  
+- **Data Collection Message Toggle**: Added setting to control [DATA] message visibility
+  - New setting in Advanced tab: "Show Collection Messages" (off by default)
+  - `/qdc messages` command to quickly toggle messages on/off
+  - Allows silent data collection without chat spam
+  - Collection still works even with messages disabled
+
 ## [1.0.60] - 2025-08-30
 
 ### Fixed

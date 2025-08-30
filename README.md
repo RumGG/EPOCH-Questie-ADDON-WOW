@@ -8,9 +8,13 @@
 
 **Not feeling up to it?** No problem! Just use Questie normally. /qdc disable
 
-## v1.0.60 - Latest Release
+## v1.0.60-hotfix - Latest Release
 
 ### Massive Update: 300+ Quests Added, and Critical Errors Fixed!
+
+**Hotfix Updates:**
+- Fixed load order error causing crashes on startup
+- Added toggle for [DATA] messages - collect silently without chat spam! (`/qdc messages`)
 
 #### All Runtime Errors Fixed
 - **No More Crashes**: Fixed AvailableQuests and QuestieTracker nil errors

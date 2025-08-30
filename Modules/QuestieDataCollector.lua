@@ -27,9 +27,17 @@ local CreateQuestDataLink
 
 -- Helper function for debug messages
 local function DebugMessage(msg, r, g, b)
-    -- Extra safety check to ensure db is loaded and debug is truly enabled
-    if Questie.db and Questie.db.profile and Questie.db.profile.debugDataCollector then
-        DEFAULT_CHAT_FRAME:AddMessage(msg, r or 1, g or 1, b or 1)
+    -- Check if this is a [DATA] message
+    if string.find(msg, "%[DATA%]") then
+        -- [DATA] messages only show if showDataCollectionMessages is enabled
+        if Questie.db and Questie.db.profile and Questie.db.profile.showDataCollectionMessages then
+            DEFAULT_CHAT_FRAME:AddMessage(msg, r or 1, g or 1, b or 1)
+        end
+    else
+        -- Regular debug messages show if debugDataCollector is enabled
+        if Questie.db and Questie.db.profile and Questie.db.profile.debugDataCollector then
+            DEFAULT_CHAT_FRAME:AddMessage(msg, r or 1, g or 1, b or 1)
+        end
     end
 end
 
@@ -2615,9 +2623,14 @@ SlashCmdList["QUESTIEDATACOLLECTOR"] = function(msg)
     elseif cmd == "status" then
         DEFAULT_CHAT_FRAME:AddMessage("=== DATA COLLECTOR STATUS ===", 0, 1, 1)
         if Questie.db.profile.enableDataCollection then
-            DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00Status: ENABLED|r", 0, 1, 0)
+            DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00Collection: ENABLED|r", 0, 1, 0)
+            if Questie.db.profile.showDataCollectionMessages then
+                DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00Messages: SHOWN|r", 1, 1, 0)
+            else
+                DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00Messages: HIDDEN (silent mode)|r", 0, 1, 0)
+            end
         else
-            DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000Status: DISABLED|r", 1, 0, 0)
+            DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000Collection: DISABLED|r", 1, 0, 0)
         end
         
         -- Check initialization status
@@ -2765,6 +2778,15 @@ SlashCmdList["QUESTIEDATACOLLECTOR"] = function(msg)
             end
         else
             DebugMessage("|cFFFF0000[DATA] Usage: /qdc turnin <questId> (while targeting the turn-in NPC)|r", 1, 0, 0)
+        end
+        
+    elseif cmd == "messages" then
+        -- Toggle message visibility
+        Questie.db.profile.showDataCollectionMessages = not Questie.db.profile.showDataCollectionMessages
+        if Questie.db.profile.showDataCollectionMessages then
+            DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00[DATA COLLECTOR] Messages ENABLED - you will see [DATA] messages|r", 1, 1, 0)
+        else
+            DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DATA COLLECTOR] Messages DISABLED - collecting silently|r", 0, 1, 0)
         end
         
     elseif cmd == "clear" then
