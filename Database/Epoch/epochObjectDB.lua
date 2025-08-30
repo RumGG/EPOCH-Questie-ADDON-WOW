@@ -179,6 +179,9 @@ local epochObjectData = {
 
 -- Banana Bonanza quest object
 [188800] = {"Sun-Ripened Banana",nil,{28757},{[14]={{70.3,47.1},{70.4,49.5},{70.6,46.6},{71.1,48.1},{70.1,49.7}}},14}, -- Durotar ground spawns
+
+-- Issue #119: Corrected coordinates for quest 717 "Tremors of the Earth"
+[2842] = {"Pillar of Diamond",nil,nil,{[3]={{83.9,39.4}}},3}, -- Corrected from 83.7,32.9 to 83.9,39.4
 }
 
 -- Stage the Epoch objectData for later merge during compilation

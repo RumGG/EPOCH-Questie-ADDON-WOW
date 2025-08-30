@@ -626,7 +626,7 @@ local epochNpcData = {
 [45725] = {"Doszurd",1840,2070,46,46,0,{[440]={{53.0,33.2}}},nil,440,nil,nil,nil,nil,nil,0},
 [45726] = {"Raging Tempest",1800,2025,45,45,0,{[440]={{62.7,42.6},{45.3,33.8},{44.8,29.9},{49.0,32.8},{55.0,34.9},{54.5,40.9},{56.1,41.3}}},{[440]={{62.7,42.6},{45.3,33.8},{44.8,29.9},{49.0,32.8},{55.0,34.9},{54.5,40.9},{56.1,41.3}}},440,nil,nil,nil,nil,nil,0},
 [45727] = {"Ravenous Looter",1760,2025,44,45,0,{[440]={{50.9,44.7},{51.2,45.5},{51.3,46.2},{50.8,46.3},{50.9,45.9},{50.7,45.8},{50.5,45.2},{50.3,45.4},{50.2,45.1},{50.1,45.4},{49.7,46.0},{50.4,46.4},{50.0,46.5},{50.3,47.1},{50.7,47.6},{50.7,46.6},{51.2,47.0},{51.3,46.2}}},{[440]={{50.9,44.7},{51.2,45.5},{51.3,46.2},{50.8,46.3},{50.9,45.9},{50.7,45.8},{50.5,45.2},{50.3,45.4},{50.2,45.1},{50.1,45.4},{49.7,46.0},{50.4,46.4},{50.0,46.5},{50.3,47.1},{50.7,47.6},{50.7,46.6},{51.2,47.0},{51.3,46.2}}},440,nil,nil,nil,nil,nil,0},
-[45731] = {"Nereid",1800,2025,45,45,0,{[440]={{56.5,82.6}}},nil,440,nil,nil,35,"AH",nil,0},
+[45731] = {"Sarae Dewlight",1000,1000,25,25,0,{[10]={{77.5,52.2}}},nil,10,{26711},{26711},11,"A",nil,0},
 [45732] = {"Dis Nuts",2000,2250,50,50,0,{[440]={{66.34,21.89}}},nil,440,nil,nil,35,"AH",nil,0},
 [46265] = {"Peach",nil,nil,37,37,0,{[400]={{78.4,75.7}}},nil,400,nil,{26570},11,"A",nil,0},
 [45736] = {"Wuti Sunjumper",1920,2160,48,48,0,{[440]={{52.4,96.1}}},nil,440,{27432,27433,27434,27435,27438},{27431,27432,27433,27434,27437,27438},85,"H",nil,0},
@@ -996,7 +996,55 @@ epochNpcData[45383] = {"Sentinel Arynia Cloudsbreak",nil,nil,12,12,0,{[141]={{55
 epochNpcData[45887] = {"Priestess A'moora",nil,nil,9,9,0,{[141]={{56.7,53.5}}},nil,141,{26926},nil,1,"A",nil,0} -- Teldrassil
 
 -- Issue #121
-epochNpcData[2140] = {"Edwin Harly",nil,nil,13,13,0,{[130]={{44.0,39.9}}},nil,130,{26218},nil,1,"H",nil,0} -- Silverpine Forest
+epochNpcData[2140] = {"Edwin Harly",nil,nil,13,13,0,{[130]={{44.0,39.9}}},nil,130,{26218},{26218},1,"H",nil,0} -- Silverpine Forest
+
+-- Issues #104-116, #119, #132, #153, #155-156: Additional NPCs
+-- Issue #104: Elwynn Forest NPCs
+epochNpcData[9296] = {"Milly Osworth",nil,nil,1,1,0,{[12]={{50.7,39.4}}},nil,12,{26778},{26777},1,"A",nil,0} -- Elwynn Forest
+epochNpcData[952] = {"Brother Neals",nil,nil,1,1,0,{[12]={{49.4,41.5}}},nil,12,{26779},{26778},1,"A",nil,0} -- Elwynn Forest
+epochNpcData[45798] = {"Lorkiz Quietbit",nil,nil,8,8,0,{[12]={{42.1,67.2}}},nil,12,nil,{26794},1,"A",nil,0} -- Elwynn Forest
+
+-- Issue #105: Feralas NPCs
+epochNpcData[4048] = {"Falfindel Waywarder",nil,nil,28,28,0,{[405]={{89.6,46.4}}},nil,405,{27488,27500,27501},{27488,27500,27501},1,"A",nil,0} -- Feralas
+
+-- Issue #106: Darkshore NPCs  
+epochNpcData[3616] = {"Onu",nil,nil,14,14,0,{[148]={{43.5,76.3}}},nil,148,nil,{27205},1,"A",nil,0} -- Darkshore
+
+-- Issue #107: Hillsbrad/Desolace NPCs
+epochNpcData[3544] = {"Jason Lemieux",nil,nil,35,35,0,{[267]={{62.3,20.8}}},nil,267,{26544},{26544},1,"H",nil,0} -- Hillsbrad Foothills
+epochNpcData[46000] = {"Pipjot",nil,nil,31,31,0,{[405]={{26.0,69.9}}},nil,405,{27238},{27238},1,"H",nil,0} -- Desolace
+
+-- Issue #108: Alliance NPCs
+epochNpcData[2364] = {"Neema",nil,nil,35,35,0,{[267]={{51.0,59.1}}},nil,267,{26542},{26542},1,"A",nil,0} -- Hillsbrad Foothills
+epochNpcData[2363] = {"Apprentice Honeywell",nil,nil,23,23,0,{[267]={{50.7,56.8}}},nil,267,{26802},{26802},1,"A",nil,0} -- Hillsbrad Foothills
+epochNpcData[45942] = {"Mayor Oakmaster",nil,nil,31,31,0,{[11]={{27.9,66.6}}},nil,11,{27000},{27000},1,"A",nil,0} -- Wetlands
+epochNpcData[2104] = {"Captain Stoutfist",nil,nil,31,31,0,{[11]={{9.8,57.4}}},nil,11,nil,{27000},1,"A",nil,0} -- Wetlands
+
+-- Issue #111 & #116: Stranglethorn Vale NPCs
+epochNpcData[45846] = {"Lorespeaker Itzli",nil,nil,36,36,0,{[33]={{32.2,27.6}}},nil,33,{26886},{26885},1,"H",nil,0} -- Stranglethorn Vale
+epochNpcData[2497] = {"Nimboya",nil,nil,36,36,0,{[33]={{32.2,27.7}}},nil,33,nil,{26885},1,"H",nil,0} -- Stranglethorn Vale
+epochNpcData[45845] = {"Thu'tek",nil,nil,36,36,0,{[33]={{26.3,12.2}}},nil,33,{26886},{26886},1,"H",nil,0} -- Stranglethorn Vale
+
+-- Issue #113: Felwood NPCs
+epochNpcData[9996] = {"Winna Hazzard",nil,nil,60,60,0,{[361]={{34.2,52.3}}},nil,361,nil,{26148},1,"H",nil,0} -- Felwood
+epochNpcData[46127] = {"Watcher Steelsong",nil,nil,52,52,0,{[361]={{50.8,81.8}}},nil,361,{27309},{27309},1,"H",nil,0} -- Felwood
+
+-- Issue #114: The Barrens NPCs
+epochNpcData[3432] = {"Mankrik",nil,nil,14,14,0,{[17]={{51.9,31.5}}},nil,17,nil,{27166},1,"H",nil,0} -- The Barrens
+epochNpcData[46065] = {"Kaliyah Stormshew",nil,nil,18,18,0,{[17]={{45.2,58.7}}},nil,17,{27195},{27195},1,"H",nil,0} -- The Barrens
+epochNpcData[7161] = {"Wrenix the Wretched",nil,nil,17,17,0,{[17]={{63.0,36.3}}},nil,17,{27197},{27197},1,"H",nil,0} -- The Barrens
+
+-- Issue #115: Various Horde NPCs
+epochNpcData[12920] = {"Doctor Gregory Victor",nil,nil,37,37,0,{[45]={{73.8,36.9}}},nil,45,{26374},{26374},1,"H",nil,0} -- Arathi Highlands
+epochNpcData[9019] = {"Nyagga",nil,nil,38,38,0,{[8]={{47.0,54.8}}},nil,8,{26376},{26376},1,"H",nil,0} -- Swamp of Sorrows
+epochNpcData[4630] = {"Pozzik",nil,nil,31,31,0,{[400]={{78.1,77.1}}},nil,400,nil,{27492},1,"N",nil,0} -- Thousand Needles
+
+-- Issue #155: Azshara NPCs
+epochNpcData[46006] = {"Relko",nil,nil,54,54,0,{[16]={{23.1,50.8}}},nil,16,nil,{27092},1,"H",nil,0} -- Azshara
+
+-- Issue #156: Various NPCs
+epochNpcData[12043] = {"Kulwia",nil,nil,27,27,0,{[406]={{45.4,59.3}}},nil,406,nil,{27397},1,"H",nil,0} -- Stonetalon Mountains
+epochNpcData[10428] = {"Motega Firemane",nil,nil,27,27,0,{[400]={{21.6,32.2}}},nil,400,{27489},{27489},1,"H",nil,0} -- Thousand Needles
 
 -- Stage the Epoch npcData for later merge during compilation
 QuestieDB._epochNpcData = epochNpcData

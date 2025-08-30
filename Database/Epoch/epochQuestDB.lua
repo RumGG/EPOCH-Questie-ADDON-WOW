@@ -345,6 +345,9 @@ epochQuestData[28573] = {"Commission for Verner Osgood",{{2697}},{{2697}},nil,30
 -- Issue #145: Riders In The Night
 epochQuestData[26707] = {"Riders In The Night",nil,{{264}},nil,28,nil,nil,{"Report the night rider sightings to Commander Althea Ebonlocke."},nil,nil,nil,nil,nil,nil,nil,nil,10,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 
+-- Issue #157: Life In Death
+epochQuestData[26711] = {"Life In Death",{{45731}},{{273}},nil,25,nil,nil,{"Collect 8 Brightwood Bloom."},nil,{nil,nil,{{62530,nil}}},nil,nil,nil,nil,nil,nil,10,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+
 -- Issue #134: How to Make Friends with a Furbolg (different from 27082)
 epochQuestData[27081] = {"How to Make Friends with a Furbolg",{{46012}},{{8420}},nil,52,nil,nil,{"Learn how to befriend the furbolg."},nil,nil,nil,nil,nil,nil,nil,nil,16,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
 
@@ -403,3 +406,80 @@ epochQuestData[26778] = {"Find the Brother",{{9296}},{{9296}},nil,1,nil,nil,{"Fi
 
 -- Issue #117: Waterlogged Journal
 epochQuestData[26570] = {"Waterlogged Journal",nil,{{4453}},nil,37,nil,nil,{"Return the waterlogged journal to Sven Yorgen."},nil,nil,nil,nil,nil,nil,nil,nil,10,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+
+-- Issues #104-116, #119, #132, #153, #155-156: Additional Epoch quest data
+-- Issue #104: Elwynn Forest quests
+epochQuestData[26774] = {"Spider Elixir",{{45775}},{{45775}},nil,9,nil,nil,{"Free 4 Webbed Miners and collect 4 Mine Spider Mandibles."},nil,{nil,nil,{{1434,"Mine Spider Mandible"}}},nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26777] = {"The Soaked Barrel",nil,{{9296}},1,1,77,nil,{"Find the source of the barrel via 12 Red Burlap Bandana discoveries."},nil,nil,nil,nil,nil,{26778},nil,nil,12,nil,nil,nil,nil,26778,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26778] = {"Find the Brother",{{9296}},{{952}},1,1,77,nil,{"Bring the soaked barrel to Brother Neals."},nil,nil,nil,nil,{26777},nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,26777,nil,nil,nil,nil,nil}
+epochQuestData[26781] = {"Linus Stone Tips",{{328}},{{328}},nil,5,nil,nil,{"Collect 1 item at coordinates 42.4, 58.6."},nil,nil,nil,nil,{26780},nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,26780,nil,nil,nil,nil,nil}
+
+-- Issue #104: Elwynn Forest (continued)
+epochQuestData[26689] = {"Barroom Blitz",{{240}},{{240}},nil,12,nil,nil,{"Deal with the barroom troublemakers."},nil,nil,nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26768] = {"Just Desserts",{{45773}},{{45773}},nil,8,nil,nil,{"Collect 5 Mild Spices, 5 Simple Flour, 1 Salt, and 20 Mana Berries."},nil,nil,nil,nil,nil,{26769},nil,nil,12,nil,nil,nil,nil,26769,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26769] = {"Just Desserts",{{45773}},{{45773}},nil,8,nil,nil,{"Collect Mana Tainted Sludge."},nil,nil,nil,nil,{26768},{26770},nil,nil,12,nil,nil,nil,nil,26770,8,0,26768,nil,nil,nil,nil,nil}
+epochQuestData[26770] = {"Just Desserts",{{45773}},{{313}},nil,8,nil,nil,{"Present Sarah's cake to Theocritus."},nil,nil,nil,nil,{26769},nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,26769,nil,nil,nil,nil,nil}
+epochQuestData[26771] = {"Lost Equipment",{{45774}},{{45774}},nil,9,nil,nil,{"Collect 8 Mining Equipment."},nil,nil,nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26775] = {"Tend to the Wounded",{{45775}},{{45775}},nil,10,nil,nil,{"Cure 5 Poisoned Miners."},nil,nil,nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26794] = {"Wanted: Big Blue",{{45798}},{{45798}},nil,8,nil,nil,{"Slay Big Blue and collect the bounty."},nil,nil,nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+
+-- Issue #105: Feralas quests
+epochQuestData[27488] = {"Bad News Has Horns",{{4048}},{{4048}},nil,28,nil,nil,{"Collect 3 Secret Notes from Thousand Needles."},nil,{nil,nil,{{12765,"Secret Note #1"},{12766,"Secret Note #2"},{12768,"Secret Note #3"}}},nil,nil,nil,nil,nil,nil,405,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27500] = {"The Sacred Flame",{{4048}},{{4048}},nil,27,nil,nil,{"Scout the centaur artifact location at the Cloven Hoof."},nil,nil,nil,nil,nil,{27501},nil,nil,400,nil,nil,nil,nil,27501,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27501] = {"The Sacred Flame",{{4048}},{{4048}},nil,30,nil,nil,{"Collect the sacred flame artifact."},nil,{nil,nil,{{10749}}},nil,nil,{27500},nil,nil,nil,400,nil,nil,nil,nil,nil,8,0,27500,nil,nil,nil,nil,nil}
+epochQuestData[27504] = {"Kristy's Delivery Service",nil,nil,nil,30,nil,nil,{"Complete Kristy's delivery service."},nil,nil,nil,nil,nil,nil,nil,nil,405,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+
+-- Issue #106: Darkshore quests
+epochQuestData[27205] = {"My Sister Isabetta",nil,{{3616}},nil,14,nil,nil,{"Find information about Isabetta."},nil,nil,nil,nil,nil,nil,nil,nil,148,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+
+-- Issue #107: Hillsbrad/Horde quests
+epochQuestData[26544] = {"Who Likes Apples?",{{3544}},{{3544}},nil,35,nil,nil,{"Collect 6 apples."},nil,nil,nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,85,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27034] = {"Never Again!",nil,nil,nil,30,nil,nil,{"Complete the task - Never Again!"},nil,nil,nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,85,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27238] = {"An Imp's Bidding",{{46000}},{{46000}},nil,31,nil,nil,{"Slay 1 monster and collect Demonic Sextant."},nil,{nil,nil,{{63113,"Demonic Sextant"}}},nil,nil,nil,nil,nil,nil,405,nil,nil,nil,nil,nil,85,0,nil,nil,nil,nil,nil,nil}
+
+-- Issue #108: Alliance quests (Hillsbrad/Wetlands)
+epochQuestData[26542] = {"A Rare Variety",{{2364}},{{2364}},nil,35,nil,nil,{"Collect 6 rare specimens."},nil,{nil,nil,{{11630}}},nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26802] = {"Venom Medicine",{{2363}},{{2363}},nil,23,nil,nil,{"Collect 8 Venom Sacs."},nil,{nil,nil,{{11630}}},nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27000] = {"A Temporary Victory",{{45942}},{{2104}},nil,31,nil,nil,{"Deliver news of Burndural Victory to Captain Stoutfist."},nil,nil,nil,nil,nil,nil,nil,nil,11,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+
+-- Issue #109: Horde quests (various zones)
+epochQuestData[26310] = {"Trial of the Willing",nil,nil,nil,25,nil,nil,{"Slay Deor Levo, Reagle the Blessed, and Justicar Masule."},nil,nil,nil,nil,nil,nil,nil,nil,331,nil,nil,nil,nil,nil,85,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27167] = {"Foreign Technology",nil,nil,nil,19,nil,nil,{"Obtain Cognation Reconstructor."},nil,nil,nil,nil,nil,nil,nil,nil,17,nil,nil,nil,nil,nil,85,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27171] = {"Retrieving the Orb",nil,nil,nil,18,nil,nil,{"Obtain Korgar's Orb."},nil,nil,nil,nil,nil,nil,nil,nil,17,nil,nil,nil,nil,nil,85,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27198] = {"The Missing Lorespeakers",nil,nil,nil,22,nil,nil,{"Find the missing lorespeakers."},nil,nil,nil,nil,nil,nil,nil,nil,17,nil,nil,nil,nil,nil,85,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27882] = {"Battle of Warsong Gulch",nil,nil,nil,21,nil,nil,{"Win the Battle of Warsong Gulch."},nil,nil,nil,nil,nil,nil,nil,nil,331,nil,nil,nil,nil,nil,85,0,nil,nil,nil,nil,nil,nil}
+
+-- Issue #111 & #116: Stranglethorn Vale quests
+epochQuestData[26885] = {"My Friend, The Skullsplitter",{{45846}},{{2497}},nil,36,nil,nil,{"Speak with Thu'tek and return his Spirit Charm to Nimboya."},nil,nil,nil,nil,nil,{26886},nil,nil,33,nil,nil,nil,nil,26886,85,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26886] = {"My Friend, The Skullsplitter",{{45845}},{{45846}},nil,36,nil,nil,{"Return to Lorespeaker Itzli at Grom'gol with Thu'tek's Spirit Charm."},nil,nil,nil,nil,{26885},nil,nil,nil,33,nil,nil,nil,nil,nil,85,0,26885,nil,nil,nil,nil,nil}
+
+-- Issue #113: Felwood quests
+epochQuestData[26148] = {"Legion Paisa",nil,{{9996}},nil,60,nil,nil,{"Take Legion Paisa to Altadena in Booty Bay."},nil,nil,nil,nil,nil,nil,nil,nil,361,nil,nil,nil,nil,nil,85,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27309] = {"Mementos of the Third War",{{46127}},nil,nil,52,nil,nil,{"Take Box of Grisly Mementos to Thrall in Orgrimmar."},nil,nil,nil,nil,nil,nil,nil,nil,361,nil,nil,nil,nil,nil,85,0,nil,nil,nil,nil,nil,nil}
+
+-- Issue #114: The Barrens quests
+epochQuestData[27166] = {"Consumed by Hatred",nil,{{3432}},nil,14,nil,nil,{"Collect 10 Kolkar Heads."},nil,{nil,nil,{{63039,"Kolkar Head"}}},nil,nil,nil,nil,nil,nil,17,nil,nil,nil,nil,nil,85,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27168] = {"Lost in Battle",nil,nil,nil,14,nil,nil,{"Find 3 different clues."},nil,nil,nil,nil,nil,nil,nil,nil,17,nil,nil,nil,nil,nil,85,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27195] = {"Straight to the Teeth",{{46065}},{{46065}},nil,18,nil,nil,{"Collect 10 Hecklefang Teeth."},nil,nil,nil,nil,nil,nil,nil,nil,17,nil,nil,nil,nil,nil,85,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27196] = {"The Kolkar Report",nil,nil,nil,15,nil,nil,{"Bring Kolkar Report to Thork at The Crossroads."},nil,nil,nil,nil,nil,nil,nil,nil,17,nil,nil,nil,nil,nil,85,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27197] = {"The Merchant's Daughter",{{7161}},{{7161}},nil,17,nil,nil,{"Obtain Box of Treasure."},nil,{nil,nil,{{63070,"Box of Treasure"}}},nil,nil,nil,nil,nil,nil,17,nil,nil,nil,nil,nil,85,0,nil,nil,nil,nil,nil,nil}
+
+-- Issue #115: Various Horde quests
+epochQuestData[26287] = {"Prismatic Scales",nil,nil,nil,40,nil,nil,{"Collect Prismatic Scale."},nil,{nil,nil,{{4354}}},nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,85,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26368] = {"Call to Skirmish: Thousand Needles",nil,nil,nil,35,nil,nil,{"Win skirmish in Thousand Needles."},nil,nil,nil,nil,nil,nil,nil,nil,400,nil,nil,nil,nil,nil,85,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26374] = {"Call to Skirmish: Arathi Highlands",{{12920}},{{12920}},nil,37,nil,nil,{"Kill 5 Alliance."},nil,nil,nil,nil,nil,nil,nil,nil,45,nil,nil,nil,nil,nil,85,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26376] = {"Call to Skirmish: Swamp of Sorrows",{{9019}},{{9019}},nil,38,nil,nil,{"Kill 5 Alliance."},nil,nil,nil,nil,nil,nil,nil,nil,8,nil,nil,nil,nil,nil,85,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27492] = {"Fresh Water Delivery",nil,{{4630}},nil,31,nil,nil,{"Dispense 10 water."},nil,nil,nil,nil,nil,nil,nil,nil,400,nil,nil,nil,nil,nil,85,0,nil,nil,nil,nil,nil,nil}
+
+-- Issue #132: Silverpine Forest quest (updating existing)
+epochQuestData[26218] = {"Wreck of the Kestrel",{{2140}},{{2140}},nil,13,nil,nil,{"Collect Smokywood Pastures Shipping Crate from the Ghostly Goblin."},nil,{nil,nil,{{60141,"Smokywood Pastures Shipping Crate"}}},nil,nil,nil,nil,nil,nil,130,nil,nil,nil,nil,nil,85,0,nil,nil,nil,nil,nil,nil}
+
+-- Issue #155: Azshara quest
+epochQuestData[27092] = {"Azshara's Legacy",nil,{{46006}},nil,54,nil,nil,{"Collect 12 Makrinni Lobstrok Eyes."},nil,{nil,nil,{{62959,"Makrinni Lobstrok Eye"}}},nil,nil,nil,nil,nil,nil,16,nil,nil,nil,nil,nil,85,0,nil,nil,nil,nil,nil,nil}
+
+-- Issue #156: Various Horde quests
+epochQuestData[26312] = {"Materials of the Light",nil,nil,nil,22,nil,nil,{"Collect Corrupted Kor Gem, Springvale's Blessed Ingots, Zelemar's Hammer, and Silver Hand Medallion."},nil,nil,nil,nil,nil,nil,nil,nil,331,nil,nil,nil,nil,nil,85,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27201] = {"The Triad Scrolls",nil,nil,nil,30,nil,nil,{"Collect The Triad: Founding of Thunder Bluff, Founding of Camp Mojache, and Founding of Sun Rock Retreat."},nil,nil,nil,nil,nil,nil,nil,nil,331,nil,nil,nil,nil,nil,85,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27397] = {"A Trip to the Vale",nil,{{12043}},nil,27,nil,nil,{"Collect Charred Wood and Basilisk Tail."},nil,nil,nil,nil,nil,nil,nil,nil,406,nil,nil,nil,nil,nil,85,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27489] = {"Canyon Patrol",{{10428}},{{10428}},nil,27,nil,nil,{"Kill 8 Pesterhide Hyenas."},nil,nil,nil,nil,nil,nil,nil,nil,400,nil,nil,nil,nil,nil,85,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27490] = {"Crag Stalking",nil,nil,nil,27,nil,nil,{"Complete crag stalking objectives."},nil,nil,nil,nil,nil,nil,nil,nil,400,nil,nil,nil,nil,nil,85,0,nil,nil,nil,nil,nil,nil}

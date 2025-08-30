@@ -39,7 +39,24 @@
   - Issue #121: Silverpine Forest quests (26218, 26872, 26874, 27167, 27195, 27198, 27200)
   - Issue #118: "Find the Brother" (26778) - Elwynn Forest
   - Issue #117: "Waterlogged Journal" (26570) - Duskwood
-  - Added 30+ NPCs with coordinates for quest givers and turn-ins
+- **Second Wave Quest Data Import** - Added 75+ additional quests from issues #104-116, #132, #153, #155-156
+  - Issue #104-105: Elwynn Forest quests including "Spider Elixir" (26774), "The Soaked Barrel" (26777), "Find the Brother" (26778)
+  - Issue #106: "A Mage's Advice" (26780) and "Linus Stone Tips" (26781) - Elwynn Forest
+  - Issue #107: "Barroom Blitz" (26689) and starter zone quests - Elwynn Forest
+  - Issue #108: Feralas quests including "Bad News Has Horns" (27488) and "The Sacred Flame" chain (27500-27501)
+  - Issue #109: "My Sister Isabetta" (27205) - Darkshore
+  - Issue #111: Hillsbrad/Desolace quests (26544, 27238, 26542, 26802)
+  - Issue #112: "A Temporary Victory" (27000) - Wetlands
+  - Issue #113: "Trial of the Willing" (26310) and Barrens quests (27167, 27171)
+  - Issue #114: "My Friend, The Skullsplitter" chain (26885, 26886) - Stranglethorn Vale
+  - Issue #115: Felwood quests "Legion Paisa" (26148) and "Mementos of the Third War" (27309)
+  - Issue #116: Multiple Barrens quests (27166, 27195-27197)
+  - Issue #132: "Prismatic Scales" (26287) - Stranglethorn Vale
+  - Issue #153: Call to Skirmish quests (26368, 26374, 26376) and "Fresh Water Delivery" (27492)
+  - Issue #155: "Wreck of the Kestrel" (26218) and "Azshara's Legacy" (27092)
+  - Issue #156: Multiple quests including "Materials of the Light" (26312) and Thousand Needles quests (27489, 27490)
+  - Issue #157: "Life In Death" (26711) - Duskwood
+  - Added 40+ NPCs with coordinates for quest givers and turn-ins
 
 ### Fixed
 - **CRITICAL FIX**: Fixed data collection bug causing all quest objectives to be mixed up (GitHub #151)
@@ -49,6 +66,8 @@
 - Fixed Lua errors when hovering over invalid quest rewards in the quest log (GitHub #154)
   - Added QuestRewardTooltipFix module to hook and validate SetQuestLogItem calls
   - Prevents crashes with invalid reward indices for Epoch quests with placeholder data
+- Fixed incorrect coordinates for "Pillar of Diamond" object (GitHub #119)
+  - Corrected coordinates from 83.7,32.9 to 83.9,39.4 for quest "Tremors of the Earth" (717)
 - Fixed Fight Promoter NPCs incorrectly showing as innkeeper pins on world map (removed INNKEEPER flag)
 - Added defensive checks for Epoch quests incorrectly showing as repeatable (GitHub #90)
   - Added validation to prevent non-repeatable Epoch quests from showing blue exclamation marks
