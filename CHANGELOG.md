@@ -13,6 +13,37 @@
   - Plus 3 placeholder quests (27408, 28475, 28476)
   - Added 4 NPCs: Sven Yorgen, Mayor Oakmaster, Scout Barleybrew, Corporal Mountainview
 
+- **Troll Starting Zone Quests** (GitHub #96): Added proper quest names and data
+  - Quest 28722: "The Darkspear Tribe" with NPC Joz'jarz (46834)
+  - Quest 28723: "Thievin' Crabs" with Amethyst Crab spawns and coordinates
+  - Fixed quest giver/turn-in NPCs with accurate coordinates from data collection
+  - Added quest objectives for all troll quests
+
+### Fixed
+- **Quest 26723 Compilation Error**: Fixed incorrect table structure in epochQuestDB.lua
+- **Quest 28764 Objectives Error**: Fixed "Second Tablet Read" tooltip error for event/script objectives
+- **Export Window UI** (GitHub #89): Improved user experience with step-by-step process
+  - Changed to 3-step process: Go to GitHub → Copy Data → Close & Purge
+  - Made GitHub URL copyable with EditBox instead of FontString
+  - Removed unnecessary "Select All" button as text is pre-selected
+- **Troll Quest Names** (GitHub #96): Fixed incorrect quest names
+  - Corrected mismatched quest names that were wrongly assigned
+  - Removed made-up quest names, using real data from submissions
+- **Tracker Nil Description Error**: Fixed tracker crash for quests without Description field
+  - Added nil check before accessing quest.Description[1]
+  - Provides fallback text for Epoch quests lacking descriptions
+- **Data Collection for Epoch Quests**: Fixed Amethyst Crab and other mob data not being collected
+  - Now ALL Epoch quests (26000+) are tracked for continuous data improvement
+  - Previously only missing or incomplete quests were tracked
+- **Quest Completion Notifications**: Simplified formatting
+  - Removed double line separators for cleaner appearance
+  - Changed hyperlink to simple "Click here to submit quest data"
+  - Changed message to "Epoch quest completed!" for clarity
+- **Cannot Untrack Epoch Quests** (GitHub #98): Removed all restrictions preventing quest untracking
+  - Users can now untrack any quest including Epoch quests
+  - Fixed UntrackQuestId, manual toggle, and Shift+Click untracking
+  - Data collection happens independently of tracker visibility
+
 ## [1.0.61] - 2025-08-30
 
 ### Added
