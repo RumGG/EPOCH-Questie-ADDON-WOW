@@ -46,7 +46,8 @@ QuestieDB.questKeys = {
     ['requiredMaxLevel'] = 30, -- int: quest is only available up to a certain level
 }
 
-QuestieDB.questData = [[return {
+-- Store WotLK data separately for selective merging
+QuestieDB._wotlkQuestData = [[return {
 [1] = {"The \"Chow\" Quest (123)aa",nil,nil,1,80,0,nil,{"Speak to Kanrethad to restore your talents, weapon and mount."},nil,nil,nil,nil,nil,nil,nil,nil,151,nil,nil,nil,nil,nil,nil,nil,nil,{{87,-250},{529,150}}},
 [2] = {"Sharptalon's Claw",{nil,nil,{16305}},{{12696}},20,30,690,nil,{"Bring Sharptalon's Claw to Senani Thunderheart at Splintertree Post, Ashenvale."},nil,nil,16305,nil,{6383},nil,{23,24},nil,331,nil,nil,nil,nil,nil,nil,nil,nil,{{81,250}}},
 [5] = {"Jitters' Growling Gut",{{288}},{{272}},17,20,1101,nil,{"Speak with Chef Grual."},nil,nil,nil,nil,{163},nil,nil,nil,10,nil,nil,nil,nil,93,8,nil,nil,{{72,25}}},

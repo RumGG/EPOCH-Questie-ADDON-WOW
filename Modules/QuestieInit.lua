@@ -414,10 +414,17 @@ function QuestieInit:LoadDatabase(key)
 end
 
 function QuestieInit:LoadBaseDB()
+    -- Load Classic databases as the base (they will be in QuestieDB.xxxData)
     QuestieInit:LoadDatabase("npcData")
     QuestieInit:LoadDatabase("objectData")
     QuestieInit:LoadDatabase("questData")
     QuestieInit:LoadDatabase("itemData")
+    
+    -- Load WotLK databases (they are stored separately in QuestieDB._wotlkXxxData)
+    QuestieInit:LoadDatabase("_wotlkNpcData")
+    QuestieInit:LoadDatabase("_wotlkObjectData")
+    QuestieInit:LoadDatabase("_wotlkQuestData")
+    QuestieInit:LoadDatabase("_wotlkItemData")
     
     -- Validate Epoch data before merging (if validator is available)
     local EpochDatabaseValidator = QuestieLoader:ImportModule("EpochDatabaseValidator")
@@ -439,7 +446,98 @@ function QuestieInit:LoadBaseDB()
         Questie:Print("|cFFFFFF00[LoadBaseDB] _epochQuestData has " .. epochCount .. " entries|r")
     end
     
-    -- After base DB tables are loaded (converted from strings), merge Epoch supplemental data if present
+    -- After Classic base DB tables are loaded, merge WotLK data selectively
+    -- For Project Epoch (WotLK 3.3.5 server), we need:
+    -- 1. All Northrend content (zones >= 65)
+    -- 2. Service NPCs from WotLK (vendors, trainers, etc.)
+    -- 3. WotLK-specific objects (mailboxes, portals, etc.)
+    
+    -- Merge WotLK quest data (only Northrend and WotLK-specific quests)
+    if QuestieDB._wotlkQuestData and type(QuestieDB.questData) == "table" then
+        local added, overwritten = 0, 0
+        for id, data in pairs(QuestieDB._wotlkQuestData) do
+            -- Add WotLK quests that don't exist in Classic
+            -- Skip overwriting Classic quests to prevent contamination
+            if QuestieDB.questData[id] == nil then
+                -- Only add if it's a Northrend quest or WotLK-specific content
+                -- Quest IDs > 11000 are generally WotLK content
+                if id > 11000 then
+                    QuestieDB.questData[id] = data
+                    added = added + 1
+                end
+            end
+        end
+        Questie:Print("Merged "..added.." WotLK quests (Northrend content)")
+        QuestieDB._wotlkQuestData = nil
+    end
+    
+    -- Merge WotLK NPC data (service NPCs and Northrend NPCs)
+    if QuestieDB._wotlkNpcData and type(QuestieDB.npcData) == "table" then
+        local added, overwritten = 0, 0
+        for id, data in pairs(QuestieDB._wotlkNpcData) do
+            local shouldMerge = false
+            
+            -- Check if it's a service NPC (vendor, trainer, innkeeper, etc.)
+            local npcFlags = data[15] -- npcFlags field
+            if npcFlags and npcFlags > 0 then
+                -- Service NPCs have flags like vendor (128), trainer (16), innkeeper (65536), etc.
+                -- But only merge if it doesn't exist in Classic or is in Northrend
+                local zoneID = data[9] -- zoneID field
+                if zoneID and zoneID >= 65 then -- Northrend zones
+                    shouldMerge = true
+                elseif QuestieDB.npcData[id] == nil then
+                    -- Add new WotLK NPCs that don't exist in Classic
+                    shouldMerge = true
+                end
+            elseif id > 23000 then -- Northrend NPCs generally have higher IDs
+                shouldMerge = true
+            end
+            
+            if shouldMerge then
+                if QuestieDB.npcData[id] == nil then
+                    QuestieDB.npcData[id] = data
+                    added = added + 1
+                else
+                    -- Only overwrite if it's a Northrend NPC
+                    local zoneID = data[9]
+                    if zoneID and zoneID >= 65 then
+                        QuestieDB.npcData[id] = data
+                        overwritten = overwritten + 1
+                    end
+                end
+            end
+        end
+        Questie:Print("Merged "..added.." WotLK NPCs ("..overwritten.." Northrend overwrites)")
+        QuestieDB._wotlkNpcData = nil
+    end
+    
+    -- Merge WotLK object data (keep all WotLK objects as they're usually important)
+    if QuestieDB._wotlkObjectData and type(QuestieDB.objectData) == "table" then
+        local added = 0
+        for id, data in pairs(QuestieDB._wotlkObjectData) do
+            if QuestieDB.objectData[id] == nil then
+                QuestieDB.objectData[id] = data
+                added = added + 1
+            end
+        end
+        Questie:Print("Merged "..added.." WotLK objects")
+        QuestieDB._wotlkObjectData = nil
+    end
+    
+    -- Merge WotLK item data
+    if QuestieDB._wotlkItemData and type(QuestieDB.itemData) == "table" then
+        local added = 0
+        for id, data in pairs(QuestieDB._wotlkItemData) do
+            if QuestieDB.itemData[id] == nil then
+                QuestieDB.itemData[id] = data
+                added = added + 1
+            end
+        end
+        Questie:Print("Merged "..added.." WotLK items")
+        QuestieDB._wotlkItemData = nil
+    end
+    
+    -- Finally, merge Epoch supplemental data (this has the highest priority)
     if QuestieDB._epochQuestData and type(QuestieDB.questData) == "table" then
         local added, overwritten = 0, 0
         for id, data in pairs(QuestieDB._epochQuestData) do
