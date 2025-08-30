@@ -506,5 +506,31 @@ epochQuestData[26516] = {"Dark Council",{{2276}},nil,nil,40,nil,nil,{"Take the A
 epochQuestData[26518] = {"The Ensorcelled Parchment",nil,nil,nil,40,nil,nil,{"Find the Ensorcelled Parchment."},nil,{nil,nil,{{62310,1,"Ensorcelled Parchment"}}},nil,nil,nil,nil,nil,nil,36,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26537] = {"The Mordis Key",nil,{{2278}},nil,40,nil,nil,{"Deliver the Mordis Key to Melisara."},nil,nil,nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 
+-- Issues #163, #164, #166: Missing quest data
+-- Issue #163 quests (skipped already existing ones: 26285, 26292, 26540, 26541, 26542, 26547, 26570, 26906, 26907)
+epochQuestData[26504] = {"Syndicate Documents",nil,{{1182}},nil,33,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,405,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil} -- Desolace turn-in
+epochQuestData[26538] = {"The Barony Mordis",{{2378}},nil,nil,40,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil} -- Hillsbrad
+epochQuestData[26543] = {"Watermelon Punch",{{2364}},nil,nil,40,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil} -- Hillsbrad
+epochQuestData[26817] = {"Justice Left Undone",nil,nil,nil,34,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,36,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil} -- Alterac Mountains
+epochQuestData[26822] = {"Hillsbrad Assault",nil,nil,nil,29,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil} -- Hillsbrad
+epochQuestData[26823] = {"Hillsbrad Defense",nil,nil,nil,29,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil} -- Hillsbrad
+epochQuestData[26884] = {"Looting the Looters",{{45844}},nil,nil,36,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil} -- STV
+epochQuestData[26902] = {"Stop The Shrinking",nil,nil,nil,35,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil} -- STV
+epochQuestData[27503] = {"Why Oh Wyvern",{{11826}},nil,nil,28,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,357,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil} -- Feralas
+
+-- Issue #164 quests (skipped already existing ones: 26370, 26374, 26537, 26544)
+epochQuestData[26362] = {"Call to Skirmish: Stonetalon Mountains",nil,nil,nil,36,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,81,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Stonetalon
+epochQuestData[26521] = {"The Argus Wake",nil,{{2317}},nil,40,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,36,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Alterac turn-in
+epochQuestData[26522] = {"The Argus Wake",nil,nil,nil,40,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Hillsbrad
+epochQuestData[26523] = {"The Ensorcelled Parchment",nil,nil,nil,40,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,36,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Alterac
+epochQuestData[26524] = {"To Ravenholdt Manor",nil,{{3544}},nil,40,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Hillsbrad turn-in
+epochQuestData[26525] = {"Felicity's Deciphering",{{6768}},{{45526}},nil,40,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,36,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Alterac
+epochQuestData[26526] = {"The Bloodstone Devices",nil,nil,nil,40,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,36,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Alterac
+epochQuestData[26539] = {"The Barony Mordis",nil,nil,nil,40,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,36,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Alterac
+epochQuestData[26545] = {"Who Likes Watermelons?",nil,nil,nil,40,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Hillsbrad
+
+-- Issue #166 quest
+epochQuestData[26713] = {"Life In Death",{{45731}},{{45731}},nil,25,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,10,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil} -- Duskwood
+
 -- Stage the Epoch questData for later merge during compilation
 QuestieDB._epochQuestData = epochQuestData

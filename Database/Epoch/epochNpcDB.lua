@@ -1012,11 +1012,11 @@ epochNpcData[4048] = {"Falfindel Waywarder",nil,nil,28,28,0,{[405]={{89.6,46.4}}
 epochNpcData[3616] = {"Onu",nil,nil,14,14,0,{[148]={{43.5,76.3}}},nil,148,nil,{27205},1,"A",nil,0} -- Darkshore
 
 -- Issue #107: Hillsbrad/Desolace NPCs
-epochNpcData[3544] = {"Jason Lemieux",nil,nil,35,35,0,{[267]={{62.3,20.8}}},nil,267,{26544},{26544},1,"H",nil,0} -- Hillsbrad Foothills
+epochNpcData[3544] = {"Jason Lemieux",nil,nil,40,40,0,{[267]={{60.9,20.4}}},nil,267,{26544},{26524,26544},2,"H",nil,0} -- Hillsbrad Foothills
 epochNpcData[46000] = {"Pipjot",nil,nil,31,31,0,{[405]={{26.0,69.9}}},nil,405,{27238},{27238},1,"H",nil,0} -- Desolace
 
 -- Issue #108: Alliance NPCs
-epochNpcData[2364] = {"Neema",nil,nil,35,35,0,{[267]={{51.0,59.1}}},nil,267,{26542},{26542},1,"A",nil,0} -- Hillsbrad Foothills
+epochNpcData[2364] = {"Neema",nil,nil,40,40,0,{[267]={{51.1,59.1}}},nil,267,{26542,26543},{26542},1,"A",nil,0} -- Hillsbrad Foothills
 epochNpcData[2363] = {"Apprentice Honeywell",nil,nil,23,23,0,{[267]={{50.7,56.8}}},nil,267,{26802},{26802},1,"A",nil,0} -- Hillsbrad Foothills
 epochNpcData[45942] = {"Mayor Oakmaster",nil,nil,31,31,0,{[11]={{27.9,66.6}}},nil,11,{27000},{27000},1,"A",nil,0} -- Wetlands
 epochNpcData[2104] = {"Captain Stoutfist",nil,nil,31,31,0,{[11]={{9.8,57.4}}},nil,11,nil,{27000},1,"A",nil,0} -- Wetlands
@@ -1067,8 +1067,17 @@ epochNpcData[7867] = {"Thorkaf Dragoneye",nil,nil,60,60,0,{[3]={{62.6,57.5}}},ni
 
 -- Issues #167, #169: Various NPCs
 epochNpcData[2276] = {"Magistrate Henry Maleb",nil,nil,36,36,0,{[267]={{48.1,59.2}}},nil,267,{26505,26516},nil,1,"A",nil,0} -- Hillsbrad Foothills
-epochNpcData[2378] = {"Kundric Zanden",nil,nil,36,36,0,{[267]={{48.6,59.1}}},nil,267,nil,{26505},1,"A",nil,0} -- Hillsbrad Foothills  
+epochNpcData[2378] = {"Kundric Zanden",nil,nil,40,40,0,{[267]={{48.7,59.1}}},nil,267,{26538},{26505},1,"A",nil,0} -- Hillsbrad Foothills  
 epochNpcData[2278] = {"Melisara",nil,nil,40,40,0,{[267]={{62.5,20.5}}},nil,267,nil,{26537},8,"H",nil,0} -- Hillsbrad Foothills
+
+-- Issues #163, #164, #166: NPCs for new quests
+epochNpcData[1182] = {"Brother Anton",nil,nil,33,33,0,{[405]={{66.4,7.7}}},nil,405,nil,{26504},1,"A",nil,0} -- Desolace
+epochNpcData[2317] = {"Elysa",nil,nil,40,40,0,{[36]={{39.2,14.4}}},nil,36,nil,{26521},2,"H",nil,0} -- Alterac Mountains
+epochNpcData[6768] = {"Lord Jorach Ravenholdt",nil,nil,40,40,0,{[36]={{86.0,79.0}}},nil,36,{26525},nil,2,"AH",nil,0} -- Alterac Mountains
+epochNpcData[11826] = {"Kristy Grant",nil,nil,28,28,0,{[357]={{89.4,45.9}}},nil,357,{27503},nil,1,"A",nil,0} -- Feralas
+epochNpcData[45526] = {"Felicity",nil,nil,40,40,0,{[36]={{86.0,80.2}}},nil,36,nil,{26525},2,"AH",nil,0} -- Alterac Mountains (overriding wrong one)
+epochNpcData[45731] = {"Sarae Dewlight",nil,nil,25,25,0,{[10]={{77.6,52.2}}},nil,10,{26713},{26713},1,"A",nil,0} -- Duskwood (overriding to add both quest giver and turn-in)
+epochNpcData[45844] = {"Shep Daltry",nil,nil,36,36,0,{[33]={{37.8,3.1}}},nil,33,{26884},nil,1,"A",nil,0} -- Stranglethorn Vale (overriding wrong one)
 
 -- Stage the Epoch npcData for later merge during compilation
 QuestieDB._epochNpcData = epochNpcData
