@@ -1,5 +1,18 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+- **Wetlands and Duskwood Quests** (GitHub #93): Added 10 quests from user data submission
+  - Quest 26570: "Waterlogged Journal" (Duskwood)
+  - Quest 26723: "Wanted: Plagued Shambler" (Duskwood)
+  - Quest 27006: "Eye of Zulumar" (Wetlands)
+  - Quest 27009: "Evacuation Report" (Wetlands)
+  - Quest 27016: "Drastic Measures" (Wetlands)
+  - Quest 27020: "With Friends Like These..." (Wetlands)
+  - Plus 3 placeholder quests (27408, 28475, 28476)
+  - Added 4 NPCs: Sven Yorgen, Mayor Oakmaster, Scout Barleybrew, Corporal Mountainview
+
 ## [1.0.61] - 2025-08-30
 
 ### Added

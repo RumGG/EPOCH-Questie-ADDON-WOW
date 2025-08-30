@@ -884,5 +884,11 @@ epochNpcData[2488] = {"Deeg",nil,nil,40,40,0,{[33]={{26.9,77.3}}},nil,33,nil,nil
 epochNpcData[2498] = {"Crank Fizzlebub",nil,nil,43,43,0,{[33]={{27.1,77.2}}},nil,33,nil,nil,0,"A","Quest Giver",0}
 epochNpcData[2916] = {"Historian Karnik",nil,nil,43,43,0,{[1537]={{77.3,11.5}}},nil,1537,nil,nil,0,"A","Quest Giver",0}
 
+-- Issue #93: Wetlands and Duskwood NPCs
+epochNpcData[311] = {"Sven Yorgen",nil,nil,45,45,0,{[10]={{7.8,34.1}}},nil,10,nil,nil,0,"A","Quest Giver",0} -- Duskwood
+epochNpcData[45942] = {"Mayor Oakmaster",nil,nil,30,30,0,{[11]={{27.9,66.6}}},nil,11,nil,nil,0,"A","Quest Giver",0} -- Wetlands
+epochNpcData[45943] = {"Scout Barleybrew",nil,nil,30,30,0,{[11]={{39.1,55.4}}},nil,11,nil,nil,0,"A","Quest Giver",0} -- Wetlands
+epochNpcData[45953] = {"Corporal Mountainview",nil,nil,30,30,0,{[11]={{26.6,59.6}}},nil,11,nil,nil,0,"A","Quest Giver",0} -- Wetlands
+
 -- Stage the Epoch npcData for later merge during compilation
 QuestieDB._epochNpcData = epochNpcData

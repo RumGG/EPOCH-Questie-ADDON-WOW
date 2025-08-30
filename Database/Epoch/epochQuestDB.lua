@@ -133,9 +133,19 @@ epochQuestData[27961] = {"The Shatterspear Festival",{{10879}},nil,nil,60,nil,ni
 -- Issue #82: Missing quest batch submission
 epochQuestData[26541] = {"Threats from Abroad",nil,nil,nil,32,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26547] = {"To The Hills",nil,nil,nil,37,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[27000] = {"A Temporary Victory",nil,{{2104}},nil,31,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,11,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+-- Issue #93: Multiple Wetlands and Duskwood quests
+epochQuestData[26570] = {"Waterlogged Journal",nil,{{311}},nil,37,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,10,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Duskwood
+epochQuestData[26723] = {"Wanted: Plagued Shambler",nil,nil,nil,30,nil,nil,{"Slay the Plagued Shambler."},nil,{{{nil,1}}},nil,nil,nil,nil,nil,nil,10,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Duskwood
+epochQuestData[27000] = {"A Temporary Victory",nil,{{45953}},nil,31,nil,nil,{"Deliver news of the Burndural Victory to Captain Stoutfist."},nil,nil,nil,nil,nil,nil,nil,nil,11,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Wetlands, turn-in to Corporal Mountainview
 epochQuestData[27001] = {"Guldar Gamble",nil,nil,nil,28,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[27002] = {"Report to the Front Lines",nil,{{45946}},nil,28,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,11,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27006] = {"Eye of Zulumar",nil,{{45943}},nil,28,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,11,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Wetlands, turn-in to Scout Barleybrew
+epochQuestData[27009] = {"Evacuation Report",nil,{{45942}},nil,27,nil,nil,{"Deliver the final evacuation report to Mayor Oakmaster."},nil,nil,nil,nil,nil,nil,nil,nil,11,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Wetlands
+epochQuestData[27016] = {"Drastic Measures",nil,nil,nil,27,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,11,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Wetlands
+epochQuestData[27020] = {"With Friends Like These...",nil,nil,nil,22,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,11,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Wetlands
+epochQuestData[27408] = {"[Epoch] Quest 27408",nil,nil,nil,20,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,0,nil,nil,nil,nil,nil,nil} -- Placeholder
+epochQuestData[28475] = {"[Epoch] Quest 28475",nil,nil,nil,20,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,0,nil,nil,nil,nil,nil,nil} -- Placeholder
+epochQuestData[28476] = {"[Epoch] Quest 28476",nil,nil,nil,20,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,0,nil,nil,nil,nil,nil,nil} -- Placeholder
 
 -- Issue #87: Searing Gorge quest chain - Thorium Brotherhood
 epochQuestData[26858] = {"The Thorium Brotherhood",{{45827}},{{14634}},nil,44,nil,nil,{"Collect 10 Firebloom from Searing Gorge and bring them to Lookout Captain Lolo Longstriker."},nil,{nil,nil,{{4625,10}}},nil,nil,nil,nil,nil,nil,51,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
