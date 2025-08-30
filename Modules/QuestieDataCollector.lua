@@ -2246,23 +2246,12 @@ function QuestieDataCollector:ShowExportWindow(questId)
                 })
                 urlBorder:SetBackdropColor(0, 0, 0, 0.5)
                 
-                -- Select & Copy button
-                local selectBtn = CreateFrame("Button", nil, popup, "UIPanelButtonTemplate")
-                selectBtn:SetPoint("BOTTOMLEFT", 100, 10)
-                selectBtn:SetWidth(100)
-                selectBtn:SetHeight(22)
-                selectBtn:SetText("Select All")
-                selectBtn:SetScript("OnClick", function() 
-                    urlBox:SetFocus()
-                    urlBox:HighlightText()
-                end)
-                
-                -- Close button
+                -- Close button (centered)
                 local closeBtn = CreateFrame("Button", nil, popup, "UIPanelButtonTemplate")
-                closeBtn:SetPoint("BOTTOMRIGHT", -100, 10)
-                closeBtn:SetWidth(60)
+                closeBtn:SetPoint("BOTTOM", 0, 10)
+                closeBtn:SetWidth(80)
                 closeBtn:SetHeight(22)
-                closeBtn:SetText("OK")
+                closeBtn:SetText("Close")
                 closeBtn:SetScript("OnClick", function() popup:Hide() end)
                 
                 popup.urlBox = urlBox
