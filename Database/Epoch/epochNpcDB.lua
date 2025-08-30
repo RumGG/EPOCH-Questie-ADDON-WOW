@@ -1045,6 +1045,8 @@ epochNpcData[46006] = {"Relko",nil,nil,54,54,0,{[16]={{23.1,50.8}}},nil,16,nil,{
 -- Issue #156: Various NPCs
 epochNpcData[12043] = {"Kulwia",nil,nil,27,27,0,{[406]={{45.4,59.3}}},nil,406,nil,{27397},1,"H",nil,0} -- Stonetalon Mountains
 epochNpcData[10428] = {"Motega Firemane",nil,nil,27,27,0,{[400]={{21.6,32.2}}},nil,400,{27489},{27489},1,"H",nil,0} -- Thousand Needles
+epochNpcData[45939] = {"Donald Eastworth",nil,nil,13,13,0,{[40]={{65.8,63.1}}},nil,40,{26987,26988},{26987},1,"A","Quest Giver",0} -- Westfall
+epochNpcData[45940] = {"Nancy Eastworth",nil,nil,13,13,0,{[40]={{56.7,50.4}}},nil,40,{26989},{26988,26989},1,"A","Quest Giver",0} -- Westfall
 
 -- Stage the Epoch npcData for later merge during compilation
 QuestieDB._epochNpcData = epochNpcData

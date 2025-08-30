@@ -56,6 +56,7 @@
   - Issue #155: "Wreck of the Kestrel" (26218) and "Azshara's Legacy" (27092)
   - Issue #156: Multiple quests including "Materials of the Light" (26312) and Thousand Needles quests (27489, 27490)
   - Issue #157: "Life In Death" (26711) - Duskwood
+  - Issue #158: Westfall quest chain "Homecoming" (26987), "A Stubborn Man" (26988), "Thumbs Up, Man Down" (26989)
   - Added 40+ NPCs with coordinates for quest givers and turn-ins
 
 ### Changed
