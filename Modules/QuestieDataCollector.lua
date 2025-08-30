@@ -183,16 +183,14 @@ function QuestieDataCollector:CheckExistingQuests()
                         local isEpochQuest = (questID >= 26000)  -- All custom Epoch quests
                         
                         if isEpochQuest then
+                            -- ALWAYS track Epoch quests to continuously improve their data
+                            needsTracking = true
                             if not questData then
-                                needsTracking = true
                                 trackReason = "missing Epoch quest"
                             elseif questData.name and string.find(questData.name, "%[Epoch%]") then
-                                needsTracking = true
                                 trackReason = "has [Epoch] prefix"
-                            elseif _trackAllEpochQuests then
-                                -- Track all Epoch quests to improve their data
-                                needsTracking = true
-                                trackReason = "is Epoch quest (26xxx)"
+                            else
+                                trackReason = "is Epoch quest (improving data)"
                             end
                         end
                         
@@ -841,7 +839,8 @@ function QuestieDataCollector:OnQuestAccepted(questId)
     
     -- Track if it's an Epoch quest (by ID range) OR any quest that's missing from the database
     -- This will catch ALL custom quests including new starting zones
-    if (isEpochQuest or isMissingFromDB or hasEpochPrefix) and (isMissingFromDB or hasEpochPrefix or hasIncompleteData) then
+    -- ALWAYS track Epoch quests to improve their data, even if they have some data already
+    if isEpochQuest or isMissingFromDB or hasEpochPrefix or hasIncompleteData then
         -- ALERT! Missing quest detected!
         local questTitle = QuestieCompat.GetQuestLogTitle(QuestieDataCollector:GetQuestLogIndexById(questId))
         
