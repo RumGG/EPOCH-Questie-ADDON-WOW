@@ -215,6 +215,21 @@ function QuestieDataCollector:CheckExistingQuests()
                                         wasAlreadyAccepted = true,  -- Flag that this quest was in log when addon loaded
                                         incompleteData = true  -- We don't have quest giver info
                                     }
+                                    
+                                    -- Populate objectives for this quest
+                                    SelectQuestLogEntry(i)
+                                    local numObjectives = GetNumQuestLeaderBoards(i)
+                                    for objIdx = 1, numObjectives do
+                                        local text, objectiveType, finished = GetQuestLogLeaderBoard(objIdx, i)
+                                        table.insert(QuestieDataCollection.quests[questID].objectives, {
+                                            text = text or ("Objective " .. objIdx),
+                                            type = objectiveType or "unknown",
+                                            index = objIdx,
+                                            completed = finished or false,
+                                            progressLocations = {},
+                                            lastText = text
+                                        })
+                                    end
                                     -- Silently track quest
                                 end
                             end
@@ -1140,13 +1155,13 @@ function QuestieDataCollector:OnQuestLogUpdate()
                             end
                         end
                         
-                            table.insert(objData.progressLocations, locData)
-                            
-                            -- Objective progress tracked silently
-                            if locData.action then
-                                DebugMessage("|cFF00FF00  Action: " .. locData.action .. "|r", 0, 1, 0)
-                            end
-                            DebugMessage("|cFF00FF00  Location: [" .. locData.coords.x .. ", " .. locData.coords.y .. "] in " .. locData.zone .. "|r", 0, 1, 0)
+                        table.insert(objData.progressLocations, locData)
+                        
+                        -- Objective progress tracked silently
+                        if locData.action then
+                            DebugMessage("|cFF00FF00  Action: " .. locData.action .. "|r", 0, 1, 0)
+                        end
+                        DebugMessage("|cFF00FF00  Location: [" .. locData.coords.x .. ", " .. locData.coords.y .. "] in " .. locData.zone .. "|r", 0, 1, 0)
                         end
                     end
                 end
