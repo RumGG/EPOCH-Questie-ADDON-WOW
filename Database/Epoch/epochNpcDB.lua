@@ -1047,5 +1047,9 @@ epochNpcData[10428] = {"Motega Firemane",nil,nil,27,27,0,{[400]={{21.6,32.2}}},n
 epochNpcData[45939] = {"Donald Eastworth",nil,nil,13,13,0,{[40]={{65.8,63.1}}},nil,40,{26987,26988},{26987},1,"A","Quest Giver",0} -- Westfall
 epochNpcData[45940] = {"Nancy Eastworth",nil,nil,13,13,0,{[40]={{56.7,50.4}}},nil,40,{26989},{26988,26989},1,"A","Quest Giver",0} -- Westfall
 
+-- Issue #177: Azshara NPC
+-- Note: NPC ID 46019 conflicts with "Randal Alestone" in zone 45, but this is Lemaira for Azshara quest 27094
+epochNpcData[46019] = {"Lemaira",nil,nil,54,54,0,{[16]={{63.4,86.1}}},nil,16,nil,{27094},nil,nil,nil,0} -- Azshara
+
 -- Stage the Epoch npcData for later merge during compilation
 QuestieDB._epochNpcData = epochNpcData

@@ -482,5 +482,8 @@ epochQuestData[26712] = {"Life In Death",{{45731}},{{265}},nil,25,nil,nil,{"Coll
 -- Issue #162: The Hinterlands quest
 epochQuestData[26186] = {"Parts From Afar",{{45030}},{{4782}},nil,46,nil,nil,{"Bring the Basket of Treats to Myolor Sunderfury in Ironforge to exchange for Siege Engine Parts."},nil,nil,nil,nil,nil,nil,nil,nil,47,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 
+-- Issue #177: Azshara quest
+epochQuestData[27094] = {"Azshara's Legacy",nil,{{46019}},nil,54,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,16,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+
 -- Stage the Epoch questData for later merge during compilation
 QuestieDB._epochQuestData = epochQuestData
