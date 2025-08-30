@@ -37,6 +37,9 @@
   - Added 30+ NPCs with coordinates for quest givers and turn-ins
 
 ### Fixed
+- Fixed Lua errors when hovering over invalid quest rewards in the quest log (GitHub #154)
+  - Added QuestRewardTooltipFix module to hook and validate SetQuestLogItem calls
+  - Prevents crashes with invalid reward indices for Epoch quests with placeholder data
 - Fixed Fight Promoter NPCs incorrectly showing as innkeeper pins on world map (removed INNKEEPER flag)
 - Added defensive checks for Epoch quests incorrectly showing as repeatable (GitHub #90)
   - Added validation to prevent non-repeatable Epoch quests from showing blue exclamation marks

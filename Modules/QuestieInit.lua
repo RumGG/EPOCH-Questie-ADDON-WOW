@@ -87,6 +87,8 @@ local WorldMapButton = QuestieLoader:ImportModule("WorldMapButton")
 local AvailableQuests = QuestieLoader:ImportModule("AvailableQuests")
 ---@type SeasonOfDiscovery
 local SeasonOfDiscovery = QuestieLoader:ImportModule("SeasonOfDiscovery")
+---@type QuestRewardTooltipFix
+local QuestRewardTooltipFix = QuestieLoader:ImportModule("QuestRewardTooltipFix")
 
 --- COMPATIBILITY ---
 local WOW_PROJECT_ID = QuestieCompat.WOW_PROJECT_ID
@@ -291,6 +293,7 @@ QuestieInit.Stages[3] = function() -- run as a coroutine
     QuestieCoords:Initialize()
     TrackerQuestTimers:Initialize()
     QuestieComms:Initialize()
+    QuestRewardTooltipFix:Initialize()
 
     QuestieSlash.RegisterSlashCommands()
 
