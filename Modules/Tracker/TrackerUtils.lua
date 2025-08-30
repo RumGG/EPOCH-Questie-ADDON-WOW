@@ -378,8 +378,11 @@ function TrackerUtils:GetCompletionText(quest)
 
     if completionText then
         return completionText
-    else
+    elseif quest.Description and quest.Description[1] then
         return quest.Description[1]:gsub("%.", "")
+    else
+        -- Fallback for quests without descriptions (common in Epoch quests)
+        return "Complete quest objectives"
     end
 end
 
