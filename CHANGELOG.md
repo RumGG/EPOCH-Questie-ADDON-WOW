@@ -2,6 +2,20 @@
 
 ## [Unreleased]
 
+### Added
+- **Quest Data Submissions** - Added 30+ quests from user data submissions
+  - Issue #144: "How to Make Friends with a Furbolg" (27082) - Azshara
+  - Issue #143: "Ardo's Dirtpaw" (26847) - Redridge Mountains
+  - Issue #142: "A Salve for Samantha" (26883) - Stranglethorn Vale
+  - Issue #141: "Parts From Afar" (26187) - Ironforge to Hinterlands
+  - Issue #140: Silverpine Forest quests (26217, 26873, 26876)
+  - Issue #139: "My Friend, The Skullsplitter" (26890) - Westfall/STV
+  - Issue #138: Stranglethorn Vale batch (26282, 26291, 26292, 26880, 26885, 26903, 26906, 26907, 26908, 26912, 26915, 26922)
+  - Issue #137: Elwynn Forest quests (26784, 26785)
+  - Issue #136: "Brewing Brethren" (26782) - Elwynn Forest
+  - Issue #135: "Linus Stone Tips" (26781) - Elwynn Forest
+  - Added 15+ NPCs with coordinates for quest givers and turn-ins
+
 ### Fixed
 - Fixed Fight Promoter NPCs incorrectly showing as innkeeper pins on world map (removed INNKEEPER flag)
 - Added defensive checks for Epoch quests incorrectly showing as repeatable (GitHub #90)
@@ -12,6 +26,10 @@
   - Restored "Swiftpaw" quest (26776) and "The Soaked Barrel" quest (26777)
   - These quests were accidentally overwritten by High Isle Fel Elf quests
   - Moved "Fel Elf Slayer" quest to ID 28768 to resolve the conflict
+- Fixed overly restrictive level filtering preventing Epoch quests from showing on map (GitHub #103)
+  - Increased level range for "Show only quests granting experience" from +4 to +6 levels
+  - Made Epoch quests (26000+) use more lenient filtering (+10 levels) due to placeholder level data
+  - This resolves issues where Epoch quests weren't visible even with low-level quest display enabled
 
 ## [1.0.62] - 2024-11-12
 

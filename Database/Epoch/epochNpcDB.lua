@@ -928,5 +928,43 @@ epochNpcData[48116] = {"Summoned Demon",nil,nil,18,18,0,{[17]={{55.0,31.0}}},nil
 epochNpcData[26760] = {"Fight Promoter",1,1,70,70,0,{[85]={{31.99,64.53},{61.55,53.2}},[1497]={{66.17,9.9}},[3487]={{74.28,79.24}},[3430]={{47.67,47.15},{39.0,20.79}},[1638]={{37.86,61.04}},[215]={{46.88,60.34},{44.42,76.35}},[1637]={{51.79,76.1}},[14]={{52.28,42.4},{42.47,68.44}},[1]={{46.49,52.47},{28.78,69.86}},[1537]={{32.56,64.24}},[1519]={{62.89,71.63}},[12]={{42.81,65.63},{48.09,42.13}},[3557]={{76.46,55.73}},[3524]={{48.87,50.1},{80.2,47.55}},[1657]={{61.94,40.59}},[141]={{55.92,58.55},{58.73,44.62}}},nil,85,nil,nil,35,"AH","Arena Battlemaster's Assistant",1}
 epochNpcData[26765] = {"[DND] TAR Pedestal - Fight Promoter",1,1,70,70,0,{[85]={{31.99,64.53},{61.55,53.2}},[1497]={{66.17,9.9}},[3487]={{74.28,79.24}},[3430]={{47.67,47.15},{39.0,20.79}},[1638]={{37.86,61.04}},[215]={{46.88,60.34},{44.42,76.35}},[1637]={{51.79,76.1}},[14]={{52.28,42.4},{42.47,68.44}},[1]={{46.49,52.47},{28.78,69.86}},[1537]={{32.56,64.24}},[1519]={{62.89,71.63}},[12]={{42.81,65.63},{48.09,42.13}},[3557]={{76.46,55.73}},[3524]={{48.87,50.1},{80.2,47.55}},[1657]={{61.94,40.59}},[141]={{55.92,58.55},{58.73,44.62}}},nil,85,nil,nil,35,"AH","",1}
 
+-- NPCs from quest data submissions
+-- Issue #144
+epochNpcData[46012] = {"Nolg",nil,nil,52,52,0,{[16]={{52.8,9.6}}},nil,16,nil,{27082},1,"H",nil,0} -- Azshara
+
+-- Issue #143
+epochNpcData[45825] = {"Buffalo Will",nil,nil,24,24,0,{[36]={{23.7,41.1}}},nil,36,{26847},nil,1,"A",nil,0} -- Redridge Mountains
+-- Note: Guard Howe (903) likely already exists in classic data
+
+-- Issue #142
+epochNpcData[11748] = {"Samantha Swifthoof",nil,nil,34,34,0,{[33]={{43.9,26.6}}},nil,33,nil,{26883},1,"H",nil,0} -- Stranglethorn Vale
+
+-- Issue #141
+epochNpcData[11145] = {"Myolor Sunderfury",nil,nil,46,46,0,{[1537]={{51.9,41.1}}},nil,1537,{26187},nil,1,"A",nil,0} -- Ironforge
+epochNpcData[45030] = {"Chief Engineer Urul",nil,nil,46,46,0,{[47]={{14.0,43.2}}},nil,47,nil,{26187},1,"A",nil,0} -- The Hinterlands
+
+-- Issue #140
+epochNpcData[45044] = {"Ainslie Yance",nil,nil,16,16,0,{[130]={{43.1,41.2}}},nil,130,nil,{26217},1,"H",nil,0} -- Silverpine Forest
+-- Note: Shadow Priest Allister (2121) likely already exists in classic data
+
+-- Issue #139
+epochNpcData[45846] = {"Lorespeaker Itzli",nil,nil,36,36,0,{[33]={{32.2,27.6}}},nil,33,nil,{26890},1,"H",nil,0} -- Stranglethorn Vale
+
+-- Issue #138
+-- Note: Ajeck Rouack (717) already exists in classic data
+epochNpcData[45869] = {"Chel Moonwood",nil,nil,41,41,0,{[33]={{28.2,75.8}}},nil,33,{26908},{26907},1,"N",nil,0} -- Stranglethorn Vale
+-- Note: Thultazor (983) likely already exists in classic data
+epochNpcData[45873] = {"Zul'jin",nil,nil,42,42,0,{[33]={{38.5,51.1}}},nil,33,{26915},{26915},1,"H",nil,0} -- Stranglethorn Vale
+
+-- Issue #137
+epochNpcData[45780] = {"Dromul Oddrink",nil,nil,6,6,0,{[12]={{54.0,16.6}}},nil,12,{26784},{26784},1,"A",nil,0} -- Elwynn Forest
+epochNpcData[45782] = {"Friend of Dromul",nil,nil,6,6,0,{[12]={{54.0,16.5}}},nil,12,{26785},{26785},1,"A",nil,0} -- Elwynn Forest
+
+-- Issue #136
+epochNpcData[45783] = {"Brother Zaldimar",nil,nil,6,6,0,{[12]={{39.0,70.7}}},nil,12,nil,{26782},1,"A",nil,0} -- Elwynn Forest
+
+-- Issue #135
+epochNpcData[45779] = {"Linus Stone",nil,nil,6,6,0,{[12]={{37.8,68.2}}},nil,12,{26781},nil,1,"A",nil,0} -- Elwynn Forest
+
 -- Stage the Epoch npcData for later merge during compilation
 QuestieDB._epochNpcData = epochNpcData

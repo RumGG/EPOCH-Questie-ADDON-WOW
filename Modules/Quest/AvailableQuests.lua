@@ -104,10 +104,10 @@ _CalculateAvailableQuests = function()
     local minLevel = playerLevel - GetQuestGreenRange("player")
     local maxLevel = playerLevel
     
-    -- With "Show only quests granting experience" setting, allow up to orange quests (+4 levels)
-    -- but not red quests (+5 and above) which clutter the map
+    -- With "Show only quests granting experience" setting, allow higher level quests
+    -- Originally was +4, but increasing to +6 to show more quests (especially for Epoch content)
     if Questie.db.profile.lowLevelStyle == Questie.LOWLEVEL_NONE then
-        maxLevel = playerLevel + 4
+        maxLevel = playerLevel + 6
     end
 
     if Questie.db.profile.lowLevelStyle == Questie.LOWLEVEL_RANGE then
@@ -165,15 +165,18 @@ _CalculateAvailableQuests = function()
             end
             
             -- Apply level filtering based on current settings
+            -- Be more lenient with Epoch quests since many have placeholder/incorrect level data
             if Questie.db.profile.lowLevelStyle == Questie.LOWLEVEL_NONE then
-                -- "Show only quests granting experience" - hide red quests (5+ levels above player)
-                -- This allows yellow/orange quests (up to +4) but not red quests that clutter the map
-                if requiredLevel > (playerLevel + 4) then
+                -- For Epoch quests, allow a wider range since level data may be incorrect
+                -- Allow up to +10 levels for Epoch quests instead of +4
+                if requiredLevel > (playerLevel + 10) then
                     return
                 end
             elseif Questie.db.profile.lowLevelStyle ~= Questie.LOWLEVEL_ALL then
-                -- For other filtering modes, apply the configured limits
-                if requiredLevel > maxLevel or (questLevel and questLevel > maxLevel) then
+                -- For other filtering modes, be more lenient with Epoch quests
+                -- Add 6 levels to the max threshold for Epoch quests
+                local epochMaxLevel = maxLevel + 6
+                if requiredLevel > epochMaxLevel or (questLevel and questLevel > epochMaxLevel) then
                     return
                 end
             end
