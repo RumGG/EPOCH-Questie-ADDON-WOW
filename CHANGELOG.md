@@ -4,6 +4,10 @@
 
 ### Fixed
 - Fixed Fight Promoter NPCs incorrectly showing as innkeeper pins on world map (removed INNKEEPER flag)
+- Added defensive checks for Epoch quests incorrectly showing as repeatable (GitHub #90)
+  - Added validation to prevent non-repeatable Epoch quests from showing blue exclamation marks
+  - Added debug logging to help identify quests with incorrect repeatable flags
+  - This fixes an issue where abandoned and retaken quests could show incorrect repeatable icons
 
 ## [1.0.62] - 2024-11-12
 

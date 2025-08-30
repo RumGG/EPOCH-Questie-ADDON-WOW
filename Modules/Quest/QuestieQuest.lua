@@ -1307,7 +1307,14 @@ function QuestieQuest:AddFinisher(quest)
                         elseif QuestieDB.IsPvPQuest(quest.Id) then
                             data.Icon = Questie.ICON_TYPE_PVPQUEST_COMPLETE
                         elseif quest.IsRepeatable then
-                            data.Icon = Questie.ICON_TYPE_REPEATABLE_COMPLETE
+                            -- Extra validation for Epoch quests (GitHub #90)
+                            -- Only show repeatable icon if we're certain it's actually repeatable
+                            if quest.Id >= 26000 and quest.specialFlags and bitband(quest.specialFlags, 1) == 0 then
+                                -- Epoch quest incorrectly marked as repeatable, skip repeatable icon
+                                Questie:Debug(Questie.DEBUG_INFO, "[REPEATABLE FIX] Epoch quest " .. quest.Id .. " was marked repeatable but specialFlags=" .. (quest.specialFlags or "nil"))
+                            else
+                                data.Icon = Questie.ICON_TYPE_REPEATABLE_COMPLETE
+                            end
                         end
 
                         if (coords[1] == -1 or coords[2] == -1) then

@@ -1397,6 +1397,10 @@ function QuestieDB.GetQuest(questId) -- /dump QuestieDB.GetQuest(867)
     QO.Description = QO.objectivesText
     if QO.specialFlags then
         QO.IsRepeatable = bitband(QO.specialFlags, 1) ~= 0
+        -- Debug logging for repeatable quest issues (GitHub #90)
+        if QO.IsRepeatable and questId >= 26000 then
+            Questie:Debug(Questie.DEBUG_INFO, "[REPEATABLE] Epoch quest " .. questId .. " (" .. (QO.name or "Unknown") .. ") marked as repeatable with specialFlags: " .. QO.specialFlags)
+        end
     end
 
     QO.IsComplete = _IsComplete

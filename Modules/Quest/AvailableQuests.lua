@@ -303,7 +303,14 @@ _GetQuestIcon = function(quest)
         return Questie.ICON_TYPE_AVAILABLE_GRAY
     end
     if quest.IsRepeatable then
-        return Questie.ICON_TYPE_REPEATABLE
+        -- Extra validation for Epoch quests (GitHub #90)
+        -- Only show repeatable icon if we're certain it's actually repeatable
+        if quest.Id >= 26000 and quest.specialFlags and bitband(quest.specialFlags, 1) == 0 then
+            -- Epoch quest incorrectly marked as repeatable, use normal icon instead
+            Questie:Debug(Questie.DEBUG_INFO, "[REPEATABLE FIX] Available quest " .. quest.Id .. " was marked repeatable but specialFlags=" .. (quest.specialFlags or "nil"))
+        else
+            return Questie.ICON_TYPE_REPEATABLE
+        end
     end
     if (QuestieDB.IsTrivial(quest.level)) then
         return Questie.ICON_TYPE_AVAILABLE_GRAY
