@@ -21,7 +21,17 @@ If you find this version of Questie with data collection helpful, consider [buyi
 
 **Not feeling up to it?** No problem! Just use Questie normally. `/qdc disable`
 
-## v1.0.61 - Latest Release
+## v1.0.63 - Latest Release
+
+### Critical Map Pin Fix
+
+**Major Fix:**
+- **Map pins now display properly in all major cities!** 
+  - Fixed coordinate conversion failure that prevented NPCs from showing on maps
+  - Added missing classic zone ID mappings for Stormwind, Ironforge, Orgrimmar, Thunder Bluff, Darnassus, and Undercity
+  - Innkeepers, trainers, vendors, and all other NPCs now properly appear on city maps
+
+## v1.0.61
 
 ### Quality of Life Improvements & Bug Fixes
 
