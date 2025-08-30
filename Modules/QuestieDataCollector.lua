@@ -236,16 +236,42 @@ function QuestieDataCollector:CheckExistingQuests()
                                    #QuestieDataCollection.quests[questID].objectives ~= numObjectives or
                                    #QuestieDataCollection.quests[questID].objectives == 0 then
                                     
+                                    -- Save old progress locations if they exist
+                                    local oldProgressLocations = {}
+                                    local oldContainers = {}
+                                    if QuestieDataCollection.quests[questID].objectives then
+                                        for idx, oldObj in ipairs(QuestieDataCollection.quests[questID].objectives) do
+                                            if oldObj.progressLocations then
+                                                oldProgressLocations[idx] = oldObj.progressLocations
+                                            end
+                                            if oldObj.containers then
+                                                oldContainers[idx] = oldObj.containers
+                                            end
+                                        end
+                                    end
+                                    
                                     QuestieDataCollection.quests[questID].objectives = {}
                                     for objIdx = 1, numObjectives do
                                         local text, objectiveType, finished = GetQuestLogLeaderBoard(objIdx, i)
+                                        
+                                        -- Parse current progress from text
+                                        local current, total = 0, 0
+                                        if text then
+                                            current, total = string.match(text, "(%d+)/(%d+)")
+                                            current = tonumber(current) or 0
+                                            total = tonumber(total) or 0
+                                        end
+                                        
                                         table.insert(QuestieDataCollection.quests[questID].objectives, {
                                             text = text or ("Objective " .. objIdx),
                                             type = objectiveType or "unknown",
                                             index = objIdx,
                                             completed = finished or false,
-                                            progressLocations = {},
-                                            lastText = text
+                                            progressLocations = oldProgressLocations[objIdx] or {},
+                                            containers = oldContainers[objIdx] or {},
+                                            lastText = text,
+                                            current = current,
+                                            total = total
                                         })
                                     end
                                 else
@@ -1193,13 +1219,27 @@ function QuestieDataCollector:OnQuestLogUpdate()
                             end
                         end
                         
-                        table.insert(objData.progressLocations, locData)
-                        
-                        -- Objective progress tracked silently
-                        if locData.action then
-                            DebugMessage("|cFF00FF00  Action: " .. locData.action .. "|r", 0, 1, 0)
+                        -- Check for duplicate progress location (same coords within 5 seconds)
+                        local isDuplicate = false
+                        if objData.progressLocations and #objData.progressLocations > 0 then
+                            local lastLoc = objData.progressLocations[#objData.progressLocations]
+                            if lastLoc.timestamp and (time() - lastLoc.timestamp < 5) and 
+                               lastLoc.coords and locData.coords and
+                               math.abs(lastLoc.coords.x - locData.coords.x) < 1 and
+                               math.abs(lastLoc.coords.y - locData.coords.y) < 1 then
+                                isDuplicate = true
+                            end
                         end
-                        DebugMessage("|cFF00FF00  Location: [" .. locData.coords.x .. ", " .. locData.coords.y .. "] in " .. locData.zone .. "|r", 0, 1, 0)
+                        
+                        if not isDuplicate then
+                            table.insert(objData.progressLocations, locData)
+                            
+                            -- Objective progress tracked silently
+                            if locData.action then
+                                DebugMessage("|cFF00FF00  Action: " .. locData.action .. "|r", 0, 1, 0)
+                            end
+                            DebugMessage("|cFF00FF00  Location: [" .. locData.coords.x .. ", " .. locData.coords.y .. "] in " .. locData.zone .. "|r", 0, 1, 0)
+                        end
                         end
                     end
                 end
