@@ -1456,7 +1456,10 @@ _RegisterObjectiveTooltips = function(objective, questId, blockItemTooltips)
             objective.hasRegisteredTooltips = true
         end
     else
-        Questie:Error("[QuestieQuest]: [Tooltips] " .. l10n("There was an error populating objectives for %s %s %s %s", objective.Description or "No objective text", questId or "No quest id", 0 or "No objective", "No error"));
+        -- Some objectives (like event/script objectives) don't have spawn lists
+        -- This is normal for quests like "Read the Second Tablet" which are triggered by scripts
+        -- Only log as debug, not error
+        Questie:Debug(Questie.DEBUG_DEVELOP, "[QuestieQuest]: Quest", questId, "has objective without spawn data:", objective.Description or "Unknown objective");
     end
 
     if (not objective.registeredItemTooltips) and objective.Type == "item" and (not blockItemTooltips) and objective.Id then
