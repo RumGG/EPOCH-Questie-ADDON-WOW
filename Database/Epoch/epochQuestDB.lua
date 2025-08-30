@@ -1,3 +1,6 @@
+---@type QuestieDB
+local QuestieDB = QuestieLoader:ImportModule("QuestieDB")
+
 epochQuestData = {}
 
 -- Issue #58: High Isle of Fel High Elves questline
