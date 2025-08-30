@@ -468,7 +468,7 @@ epochQuestData[27492] = {"Fresh Water Delivery",nil,{{4630}},nil,31,nil,nil,{"Di
 epochQuestData[26218] = {"Wreck of the Kestrel",{{2140}},{{2140}},nil,13,nil,nil,{"Collect Smokywood Pastures Shipping Crate from the Ghostly Goblin."},nil,{nil,nil,{{60141,"Smokywood Pastures Shipping Crate"}}},nil,nil,nil,nil,nil,nil,130,nil,nil,nil,nil,nil,85,0,nil,nil,nil,nil,nil,nil}
 
 -- Issue #155: Azshara quest
-epochQuestData[27092] = {"Azshara's Legacy",nil,{{46006}},nil,54,nil,nil,{"Collect 12 Makrinni Lobstrok Eyes."},nil,{nil,nil,{{62959,"Makrinni Lobstrok Eye"}}},nil,nil,nil,nil,nil,nil,16,nil,nil,nil,nil,nil,85,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27092] = {"Azshara's Legacy",{{46006}},{{46008}},nil,54,nil,nil,{"Collect 12 Makrinni Lobstrok Eyes."},nil,{nil,nil,{{62959,"Makrinni Lobstrok Eye",12}}},nil,nil,nil,nil,nil,nil,16,nil,nil,nil,nil,nil,85,0,nil,nil,nil,nil,nil,nil}
 
 -- Issue #156: Various Horde quests
 epochQuestData[26312] = {"Materials of the Light",nil,nil,nil,22,nil,nil,{"Collect Corrupted Kor Gem, Springvale's Blessed Ingots, Zelemar's Hammer, and Silver Hand Medallion."},nil,nil,nil,nil,nil,nil,nil,nil,331,nil,nil,nil,nil,nil,85,0,nil,nil,nil,nil,nil,nil}
@@ -483,6 +483,9 @@ epochQuestData[26712] = {"Life In Death",{{45731}},{{265}},nil,25,nil,nil,{"Coll
 -- Issue #162: The Hinterlands quest
 epochQuestData[26186] = {"Parts From Afar",{{45030}},{{4782}},nil,46,nil,nil,{"Bring the Basket of Treats to Myolor Sunderfury in Ironforge to exchange for Siege Engine Parts."},nil,nil,nil,nil,nil,nil,nil,nil,47,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 
+-- Issue #172-173: Azshara quest chain part 2
+epochQuestData[27093] = {"Azshara's Legacy",{{8395}},{{8379}},nil,54,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,16,nil,nil,nil,nil,nil,85,0,nil,nil,nil,nil,nil,nil}
+
 -- Issue #177: Azshara quest
 epochQuestData[27094] = {"Azshara's Legacy",nil,{{46019}},nil,54,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,16,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 
@@ -494,6 +497,9 @@ epochQuestData[27299] = {"Sniff Him Out",{{46121}},nil,nil,41,nil,nil,{"Follow t
 epochQuestData[27300] = {"Beezil And The Burning Blade",{{46120}},{{46121}},nil,41,nil,nil,{"Report to Cys Craftcharge after speaking with Beezil Linkspanner."},nil,nil,nil,nil,nil,nil,nil,nil,15,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[27302] = {"Burning Blade Dossier",{{46121}},{{46123}},nil,41,nil,nil,{"Bring Cys Craftcharge's Report to Watcher Wallace in Theramore."},nil,nil,nil,nil,nil,nil,nil,nil,15,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[27443] = {"Azeroth Space Society",{{46228}},{{46120}},nil,41,nil,nil,{"Deliver Kranz's message to Beezil Linkspanner in Dustwallow Marsh."},nil,nil,nil,nil,nil,nil,nil,nil,440,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+
+-- Issue #170: Badlands quest
+epochQuestData[27941] = {"Crafted from Crawlers",nil,{{7867}},nil,60,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,3,nil,nil,nil,nil,nil,85,0,nil,nil,nil,nil,nil,nil}
 
 -- Stage the Epoch questData for later merge during compilation
 QuestieDB._epochQuestData = epochQuestData

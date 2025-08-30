@@ -283,7 +283,7 @@ local epochNpcData = {
 [7917] = {"[Epoch] NPC 7917",2200,2475,55,55,0,{[1519]={{51.1,48.4}}},nil,1519,nil,nil,11,"A",nil,0},
 [8118] = {"[Epoch] NPC 8118",1120,1350,28,30,0,{[1519]={{62.4,70.2}}},nil,1519,nil,nil,35,"AH",nil,0},
 [8378] = {"Alexandra Blazen",1880,2115,47,47,0,{[16]={{53.08,87.72}}},nil,16,{27133},{27133},11,"A",nil,0},
-[8379] = {"[Epoch] NPC 8379",2400,2700,60,60,0,{[16]={{29.7,40.5}}},nil,16,nil,nil,35,"AH",nil,0},
+[8379] = {"Archmage Xylem",2400,2700,60,60,0,{[16]={{29.7,40.4}}},nil,16,nil,{27093},35,"AH",nil,0},
 [8382] = {"Patrick Mills",1920,2160,48,48,0,{[16]={{53.01,87.67}}},nil,16,{27134},{27134},11,"A",nil,0},
 [8383] = {"[Epoch] NPC 8383",2400,2700,60,60,0,{[1519]={{809,61.4}}},nil,1519,nil,nil,11,"A",nil,0},
 [8478] = {"Second Mate Shandril",1720,1935,43,43,0,{[16]={{0.0,0.0}}},nil,16,{27137,27138,27139},{27136,27137},nil,nil,nil,0},
@@ -971,7 +971,7 @@ epochNpcData[45779] = {"Linus Stone",nil,nil,6,6,0,{[12]={{37.8,68.2}}},nil,12,{
 epochNpcData[45946] = {"Commander Strongborn",nil,nil,27,27,0,{[11]={{34.2,62.6}}},nil,11,nil,{27053},1,"A",nil,0} -- Wetlands
 
 -- Issue #150/149
-epochNpcData[46008] = {"Master Leander",nil,nil,54,54,0,{[16]={{21.7,50.0}}},nil,16,nil,{27091},1,"H",nil,0} -- Azshara
+epochNpcData[46008] = {"Master Leander",nil,nil,54,54,0,{[16]={{21.7,50.0}}},nil,16,nil,{27091,27092},1,"H",nil,0} -- Azshara
 
 -- Issue #148
 epochNpcData[45546] = {"Private Noit",nil,nil,32,32,0,{[267]={{48.1,60.1}}},nil,267,{26540,26541},nil,1,"A",nil,0} -- Hillsbrad Foothills
@@ -1060,6 +1060,10 @@ epochNpcData[4772] = {"Ultham Ironhorn",nil,nil,40,40,0,{[1]={{63.9,50.1}}},nil,
 epochNpcData[46120] = {"Beezil Linkspanner",nil,nil,41,41,0,{[15]={{52.1,66.0}}},nil,15,{27300},{27443},1,"A",nil,0} -- Dustwallow Marsh
 epochNpcData[46123] = {"Watcher Wallace",nil,nil,41,41,0,{[15]={{66.9,53.2}}},nil,15,nil,{27302},1,"A",nil,0} -- Dustwallow Marsh
 epochNpcData[46228] = {"Kranz",nil,nil,41,41,0,{[440]={{56.6,81.1}}},nil,440,{27443},nil,1,"A",nil,0} -- Tanaris
+
+-- Issue #170-173: Azshara's Legacy quest chain NPCs
+epochNpcData[8395] = {"Sanath Lim-yo",nil,nil,54,54,0,{[16]={{28.0,50.0}}},nil,16,{27093},nil,1,"H",nil,0} -- Azshara
+epochNpcData[7867] = {"Thorkaf Dragoneye",nil,nil,60,60,0,{[3]={{62.6,57.5}}},nil,3,nil,{27941},1,"H",nil,0} -- Badlands
 
 -- Stage the Epoch npcData for later merge during compilation
 QuestieDB._epochNpcData = epochNpcData
