@@ -158,6 +158,30 @@ epochQuestData[26858] = {"The Thorium Brotherhood",{{45827}},{{14634}},nil,44,ni
 epochQuestData[26864] = {"Do Slavers Keep Records?",nil,{{45833}},nil,46,nil,nil,{"Collect Slaver's Records from Dark Iron Taskmasters and bring them to Bhurind Stoutforge."},nil,{nil,nil,{{63195,1}}},nil,nil,nil,nil,nil,nil,51,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26868] = {"Grampy Stoutforge",{{14624}},{{45834}},nil,46,nil,nil,{"Speak with Grampy Stoutforge in Searing Gorge."},nil,nil,nil,nil,nil,nil,nil,nil,51,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 
+-- Issue #97: Blasted Lands quests from user data submission
+epochQuestData[26277] = {"Shaman of the Flame",nil,nil,nil,54,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,19,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Blasted Lands, incomplete data
+epochQuestData[26598] = {"Collecting on Debt",{{8178}},nil,nil,52,nil,nil,{"Collect Twisted Staff, Elaborate Timepiece, and Magic Drum."},nil,nil,nil,nil,nil,nil,nil,nil,19,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Quest giver: Nina Lightbrew
+epochQuestData[26599] = {"Feeding the Troops",{{5393}},nil,nil,50,nil,nil,{"Collect 10 Sulfurous Meat."},nil,nil,nil,nil,nil,nil,nil,nil,19,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Quest giver: Quartermaster Lungertz
+epochQuestData[26600] = {"Alchemy is the Answer",{{5393}},nil,nil,50,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,19,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Quest giver: Quartermaster Lungertz
+epochQuestData[26601] = {"The Clay Cleanse",nil,nil,nil,50,nil,nil,{"Collect 7 Red Clay."},nil,nil,nil,nil,nil,nil,nil,nil,19,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Blasted Lands
+epochQuestData[26602] = {"Ready for Distribution",nil,nil,nil,50,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,19,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Blasted Lands
+epochQuestData[26614] = {"Gathering Intelligence",{{5385}},nil,nil,51,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,19,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Quest giver: Watcher Mahar Ba
+epochQuestData[26615] = {"The Bigger Picture",{{5385}},nil,nil,53,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,19,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Quest giver: Watcher Mahar Ba
+epochQuestData[26616] = {"Eyes of Our Own",{{5385}},nil,nil,53,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,19,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Quest giver: Watcher Mahar Ba
+epochQuestData[26617] = {"Felstone Mines",nil,nil,nil,52,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,19,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Blasted Lands
+epochQuestData[26618] = {"Parched and Parcel",{{45613}},nil,nil,52,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,19,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Quest giver: Eunna
+epochQuestData[26619] = {"It Ain't the Worst",nil,nil,nil,52,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,19,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Blasted Lands
+epochQuestData[26621] = {"Resurgent Evil",nil,nil,nil,53,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,19,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Blasted Lands
+epochQuestData[26626] = {"An Unlikely Ally",{{8022}},nil,nil,50,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,19,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Quest giver: Spirit of the Exorcist
+epochQuestData[26628] = {"The Foundation Crumbles",nil,nil,nil,51,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,19,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Blasted Lands
+epochQuestData[26629] = {"True Believers",nil,nil,nil,51,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,19,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Blasted Lands
+epochQuestData[26630] = {"The Sting of Betrayal",nil,nil,nil,52,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,19,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Blasted Lands
+epochQuestData[26631] = {"The Thorn in My Side",nil,nil,nil,52,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,19,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Blasted Lands
+epochQuestData[26632] = {"Glyph of the Warlord",nil,nil,nil,53,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,19,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Blasted Lands
+epochQuestData[27076] = {"Descendants of Exiles",nil,nil,nil,51,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,19,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Blasted Lands
+epochQuestData[27659] = {"Commission for High Chief Ungarl",nil,{{5385}},nil,50,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,19,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Turn-in: Watcher Mahar Ba
+epochQuestData[28647] = {"Commission for Strumner Flintheel",nil,{{14634}},nil,50,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,51,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Turn-in: Lookout Captain Lolo Longstriker, Searing Gorge
+
 --[[  
 EPOCH QUEST DATABASE STRUCTURE ANALYSIS
 

@@ -896,5 +896,12 @@ epochNpcData[46834] = {"Joz'jarz",nil,nil,5,5,0,{[14]={{70.1,42}}},nil,14,nil,ni
 epochNpcData[46835] = {"Amethyst Crab",nil,nil,2,2,0,{[14]={{70.2,42},{69.6,42.6},{69.5,42.2}}},nil,14,nil,nil,0,nil,nil,0} -- Durotar, spawn locations from data collection
 epochNpcData[46934] = {"Uwa",nil,nil,5,5,0,nil,nil,14,nil,nil,0,"H","Quest Giver",0} -- Durotar, needs coordinates
 
+-- Issue #97: Blasted Lands NPCs from user data submission
+epochNpcData[8178] = {"Nina Lightbrew",nil,nil,52,52,0,{[19]={{65.1,19.4}}},nil,19,{26598},nil,nil,"A",nil,0} -- Blasted Lands
+epochNpcData[5393] = {"Quartermaster Lungertz",nil,nil,50,50,0,{[19]={{66.4,21.3}}},nil,19,{26599,26600},nil,nil,"A",nil,0} -- Blasted Lands
+epochNpcData[5385] = {"Watcher Mahar Ba",nil,nil,51,51,0,{[19]={{67.5,19.1}}},nil,19,{26614,26615,26616},{27659},nil,"A",nil,0} -- Blasted Lands, also turn-in for 27659
+epochNpcData[45613] = {"Eunna",nil,nil,52,52,0,{[19]={{63.4,20.2}}},nil,19,{26618},nil,nil,"A",nil,0} -- Blasted Lands (Hildar in submission but Eunna in quest text)
+epochNpcData[8022] = {"Spirit of the Exorcist",nil,nil,50,50,0,{[19]={{66.9,19.4}}},nil,19,{26626},nil,nil,"A",nil,0} -- Blasted Lands
+
 -- Stage the Epoch npcData for later merge during compilation
 QuestieDB._epochNpcData = epochNpcData
