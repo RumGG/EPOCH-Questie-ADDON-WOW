@@ -1610,6 +1610,11 @@ function QuestieDataCollector:OnUIInfoMessage(message)
     -- If it's not a progress message, we're done
     if not (itemName and current and total) then return end
     
+    -- Debug: Show what we parsed
+    if Questie.db.profile.debugDataCollector then
+        DebugMessage("|cFFFFFF00[DEBUG] Quest progress detected: '" .. itemName .. "' " .. current .. "/" .. total .. "|r", 1, 1, 0)
+    end
+    
     -- We have a quest progress update!
     local coords = QuestieDataCollector:GetPlayerCoords()
     local zone = GetRealZoneText()
@@ -1655,8 +1660,21 @@ function QuestieDataCollector:OnUIInfoMessage(message)
             -- Check objectives for matching item
             for objIndex, objective in ipairs(questData.objectives or {}) do
                 -- Check if this objective matches the item name
-                if string.find(string.lower(objective.text or ""), string.lower(itemName)) or
-                   string.find(string.lower(itemName), string.lower(objective.text or "")) then
+                -- Handle both singular and plural forms by removing trailing 's' for comparison
+                local objTextLower = string.lower(objective.text or "")
+                local itemNameLower = string.lower(itemName)
+                local itemNameSingular = string.gsub(itemNameLower, "s$", "")  -- Remove trailing 's'
+                local itemNamePlural = itemNameLower .. "s"
+                
+                -- Match if:
+                -- 1. Exact match found in objective text
+                -- 2. Singular form found in objective text (e.g., "Banana" matches "Bananas")
+                -- 3. Plural form found in objective text
+                -- 4. The objective is an item type and progress format matches (X/Y pattern)
+                if string.find(objTextLower, itemNameLower) or
+                   string.find(objTextLower, itemNameSingular) or
+                   string.find(objTextLower, itemNamePlural) or
+                   (objective.type == "item" and current and total) then
                     
                     foundMatch = true -- Found the matching quest/objective
                             
