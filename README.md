@@ -13,11 +13,16 @@ If you find this version of Questie with data collection helpful, consider [buyi
 
 ### 📝 Want to Help? Easy Data Collection!
 
+**⚠️ IMPORTANT: Only submit data collected with Questie v1.0.63 or newer!**
+- Older versions had collection bugs that produce incorrect data
+- Your export will show the version - if it's older than v1.0.63, please update first
+
 **Quick Start:**
-1. Type `/qdc enable` to turn on collection - this should persist through log in/out
-2. Quest normally - Questie automatically detects if a quest is not in the database and begins collecting data for it!
-3. **NEW**: Left-click Questie minimap icon → "Export Quest Data" for quick access!
-4. Share on [GitHub](https://github.com/trav346/Questie-Epoch/issues/new)
+1. **Update to latest version** (v1.0.63+)
+2. Type `/qdc enable` to turn on collection - this should persist through log in/out
+3. Quest normally - Questie automatically detects if a quest is not in the database and begins collecting data for it!
+4. **NEW**: Left-click Questie minimap icon → "Export Quest Data" for quick access!
+5. Share on [GitHub](https://github.com/trav346/Questie-Epoch/issues/new)
 
 **Not feeling up to it?** No problem! Just use Questie normally. `/qdc disable`
 

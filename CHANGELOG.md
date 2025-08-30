@@ -22,6 +22,10 @@
   - Issue #169: Hillsbrad/Alterac quest batch
   - Issues #163, #164, #166: 20+ additional quests across multiple zones
   - All quest data verified for accuracy with corrected zone IDs
+  - **NOTE**: Many submissions had incorrect data that required manual fixes
+
+### Changed
+- **Data submission policy**: Now only accepting quest data from v1.0.63+ due to collection bugs in older versions
 
 ### Fixed
 - **Map pins not displaying** - Fixed critical coordinate conversion issue in HereBeDragons
