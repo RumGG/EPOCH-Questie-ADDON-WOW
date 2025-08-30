@@ -2133,27 +2133,13 @@ function QuestieDataCollector:ShowExportWindow(questId)
         -- Title
         local title = f:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
         title:SetPoint("TOP", 0, -20)
-        title:SetText("|cFF00FF00Quest Data Ready for Submission!|r")
+        title:SetText("|cFF00FF00Quest Data Ready for Export|r")
         f.title = title
         
-        -- Step instructions
-        local step1 = f:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-        step1:SetPoint("TOP", title, "BOTTOM", 0, -8)
-        step1:SetText("|cFFFFFFFFStep 1:|r Click 'Select All' button below")
-        
-        local step2 = f:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-        step2:SetPoint("TOP", step1, "BOTTOM", 0, -4)
-        step2:SetText("|cFFFFFFFFStep 2:|r Copy (Ctrl+C) and paste into GitHub issue")
-        
-        local step3 = f:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-        step3:SetPoint("TOP", step2, "BOTTOM", 0, -4)
-        step3:SetText("|cFFFFFFFFStep 3:|r After submitting, click 'Purge Collected Data' to clear your local storage")
-        step3:SetTextColor(1, 0.8, 0)
-        
-        -- Scroll frame for data
+        -- Scroll frame for data (adjusted to use more space since we removed instructions)
         local scrollFrame = CreateFrame("ScrollFrame", "QuestieDataCollectorScrollFrame", f, "UIPanelScrollFrameTemplate")
-        scrollFrame:SetPoint("TOPLEFT", 20, -80)
-        scrollFrame:SetPoint("BOTTOMRIGHT", -40, 50)
+        scrollFrame:SetPoint("TOPLEFT", 20, -45)
+        scrollFrame:SetPoint("BOTTOMRIGHT", -40, 55)
         
         local editBox = CreateFrame("EditBox", "QuestieDataCollectorEditBox", scrollFrame)
         editBox:SetMultiLine(true)
@@ -2198,30 +2184,62 @@ function QuestieDataCollector:ShowExportWindow(questId)
         f.editBox = editBox
         f.scrollFrame = scrollFrame
         
-        -- Select All button
+        -- Step 1: Go to GitHub button
+        local githubButton = CreateFrame("Button", nil, f, "UIPanelButtonTemplate")
+        githubButton:SetPoint("BOTTOMLEFT", 20, 20)
+        githubButton:SetWidth(140)
+        githubButton:SetHeight(25)
+        githubButton:SetText("|cFF00FF00Step 1:|r Go to GitHub")
+        githubButton:SetScript("OnClick", function()
+            -- Create a simple popup with the GitHub URL
+            if not GitHubURLFrame then
+                local popup = CreateFrame("Frame", "GitHubURLFrame", UIParent)
+                popup:SetFrameStrata("TOOLTIP")
+                popup:SetWidth(400)
+                popup:SetHeight(100)
+                popup:SetPoint("CENTER")
+                popup:SetBackdrop({
+                    bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background",
+                    edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Border",
+                    tile = true, tileSize = 32, edgeSize = 16,
+                    insets = { left = 5, right = 5, top = 5, bottom = 5 }
+                })
+                
+                local text = popup:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+                text:SetPoint("CENTER", 0, 10)
+                text:SetText("|cFFFFFFFFCopy this URL to your browser:\n|r|cFF00FFFFhttps://github.com/trav346/Questie-Epoch/issues|r")
+                
+                local closeBtn = CreateFrame("Button", nil, popup, "UIPanelButtonTemplate")
+                closeBtn:SetPoint("BOTTOM", 0, 10)
+                closeBtn:SetWidth(60)
+                closeBtn:SetHeight(22)
+                closeBtn:SetText("OK")
+                closeBtn:SetScript("OnClick", function() popup:Hide() end)
+                
+                popup.text = text
+            end
+            GitHubURLFrame:Show()
+            DebugMessage("|cFF00FFFFGitHub URL: https://github.com/trav346/Questie-Epoch/issues|r", 0, 1, 1)
+        end)
+        
+        -- Step 2: Copy Data button
         local copyButton = CreateFrame("Button", nil, f, "UIPanelButtonTemplate")
-        copyButton:SetPoint("BOTTOMLEFT", 40, 20)
-        copyButton:SetWidth(120)
+        copyButton:SetPoint("BOTTOM", 0, 20)
+        copyButton:SetWidth(180)
         copyButton:SetHeight(25)
-        copyButton:SetText("Select All")
+        copyButton:SetText("|cFF00FF00Step 2:|r Copy Collected Data")
         copyButton:SetScript("OnClick", function()
             editBox:SetFocus()
             editBox:HighlightText()
-            DebugMessage("|cFF00FF00Text selected! Now press Ctrl+C to copy.|r", 0, 1, 0)
+            DebugMessage("|cFF00FF00Data selected! Press Ctrl+C to copy, then paste in GitHub issue.|r", 0, 1, 0)
         end)
         
-        -- Help text about keybind conflicts
-        local helpText = f:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-        helpText:SetPoint("BOTTOM", copyButton, "TOP", 60, 5)
-        helpText:SetText("|cFFFFFF00Tip: If Ctrl+C doesn't work, unbind it in Key Bindings|r")
-        helpText:SetTextColor(1, 1, 0, 0.7)
-        
-        -- Close & Purge Data button
+        -- Step 3: Close & Purge button
         local purgeButton = CreateFrame("Button", nil, f, "UIPanelButtonTemplate")
-        purgeButton:SetPoint("BOTTOMRIGHT", -40, 20)
-        purgeButton:SetWidth(140)
+        purgeButton:SetPoint("BOTTOMRIGHT", -20, 20)
+        purgeButton:SetWidth(160)
         purgeButton:SetHeight(25)
-        purgeButton:SetText("Purge Collected Data")
+        purgeButton:SetText("|cFF00FF00Step 3:|r Close & Purge Data")
         purgeButton:SetScript("OnClick", function()
             -- Clear ALL quest data from the saved variable
             _G.QuestieDataCollection = {
@@ -2279,17 +2297,11 @@ function QuestieDataCollector:ShowExportWindow(questId)
         -- Generate combined export text
         exportText = "=== BATCH QUEST DATA SUBMISSION ===\n"
         exportText = exportText .. "Total Quests: " .. #questList .. "\n\n"
-        exportText = exportText .. "=== HOW TO SUBMIT THIS DATA ===\n"
-        exportText = exportText .. "1. Select all text in this window (click 'Select All' button)\n"
-        exportText = exportText .. "2. Copy it (Ctrl+C)\n"
-        exportText = exportText .. "3. Go to: https://github.com/trav346/Questie-Epoch/issues\n"
-        exportText = exportText .. "   (Note: You'll need a free GitHub account to submit)\n"
-        exportText = exportText .. "4. Click 'New Issue'\n"
         -- Create comma-separated list of quest IDs for the title
         local questIdList = table.concat(questList, ", ")
-        exportText = exportText .. "5. Title: 'Missing Quests: " .. questIdList .. "'\n"
-        exportText = exportText .. "6. Paste this entire text in the description\n"
-        exportText = exportText .. "7. Click 'Submit new issue'\n\n"
+        exportText = exportText .. "=== GITHUB ISSUE TITLE ===\n"
+        exportText = exportText .. "Missing Quests: " .. questIdList .. "\n\n"
+        exportText = exportText .. "=== PASTE EVERYTHING BELOW THIS LINE ===\n\n"
         
         for _, qId in ipairs(questList) do
             local data = QuestieDataCollection.quests[qId]
@@ -2317,15 +2329,9 @@ function QuestieDataCollector:GenerateExportText(questId, data, skipInstructions
     local text = ""
     
     if not skipInstructions then
-        text = "=== HOW TO SUBMIT THIS DATA ===\n"
-        text = text .. "1. Select all text in this window (click 'Select All' button)\n"
-        text = text .. "2. Copy it (Ctrl+C)\n"
-        text = text .. "3. Go to: https://github.com/trav346/Questie-Epoch/issues\n"
-        text = text .. "   (Note: You'll need a free GitHub account to submit)\n"
-        text = text .. "4. Click 'New Issue'\n"
-        text = text .. "5. Title: 'Missing Quest: " .. (data.name or "Unknown") .. " (" .. questId .. ")'\n"
-        text = text .. "6. Paste this entire text in the description\n"
-        text = text .. "7. Click 'Submit new issue'\n\n"
+        text = "=== GITHUB ISSUE TITLE ===\n"
+        text = text .. "Missing Quest: " .. (data.name or "Unknown") .. " (ID: " .. questId .. ")\n\n"
+        text = text .. "=== PASTE EVERYTHING BELOW THIS LINE ===\n\n"
     end
     
     text = text .. "=== QUEST DATA ===\n\n"
