@@ -897,7 +897,8 @@ function QuestieMap:GetNearestQuestSpawn(quest)
     if not quest then
         return nil
     end
-    if quest:IsComplete() == 1 then
+    -- Check if quest has IsComplete method (runtime stub quests might not)
+    if quest.IsComplete and quest:IsComplete() == 1 then
         local finisherSpawns
         local finisherName
         if quest.Finisher ~= nil then
