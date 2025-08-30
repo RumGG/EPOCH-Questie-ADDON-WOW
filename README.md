@@ -9,13 +9,28 @@ If you find this version of Questie with data collection helpful, consider [buyi
 
 **Quick Start:**
 1. Type `/qdc enable` to turn on collection - this should persist through log in/out
-2. Quest normally - Questie automatically detect if a quest is not in the database and begin collecting at a for it!
-3. Type `/qdc export` when done questing
+2. Quest normally - Questie automatically detects if a quest is not in the database and begins collecting data for it!
+3. **NEW**: Left-click Questie minimap icon → "Export Quest Data" for quick access!
 4. Share on [GitHub](https://github.com/trav346/Questie/issues/new)
 
-**Not feeling up to it?** No problem! Just use Questie normally. /qdc disable
+**Not feeling up to it?** No problem! Just use Questie normally. `/qdc disable`
 
-## v1.0.60-hotfix2 - Latest Release
+## v1.0.61 - Latest Release
+
+### Quality of Life Improvements & Bug Fixes
+
+**New Features:**
+- **Export Button in Minimap Menu**: Quick access to data export (left-click Questie icon)
+- **Cleaner Data Collection**: Single-line notifications instead of spam
+- **Silent Debug Mode**: All debug messages now respect your settings
+
+**Critical Fixes:**
+- Fixed IsComplete nil errors when accepting quests
+- Fixed debug messages bypassing toggle settings
+- Actually added the 18 troll starting zone quests that were "added" in v1.0.56
+- Added 5 more Epoch quests from issue #91
+
+## v1.0.60-hotfix2
 
 ### Massive Update: 300+ Quests Added, and Critical Errors Fixed!
 
