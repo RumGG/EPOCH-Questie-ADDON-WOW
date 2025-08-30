@@ -43,7 +43,10 @@ Database\Classic\classicQuestDB.lua
 Database\Wotlk\wotlkItemDB.lua
 Database\Wotlk\wotlkNpcDB.lua
 Database\Wotlk\wotlkObjectDB.lua
-Database\Wotlk\wotlkQuestDB.lua
+# Wrath quest database disabled for Project Epoch (GitHub issue #125)
+# Wrath quests don't exist on Epoch. If any Wrath quest is found, it should be
+# added to epochQuestDB.lua instead so it can be properly tracked.
+#Database\Wotlk\wotlkQuestDB.lua
 Database\QuestieDB.lua
 Database\Epoch\epochQuestDB.lua
 Database\Epoch\epochNpcDB.lua

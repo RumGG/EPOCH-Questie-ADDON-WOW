@@ -58,6 +58,13 @@
   - Issue #157: "Life In Death" (26711) - Duskwood
   - Added 40+ NPCs with coordinates for quest givers and turn-ins
 
+### Changed
+- **Disabled Wrath quest database loading** (GitHub #125)
+  - Wrath quests don't exist on Project Epoch server
+  - Saves ~2.3MB of memory by not loading 9086 non-existent quests
+  - Keeps Wrath NPC/Item/Object databases as Epoch uses similar NPC placements
+  - Any actual Wrath quest found on Epoch should be added to epochQuestDB.lua instead
+
 ### Fixed
 - **CRITICAL FIX**: Fixed data collection bug causing all quest objectives to be mixed up (GitHub #151)
   - Fixed incorrect WoW 3.3.5 API usage where GetNumQuestLeaderBoards() and GetQuestLogLeaderBoard() were being passed parameters they don't accept
