@@ -1,63 +1,72 @@
-## v1.0.58 - Latest Release
+## v1.0.60 - Latest Release
 
-### 🎉 Critical Map Pin Fix + 35 New Quests!
+### 🎉 Massive Update: 300+ Quests Added, All Critical Errors Fixed!
 
-#### All Service NPCs Now Working! 
+#### ✅ All Runtime Errors Fixed
+- **No More Crashes**: Fixed AvailableQuests and QuestieTracker nil errors
+- **Chat Filter Working**: QuestieShutUp now properly blocks party spam
+- **Map Errors Gone**: Custom Project Epoch zones no longer cause errors
+- **Data Collector Silent**: No more chat spam - silently tracks quest data
+
+#### 🗺️ All Service NPCs Now Working!
 - **WotLK Database Imported**: Fixed version detection for 3.3.5 client
-- **All Cities Fixed**: Innkeepers, bankers, auctioneers, trainers now show everywhere
+- **All Cities Fixed**: Innkeepers, bankers, auctioneers, trainers show everywhere
 - **Stormwind Fully Functional**: All service NPCs at correct Project Epoch locations
-- **No More Placeholders**: Removed 274 "[Epoch] NPC XXXXX" entries from Stormwind
+- **No More Placeholders**: Removed 274 "[Epoch] NPC XXXXX" entries
 
-#### 35+ New Quests Added (Issues #78, #79, #80, #81)
-- **Silverpine Forest**: "Lost in the Lake", "Wreck of the Kestrel", "Arugal Ambush"
+#### 📊 300+ New Quests Added (GitHub Issues #32-87)
+This release combines all quest additions from versions 1.0.56 through 1.0.60:
+
+**Starting Zones Complete:**
+- **Gnome**: 18 quests with complete NPC data
+- **Troll/Orc**: 21 quests including "The Darkspear Tribe", "Banana Bonanza"
+- **Human**: Hunter training, Tattered Letter, Soaked Barrel chains
+
+**Major Quest Chains:**
+- **Duskwood**: Riders In The Night, Life In Death, Until Death Do Us Part chains
+- **Westfall**: Barroom Blitz chain, Hand of Azora chain, The Killing Fields
+- **Ironforge Airfield**: Complete 10-quest chain with proper NPCs
+- **The Hinterlands**: 11 Alliance quests including "A Sticky Situation" series
+- **Desolace**: "The Argus Wake" 5-quest chain (42-44)
+
+**PvP Content:**
 - **Ashenvale**: "Fight for Warsong Gulch" battleground introduction
-- **Hillsbrad Foothills**: "Who Likes Apples?", "Fresh Water Delivery", "The Ghost of the Flats"
-- **Westfall**: "Commission for Protector Gariel", "The Killing Fields" (fixed)
-- **Multiple Zones**: 8 "Call to Skirmish" PvP quests
-- **18 New NPCs**: Quest givers and turn-in NPCs with proper locations
+- **Multiple Zones**: 8 "Call to Skirmish" quests for world PvP
 
-#### Children's Week Removed
+**Level 1-60 Coverage:**
+- Elwynn Forest, Darkshore, Stranglethorn Vale, Hillsbrad Foothills
+- The Barrens, Stonetalon Mountains, Thousand Needles, Mulgore
+- Arathi Highlands, Badlands, Swamp of Sorrows, Tanaris
+- Winterspring, Eastern Plaguelands, Searing Gorge
+
+#### 🛠️ Major Fixes Since v1.0.56
+
+**Container Collection Fixed:**
+- Sun-Ripened Banana containers now properly identified
+- Ground object quests show accurate map pins
+- Auto-rescan after reload - no manual commands needed
+
+**Quest Tracking Improvements:**
+- TomTom no longer changes your tracker sort preference
+- Completed quests properly removed from tracker
+- Quest items don't cause tracking to break
+
+**Database Cleanup:**
+- Fixed duplicate quest entries
+- Removed conflicting stub entries
+- Updated 100+ quests with complete data
+
+#### 📝 Children's Week Removed
 - Seasonal quest no longer shows year-round
 - NPCs properly blacklisted
 
 ---
 
-## v1.0.57 - Previous Release
-
-### 🎉 Massive Quest Database Update!
-
-#### 100+ New Epoch Quests Added
-- **Complete Quest Chains**: Major storylines in Duskwood, Westfall, and Badlands fully supported
-- **GitHub Issues #40-67**: All community-submitted quest data integrated  
-- **760+ Total Epoch Quests**: The most comprehensive Epoch quest database available
-
-### 🎯 Major Fixes
-
-#### Container Names Finally Fixed! (Issue #32)
-- **Sun-Ripened Banana** containers now properly identified (not "Unknown Container")
-- Container names preserved even when they match the item name
-- Ground object collection quests now show accurate map pins
-- Auto-rescan after reload - no more manual `/qdc rescan` needed
-
-#### Data Collection Improvements
-- Runtime stubbed quests properly detected (Issue #21)
-- No more [DATA] message spam (Issue #27)
-- Quest ID tracking expanded to ALL Epoch quests (26000+)
-- Export window shows [COMPLETE] or [INCOMPLETE] status
-
-### 🚀 What This Means for Players
-- **Better Leveling**: Starting zones now have complete quest tracking
-- **Accurate Map Pins**: Container locations properly named and positioned
-- **Less Manual Work**: Automatic tracking initialization after reload
-- **Community Power**: Your data submissions are making the addon better daily
-
 ### 📝 Want to Help? Easy Data Collection!
-
-**New to data collection?** Check out our **[Simple Guide](DATA_COLLECTION_GUIDE.md)** - it explains everything in plain English!
 
 **Quick Start:**
 1. Type `/qdc enable` to turn on collection
-2. Quest normally - Questie learns as you play
+2. Quest normally - Questie learns as you play (silently, no chat spam!)
 3. Type `/qdc export [questID]` when done with a quest
 4. Share on [GitHub](https://github.com/trav346/Questie/issues/new)
 
