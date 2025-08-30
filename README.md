@@ -1,7 +1,7 @@
 ### ☕ Support Development
 [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-Support%20Development-orange?style=for-the-badge&logo=buy-me-a-coffee)](https://buymeacoffee.com/trav346)
 
-If you find Questie helpful, consider [buying me a coffee](https://buymeacoffee.com/trav346) to support continued development!
+If you find this version of Questie with data collection helpful, consider [buying me a coffee](https://buymeacoffee.com/trav346) to support continued development!
 
 ---
 

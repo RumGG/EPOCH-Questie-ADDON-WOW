@@ -1,5 +1,42 @@
 # Changelog
 
+## [1.0.61] - 2025-08-30
+
+### Added
+- **Export Button in Minimap Menu**: Added quick access to data export window from Questie minimap dropdown (GitHub #89)
+  - Left-click Questie minimap icon shows new "Export Quest Data" option
+  - Only appears when data collection is enabled
+  - Makes submitting quest data much easier for contributors
+
+- **Missing Troll Starting Zone Quests**: Added 18 troll quests that were mentioned in previous changelog but never actually added
+  - Quests 28750-28767 including "The Darkspear Tribe", "Banana Bonanza", etc.
+  - All quests now have proper NPC and objective data
+  - Fixed issue where quest 28759 wasn't showing on map despite being in quest log
+
+- **Additional Epoch Quests**: Added quests from GitHub issue #91
+  - Quest 26282: "The Emerald Dragon..." with NPC Deeg (2488)
+  - Quest 26283: "Sasha's Hunt" with NPC Deeg (2488)
+  - Quest 26284: "Justice for the Hyals" with NPC Crank Fizzlebub (2498)
+  - Quest 26285: "Justice for the Hyals" (turn-in) with NPC Historian Karnik (2916)
+  - Quest 26286: "Into the Scarlet Monastery" with NPC Historian Karnik (2916)
+
+### Changed
+- **Simplified Data Collection Messages**: Replaced verbose multi-line messages with single notification
+  - Changed from 3-line spam with GitHub URL to simple: "Quest not in database. This quest is now being tracked by Data Collector!"
+  - Makes data collection less intrusive while still informative
+  - Debug messages now properly respect showDataCollectionMessages setting
+
+### Fixed
+- **IsComplete Nil Errors**: Fixed multiple crashes when accepting quests
+  - Added defensive checks in QuestieMap before calling quest:IsComplete()
+  - Runtime stub quests now handled gracefully without crashes
+  - Fixed error occurring when accepting troll quest 28760
+
+- **Debug Message Spam**: Fixed debug messages bypassing the showDataCollectionMessages setting
+  - All [DEBUG] and [DataCollector Debug] messages now properly controlled by settings
+  - Fixed 4 direct chat prints that were ignoring the toggle
+  - Debug system now properly centralized through DebugMessage function
+
 ## [1.0.60-hotfix2] - 2025-08-30
 
 ### Fixed
