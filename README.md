@@ -1,20 +1,30 @@
+### 📝 Want to Help? Easy Data Collection!
+
+**Quick Start:**
+1. Type `/qdc enable` to turn on collection - this should persist through log in/out
+2. Quest normally - Questie automatically detect if a quest is not in the database and begin collecting at a for it!
+3. Type `/qdc export` when done questing
+4. Share on [GitHub](https://github.com/trav346/Questie/issues/new)
+
+**Not feeling up to it?** No problem! Just use Questie normally. /qdc disable
+
 ## v1.0.60 - Latest Release
 
-### 🎉 Massive Update: 300+ Quests Added, All Critical Errors Fixed!
+### Massive Update: 300+ Quests Added, and Critical Errors Fixed!
 
-#### ✅ All Runtime Errors Fixed
+#### All Runtime Errors Fixed
 - **No More Crashes**: Fixed AvailableQuests and QuestieTracker nil errors
 - **Chat Filter Working**: QuestieShutUp now properly blocks party spam
 - **Map Errors Gone**: Custom Project Epoch zones no longer cause errors
 - **Data Collector Silent**: No more chat spam - silently tracks quest data
 
-#### 🗺️ All Service NPCs Now Working!
+####  All Service NPCs Now Working!
 - **WotLK Database Imported**: Fixed version detection for 3.3.5 client
 - **All Cities Fixed**: Innkeepers, bankers, auctioneers, trainers show everywhere
-- **Stormwind Fully Functional**: All service NPCs at correct Project Epoch locations
+- **Stormwind Fully Functional**: All service NPCs at correct Project Epoch locations. Let me know if I missed any.
 - **No More Placeholders**: Removed 274 "[Epoch] NPC XXXXX" entries
 
-#### 📊 300+ New Quests Added (GitHub Issues #32-87)
+####  300+ New Quests Added (GitHub Issues #32-87)
 This release combines all quest additions from versions 1.0.56 through 1.0.60:
 
 **Starting Zones Complete:**
@@ -59,18 +69,6 @@ This release combines all quest additions from versions 1.0.56 through 1.0.60:
 #### 📝 Children's Week Removed
 - Seasonal quest no longer shows year-round
 - NPCs properly blacklisted
-
----
-
-### 📝 Want to Help? Easy Data Collection!
-
-**Quick Start:**
-1. Type `/qdc enable` to turn on collection
-2. Quest normally - Questie learns as you play (silently, no chat spam!)
-3. Type `/qdc export [questID]` when done with a quest
-4. Share on [GitHub](https://github.com/trav346/Questie/issues/new)
-
-**Don't want to help?** No problem! Just use Questie normally.
 
 ---
 

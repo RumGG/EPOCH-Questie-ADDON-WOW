@@ -3,15 +3,27 @@
 ## [1.0.60] - 2025-08-30
 
 ### Fixed
-- **AvailableQuests Error**: Fixed "attempt to index local 'npc' (a nil value)" error when quest starters are single IDs instead of tables
+
+#### Critical Error Fixes
+- **AvailableQuests Error**: Fixed "attempt to index local 'npc' (a nil value)" error when quest starters are single IDs instead of tables (Fixes #43, #46, #52)
   - Now properly handles quests with single NPC or GameObject starters
   - Converts single IDs to tables before processing
+  - Quest markers now gracefully handle incomplete quest data
 - **QuestieTracker Error**: Fixed "IsComplete() nil value" error when tracking malformed quests
   - Added defensive check for quest objects missing the IsComplete method
   - Prevents tracker crash when encountering incomplete quest data
+  - Fixed tracker showing completed quests after accepting new ones
+  - Fixed tracker not refreshing properly when completing and accepting quests
+  - Completed quests are now properly cleaned from QuestiePlayer.currentQuestlog
 - **QuestieShutUp Filter**: Fixed chat filter not blocking Questie messages from party members (Fixes #55)
   - Corrected pattern mismatch between filter and actual message format
   - Filter now properly matches locale-specific message formats
+- **World Map Tooltips**: Fixed tooltips not showing on vanilla fullscreen world map (merged PR #25 from @virtiz)
+  - Tooltips now properly check full parent chain to detect WorldMapFrame ancestry
+  - Added SetClampedToScreen to keep tooltips visible at screen edges
+- **Object Data Errors**: Fixed "Missing objective data" errors showing table references instead of meaningful descriptions
+  - Now silently skips missing data or logs at debug level only
+  - Prevents spam for missing object ID 6445625 and similar
 - **Critical Map Pin Fix**: Imported WotLK database to fix all service NPC detection
   - Project Epoch was using Classic-era NPC flags (INNKEEPER=128) but needed WotLK flags (INNKEEPER=65536)
   - Fixed version detection to properly identify 3.3.5 client and use correct flag values
@@ -39,12 +51,55 @@
   - Fixed Innkeeper Allison coordinates in Stormwind (was 60.39,75.28, now 52.62,65.7)
   - Fixed quest 26993 "The Killing Fields" with proper objectives and mob targets (Riverpaw Gnolls and Scouts)
   - Cleaned up quest data integrity in epochQuestDB.lua
-- **Data Collector Improvements**: Removed all chat spam messages 
-  - Silently tracks quest data without printing to chat
-  - Removed duplicate alert messages when accepting quests
+#### Data Collection Overhaul
+- **Container Names Fixed**: Major fixes to ground object/container tracking (Fixes #32)
+  - Fixed container names being lost when they match item names (e.g., "Sun-Ripened Banana") 
+  - Fixed container names being overwritten with placeholders like "Unidentified Container"
+  - Container names now properly captured from GameTooltip during mouseover
+  - Container names preserved even when loot window doesn't show the name
+  - Export now includes proper container data for ground object quests
+  - Added automatic rescan 1 second after initialization (no more manual `/qdc rescan` needed)
+- **Runtime Stub Detection**: Fixed missing quest detection for runtime stubbed quests (Fixes #21)
+  - Now properly detects quests created as runtime stubs (e.g., new troll starting zone quests)
+  - Removed upper limit on Epoch quest IDs (now tracks all quests 26000+)
+  - Fixed detection of [Epoch] prefix in questData.name for placeholder quests
+  - Now correctly identifies and tracks quest 28722 "The Darkspear Tribe" and similar new quests
+- **Chat Spam Removed**: Fixed [DATA] messages being shown to all users (Fixes #27)
+  - All [DATA] tracking messages now only show when debug mode is enabled
+  - Removed all alert messages when accepting quests - silently tracks data
+  - Important completion notices still show when needed
+  - Added helper function to properly handle debug-only messages
+- **Export Improvements**: All quest data can now be exported, even incomplete quests
+  - Partial data is valuable - shows quest givers, objectives, NPCs even without turn-in
+  - Export window now shows [COMPLETE] or [INCOMPLETE] status for each quest
+  - Export format clearly indicates if quest data is incomplete
+- **Quest Progress Detection**: Enhanced automatic tracking
+  - Now detects quest progress from system messages (e.g., "Sun-Ripened Banana: 7/10")
+  - Automatically captures container/object data when quest progress is detected
+  - Links ground objects to quest objectives for proper map icon placement
+
+#### Map and Tracking Improvements  
 - **Map Error Handling**: Fixed error for unknown zones like custom Project Epoch areas
   - Changed hard error to warning for unmapped zones (e.g., areaId 178 "Deeg")
   - Allows addon to continue functioning with custom server zones
+- **Map Scaling**: Simplified world map dimension calculations (Fixes #39)
+  - Removed unnecessary conditional scaling logic that was never triggered
+  - WorldMapButton width consistently returns 1002 in both fullscreen and windowed modes
+  - Map icons should now position correctly regardless of map mode
+- **Party Tooltips**: Fixed party member quest progress not showing in tooltips
+  - Properly access remoteQuestLogs structure for fallback mechanism
+  - Shows party progress even when no per-mob tooltip cache exists
+- **TomTom Integration**: Fixed TomTom auto-waypoint permanently changing tracker sort
+  - TomTom now finds closest quest independently without modifying tracker sort preference
+  - User's chosen sort order (proximity, level, etc.) is no longer overridden
+- **Quest Item Tracking**: Fixed tracker hiding quests when looting quest items
+  - Preserves quest tracking state when items are looted from ground objects
+  - Prevents quests from being inadvertently untracked during objective updates
+- **Quest Level Filtering**: Fixed quest level filtering and improved usability (Fixes #41)
+  - Quests with "[Epoch] Quest XXXXX" placeholder names are now hidden from the map
+  - Epoch quests with missing/zero requiredLevel now properly respect level filters
+  - Changed "Show only quests granting experience" to hide red quests (5+ levels above player)
+  - Now shows green, yellow, and orange quests but hides red quests that clutter the map
 
 ### Added
 - **Quest Items**: Added 10+ quest items with proper drop sources
@@ -97,150 +152,9 @@
   - Updated 10 mailbox coordinates based on actual WotLK positions
   - Added mailboxes in Trade District, Cathedral Square, Park District, Mage Quarter, Old Town, and Dwarven District
 
-## [1.0.57] - 2025-08-29
+## [1.0.53] - 2025-08-28
 
-### Added
-- **Quest Data**: Added 100+ Epoch quests from GitHub issues (#40-67)
-  - Elwynn Forest: Hunter training quests, Tattered Letter, Soaked Barrel chain
-  - Darkshore: Twilight's Hammer, Welcome to Auberdine, Commission for Archaeologist Everit
-  - Duskwood: Riders In The Night chain, Life In Death chain, Until Death Do Us Part chain, Wanted: Plagued Shambler
-  - Stranglethorn Vale: Kaldorei Lune, Looting the Looters, Call to Skirmish
-  - Hillsbrad Foothills: Threats from Abroad
-  - The Barrens: Burning Blade Signets, WANTED: Deepskin
-  - Ashenvale: Heart of the Ancient
-  - Stonetalon Mountains: Attack on the Mine, Ore for Sun Rock, Twilight Fangs
-  - Thousand Needles: Fresh Water Delivery, Podium Finish, racing quests
-  - Westfall: Barroom Blitz chain, The Venture to Sentinel Hill
-  - Mulgore: In Favor of the Sun, Grimtotem Encroachment, Finding Mone
-  - Arathi Highlands: Commission for Indon Cliffreach
-  - Badlands: Primitive Relic, Trapped Miners chain, The Strange Ore
-  - Swamp of Sorrows: Deathstrike Remedy, Horrors of the Swamp
-  - Multiple zones: Various level 1-60 quests with NPCs and objectives
-- **NPCs**: Added 30+ Epoch NPCs with proper locations and quest associations
-  - Quest givers and turn-in NPCs for all new quest chains
-  - Mob spawns for quest objectives
-  - Proper coordinates for all NPC locations
-
-### Fixed
-- **Debug Spam Cleanup**: Removed excessive debug messages shown to users
-  - Fixed "GetQuest failed" errors appearing on startup by waiting for full initialization
-  - Moved all [DATA] container tracking messages to debug mode only
-  - Container detection tips now only show when debug mode is enabled
-  - Quest progress tracking messages moved to debug output
-- **Map Scaling**: Simplified world map dimension calculations (Fixes #39)
-  - Removed unnecessary conditional scaling logic that was never triggered
-  - WorldMapButton width consistently returns 1002 in both fullscreen and windowed modes
-  - Map icons should now position correctly regardless of map mode
-- **Available Quests**: Fixed nil NPC/GameObject errors when drawing quest starters (Fixes #43, #46, #52)
-  - Added defensive nil checks when NPCs or GameObjects are missing from database
-  - Quest markers now gracefully handle incomplete quest data
-  - Debug messages logged when starter data is missing instead of crashing
-- **Quest Level Filtering**: Fixed quest level filtering and improved usability (Fixes #41)
-  - Quests with "[Epoch] Quest XXXXX" placeholder names are now hidden from the map
-  - Epoch quests with missing/zero requiredLevel now properly respect level filters
-  - Changed "Show only quests granting experience" to hide red quests (5+ levels above player)
-  - Now shows green, yellow, and orange quests but hides red quests that clutter the map
-  - Properly handles Epoch quests like 26332 (level 60), 27470 (level 44) that had requiredLevel = 0
-
-## [1.0.56] - 2025-08-29
-
-### Fixed
-- **Data Collection - Container Names**: Major fixes to ground object/container tracking (Fixes #32)
-  - Fixed container names being lost when they match item names (e.g., "Sun-Ripened Banana") 
-  - Fixed container names being overwritten with placeholders like "Unidentified Container"
-  - Container names now properly captured from GameTooltip during mouseover
-  - Removed 5-second timestamp restriction that prevented using cached container names
-  - Container names preserved even when loot window doesn't show the name
-  - Export now includes proper container data for ground object quests
-  - Confirmed working: "Sun-Ripened Banana" containers now properly captured for quest 28757
-- **Data Collection - Quest Progress Detection**: Enhanced automatic tracking
-  - Now detects quest progress from system messages (e.g., "Sun-Ripened Banana: 7/10")
-  - Automatically captures container/object data when quest progress is detected
-  - Links ground objects to quest objectives for proper map icon placement
-  - Added automatic rescan 1 second after initialization (no more manual `/qdc rescan` needed)
-- **Data Collection - Debug Commands**: Added new debugging tools
-  - Added `/qdc check <questId>` command to inspect specific quest data
-  - Added `/qdc save` command to force save data to SavedVariables
-- **Party Tooltips**: Fixed party member quest progress not showing in tooltips
-  - Properly access remoteQuestLogs structure for fallback mechanism
-  - Shows party progress even when no per-mob tooltip cache exists
-- **Tracker Issues**: Fixed multiple tracker update issues
-  - Fixed tracker showing completed quests after accepting new ones
-  - Fixed tracker not refreshing properly when completing and accepting quests
-  - Completed quests are now properly cleaned from QuestiePlayer.currentQuestlog
-- **TomTom Integration**: Fixed TomTom auto-waypoint permanently changing tracker sort
-  - TomTom now finds closest quest independently without modifying tracker sort preference
-  - User's chosen sort order (proximity, level, etc.) is no longer overridden
-- **Quest Item Tracking**: Fixed tracker hiding quests when looting quest items
-  - Preserves quest tracking state when items are looted from ground objects
-  - Prevents quests from being inadvertently untracked during objective updates
-
-### Added
-- **Quest Data**: Added 90+ new Epoch quests from GitHub submissions (#32-#38)
-  - Issue #35: Quest 26892 "Beastial Allies" with NPCs (Stranglethorn Vale)
-  - Issue #34: 18 quests including Ironforge Airfield chain (26202, 26205, 26208, 26663-26696, 26987, 26998, 28087, 28375)
-  - Issue #33: 6 Hinterlands quests (26209-26212, 27322, 28536)
-  - Issue #32: 18 Gnome starting area quests with complete NPC data
-  - Issue #37: Complete - All 21 remaining Troll/Orc starting area quests added (27201, 28550, 28628, 28750-28755, 28757-28767, 28769)
-  - Issue #38: 3 additional quests (26289 "Renegade Naga", 26594 "WANTED: Scorchmaw", 26863 "The Shadowforge Librarian")
-  - Added corresponding NPCs for all quests with location data
-- **Quest Data**: Troll starting zone improvements
-  - Quest 28722 "The Darkspear Tribe" with quest giver and turn-in NPC  
-  - Quest 28723 "Thievin' Crabs" level 2 quest
-  - Quest 28757 "Banana Bonanza" with working ground object collection
-  - NPC 46834 "Joz'jarz" in Durotar
-- **Quest Data**: Added multiple new Epoch quests from GitHub submissions
-  - Quest 26277 "Shaman of the Flame" in Azshara (kill 12 Flamescale Naga)
-  - Quest 27484 "Purifying the Essence" in The Barrens (defeat Undead Champion)
-  - Quest 27400 "Mirkfallon Bracers" in Stonetalon Mountains (partial data)
-  - Quest placeholders for 26285, 26884, 26906, 27499 (incomplete submissions)
-  - Added NPCs: Lord Aithalis (45143), Kolkar Waylayer (3610), Tammra Windfield (11864), Undead Champion (62026)
-  - Added item: Tainted Essence (63509)
-- **Ready Message**: Added "Questie Ready!" message after full initialization
-  - Shows when quest tracking and map icons are fully active
-  - Appears after all initialization stages complete
-
-## [1.0.55] - 2025-08-29
-
-### Fixed
-- **Data Collection**: Fixed missing quest detection for runtime stubbed quests (Fixes #21)
-  - Now properly detects quests created as runtime stubs (e.g., new troll starting zone quests)
-  - Removed upper limit on Epoch quest IDs (now tracks all quests 26000+)
-  - Fixed detection of [Epoch] prefix in questData.name for placeholder quests
-  - Now correctly identifies and tracks quest 28722 "The Darkspear Tribe" and similar new quests
-- **Data Collection Spam**: Fixed [DATA] messages being shown to all users (Fixes #27)
-  - All [DATA] tracking messages now only show when debug mode is enabled
-  - Important alerts (missing quest detection, completion notices) still show to users
-  - Added helper function to properly handle debug-only messages
-  - Removed excessive initialization and event logging
-
-### Changed
-- **Data Export**: All quest data can now be exported, even incomplete quests
-  - Partial data is valuable - shows quest givers, objectives, NPCs even without turn-in
-  - Export window now shows [COMPLETE] or [INCOMPLETE] status for each quest
-  - Export format clearly indicates if quest data is incomplete
-
-### Added
-- **Initialization Message**: Added clear message when data collector is ready to accept quests
-
-## [1.0.54] - 2025-08-29
-
-### Fixed
-- **World Map Tooltips**: Fixed tooltips not showing on vanilla fullscreen world map (merged PR #25 from @virtiz)
-  - Tooltips now properly check full parent chain to detect WorldMapFrame ancestry
-  - Added SetClampedToScreen to keep tooltips visible at screen edges
-- **Object Data Errors**: Fixed "Missing objective data" errors showing table references instead of meaningful descriptions
-  - Now silently skips missing data or logs at debug level only
-  - Prevents spam for missing object ID 6445625 and similar
-
-### Added
-- **Release Automation**: GitHub Actions workflow for automated releases
-- **Documentation**: Added CHANGELOG.md and RELEASE_PROCESS.md
-- **Map Scaling Fix**: Improved coordinate calculation for different map modes
-
-### Changed
-- Improved error handling for missing quest objective data
-- Updated .gitignore to properly track important documentation files
+Note: Versions 1.0.54-59 were internal development versions. All changes from those versions are included in v1.0.60 above.
 
 ## [1.0.4] - 2025-08-27
 
