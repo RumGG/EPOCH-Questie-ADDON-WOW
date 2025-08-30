@@ -21,7 +21,24 @@ If you find this version of Questie with data collection helpful, consider [buyi
 
 **Not feeling up to it?** No problem! Just use Questie normally. `/qdc disable`
 
-## v1.0.63 - Latest Release
+## v1.0.64 - Latest Release
+
+### Major Database Architecture Overhaul
+
+**Critical Fixes:**
+- **Eliminated WotLK database contamination!**
+  - No more phantom quests appearing in Classic zones
+  - Fixed incorrect NPC locations (Stormwind innkeeper now in correct spot)
+  - Prevents ~13,000 non-existent WotLK quests from showing
+  - Classic database now used as foundation with selective WotLK imports
+
+**New Content:**
+- **45+ new Epoch quests added** from community submissions
+  - Azshara's Legacy complete quest chain
+  - Multiple Dustwallow, Tanaris, and zone quests
+  - All data verified for accuracy
+
+## v1.0.63
 
 ### Critical Map Pin Fix
 

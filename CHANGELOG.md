@@ -2,6 +2,27 @@
 
 ## [Unreleased]
 
+## [1.0.64] - 2024-08-30
+
+### Fixed - Major Database Architecture Overhaul
+- **CRITICAL FIX: Eliminated WotLK database contamination**
+  - Changed database architecture to use Classic as the base instead of WotLK
+  - Prevents ~13,000 phantom WotLK quests from appearing in Classic zones
+  - Fixes incorrect NPC coordinates (like Stormwind innkeeper being in wrong location)
+  - Selectively imports only essential WotLK data (Northrend content and service NPCs)
+  - Resolves issues #165 and #175 where non-existent quests were showing
+
+### Added - 45+ New Epoch Quests
+- **Processed 12 GitHub issues with quest data submissions**
+  - Issue #177: Azshara's Legacy (27094)
+  - Issue #176: Rumbles Of The Earth (27049)
+  - Issue #174: Batch of 7 quests (Dustwallow, Tanaris, Dun Morogh)
+  - Issues #170-173: Complete Azshara's Legacy quest chain
+  - Issue #167: Seeking Redemption (26455)
+  - Issue #169: Hillsbrad/Alterac quest batch
+  - Issues #163, #164, #166: 20+ additional quests across multiple zones
+  - All quest data verified for accuracy with corrected zone IDs
+
 ### Fixed
 - **Map pins not displaying** - Fixed critical coordinate conversion issue in HereBeDragons
   - Added missing classic zone ID mappings for major cities (Stormwind, Ironforge, Orgrimmar, Thunder Bluff, Darnassus, Undercity)
