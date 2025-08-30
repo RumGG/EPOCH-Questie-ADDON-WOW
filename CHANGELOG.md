@@ -7,6 +7,10 @@
   - Changed object ID 40000057 to 4000057 in epochItemDB.lua to fit within 24-bit limit
   - Fixes issue #193 where QuestieStream.lua would crash with overflow error
   - Epoch object IDs starting with 4000000+ now work correctly
+- **Fixed tracker only showing 5 quests on login (all quests on reload)**
+  - questsWatched was being captured at file load time instead of during initialization
+  - On initial login, quest data isn't fully loaded when file loads
+  - Now properly gets quest count during the sync process after data is available
 - **Removed debug output from database initialization**
   - Cleaned up temporary debug logging from QuestieInit.lua
 

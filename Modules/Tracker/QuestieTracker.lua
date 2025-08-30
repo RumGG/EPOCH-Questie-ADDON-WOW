@@ -247,13 +247,18 @@ function QuestieTracker.Initialize()
             -- Sync and populate the QuestieTracker - this should only run when a player has loaded
             -- Questie for the first time or when Re-enabling the QuestieTracker after it's disabled.
 
+            -- Get the current number of watched quests NOW, not from file load time
+            -- The file-level questsWatched variable is stale on initial login
+            local currentQuestsWatched = GetNumQuestWatches(true) or GetNumQuestWatches() or 0
+            Questie:Debug(Questie.DEBUG_DEVELOP, "[QuestieTracker] Syncing watched quests, count:", currentQuestsWatched)
+            
             -- The questsWatched variable is populated by the Unhooked GetNumQuestWatches(). If Questie
             -- is enabled, this is always 0 unless it's run with a true var RE:GetNumQuestWatches(true).
-            if questsWatched > 0 then
+            if currentQuestsWatched > 0 then
                 -- When a quest is removed from the Watch Frame, the questIndex can change so we need to snag
                 -- the entire list and build a temp table with QuestIDs instead to ensure we remove them all.
                 local tempQuestIDs = {}
-                for i = 1, questsWatched do
+                for i = 1, currentQuestsWatched do
                     local questIndex = GetQuestIndexForWatch(i)
                     if questIndex then
                         local questId = select(8, GetQuestLogTitle(questIndex))
