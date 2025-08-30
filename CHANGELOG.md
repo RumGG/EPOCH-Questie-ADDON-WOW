@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.60-hotfix2] - 2025-08-30
+
+### Fixed
+- **Quest 26768 Data Error**: Fixed "bad argument to rshift" compilation error
+  - Corrected objective data structure from `{{{{objects}}}}` to `{nil,{{{objects}}}}`
+  - Quest "Barrel Down" now loads properly
+
 ## [1.0.60-hotfix] - 2025-08-30
 
 ### Fixed

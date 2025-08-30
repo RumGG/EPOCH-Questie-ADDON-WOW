@@ -8,11 +8,12 @@
 
 **Not feeling up to it?** No problem! Just use Questie normally. /qdc disable
 
-## v1.0.60-hotfix - Latest Release
+## v1.0.60-hotfix2 - Latest Release
 
 ### Massive Update: 300+ Quests Added, and Critical Errors Fixed!
 
-**Hotfix Updates:**
+**Hotfix2 Updates:**
+- Fixed quest 26768 "Barrel Down" compilation error
 - Fixed load order error causing crashes on startup
 - Added toggle for [DATA] messages - collect silently without chat spam! (`/qdc messages`)
 
