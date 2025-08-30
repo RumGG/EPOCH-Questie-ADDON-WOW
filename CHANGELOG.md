@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+### Fixed
+- **Fixed overflow error for Epoch object IDs**
+  - Changed object ID 40000057 to 4000057 in epochItemDB.lua to fit within 24-bit limit
+  - Fixes issue #193 where QuestieStream.lua would crash with overflow error
+  - Epoch object IDs starting with 4000000+ now work correctly
+- **Removed debug output from database initialization**
+  - Cleaned up temporary debug logging from QuestieInit.lua
+
 ## [1.0.64] - 2024-08-30
 
 ### Fixed - Major Database Architecture Overhaul

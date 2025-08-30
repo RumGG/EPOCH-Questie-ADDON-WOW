@@ -800,8 +800,8 @@ function QuestieEpochStormwindFixes:Load()
             [npcKeys.spawns] = {[1519]={{62.63,34.12}}},
         },
         -- NPC ID 6740: Innkeeper Allison (Innkeeper)
+        -- Removed spawn override - using correct coordinates from epochNpcDB (52.62,65.7 in Trade District)
         [6740] = {
-            [npcKeys.spawns] = {[1519]={{60.39,75.28}}},
             [npcKeys.npcFlags] = npcFlags.GOSSIP + npcFlags.QUEST_GIVER + npcFlags.VENDOR + npcFlags.INNKEEPER,
         },
         -- NPC ID 5112: Gwenna Firebrew (Barmaid - Cathedral Square innkeeper)

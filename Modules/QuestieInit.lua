@@ -435,16 +435,6 @@ function QuestieInit:LoadBaseDB()
         end
     end
     
-    -- Debug: Check the state of quest data before merge
-    Questie:Print("|cFFFFFF00[LoadBaseDB] questData type: " .. type(QuestieDB.questData) .. "|r")
-    Questie:Print("|cFFFFFF00[LoadBaseDB] _epochQuestData exists: " .. tostring(QuestieDB._epochQuestData ~= nil) .. "|r")
-    if QuestieDB._epochQuestData then
-        local epochCount = 0
-        for _ in pairs(QuestieDB._epochQuestData) do
-            epochCount = epochCount + 1
-        end
-        Questie:Print("|cFFFFFF00[LoadBaseDB] _epochQuestData has " .. epochCount .. " entries|r")
-    end
     
     -- After Classic base DB tables are loaded, merge WotLK data selectively
     -- For Project Epoch (WotLK 3.3.5 server), we need:
@@ -452,8 +442,13 @@ function QuestieInit:LoadBaseDB()
     -- 2. Service NPCs from WotLK (vendors, trainers, etc.)
     -- 3. WotLK-specific objects (mailboxes, portals, etc.)
     
+    -- Initialize questData as empty table if it failed to load or doesn't exist
+    if type(QuestieDB.questData) ~= "table" then
+        QuestieDB.questData = {}
+    end
+    
     -- Merge WotLK quest data (only Northrend and WotLK-specific quests)
-    if QuestieDB._wotlkQuestData and type(QuestieDB.questData) == "table" then
+    if QuestieDB._wotlkQuestData then
         local added, overwritten = 0, 0
         for id, data in pairs(QuestieDB._wotlkQuestData) do
             -- Add WotLK quests that don't exist in Classic
@@ -471,8 +466,13 @@ function QuestieInit:LoadBaseDB()
         QuestieDB._wotlkQuestData = nil
     end
     
+    -- Initialize npcData as empty table if it failed to load or doesn't exist
+    if type(QuestieDB.npcData) ~= "table" then
+        QuestieDB.npcData = {}
+    end
+    
     -- Merge WotLK NPC data (service NPCs and Northrend NPCs)
-    if QuestieDB._wotlkNpcData and type(QuestieDB.npcData) == "table" then
+    if QuestieDB._wotlkNpcData then
         local added, overwritten = 0, 0
         for id, data in pairs(QuestieDB._wotlkNpcData) do
             local shouldMerge = false
@@ -511,8 +511,13 @@ function QuestieInit:LoadBaseDB()
         QuestieDB._wotlkNpcData = nil
     end
     
+    -- Initialize objectData as empty table if it failed to load or doesn't exist
+    if type(QuestieDB.objectData) ~= "table" then
+        QuestieDB.objectData = {}
+    end
+    
     -- Merge WotLK object data (keep all WotLK objects as they're usually important)
-    if QuestieDB._wotlkObjectData and type(QuestieDB.objectData) == "table" then
+    if QuestieDB._wotlkObjectData then
         local added = 0
         for id, data in pairs(QuestieDB._wotlkObjectData) do
             if QuestieDB.objectData[id] == nil then
@@ -524,8 +529,13 @@ function QuestieInit:LoadBaseDB()
         QuestieDB._wotlkObjectData = nil
     end
     
+    -- Initialize itemData as empty table if it failed to load or doesn't exist
+    if type(QuestieDB.itemData) ~= "table" then
+        QuestieDB.itemData = {}
+    end
+    
     -- Merge WotLK item data
-    if QuestieDB._wotlkItemData and type(QuestieDB.itemData) == "table" then
+    if QuestieDB._wotlkItemData then
         local added = 0
         for id, data in pairs(QuestieDB._wotlkItemData) do
             if QuestieDB.itemData[id] == nil then
@@ -538,7 +548,7 @@ function QuestieInit:LoadBaseDB()
     end
     
     -- Finally, merge Epoch supplemental data (this has the highest priority)
-    if QuestieDB._epochQuestData and type(QuestieDB.questData) == "table" then
+    if QuestieDB._epochQuestData then
         local added, overwritten = 0, 0
         for id, data in pairs(QuestieDB._epochQuestData) do
             if QuestieDB.questData[id] == nil then
@@ -553,7 +563,7 @@ function QuestieInit:LoadBaseDB()
         print("Questie Epoch: merged "..added.." quests ("..overwritten.." overwritten)")
         QuestieDB._epochQuestData = nil
     end
-    if QuestieDB._epochNpcData and type(QuestieDB.npcData) == "table" then
+    if QuestieDB._epochNpcData then
         local added, overwritten = 0, 0
         for id, data in pairs(QuestieDB._epochNpcData) do
             if QuestieDB.npcData[id] == nil then
@@ -568,7 +578,7 @@ function QuestieInit:LoadBaseDB()
         print("Questie Epoch: merged "..added.." NPCs ("..overwritten.." overwritten)")
         QuestieDB._epochNpcData = nil
     end
-    if QuestieDB._epochObjectData and type(QuestieDB.objectData) == "table" then
+    if QuestieDB._epochObjectData then
         local added, overwritten = 0, 0
         for id, data in pairs(QuestieDB._epochObjectData) do
             if QuestieDB.objectData[id] == nil then
@@ -583,7 +593,7 @@ function QuestieInit:LoadBaseDB()
         print("Questie Epoch: merged "..added.." objects ("..overwritten.." overwritten)")
         QuestieDB._epochObjectData = nil
     end
-    if QuestieDB._epochItemData and type(QuestieDB.itemData) == "table" then
+    if QuestieDB._epochItemData then
         local added, overwritten = 0, 0
         for id, data in pairs(QuestieDB._epochItemData) do
             if QuestieDB.itemData[id] == nil then
