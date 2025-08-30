@@ -667,7 +667,7 @@ local epochNpcData = {
 [45885] = {"Jasper Greene",nil,nil,9,9,0,{[85]={{38.8,52.6}}},nil,85,{26925,26937},{26937},nil,nil,nil,0},
 [45886] = {"Historian Eva Trelayne",nil,nil,9,9,0,{[1458]={{75.8,37.8}}},nil,1458,nil,{26927},nil,"H",nil,0}, -- In Undercity Magic Quarter
 [45887] = {"Historian Todd Page",nil,nil,9,9,0,{[85]={{60.6,51.0}}},nil,85,{26926},{26925},nil,nil,nil,0},
-[45888] = {"Deathguard Kitsapell",nil,nil,11,11,0,{[130]={{49.6,31.1}}},nil,130,{26928,26929},nil,nil,nil,nil,0}, -- Updated from issue #20 (Silverpine Forest)
+[45888] = {"Deathguard Kitsapell",nil,nil,11,11,0,{[130]={{49.6,31.1}}},nil,130,{26928,26929},{26455},nil,nil,nil,0}, -- Updated from issue #20, #167 (Silverpine Forest)
 [45895] = {"Dark Ooze",nil,nil,9,10,0,{[85]={{24.5,49.5},{24.1,50},{24.1,50.4},{23.9,51.1},{23.8,51},{23.7,51.7},{24.2,49.7}}},nil,85,nil,nil,nil,nil,nil,0},
 [45898] = {"Luna Strinbrow",nil,nil,5,5,0,{[85]={{30.8,65.3}}},nil,85,{26939},{26939},nil,nil,nil,0},
 [45899] = {"Fergus Kitsapell",nil,nil,10,10,0,{[85]={{60.3,53.1}}},nil,85,{26940},{26940},nil,nil,nil,0},
@@ -1064,6 +1064,11 @@ epochNpcData[46228] = {"Kranz",nil,nil,41,41,0,{[440]={{56.6,81.1}}},nil,440,{27
 -- Issue #170-173: Azshara's Legacy quest chain NPCs
 epochNpcData[8395] = {"Sanath Lim-yo",nil,nil,54,54,0,{[16]={{28.0,50.0}}},nil,16,{27093},nil,1,"H",nil,0} -- Azshara
 epochNpcData[7867] = {"Thorkaf Dragoneye",nil,nil,60,60,0,{[3]={{62.6,57.5}}},nil,3,nil,{27941},1,"H",nil,0} -- Badlands
+
+-- Issues #167, #169: Various NPCs
+epochNpcData[2276] = {"Magistrate Henry Maleb",nil,nil,36,36,0,{[267]={{48.1,59.2}}},nil,267,{26505,26516},nil,1,"A",nil,0} -- Hillsbrad Foothills
+epochNpcData[2378] = {"Kundric Zanden",nil,nil,36,36,0,{[267]={{48.6,59.1}}},nil,267,nil,{26505},1,"A",nil,0} -- Hillsbrad Foothills  
+epochNpcData[2278] = {"Melisara",nil,nil,40,40,0,{[267]={{62.5,20.5}}},nil,267,nil,{26537},8,"H",nil,0} -- Hillsbrad Foothills
 
 -- Stage the Epoch npcData for later merge during compilation
 QuestieDB._epochNpcData = epochNpcData

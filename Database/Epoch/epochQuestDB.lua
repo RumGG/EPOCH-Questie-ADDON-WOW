@@ -366,7 +366,7 @@ epochQuestData[27322] = {"Shadowguard Report",nil,nil,nil,50,nil,nil,{"Deliver t
 epochQuestData[27463] = {"Warden's Summons",nil,nil,nil,52,nil,nil,{"Answer the Warden's summons."},nil,nil,nil,nil,nil,nil,nil,nil,331,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 
 -- Issue #126: Various quests
-epochQuestData[26455] = {"Seeking Redemption",{{45383}},nil,nil,12,nil,nil,{"Seek redemption for past wrongs."},nil,nil,nil,nil,nil,nil,nil,nil,141,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26455] = {"Seeking Redemption",{{45383}},{{45888}},nil,12,nil,nil,{"Seek redemption for past wrongs."},nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26926] = {"A Box of Relics",{{45887}},nil,nil,9,nil,nil,{"Deliver the box of relics."},nil,nil,nil,nil,nil,nil,nil,nil,141,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26942] = {"Ancient Artifact",nil,nil,nil,11,nil,nil,{"Recover the ancient artifact."},nil,nil,nil,nil,nil,nil,nil,nil,141,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[27266] = {"Forest Patrol",nil,nil,nil,10,nil,nil,{"Patrol the forest perimeter."},nil,nil,nil,nil,nil,nil,nil,nil,141,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
@@ -379,8 +379,7 @@ epochQuestData[28657] = {"Nature's Balance",nil,nil,nil,15,nil,nil,{"Restore nat
 -- Issue #124: Demons In Fel Rock
 epochQuestData[27483] = {"Demons In Fel Rock",nil,{{3610}},nil,6,nil,nil,{"Investigate demon activity in Fel Rock."},nil,nil,nil,nil,nil,nil,nil,nil,141,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 
--- Issue #123: Dark Council
-epochQuestData[26516] = {"Dark Council",nil,{{6768}},nil,40,nil,nil,{"Infiltrate the dark council meeting."},nil,nil,nil,nil,nil,nil,nil,nil,331,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+-- Issue #123: Dark Council (removed, replaced by issue #169 data)
 
 -- Issue #122: Pilfering the Reef (mentioned in title but not seeing data)
 epochQuestData[26891] = {"Pilfering the Reef",nil,nil,nil,39,nil,nil,{"Pilfer treasures from the reef."},nil,nil,nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
@@ -500,6 +499,12 @@ epochQuestData[27443] = {"Azeroth Space Society",{{46228}},{{46120}},nil,41,nil,
 
 -- Issue #170: Badlands quest
 epochQuestData[27941] = {"Crafted from Crawlers",nil,{{7867}},nil,60,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,3,nil,nil,nil,nil,nil,85,0,nil,nil,nil,nil,nil,nil}
+
+-- Issues #167, #169: Various quests
+epochQuestData[26505] = {"Letter to Ravenholdt",{{2276}},{{2378}},nil,36,nil,nil,{"Take the letter from Magistrate Henry Maleb to Lord Jorach Ravenholdt at Ravenholdt Manor in the Alterac Mountains."},nil,nil,nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26516] = {"Dark Council",{{2276}},nil,nil,40,nil,nil,{"Take the Argus Spellbook to Lord Jorach Ravenholdt at Ravenholdt Manor in Alterac Mountains."},nil,nil,nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26518] = {"The Ensorcelled Parchment",nil,nil,nil,40,nil,nil,{"Find the Ensorcelled Parchment."},nil,{nil,nil,{{62310,1,"Ensorcelled Parchment"}}},nil,nil,nil,nil,nil,nil,36,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26537] = {"The Mordis Key",nil,{{2278}},nil,40,nil,nil,{"Deliver the Mordis Key to Melisara."},nil,nil,nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 
 -- Stage the Epoch questData for later merge during compilation
 QuestieDB._epochQuestData = epochQuestData
