@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [1.0.62] - 2024-11-12
+
 ### Added
 - **Wetlands and Duskwood Quests** (GitHub #93): Added 10 quests from user data submission
   - Quest 26570: "Waterlogged Journal" (Duskwood)
