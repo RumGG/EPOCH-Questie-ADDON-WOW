@@ -8,6 +8,10 @@
   - Added validation to prevent non-repeatable Epoch quests from showing blue exclamation marks
   - Added debug logging to help identify quests with incorrect repeatable flags
   - This fixes an issue where abandoned and retaken quests could show incorrect repeatable icons
+- Fixed missing Elwynn Forest starter quests (GitHub #103)
+  - Restored "Swiftpaw" quest (26776) and "The Soaked Barrel" quest (26777)
+  - These quests were accidentally overwritten by High Isle Fel Elf quests
+  - Moved "Fel Elf Slayer" quest to ID 28768 to resolve the conflict
 
 ## [1.0.62] - 2024-11-12
 

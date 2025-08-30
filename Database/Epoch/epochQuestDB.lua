@@ -14,7 +14,9 @@ epochQuestData[26772] = {"Necromancy and You",{{46294}},{{46294}},nil,60,nil,nil
 epochQuestData[26773] = {"[Epoch] Quest 26773",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26774] = {"[Epoch] Quest 26774",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26775] = {"[Epoch] Quest 26775",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26776] = {"Fel Elf Slayer",{{46295}},{{46295}},nil,60,nil,nil,{"Kill the Fel Elf Slayer."},nil,{{{46390,nil}}},nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+-- Restored original Elwynn Forest starter quests (were overwritten by Fel Elf quest which is now at 28768)
+epochQuestData[26776] = {"Swiftpaw",{{11940}},{{11940}},4,6,77,nil,{"Bring Swiftpaw's Snout to Merissa Stilwell outside Northshire Abbey."},nil,{nil,nil,{{60388,nil}}},nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26777] = {"The Soaked Barrel",{nil,{4000007}},nil,1,1,77,nil,{"Find someone in Northshire Abbey who may know the owner of the barrel."},nil,nil,nil,nil,nil,nil,nil,nil,12,nil,nil,nil,{60021},26778,nil,1,nil,nil,nil,nil,nil,nil}
 epochQuestData[26778] = {"[Epoch] Quest 26778",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26779] = {"The Demon of the Grove",{{6778},{1377}},{{6778}},nil,11,nil,nil,{"Kill Melanas and bring Melanas' Head to Melika Isenstrider in Darnassus."},nil,{{{2038,nil}},nil,{{5221,nil}}},nil,nil,{927},nil,nil,nil,141,nil,nil,nil,nil,nil,8,0,927,nil,nil,nil,nil,nil}
 epochQuestData[26780] = {"[Epoch] Quest 26780",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
@@ -236,7 +238,8 @@ STRUCTURAL VALIDATION:
 
 QUEST CATEGORIES:
 - Troll Starting Zone (28750-28767): Echo Isles, levels 1-5
-- High Isle Fel Elves (26766-26776): Darkshore extension, levels 58-60
+- Elwynn Forest Starter (26776-26778): Northshire Abbey area, levels 1-6
+- High Isle Fel Elves (26766-26775, 28768): Darkshore extension, levels 58-60
 - Scholomance Academy (26963-26981): Western Plaguelands, levels 53-54
 - Springsocket Quests (26126, 28077, 28535, 28618): Barrens, levels 36-50
 - Argus Wake Chain (26529-26533): Desolace, levels 42-44
@@ -270,3 +273,6 @@ epochQuestData[27173] = {"The Summoning",{{48110}},{{48110}},nil,18,nil,nil,{"Co
 epochQuestData[27174] = {"Return to Mankrik",{{48110}},{{3432}},nil,19,nil,nil,{"Return to Mankrik with the Demon's Heart."},nil,{nil,nil,{{63297,"Demon's Heart"}}},nil,nil,{27173},{27175},nil,nil,17,nil,nil,nil,nil,27175,1,0,27173,nil,nil,nil,nil,nil}
 epochQuestData[27175] = {"Mankrik's Gratitude",{{3432}},{{48111}},nil,20,nil,nil,{"Take Mankrik's Letter to Nadia in the Barrens."},nil,{nil,nil,{{63298,"Mankrik's Letter"}}},nil,nil,{27174},{27176},nil,nil,17,nil,nil,nil,nil,27176,1,0,27174,nil,nil,nil,nil,nil}
 epochQuestData[27176] = {"Nadia's Task",{{48111}},{{48111}},nil,21,nil,nil,{"Complete Nadia's task in the Barrens."},nil,nil,nil,nil,{27175},nil,nil,nil,17,nil,nil,nil,nil,nil,1,0,27175,nil,nil,nil,nil,nil}
+
+-- Fel Elf Slayer quest moved from 26776 to avoid conflict with Elwynn Forest starter quests
+epochQuestData[28768] = {"Fel Elf Slayer",{{46295}},{{46295}},nil,60,nil,nil,{"Kill the Fel Elf Slayer."},nil,{{{46390,nil}}},nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
