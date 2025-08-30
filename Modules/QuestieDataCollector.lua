@@ -2195,8 +2195,8 @@ function QuestieDataCollector:ShowExportWindow(questId)
             if not GitHubURLFrame then
                 local popup = CreateFrame("Frame", "GitHubURLFrame", UIParent)
                 popup:SetFrameStrata("TOOLTIP")
-                popup:SetWidth(400)
-                popup:SetHeight(100)
+                popup:SetWidth(450)
+                popup:SetHeight(120)
                 popup:SetPoint("CENTER")
                 popup:SetBackdrop({
                     bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background",
@@ -2205,21 +2205,72 @@ function QuestieDataCollector:ShowExportWindow(questId)
                     insets = { left = 5, right = 5, top = 5, bottom = 5 }
                 })
                 
-                local text = popup:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-                text:SetPoint("CENTER", 0, 10)
-                text:SetText("|cFFFFFFFFCopy this URL to your browser:\n|r|cFF00FFFFhttps://github.com/trav346/Questie-Epoch/issues|r")
+                -- Title text
+                local titleText = popup:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+                titleText:SetPoint("TOP", 0, -15)
+                titleText:SetText("|cFFFFFFFFCopy this URL to your browser:|r")
                 
+                -- Create an EditBox for the URL so it can be selected
+                local urlBox = CreateFrame("EditBox", nil, popup)
+                urlBox:SetPoint("CENTER", 0, 5)
+                urlBox:SetWidth(400)
+                urlBox:SetHeight(20)
+                urlBox:SetFontObject(GameFontHighlight)
+                urlBox:SetText("https://github.com/trav346/Questie-Epoch/issues")
+                urlBox:SetAutoFocus(false)
+                urlBox:SetScript("OnEditFocusGained", function(self)
+                    self:HighlightText()
+                end)
+                urlBox:SetScript("OnEscapePressed", function(self)
+                    self:ClearFocus()
+                    popup:Hide()
+                end)
+                -- Prevent editing but allow selection
+                urlBox:SetScript("OnTextChanged", function(self, userInput)
+                    if userInput then
+                        self:SetText("https://github.com/trav346/Questie-Epoch/issues")
+                        self:HighlightText()
+                    end
+                end)
+                
+                -- Visual frame around the EditBox
+                local urlBorder = CreateFrame("Frame", nil, popup)
+                urlBorder:SetPoint("CENTER", urlBox, "CENTER", 0, 0)
+                urlBorder:SetWidth(410)
+                urlBorder:SetHeight(30)
+                urlBorder:SetBackdrop({
+                    bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
+                    edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+                    tile = true, tileSize = 16, edgeSize = 16,
+                    insets = { left = 4, right = 4, top = 4, bottom = 4 }
+                })
+                urlBorder:SetBackdropColor(0, 0, 0, 0.5)
+                
+                -- Select & Copy button
+                local selectBtn = CreateFrame("Button", nil, popup, "UIPanelButtonTemplate")
+                selectBtn:SetPoint("BOTTOMLEFT", 100, 10)
+                selectBtn:SetWidth(100)
+                selectBtn:SetHeight(22)
+                selectBtn:SetText("Select All")
+                selectBtn:SetScript("OnClick", function() 
+                    urlBox:SetFocus()
+                    urlBox:HighlightText()
+                end)
+                
+                -- Close button
                 local closeBtn = CreateFrame("Button", nil, popup, "UIPanelButtonTemplate")
-                closeBtn:SetPoint("BOTTOM", 0, 10)
+                closeBtn:SetPoint("BOTTOMRIGHT", -100, 10)
                 closeBtn:SetWidth(60)
                 closeBtn:SetHeight(22)
                 closeBtn:SetText("OK")
                 closeBtn:SetScript("OnClick", function() popup:Hide() end)
                 
-                popup.text = text
+                popup.urlBox = urlBox
             end
             GitHubURLFrame:Show()
-            DebugMessage("|cFF00FFFFGitHub URL: https://github.com/trav346/Questie-Epoch/issues|r", 0, 1, 1)
+            -- Auto-select the URL when showing
+            GitHubURLFrame.urlBox:SetFocus()
+            GitHubURLFrame.urlBox:HighlightText()
         end)
         
         -- Step 2: Copy Data button
