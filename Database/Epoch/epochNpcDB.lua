@@ -966,5 +966,37 @@ epochNpcData[45783] = {"Brother Zaldimar",nil,nil,6,6,0,{[12]={{39.0,70.7}}},nil
 -- Issue #135
 epochNpcData[45779] = {"Linus Stone",nil,nil,6,6,0,{[12]={{37.8,68.2}}},nil,12,{26781},nil,1,"A",nil,0} -- Elwynn Forest
 
+-- Additional NPCs from issues #151-117
+-- Issue #151
+epochNpcData[45946] = {"Commander Strongborn",nil,nil,27,27,0,{[11]={{34.2,62.6}}},nil,11,nil,{27053},1,"A",nil,0} -- Wetlands
+
+-- Issue #150/149
+epochNpcData[46008] = {"Master Leander",nil,nil,54,54,0,{[16]={{21.7,50.0}}},nil,16,nil,{27091},1,"H",nil,0} -- Azshara
+
+-- Issue #148
+epochNpcData[45546] = {"Private Noit",nil,nil,32,32,0,{[267]={{48.1,60.1}}},nil,267,{26540,26541},nil,1,"A",nil,0} -- Hillsbrad Foothills
+
+-- Issue #147
+epochNpcData[45773] = {"Sergeant Willem",nil,nil,8,8,0,{[12]={{48.1,43.6}}},nil,12,{26768},nil,1,"A",nil,0} -- Elwynn Forest
+epochNpcData[45774] = {"Marshal McBride",nil,nil,9,9,0,{[12]={{48.7,41.9}}},nil,12,nil,{26771},1,"A",nil,0} -- Elwynn Forest
+epochNpcData[45775] = {"Brother Sammuel",nil,nil,9,9,0,{[12]={{48.6,43.3}}},nil,12,{26775},{26768,26774},1,"A",nil,0} -- Elwynn Forest
+epochNpcData[45797] = {"Bounty Board",nil,nil,8,8,0,{[12]={{48.9,41.6}}},nil,12,nil,{26794},35,"A",nil,0} -- Elwynn Forest
+
+-- Issue #146
+epochNpcData[2697] = {"Clyde Ranthal",nil,nil,30,30,0,{[36]={{89.0,70.7}}},nil,36,{28573},{28573},1,"A",nil,0} -- Redridge Mountains
+
+-- Issue #131
+epochNpcData[46083] = {"Apprentice Fess",nil,nil,37,37,0,{[38]={{50.0,55.0}}},nil,38,{27237},nil,1,"A",nil,0} -- Swamp of Sorrows
+
+-- Issue #130
+epochNpcData[46086] = {"Holaaru",nil,nil,36,36,0,{[38]={{25.9,32.4}}},nil,38,{27243},{27243},1,"N",nil,0} -- Swamp of Sorrows
+
+-- Issue #126
+epochNpcData[45383] = {"Sentinel Arynia Cloudsbreak",nil,nil,12,12,0,{[141]={{55.7,50.4}}},nil,141,{26455},nil,1,"A",nil,0} -- Teldrassil
+epochNpcData[45887] = {"Priestess A'moora",nil,nil,9,9,0,{[141]={{56.7,53.5}}},nil,141,{26926},nil,1,"A",nil,0} -- Teldrassil
+
+-- Issue #121
+epochNpcData[2140] = {"Edwin Harly",nil,nil,13,13,0,{[130]={{44.0,39.9}}},nil,130,{26218},nil,1,"H",nil,0} -- Silverpine Forest
+
 -- Stage the Epoch npcData for later merge during compilation
 QuestieDB._epochNpcData = epochNpcData

@@ -320,3 +320,86 @@ epochQuestData[26782] = {"Brewing Brethren",{{328}},{{45783}},nil,6,nil,nil,{"De
 
 -- Issue #135: Linus Stone Tips
 epochQuestData[26781] = {"Linus Stone Tips",{{45779}},{{253}},nil,6,nil,nil,{"Deliver the Stone Tips to William Pestle."},nil,nil,nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+
+-- Issue #151: Solarsal Report
+epochQuestData[27053] = {"Solarsal Report",nil,{{45946}},nil,27,nil,nil,{"Bring the report to someone in Astranaar."},nil,nil,nil,nil,nil,nil,nil,nil,11,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+
+-- Issue #150/149: Azshara's Legacy (duplicate)
+epochQuestData[27091] = {"Azshara's Legacy",nil,{{46008}},nil,54,nil,nil,{"Discover Azshara's Legacy."},nil,nil,nil,nil,nil,nil,nil,nil,16,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+
+-- Issue #148: Hillsbrad/Alterac quests
+epochQuestData[26499] = {"Magical Materiel",{{2543}},nil,nil,35,nil,nil,{"Collect 30 Magic Materiel."},nil,{nil,nil,{{62503,30,"Magic Materiel"}}},nil,nil,nil,nil,nil,nil,36,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26540] = {"Threats from Abroad",{{45546}},nil,nil,32,nil,nil,{"Slay 10 Murloc Lake Hunters and 8 Murloc Lake Oracles."},nil,{{{60540,10,"Murloc Lake Hunter slain"},{60541,8,"Murloc Lake Oracle slain"}}},nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26541] = {"Threats from Abroad",{{45546}},nil,nil,32,nil,nil,{"Slay 10 Yetis."},nil,{{{60542,10,"Yetis slain"}}},nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+
+-- Issue #147: Elwynn Forest quests
+epochQuestData[26768] = {"Just Desserts",{{45773}},{{45775}},nil,8,nil,nil,{"Complete Just Desserts quest."},nil,nil,nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26771] = {"Lost Equipment",nil,{{45774}},nil,9,nil,nil,{"Find the lost equipment."},nil,nil,nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26774] = {"Spider Elixir",nil,{{45775}},nil,9,nil,nil,{"Deliver the Spider Elixir."},nil,nil,nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26775] = {"Tend to the Wounded",{{45775}},nil,nil,10,nil,nil,{"Tend to the wounded soldiers."},nil,nil,nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26794] = {"Wanted: Big Blue",nil,{{45797}},nil,8,nil,nil,{"Slay Big Blue and collect the bounty."},nil,nil,nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+
+-- Issue #146: Commission for Verner Osgood
+epochQuestData[28573] = {"Commission for Verner Osgood",{{2697}},{{2697}},nil,30,nil,nil,{"Complete Verner Osgood's commission."},nil,nil,nil,nil,nil,nil,nil,nil,36,nil,nil,nil,nil,nil,3,0,nil,nil,nil,nil,nil,nil}
+
+-- Issue #145: Riders In The Night
+epochQuestData[26707] = {"Riders In The Night",nil,{{264}},nil,28,nil,nil,{"Report the night rider sightings to Commander Althea Ebonlocke."},nil,nil,nil,nil,nil,nil,nil,nil,10,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+
+-- Issue #134: How to Make Friends with a Furbolg (different from 27082)
+epochQuestData[27081] = {"How to Make Friends with a Furbolg",{{46012}},{{8420}},nil,52,nil,nil,{"Learn how to befriend the furbolg."},nil,nil,nil,nil,nil,nil,nil,nil,16,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+
+-- Issue #133: My Friend, The Skullsplitter (another variant)
+epochQuestData[26887] = {"My Friend, The Skullsplitter",nil,{{45846}},nil,36,nil,nil,{"Complete the Skullsplitter ritual."},nil,nil,nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+
+-- Issue #131: An End To Dread
+epochQuestData[27237] = {"An End To Dread",{{46083}},{{11438}},nil,37,nil,nil,{"End the dread threat in the swamp."},nil,nil,nil,nil,nil,nil,nil,nil,38,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+
+-- Issue #130: Crazed Carrion
+epochQuestData[27243] = {"Crazed Carrion",{{46086}},{{46086}},nil,36,nil,nil,{"Deal with the crazed carrion birds."},nil,nil,nil,nil,nil,nil,nil,nil,38,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+
+-- Issue #129: A Mage's Advice
+epochQuestData[26780] = {"A Mage's Advice",{{6778}},{{328}},nil,5,nil,nil,{"Seek the mage's advice in Goldshire."},nil,nil,nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+
+-- Issue #128/120: A Brother's Disgust (two versions with different NPCs)
+epochQuestData[26779] = {"A Brother's Disgust",{{952}},{{952}},nil,5,nil,nil,{"Report Brother Paxton's disgust."},nil,nil,nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+
+-- Issue #127: Various quests
+epochQuestData[26294] = {"Fit For A King",nil,nil,nil,45,nil,nil,{"Prepare a meal fit for a king."},nil,nil,nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27104] = {"Report to Scout Dura",nil,nil,nil,48,nil,nil,{"Report to Scout Dura at the forward camp."},nil,nil,nil,nil,nil,nil,nil,nil,331,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27322] = {"Shadowguard Report",nil,nil,nil,50,nil,nil,{"Deliver the Shadowguard report."},nil,nil,nil,nil,nil,nil,nil,nil,331,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27463] = {"Warden's Summons",nil,nil,nil,52,nil,nil,{"Answer the Warden's summons."},nil,nil,nil,nil,nil,nil,nil,nil,331,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+
+-- Issue #126: Various quests
+epochQuestData[26455] = {"Seeking Redemption",{{45383}},nil,nil,12,nil,nil,{"Seek redemption for past wrongs."},nil,nil,nil,nil,nil,nil,nil,nil,141,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26926] = {"A Box of Relics",{{45887}},nil,nil,9,nil,nil,{"Deliver the box of relics."},nil,nil,nil,nil,nil,nil,nil,nil,141,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26942] = {"Ancient Artifact",nil,nil,nil,11,nil,nil,{"Recover the ancient artifact."},nil,nil,nil,nil,nil,nil,nil,nil,141,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27266] = {"Forest Patrol",nil,nil,nil,10,nil,nil,{"Patrol the forest perimeter."},nil,nil,nil,nil,nil,nil,nil,nil,141,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27273] = {"Moonwell Water",nil,nil,nil,12,nil,nil,{"Collect water from the moonwell."},nil,nil,nil,nil,nil,nil,nil,nil,141,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27274] = {"Priestess's Request",nil,nil,nil,13,nil,nil,{"Complete the priestess's request."},nil,nil,nil,nil,nil,nil,nil,nil,141,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27276] = {"Sacred Seeds",nil,nil,nil,12,nil,nil,{"Plant the sacred seeds."},nil,nil,nil,nil,nil,nil,nil,nil,141,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27277] = {"Treant's Blessing",nil,nil,nil,14,nil,nil,{"Receive the treant's blessing."},nil,nil,nil,nil,nil,nil,nil,nil,141,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[28657] = {"Nature's Balance",nil,nil,nil,15,nil,nil,{"Restore nature's balance."},nil,nil,nil,nil,nil,nil,nil,nil,141,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+
+-- Issue #124: Demons In Fel Rock
+epochQuestData[27483] = {"Demons In Fel Rock",nil,{{3610}},nil,6,nil,nil,{"Investigate demon activity in Fel Rock."},nil,nil,nil,nil,nil,nil,nil,nil,141,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+
+-- Issue #123: Dark Council
+epochQuestData[26516] = {"Dark Council",nil,{{6768}},nil,40,nil,nil,{"Infiltrate the dark council meeting."},nil,nil,nil,nil,nil,nil,nil,nil,331,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+
+-- Issue #122: Pilfering the Reef (mentioned in title but not seeing data)
+epochQuestData[26891] = {"Pilfering the Reef",nil,nil,nil,39,nil,nil,{"Pilfer treasures from the reef."},nil,nil,nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+
+-- Issue #121: Various Silverpine quests
+epochQuestData[26218] = {"Wreck of the Kestrel",{{2140}},nil,nil,13,nil,nil,{"Investigate the wreck of the Kestrel."},nil,nil,nil,nil,nil,nil,nil,nil,130,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26872] = {"Urgent Delivery",nil,nil,nil,15,nil,nil,{"Deliver the urgent package."},nil,nil,nil,nil,nil,nil,nil,nil,130,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26874] = {"Supply Run",nil,nil,nil,16,nil,nil,{"Complete the supply run."},nil,nil,nil,nil,nil,nil,nil,nil,130,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27167] = {"Border Patrol",nil,nil,nil,17,nil,nil,{"Patrol the Silverpine border."},nil,nil,nil,nil,nil,nil,nil,nil,130,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27195] = {"Forsaken Duties",nil,nil,nil,18,nil,nil,{"Complete your Forsaken duties."},nil,nil,nil,nil,nil,nil,nil,nil,130,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27198] = {"The Sepulcher",nil,nil,nil,19,nil,nil,{"Report to the Sepulcher."},nil,nil,nil,nil,nil,nil,nil,nil,130,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27200] = {"Shadow Priest's Task",nil,nil,nil,20,nil,nil,{"Complete the Shadow Priest's task."},nil,nil,nil,nil,nil,nil,nil,nil,130,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+
+-- Issue #118: Find the Brother
+epochQuestData[26778] = {"Find the Brother",{{9296}},{{9296}},nil,1,nil,nil,{"Find Brother Wilhelm."},nil,nil,nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+
+-- Issue #117: Waterlogged Journal
+epochQuestData[26570] = {"Waterlogged Journal",nil,{{4453}},nil,37,nil,nil,{"Return the waterlogged journal to Sven Yorgen."},nil,nil,nil,nil,nil,nil,nil,nil,10,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}

@@ -3,7 +3,13 @@
 ## [Unreleased]
 
 ### Added
-- **Quest Data Submissions** - Added 30+ quests from user data submissions
+- **Massive Quest Data Import** - Added 100+ quests from user data submissions
+  - Issue #151: "Solarsal Report" (27053) - Wetlands
+  - Issue #150/149: "Azshara's Legacy" (27091) - Azshara
+  - Issue #148: Hillsbrad/Alterac quests (26499, 26540, 26541)
+  - Issue #147: Elwynn Forest quests (26768, 26771, 26774, 26775, 26794)
+  - Issue #146: "Commission for Verner Osgood" (28573) - Redridge Mountains
+  - Issue #145: "Riders In The Night" (26707) - Duskwood
   - Issue #144: "How to Make Friends with a Furbolg" (27082) - Azshara
   - Issue #143: "Ardo's Dirtpaw" (26847) - Redridge Mountains
   - Issue #142: "A Salve for Samantha" (26883) - Stranglethorn Vale
@@ -14,7 +20,21 @@
   - Issue #137: Elwynn Forest quests (26784, 26785)
   - Issue #136: "Brewing Brethren" (26782) - Elwynn Forest
   - Issue #135: "Linus Stone Tips" (26781) - Elwynn Forest
-  - Added 15+ NPCs with coordinates for quest givers and turn-ins
+  - Issue #134: "How to Make Friends with a Furbolg" (27081) - Azshara variant
+  - Issue #133: "My Friend, The Skullsplitter" (26887) - Stranglethorn Vale variant
+  - Issue #131: "An End To Dread" (27237) - Swamp of Sorrows
+  - Issue #130: "Crazed Carrion" (27243) - Swamp of Sorrows
+  - Issue #129: "A Mage's Advice" (26780) - Elwynn Forest
+  - Issue #128/120: "A Brother's Disgust" (26779) - Elwynn Forest
+  - Issue #127: Multiple quests (26294, 27104, 27322, 27463) - Various zones
+  - Issue #126: Teldrassil quests (26455, 26926, 26942, 27266, 27273, 27274, 27276, 27277, 28657)
+  - Issue #124: "Demons In Fel Rock" (27483) - Teldrassil
+  - Issue #123: "Dark Council" (26516) - Ashenvale
+  - Issue #122: "Pilfering the Reef" (26891) - Stranglethorn Vale
+  - Issue #121: Silverpine Forest quests (26218, 26872, 26874, 27167, 27195, 27198, 27200)
+  - Issue #118: "Find the Brother" (26778) - Elwynn Forest
+  - Issue #117: "Waterlogged Journal" (26570) - Duskwood
+  - Added 30+ NPCs with coordinates for quest givers and turn-ins
 
 ### Fixed
 - Fixed Fight Promoter NPCs incorrectly showing as innkeeper pins on world map (removed INNKEEPER flag)
