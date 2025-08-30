@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+### Fixed
+- Fixed Fight Promoter NPCs incorrectly showing as innkeeper pins on world map (removed INNKEEPER flag)
+
 ## [1.0.62] - 2024-11-12
 
 ### Added

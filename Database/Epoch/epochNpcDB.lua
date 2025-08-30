@@ -921,5 +921,12 @@ epochNpcData[48114] = {"Baron Geddon's Essence",nil,nil,17,17,0,{[17]={{55.5,31.
 epochNpcData[48115] = {"Felguard Commander",nil,nil,17,17,0,{[17]={{55.2,30.8}}},nil,17,nil,nil,1,nil,nil,0} -- Stagnant Oasis depths
 epochNpcData[48116] = {"Summoned Demon",nil,nil,18,18,0,{[17]={{55.0,31.0}}},nil,17,nil,nil,1,nil,nil,0} -- Ritual site
 
+-- Fix Fight Promoter NPCs showing as innkeepers (remove INNKEEPER flag)
+-- Original flags: 65537 = INNKEEPER (65536) + GOSSIP (1)
+-- Fixed to just: 1 = GOSSIP only (no innkeeper functionality)
+-- These NPCs are Arena Battlemaster's Assistants but arenas don't exist in Project Epoch
+epochNpcData[26760] = {"Fight Promoter",1,1,70,70,0,{[85]={{31.99,64.53},{61.55,53.2}},[1497]={{66.17,9.9}},[3487]={{74.28,79.24}},[3430]={{47.67,47.15},{39.0,20.79}},[1638]={{37.86,61.04}},[215]={{46.88,60.34},{44.42,76.35}},[1637]={{51.79,76.1}},[14]={{52.28,42.4},{42.47,68.44}},[1]={{46.49,52.47},{28.78,69.86}},[1537]={{32.56,64.24}},[1519]={{62.89,71.63}},[12]={{42.81,65.63},{48.09,42.13}},[3557]={{76.46,55.73}},[3524]={{48.87,50.1},{80.2,47.55}},[1657]={{61.94,40.59}},[141]={{55.92,58.55},{58.73,44.62}}},nil,85,nil,nil,35,"AH","Arena Battlemaster's Assistant",1}
+epochNpcData[26765] = {"[DND] TAR Pedestal - Fight Promoter",1,1,70,70,0,{[85]={{31.99,64.53},{61.55,53.2}},[1497]={{66.17,9.9}},[3487]={{74.28,79.24}},[3430]={{47.67,47.15},{39.0,20.79}},[1638]={{37.86,61.04}},[215]={{46.88,60.34},{44.42,76.35}},[1637]={{51.79,76.1}},[14]={{52.28,42.4},{42.47,68.44}},[1]={{46.49,52.47},{28.78,69.86}},[1537]={{32.56,64.24}},[1519]={{62.89,71.63}},[12]={{42.81,65.63},{48.09,42.13}},[3557]={{76.46,55.73}},[3524]={{48.87,50.1},{80.2,47.55}},[1657]={{61.94,40.59}},[141]={{55.92,58.55},{58.73,44.62}}},nil,85,nil,nil,35,"AH","",1}
+
 -- Stage the Epoch npcData for later merge during compilation
 QuestieDB._epochNpcData = epochNpcData
