@@ -1222,6 +1222,12 @@ function QuestieDB.GetQuest(questId) -- /dump QuestieDB.GetQuest(867)
         return _QuestieDB.questCache[questId];
     end
 
+    -- Check if database is initialized before querying
+    if not QuestieDB.QueryQuest then
+        Questie:Debug(Questie.DEBUG_DEVELOP, "[QuestieDB.GetQuest] Database not yet initialized for questID:", questId)
+        return nil
+    end
+    
     local rawdata = QuestieDB.QueryQuest(questId, QuestieDB._questAdapterQueryOrder)
 
     if (not rawdata) then

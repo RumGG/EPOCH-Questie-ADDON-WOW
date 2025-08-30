@@ -89,11 +89,13 @@ function QuestieDataCollector:Initialize()
     -- Enable tooltip IDs
     QuestieDataCollector:EnableTooltipIDs()
     
-    _initialized = true
+    -- Only show messages on first initialization, not after login
+    if not _initialized then
+        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Questie Data Collector]|r Ready! You can now accept quests for data collection.", 0, 1, 0)
+        DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00Type /qdc for commands|r", 1, 1, 0)
+    end
     
-    -- Show initialization complete message
-    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Questie Data Collector]|r Ready! You can now accept quests for data collection.", 0, 1, 0)
-    DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00Type /qdc for commands|r", 1, 1, 0)
+    _initialized = true
     
     -- Wait for Questie to be fully initialized before checking quests
     -- This prevents GetQuest failures during startup
@@ -101,7 +103,8 @@ function QuestieDataCollector:Initialize()
     C_Timer.After(2.0, function()
         -- Only check existing quests after Questie is fully loaded
         if QuestieDB and QuestieDB.GetQuest then
-            _activeTracking = {}
+            -- Don't clear _activeTracking on reinit - preserve existing tracking
+            -- _activeTracking = {}
             QuestieDataCollector:CheckExistingQuests()
         end
         
@@ -169,12 +172,47 @@ function QuestieDataCollector:CheckExistingQuests()
                     end)
                     
                     if not success then
-                        -- GetQuest failed, skip this quest silently - no messages at all
-                        -- This is expected for vanilla quests that were modified by Epoch
-                        -- Only log in debug mode if explicitly requested
-                        if Questie.db and Questie.db.profile and Questie.db.profile.debugDataCollector then
-                            -- Even in debug mode, don't show these as they're too spammy
-                            -- DebugMessage("|cFFFF0000[DataCollector]|r GetQuest failed for questID: " .. tostring(questID), 1, 0, 0)
+                        -- GetQuest failed - but for Epoch quests, we should still track them!
+                        if questID >= 26000 then
+                            -- This is an Epoch quest, track it anyway
+                            DebugMessage(string.format("|cFFFFFF00[Warning] GetQuest failed for Epoch quest %d but tracking anyway|r", questID), 1, 1, 0)
+                            if not _activeTracking[questID] then
+                                _activeTracking[questID] = true
+                                trackedCount = trackedCount + 1
+                            end
+                            
+                            -- Initialize basic quest data
+                            if not QuestieDataCollection.quests[questID] then
+                                QuestieDataCollection.quests[questID] = {
+                                    id = questID,
+                                    name = title or ("Quest " .. questID),
+                                    level = level,
+                                    objectives = {},
+                                    npcs = {},
+                                    items = {},
+                                    objects = {},
+                                    sessionStart = date("%Y-%m-%d %H:%M:%S"),
+                                    wasAlreadyAccepted = true,
+                                    incompleteData = true
+                                }
+                            end
+                            
+                            -- Populate objectives for the quest
+                            SelectQuestLogEntry(i)
+                            local numObjectives = GetNumQuestLeaderBoards(i)
+                            if numObjectives > 0 and #QuestieDataCollection.quests[questID].objectives == 0 then
+                                for objIdx = 1, numObjectives do
+                                    local text, objectiveType, finished = GetQuestLogLeaderBoard(objIdx, i)
+                                    table.insert(QuestieDataCollection.quests[questID].objectives, {
+                                        text = text or ("Objective " .. objIdx),
+                                        type = objectiveType or "unknown",
+                                        index = objIdx,
+                                        completed = finished or false,
+                                        progressLocations = {},
+                                        lastText = text
+                                    })
+                                end
+                            end
                         end
                     else
                         -- Now process the quest data
@@ -200,6 +238,10 @@ function QuestieDataCollector:CheckExistingQuests()
                             if not _activeTracking[questID] then
                                 _activeTracking[questID] = true
                                 trackedCount = trackedCount + 1
+                                
+                                -- Always show when re-adding quests after login for debugging
+                                DebugMessage(string.format("|cFF00FF00[Tracking Restored] Quest %d: %s|r", 
+                                    questID, title or "Unknown"), 0, 1, 0)
                                 
                                 -- Initialize quest data if not exists
                                 if not QuestieDataCollection.quests[questID] then
@@ -311,13 +353,15 @@ function QuestieDataCollector:CheckExistingQuests()
 end
 
 function QuestieDataCollector:RegisterEvents()
-    -- Only create event frame if it doesn't exist
+    -- Create event frame if it doesn't exist
+    local eventFrame
     if QuestieDataCollector.eventFrame then
-        return -- Already registered
+        eventFrame = QuestieDataCollector.eventFrame
+        -- Re-register all events in case they were lost after login
+    else
+        eventFrame = CreateFrame("Frame")
+        QuestieDataCollector.eventFrame = eventFrame
     end
-    
-    local eventFrame = CreateFrame("Frame")
-    QuestieDataCollector.eventFrame = eventFrame
     
     -- Register all needed events
     eventFrame:RegisterEvent("QUEST_ACCEPTED")
@@ -379,6 +423,11 @@ function QuestieDataCollector:RegisterEvents()
 end
 
 function QuestieDataCollector:EnableTooltipIDs()
+    -- Only enable tooltips if data collection is actually enabled
+    if not Questie.db.profile.enableDataCollection then
+        return
+    end
+    
     -- Store original settings
     if not _originalTooltipSettings then
         _originalTooltipSettings = {
@@ -844,7 +893,10 @@ function QuestieDataCollector:OnQuestAccepted(questId)
     end
     
     -- Check for ALL custom/Epoch quests, not just 26000-26999 range
-    local questData = QuestieDB.GetQuest(questId)  -- Use dot notation, not colon
+    local questData = nil
+    if QuestieDB and QuestieDB.GetQuest then
+        questData = QuestieDB.GetQuest(questId)  -- Use dot notation, not colon
+    end
     
     local isEpochQuest = (questId >= 26000)  -- All custom Epoch quests start at 26000+
     
@@ -872,7 +924,7 @@ function QuestieDataCollector:OnQuestAccepted(questId)
     
     -- Check if quest has incomplete data (missing quest givers or objectives)
     local hasIncompleteData = false
-    if questData and isEpochQuest then
+    if questData and isEpochQuest and QuestieDB.QueryQuestSingle then
         -- Check if quest is missing critical data using individual queries to avoid compiler error
         local startedBy = QuestieDB.QueryQuestSingle(questId, "startedBy")
         local objectives = QuestieDB.QueryQuestSingle(questId, "objectives")
@@ -1145,6 +1197,17 @@ function QuestieDataCollector:OnCombatLogEvent(...)
 end
 
 function QuestieDataCollector:OnQuestLogUpdate()
+    -- Debug: Check if _activeTracking is populated
+    if Questie.db.profile.debugDataCollector then
+        local count = 0
+        for _ in pairs(_activeTracking) do
+            count = count + 1
+        end
+        if count == 0 then
+            DebugMessage("|cFFFF0000[DEBUG] OnQuestLogUpdate: _activeTracking is EMPTY!|r", 1, 0, 0)
+        end
+    end
+    
     -- Check all tracked quests for objective changes
     for questId, _ in pairs(_activeTracking) do
         if QuestieDataCollection.quests[questId] then
@@ -1274,11 +1337,11 @@ function QuestieDataCollector:OnQuestLogUpdate()
                         if not isDuplicate then
                             table.insert(objData.progressLocations, locData)
                             
-                            -- Objective progress tracked silently
-                            if locData.action then
-                                DebugMessage("|cFF00FF00  Action: " .. locData.action .. "|r", 0, 1, 0)
-                            end
-                            DebugMessage("|cFF00FF00  Location: [" .. locData.coords.x .. ", " .. locData.coords.y .. "] in " .. locData.zone .. "|r", 0, 1, 0)
+                            -- Objective progress tracked silently (debug messages disabled)
+                            -- if locData.action then
+                            --     DebugMessage("|cFF00FF00  Action: " .. locData.action .. "|r", 0, 1, 0)
+                            -- end
+                            -- DebugMessage("|cFF00FF00  Location: [" .. locData.coords.x .. ", " .. locData.coords.y .. "] in " .. locData.zone .. "|r", 0, 1, 0)
                         end
                         end
                     end
@@ -2780,16 +2843,12 @@ autoInitFrame:SetScript("OnEvent", function(self, event, arg1)
             end
         end)
     elseif event == "PLAYER_ENTERING_WORLD" then
-        self:UnregisterEvent("PLAYER_ENTERING_WORLD")
-        -- Fallback initialization if ADDON_LOADED didn't work
+        -- Don't unregister - we need this for every login/reload
+        -- Reinitialize after every login to ensure tracking continues
         C_Timer.After(0.5, function()
             if Questie and Questie.db and Questie.db.profile.enableDataCollection then
-                if not _initialized then
-                    DebugMessage("|cFFFFFF00[DATA COLLECTOR] Auto-initializing after login...|r", 1, 1, 0)
-                    QuestieDataCollector:Initialize()
-                else
-                    DebugMessage("|cFF00FF00[DATA COLLECTOR] Already initialized|r", 0, 1, 0)
-                end
+                -- Always reinitialize after login to restore tracking (silently)
+                QuestieDataCollector:Initialize()
             end
         end)
     end

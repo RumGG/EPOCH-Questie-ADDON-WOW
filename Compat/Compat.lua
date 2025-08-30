@@ -506,10 +506,16 @@ function QuestieCompat.CalculateNextResetTime()
 
     Questie:Debug(Questie.DEBUG_DEVELOP, "[CalculateNextResetTime] GetQuestResetTime: ", timeUntilReset)
     if timeUntilReset <= 0 then
-        Questie:Error("GetQuestResetTime() returns an invalid value: "..timeUntilReset..". Please report on Github!")
-        return
+        -- GetQuestResetTime() returns -1 when no daily quests are available or API is not supported
+        -- On Project Epoch, this may occur if daily quests aren't implemented yet
+        -- Default to 24 hours from now if we don't have a valid reset time
+        if not Questie.db.profile.dailyResetTime or Questie.db.profile.dailyResetTime <= currentTime then
+            Questie.db.profile.dailyResetTime = currentTime + 86400 -- 24 hours in seconds
+        end
+        Questie:Debug(Questie.DEBUG_DEVELOP, "[CalculateNextResetTime] GetQuestResetTime returned ", timeUntilReset, ", using fallback daily reset time")
+    else
+        Questie.db.profile.dailyResetTime = Questie.db.profile.dailyResetTime or (currentTime + timeUntilReset)
     end
-    Questie.db.profile.dailyResetTime = Questie.db.profile.dailyResetTime or (currentTime + timeUntilReset)
     Questie:Debug(Questie.DEBUG_DEVELOP, "[CalculateNextResetTime] Next daily rest time: ", date("%m/%d/%y %H:%M:%S", Questie.db.profile.dailyResetTime))
 
     Questie.db.profile.weeklyResetHour = Questie.db.profile.weeklyResetHour or tonumber(date("%H", Questie.db.profile.dailyResetTime+300))

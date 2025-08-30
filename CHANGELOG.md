@@ -30,6 +30,17 @@
   - "Commission for Protector Gariel" (28495) - level 5
   - Uses existing classic NPCs: Farmer Furlbrow, Farmer Saldean, Protector Gariel
 
+- **Stranglethorn Vale & Barrens Quests** (GitHub #99): Added 15 quests from user data submission
+  - Stranglethorn: Deeg's Lost Pipe (26285), Prismatic Scales (26287), Troll Relic (26290), The Janky Helmet (26904/26905), Commission for Captain Hecklebury Smotts (28073)
+  - Barrens quest chain: Finding the Clues (27168) through Nadia's Task (27176) - 9 linked quests
+  - Added 13 NPCs including Deeg, Venture Co. Tinkerer, Scooty, Captain Hecklebury Smotts, Mankrik, Shin'Zil, Nadia
+  - Quest levels range from 14-43
+
+- **Banana Bonanza Quest Complete Data**: Added full data from collection system
+  - Quest 28757 now has quest giver Daz'tiro (46718) and turn-in NPC Azisary (47100)
+  - Added Sun-Ripened Banana ground object (188800) with 5 spawn locations from data collection
+  - Map pins will now show for quest givers, turn-in NPC, and banana spawn points
+
 ### Fixed
 - **Quest 26723 Compilation Error**: Fixed incorrect table structure in epochQuestDB.lua
 - **Quest 28764 Objectives Error**: Fixed "Second Tablet Read" tooltip error for event/script objectives
@@ -54,6 +65,23 @@
   - Users can now untrack any quest including Epoch quests
   - Fixed UntrackQuestId, manual toggle, and Shift+Click untracking
   - Data collection happens independently of tracker visibility
+- **GetQuestResetTime() Error**: Fixed error spam when API returns -1
+  - Added graceful fallback to 24-hour reset when daily quest API unavailable
+  - Common on Project Epoch where daily quests may not be implemented
+  - No longer shows error message, uses default timing instead
+- **Data Collection Debug Messages**: Removed chat spam during objective tracking
+  - Disabled "Action: Item collection" and location coordinate messages
+  - Progress tracking still works but now operates silently
+- **QuestieDB.QueryQuest Nil Error**: Fixed crash when accepting quests before database initialization
+  - Added safety checks for uninitialized database functions
+  - Gracefully handles early quest acceptance during loading
+- **Data Collection After Logout/Login**: Fixed tracking not resuming after relogging
+  - Epoch quests now stay tracked even if database isn't ready
+  - Events properly re-register after login
+  - Objectives populate correctly for quests in progress
+- **Developer Options Not Saving** (GitHub #102): Fixed developer options turning back on after restart
+  - Tooltip IDs no longer forced on when data collection is disabled
+  - Settings now properly persist between sessions
 
 ## [1.0.61] - 2025-08-30
 

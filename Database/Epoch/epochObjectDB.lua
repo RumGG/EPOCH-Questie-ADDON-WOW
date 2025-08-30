@@ -176,6 +176,9 @@ local epochObjectData = {
 -- Issue #68: Westfall quest objects
 [400001] = {"Sack of Oats",nil,{3575},{[40]={{45.9,38.3},{46.5,37.7},{46,38.1}}},40}, -- For Hand of Azora quest
 [400002] = {"Fishing Bobber",nil,{13926},{[1519]={{54.8,69}}},1519}, -- For Hand of Azora quest in Stormwind
+
+-- Banana Bonanza quest object
+[188800] = {"Sun-Ripened Banana",nil,{28757},{[14]={{70.3,47.1},{70.4,49.5},{70.6,46.6},{71.1,48.1},{70.1,49.7}}},14}, -- Durotar ground spawns
 }
 
 -- Stage the Epoch objectData for later merge during compilation

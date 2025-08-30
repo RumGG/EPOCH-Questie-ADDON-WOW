@@ -102,7 +102,7 @@ epochQuestData[28752] = {"Your Seat Awaits",nil,nil,nil,1,nil,nil,nil,nil,nil,ni
 epochQuestData[28753] = {"Island Troll-kin",nil,nil,nil,2,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[28754] = {"Troll Skull Poker",nil,nil,nil,2,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[28755] = {"Smoked Boar Meat",nil,nil,nil,2,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[28757] = {"Banana Bonanza",nil,nil,nil,3,nil,nil,{"Collect 10 Sun-Ripened Bananas."},nil,{nil,nil,{{110002,10}}},nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[28757] = {"Banana Bonanza",{{46718}},{{47100}},nil,3,nil,nil,{"Collect 10 Sun-Ripened Bananas."},nil,{nil,{{188800,10,"Sun-Ripened Banana"}},{{110002,10}}},nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[28758] = {"Shell Collection",nil,nil,nil,3,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[28759] = {"Claws of the Cat",nil,nil,nil,3,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[28760] = {"Jinxed Trolls",nil,nil,nil,3,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
@@ -122,7 +122,7 @@ epochQuestData[26126] = {"Springsocket Eels",{{45549}},{{45549}},nil,36,nil,nil,
 epochQuestData[26282] = {"An Old Debt",nil,nil,nil,42,nil,nil,{"Find Joakim Sparkroot in Westfall."},nil,nil,nil,nil,nil,nil,nil,nil,40,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26283] = {"Azothan Relic",nil,nil,nil,43,nil,nil,{"Locate a historian in Ironforge."},nil,nil,nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26284] = {"Azothan Relics",{{2916}},{{2916}},nil,43,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,1537,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26285] = {"Deeg's Lost Pipe",{{2488}},{{2488}},nil,40,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26285] = {"Deeg's Lost Pipe",{{2488}},{{2488}},nil,40,nil,nil,{"Retrieve Deeg's Lost Pipe from the water near the Grom'gol Base Camp dock."},nil,{nil,{{188470,"Deeg's Lost Pipe"}}},nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26286] = {"Kill the Foreman",{{2498}},{{2498}},nil,43,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26377] = {"Call to Skirmish: Badlands",nil,nil,nil,43,nil,nil,{"Kill 5 Horde."},nil,nil,nil,nil,nil,nil,nil,nil,3,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26381] = {"Call to Skirmish: Stranglethorn Vale",nil,nil,nil,43,nil,nil,{"Kill 5 Horde."},nil,nil,nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
@@ -251,3 +251,22 @@ DATA COLLECTION STATUS:
 NOTE: Runtime stub system creates "[Epoch]" prefixed entries for missing quests.
 Once proper data is added to this database, the runtime stubs are replaced.
 --]]
+
+-- Issue #99: Additional quest data from various zones
+-- Stranglethorn Vale quests
+epochQuestData[26287] = {"Prismatic Scales",{{2488}},{{2488}},nil,40,nil,nil,{"Fish for Prismatic Scales in the waters around Grom'gol Base Camp."},nil,{nil,nil,{{62115,"Prismatic Scales"}}},nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26290] = {"Troll Relic",{{2488}},nil,nil,43,nil,nil,{"Locate a knowledgeable Lorespeaker within Orgrimmar."},nil,nil,nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26904] = {"The Janky Helmet",{{48086}},{{9317}},nil,42,nil,nil,{"Experiment on 10 Elder Mistvale Gorillas and bring the Janky Helmet to Scooty in Booty Bay."},nil,{{{1557,10,"Elder Mistvale Gorilla experimented on"}},nil,{{63212,"The Janky Helmet"}}},nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26905] = {"The Janky Helmet",{{9317}},{{48086}},nil,42,nil,nil,{"Bring the Janky Helmet to the Venture Co. Tinkerer."},nil,{nil,nil,{{63212,"The Janky Helmet"}}},nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[28073] = {"Commission for Captain Hecklebury Smotts",{{48167}},{{48167}},nil,30,nil,nil,{"Complete Captain Hecklebury Smotts' commission."},nil,nil,nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,3,0,nil,nil,nil,nil,nil,nil}
+
+-- The Barrens quest chain
+epochQuestData[27168] = {"Finding the Clues",{{3432}},{{3432}},nil,14,nil,nil,{"Search for clues about Mankrik's wife in the Barrens."},nil,{nil,{{188623,"First Clue"},{188624,"Second Clue"},{188625,"Third Clue"}}},nil,nil,nil,{27169},nil,nil,17,nil,nil,nil,nil,27169,1,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27169] = {"[Epoch] Quest 27169",{{3432}},{{48110}},nil,15,nil,nil,{"Speak with Shin'Zil at the entrance to the Stagnant Oasis."},nil,nil,nil,nil,{27168},{27170},nil,nil,17,nil,nil,nil,nil,27170,1,0,27168,nil,nil,nil,nil,nil}
+epochQuestData[27170] = {"The Demon's Task",{{48110}},{{48110}},nil,15,nil,nil,{"Collect 10 Zhevra Hooves and 5 Plainstrider Beaks for Shin'Zil."},nil,{{{3240,nil},{3244,nil}},nil,{{63291,10,"Zhevra Hoof"},{63292,5,"Plainstrider Beak"}}},nil,nil,{27169},{27171},nil,nil,17,nil,nil,nil,nil,27171,1,0,27169,nil,nil,nil,nil,nil}
+epochQuestData[27171] = {"Dark Reagents",{{48110}},{{48110}},nil,16,nil,nil,{"Collect 8 Corrupted Essences from Corrupted Scorpids and 4 Shadowy Gems from Shadowy Assassins."},nil,{{{48112,nil},{48113,nil}},nil,{{63293,8,"Corrupted Essence"},{63294,4,"Shadowy Gem"}}},nil,nil,{27170},{27172},nil,nil,17,nil,nil,nil,nil,27172,1,0,27170,nil,nil,nil,nil,nil}
+epochQuestData[27172] = {"Preparation of the Ritual",{{48110}},{{48110}},nil,17,nil,nil,{"Obtain a Vial of Elemental Water from Baron Geddon's essence and Fel Iron from a Felguard Commander."},nil,{{{48114,nil},{48115,nil}},nil,{{63295,"Vial of Elemental Water"},{63296,"Fel Iron"}}},nil,nil,{27171},{27173},nil,nil,17,nil,nil,nil,nil,27173,1,0,27171,nil,nil,nil,nil,nil}
+epochQuestData[27173] = {"The Summoning",{{48110}},{{48110}},nil,18,nil,nil,{"Complete the ritual and defeat the summoned demon."},nil,{{{48116,"Summoned demon defeated"}}},nil,nil,{27172},{27174},nil,nil,17,nil,nil,nil,nil,27174,1,0,27172,nil,nil,nil,nil,nil}
+epochQuestData[27174] = {"Return to Mankrik",{{48110}},{{3432}},nil,19,nil,nil,{"Return to Mankrik with the Demon's Heart."},nil,{nil,nil,{{63297,"Demon's Heart"}}},nil,nil,{27173},{27175},nil,nil,17,nil,nil,nil,nil,27175,1,0,27173,nil,nil,nil,nil,nil}
+epochQuestData[27175] = {"Mankrik's Gratitude",{{3432}},{{48111}},nil,20,nil,nil,{"Take Mankrik's Letter to Nadia in the Barrens."},nil,{nil,nil,{{63298,"Mankrik's Letter"}}},nil,nil,{27174},{27176},nil,nil,17,nil,nil,nil,nil,27176,1,0,27174,nil,nil,nil,nil,nil}
+epochQuestData[27176] = {"Nadia's Task",{{48111}},{{48111}},nil,21,nil,nil,{"Complete Nadia's task in the Barrens."},nil,nil,nil,nil,{27175},nil,nil,nil,17,nil,nil,nil,nil,nil,1,0,27175,nil,nil,nil,nil,nil}

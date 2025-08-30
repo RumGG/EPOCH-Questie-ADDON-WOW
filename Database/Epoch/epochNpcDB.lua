@@ -891,7 +891,8 @@ epochNpcData[45943] = {"Scout Barleybrew",nil,nil,30,30,0,{[11]={{39.1,55.4}}},n
 epochNpcData[45953] = {"Corporal Mountainview",nil,nil,30,30,0,{[11]={{26.6,59.6}}},nil,11,nil,nil,0,"A","Quest Giver",0} -- Wetlands
 
 -- Issue #96: Troll starting zone NPCs (Durotar)
-epochNpcData[46718] = {"Daz'tiro",nil,nil,5,5,0,{[14]={{70.9,45.9}}},nil,14,nil,nil,0,"H","Quest Giver",0} -- Durotar, turn-in NPC for Thievin' Crabs
+epochNpcData[46718] = {"Daz'tiro",nil,nil,5,5,0,{[14]={{70.8,45.9}}},nil,14,{28757},nil,0,"H","Quest Giver",0} -- Durotar, quest giver for Banana Bonanza
+epochNpcData[47100] = {"Azisary",nil,nil,5,5,0,{[14]={{72.92,49.14}}},nil,14,nil,{28757},0,"H","Quest Turn-in",0} -- Durotar, turn-in NPC for Banana Bonanza
 epochNpcData[46834] = {"Joz'jarz",nil,nil,5,5,0,{[14]={{70.1,42}}},nil,14,nil,nil,0,"H","Quest Giver",0} -- Durotar, quest giver for Thievin' Crabs
 epochNpcData[46835] = {"Amethyst Crab",nil,nil,2,2,0,{[14]={{70.2,42},{69.6,42.6},{69.5,42.2}}},nil,14,nil,nil,0,nil,nil,0} -- Durotar, spawn locations from data collection
 epochNpcData[46934] = {"Uwa",nil,nil,5,5,0,nil,nil,14,nil,nil,0,"H","Quest Giver",0} -- Durotar, needs coordinates
@@ -902,6 +903,23 @@ epochNpcData[5393] = {"Quartermaster Lungertz",nil,nil,50,50,0,{[19]={{66.4,21.3
 epochNpcData[5385] = {"Watcher Mahar Ba",nil,nil,51,51,0,{[19]={{67.5,19.1}}},nil,19,{26614,26615,26616},{27659},nil,"A",nil,0} -- Blasted Lands, also turn-in for 27659
 epochNpcData[45613] = {"Eunna",nil,nil,52,52,0,{[19]={{63.4,20.2}}},nil,19,{26618},nil,nil,"A",nil,0} -- Blasted Lands (Hildar in submission but Eunna in quest text)
 epochNpcData[8022] = {"Spirit of the Exorcist",nil,nil,50,50,0,{[19]={{66.9,19.4}}},nil,19,{26626},nil,nil,"A",nil,0} -- Blasted Lands
+
+-- Issue #99: Additional NPCs
+-- Stranglethorn Vale NPCs
+epochNpcData[2488] = {"Deeg",nil,nil,40,40,0,{[33]={{26.7,73.7}}},nil,33,{26285,26287,26290},nil,1,"H",nil,0} -- Grom'gol Base Camp
+epochNpcData[48086] = {"Venture Co. Tinkerer",nil,nil,42,42,0,{[33]={{43.5,71.1}}},nil,33,{26904},{26905},1,"H",nil,0} -- Gurubashi Arena
+epochNpcData[9317] = {"Scooty",nil,nil,45,45,0,{[33]={{27.6,77.5}}},nil,33,{26905},{26904},3,"H",nil,0} -- Booty Bay Engineering
+epochNpcData[48167] = {"Captain Hecklebury Smotts",nil,nil,30,30,0,{[33]={{26.9,77.1}}},nil,33,{28073},nil,3,nil,nil,0} -- Booty Bay
+
+-- The Barrens NPCs
+epochNpcData[3432] = {"Mankrik",nil,nil,15,15,0,{[17]={{52.0,31.6}}},nil,17,{27168,27174},nil,1,"H",nil,0} -- Crossroads
+epochNpcData[48110] = {"Shin'Zil",nil,nil,17,17,0,{[17]={{55.2,31.4}}},nil,17,{27170,27171,27172,27173},{27169},1,"H",nil,0} -- Stagnant Oasis entrance
+epochNpcData[48111] = {"Nadia",nil,nil,20,20,0,{[17]={{51.9,29.8}}},nil,17,{27176},{27175},1,"H",nil,0} -- Crossroads
+epochNpcData[48112] = {"Corrupted Scorpid",nil,nil,16,16,0,{[17]={{55.0,32.0},{54.8,31.6},{55.3,31.2}}},nil,17,nil,nil,1,nil,nil,0} -- Stagnant Oasis
+epochNpcData[48113] = {"Shadowy Assassin",nil,nil,16,16,0,{[17]={{55.1,31.8},{55.4,31.5}}},nil,17,nil,nil,1,nil,nil,0} -- Stagnant Oasis
+epochNpcData[48114] = {"Baron Geddon's Essence",nil,nil,17,17,0,{[17]={{55.5,31.0}}},nil,17,nil,nil,1,nil,nil,0} -- Stagnant Oasis depths
+epochNpcData[48115] = {"Felguard Commander",nil,nil,17,17,0,{[17]={{55.2,30.8}}},nil,17,nil,nil,1,nil,nil,0} -- Stagnant Oasis depths
+epochNpcData[48116] = {"Summoned Demon",nil,nil,18,18,0,{[17]={{55.0,31.0}}},nil,17,nil,nil,1,nil,nil,0} -- Ritual site
 
 -- Stage the Epoch npcData for later merge during compilation
 QuestieDB._epochNpcData = epochNpcData
