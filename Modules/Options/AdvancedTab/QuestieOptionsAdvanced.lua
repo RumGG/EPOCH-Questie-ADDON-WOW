@@ -277,7 +277,7 @@ function QuestieOptions.tabs.advanced:Initialize()
             github_text = {
                 type = "description",
                 order = 4.8,
-                name = function() return Questie:Colorize(l10n('Questie is under active development for Project Epoch! Please check Discord or Github for latest info! (https://github.com/esurm/Questie)'), 'purple'); end,
+                name = function() return Questie:Colorize(l10n('Questie is under active development for Project Epoch! Please check Discord or Github for latest info! (https://github.com/trav346/Questie)'), 'purple'); end,
                 fontSize = "medium",
             },
             HeaderDev = {

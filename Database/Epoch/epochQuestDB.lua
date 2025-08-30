@@ -12,8 +12,7 @@ epochQuestData[26770] = {"[Epoch] Quest 26770",nil,nil,nil,nil,nil,nil,nil,nil,n
 epochQuestData[26771] = {"The High Isle of Fel High Elves",{{46293}},{{46293}},nil,60,nil,nil,{"Kill 15 Fel High Elves and collect 5 books: Book of Lost Souls, Book of Dark Magic, Book of Forbidden Knowledge, Book of Elven Torture, and Book of Deadly Poisons."},nil,{{{46381,nil},{46382,nil},{46383,nil},{46384,nil},{46385,nil},{46386,nil}},nil,{{62836,nil},{62837,nil},{62838,nil},{62839,nil},{62840,nil}}},nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26772] = {"Necromancy and You",{{46294}},{{46294}},nil,60,nil,nil,{"Kill 15 Undead and the Necromancer Overlord in the cave on High Isle."},nil,{{{46387,nil},{46388,nil},{46389,nil},{46390,nil}}},nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26773] = {"[Epoch] Quest 26773",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26774] = {"[Epoch] Quest 26774",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26775] = {"[Epoch] Quest 26775",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+-- Removed placeholders for 26774 and 26775 (defined later with correct data)
 -- Restored original Elwynn Forest starter quests (were overwritten by Fel Elf quest which is now at 28768)
 epochQuestData[26776] = {"Swiftpaw",{{11940}},{{11940}},4,6,77,nil,{"Bring Swiftpaw's Snout to Merissa Stilwell outside Northshire Abbey."},nil,{nil,nil,{{60388,nil}}},nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26777] = {"The Soaked Barrel",{nil,{4000007}},nil,1,1,77,nil,{"Find someone in Northshire Abbey who may know the owner of the barrel."},nil,nil,nil,nil,nil,nil,nil,nil,12,nil,nil,nil,{60021},26778,nil,1,nil,nil,nil,nil,nil,nil}
@@ -333,11 +332,7 @@ epochQuestData[26540] = {"Threats from Abroad",{{45546}},nil,nil,32,nil,nil,{"Sl
 epochQuestData[26541] = {"Threats from Abroad",{{45546}},nil,nil,32,nil,nil,{"Slay 10 Yetis."},nil,{{{60542,10,"Yetis slain"}}},nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 
 -- Issue #147: Elwynn Forest quests
-epochQuestData[26768] = {"Just Desserts",{{45773}},{{45775}},nil,8,nil,nil,{"Complete Just Desserts quest."},nil,nil,nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26771] = {"Lost Equipment",nil,{{45774}},nil,9,nil,nil,{"Find the lost equipment."},nil,nil,nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26774] = {"Spider Elixir",nil,{{45775}},nil,9,nil,nil,{"Deliver the Spider Elixir."},nil,nil,nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26775] = {"Tend to the Wounded",{{45775}},nil,nil,10,nil,nil,{"Tend to the wounded soldiers."},nil,nil,nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26794] = {"Wanted: Big Blue",nil,{{45797}},nil,8,nil,nil,{"Slay Big Blue and collect the bounty."},nil,nil,nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+-- Removed duplicate entries for quests 26768, 26771, 26774, 26775, 26794 (defined with correct data in Issue #104 section)
 
 -- Issue #146: Commission for Verner Osgood
 epochQuestData[28573] = {"Commission for Verner Osgood",{{2697}},{{2697}},nil,30,nil,nil,{"Complete Verner Osgood's commission."},nil,nil,nil,nil,nil,nil,nil,nil,36,nil,nil,nil,nil,nil,3,0,nil,nil,nil,nil,nil,nil}
@@ -409,19 +404,19 @@ epochQuestData[26570] = {"Waterlogged Journal",nil,{{4453}},nil,37,nil,nil,{"Ret
 
 -- Issues #104-116, #119, #132, #153, #155-156: Additional Epoch quest data
 -- Issue #104: Elwynn Forest quests
-epochQuestData[26774] = {"Spider Elixir",{{45775}},{{45775}},nil,9,nil,nil,{"Free 4 Webbed Miners and collect 4 Mine Spider Mandibles."},nil,{nil,nil,{{1434,"Mine Spider Mandible"}}},nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26774] = {"Spider Elixir",{{45775}},{{45775}},nil,9,nil,nil,{"Free 4 Webbed Miners and collect 4 Mine Spider Mandibles."},nil,{{{60801,4,"Webbed Miners freed"}},nil,{{62825,"Mine Spider Mandible",4}}},nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26777] = {"The Soaked Barrel",nil,{{9296}},1,1,77,nil,{"Find the source of the barrel via 12 Red Burlap Bandana discoveries."},nil,nil,nil,nil,nil,{26778},nil,nil,12,nil,nil,nil,nil,26778,8,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26778] = {"Find the Brother",{{9296}},{{952}},1,1,77,nil,{"Bring the soaked barrel to Brother Neals."},nil,nil,nil,nil,{26777},nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,26777,nil,nil,nil,nil,nil}
 epochQuestData[26781] = {"Linus Stone Tips",{{328}},{{328}},nil,5,nil,nil,{"Collect 1 item at coordinates 42.4, 58.6."},nil,nil,nil,nil,{26780},nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,26780,nil,nil,nil,nil,nil}
 
 -- Issue #104: Elwynn Forest (continued)
 epochQuestData[26689] = {"Barroom Blitz",{{240}},{{240}},nil,12,nil,nil,{"Deal with the barroom troublemakers."},nil,nil,nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26768] = {"Just Desserts",{{45773}},{{45773}},nil,8,nil,nil,{"Collect 5 Mild Spices, 5 Simple Flour, 1 Salt, and 20 Mana Berries."},nil,nil,nil,nil,nil,{26769},nil,nil,12,nil,nil,nil,nil,26769,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26768] = {"Just Desserts",{{45773}},{{45773}},nil,8,nil,nil,{"Collect 5 Mild Spices, 5 Simple Flour, 1 Salt, and 20 Mana Berries."},nil,{nil,nil,{{2678,"Mild Spices",5},{30817,"Simple Flour",5},{2901,"Salt",1},{62823,"Mana Berry",20}}},nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26769] = {"Just Desserts",{{45773}},{{45773}},nil,8,nil,nil,{"Collect Mana Tainted Sludge."},nil,nil,nil,nil,{26768},{26770},nil,nil,12,nil,nil,nil,nil,26770,8,0,26768,nil,nil,nil,nil,nil}
 epochQuestData[26770] = {"Just Desserts",{{45773}},{{313}},nil,8,nil,nil,{"Present Sarah's cake to Theocritus."},nil,nil,nil,nil,{26769},nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,26769,nil,nil,nil,nil,nil}
-epochQuestData[26771] = {"Lost Equipment",{{45774}},{{45774}},nil,9,nil,nil,{"Collect 8 Mining Equipment."},nil,nil,nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26775] = {"Tend to the Wounded",{{45775}},{{45775}},nil,10,nil,nil,{"Cure 5 Poisoned Miners."},nil,nil,nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26794] = {"Wanted: Big Blue",{{45798}},{{45798}},nil,8,nil,nil,{"Slay Big Blue and collect the bounty."},nil,nil,nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26771] = {"Lost Equipment",{{45777}},{{45774}},nil,9,nil,nil,{"Collect 8 Mining Equipment."},nil,{nil,nil,{{62824,"Mining Equipment",8}}},nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26775] = {"Tend to the Wounded",{{45775}},{{45775}},nil,10,nil,nil,{"Cure 5 Poisoned Miners."},nil,{{{60800,5,"Poisoned Miners cured"}}},nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26794] = {"Wanted: Big Blue",{nil,{45797}},{{45798}},nil,8,nil,nil,{"Slay Big Blue and collect the bounty."},nil,{{{60799,"Big Blue"}}},nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 
 -- Issue #105: Feralas quests
 epochQuestData[27488] = {"Bad News Has Horns",{{4048}},{{4048}},nil,28,nil,nil,{"Collect 3 Secret Notes from Thousand Needles."},nil,{nil,nil,{{12765,"Secret Note #1"},{12766,"Secret Note #2"},{12768,"Secret Note #3"}}},nil,nil,nil,nil,nil,nil,405,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
@@ -483,3 +478,9 @@ epochQuestData[27201] = {"The Triad Scrolls",nil,nil,nil,30,nil,nil,{"Collect Th
 epochQuestData[27397] = {"A Trip to the Vale",nil,{{12043}},nil,27,nil,nil,{"Collect Charred Wood and Basilisk Tail."},nil,nil,nil,nil,nil,nil,nil,nil,406,nil,nil,nil,nil,nil,85,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[27489] = {"Canyon Patrol",{{10428}},{{10428}},nil,27,nil,nil,{"Kill 8 Pesterhide Hyenas."},nil,nil,nil,nil,nil,nil,nil,nil,400,nil,nil,nil,nil,nil,85,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[27490] = {"Crag Stalking",nil,nil,nil,27,nil,nil,{"Complete crag stalking objectives."},nil,nil,nil,nil,nil,nil,nil,nil,400,nil,nil,nil,nil,nil,85,0,nil,nil,nil,nil,nil,nil}
+
+-- Issue #160: Duskwood quest
+epochQuestData[26712] = {"Life In Death",{{45731}},{{265}},nil,25,nil,nil,{"Collect 5 Fresh Bone Powder and Grave Moss."},nil,{nil,{{187564,"Grave Moss"}},{{62531,"Fresh Bone Powder",5}}},nil,nil,nil,nil,nil,nil,10,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+
+-- Issue #162: The Hinterlands quest
+epochQuestData[26186] = {"Parts From Afar",{{45030}},{{4782}},nil,46,nil,nil,{"Bring the Basket of Treats to Myolor Sunderfury in Ironforge to exchange for Siege Engine Parts."},nil,nil,nil,nil,nil,nil,nil,nil,47,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}

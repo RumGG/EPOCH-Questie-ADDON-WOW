@@ -9,6 +9,9 @@
   - Critical for debugging data collection issues
   - Removed emojis from export text as they don't work in plain text submissions
 - **Massive Quest Data Import** - Added 100+ quests from user data submissions
+  - Issue #162: "Parts From Afar" (26186) - The Hinterlands (final quest data submission!)
+  - Issue #160: "Life In Death" (26712) - Duskwood
+  - Issue #159: Updated Elwynn Forest quests with complete data (26768, 26771, 26774, 26775, 26794)
   - Issue #151: "Solarsal Report" (27053) - Wetlands
   - Issue #150/149: "Azshara's Legacy" (27091) - Azshara
   - Issue #148: Hillsbrad/Alterac quests (26499, 26540, 26541)
@@ -60,6 +63,9 @@
   - Added 40+ NPCs with coordinates for quest givers and turn-ins
 
 ### Changed
+- **Fixed GitHub repository link** (GitHub #161)
+  - Updated link from esurm/Questie to trav346/Questie in Advanced settings
+  - Fixed all localization strings to use correct repository
 - **Disabled Wrath quest database loading** (GitHub #125)
   - Wrath quests don't exist on Project Epoch server
   - Saves ~2.3MB of memory by not loading 9086 non-existent quests

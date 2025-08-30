@@ -182,6 +182,9 @@ local epochObjectData = {
 
 -- Issue #119: Corrected coordinates for quest 717 "Tremors of the Earth"
 [2842] = {"Pillar of Diamond",nil,nil,{[3]={{83.9,39.4}}},3}, -- Corrected from 83.7,32.9 to 83.9,39.4
+
+-- Issue #160: Duskwood quest object
+[187564] = {"Grave Moss",nil,nil,{[10]={{22.5,40.7}}},10}, -- Life In Death quest
 }
 
 -- Stage the Epoch objectData for later merge during compilation
