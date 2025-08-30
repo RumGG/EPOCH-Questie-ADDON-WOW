@@ -174,8 +174,7 @@ function QuestieDataCollector:CheckExistingQuests()
                     if not success then
                         -- GetQuest failed - but for Epoch quests, we should still track them!
                         if questID >= 26000 then
-                            -- This is an Epoch quest, track it anyway
-                            DebugMessage(string.format("|cFFFFFF00[Warning] GetQuest failed for Epoch quest %d but tracking anyway|r", questID), 1, 1, 0)
+                            -- This is an Epoch quest, track it anyway (silently)
                             if not _activeTracking[questID] then
                                 _activeTracking[questID] = true
                                 trackedCount = trackedCount + 1
@@ -239,9 +238,7 @@ function QuestieDataCollector:CheckExistingQuests()
                                 _activeTracking[questID] = true
                                 trackedCount = trackedCount + 1
                                 
-                                -- Always show when re-adding quests after login for debugging
-                                DebugMessage(string.format("|cFF00FF00[Tracking Restored] Quest %d: %s|r", 
-                                    questID, title or "Unknown"), 0, 1, 0)
+                                -- Silently track without spam messages
                                 
                                 -- Initialize quest data if not exists
                                 if not QuestieDataCollection.quests[questID] then
