@@ -81,9 +81,6 @@ epochQuestData[27244] = {"Drysnap Delicacy",nil,nil,nil,35,nil,nil,nil,nil,nil,n
 epochQuestData[27273] = {"[Epoch] Quest 27273",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[28501] = {"[Epoch] Quest 28501",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 
--- Stage the Epoch questData for later merge during compilation
-QuestieDB._epochQuestData = epochQuestData
-
 -- Issue #75: Springsocket commission quests - Barrens
 epochQuestData[28077] = {"Commission for Dirk Windrattle",{{45604}},{{45604}},nil,40,nil,nil,{"Bring 10 Dragonbreath Chili to Dirk Windrattle at Springsocket."},nil,{nil,nil,{{12217,10}}},nil,nil,nil,nil,nil,nil,3,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[28535] = {"Commission for Joakim Sparkroot",{{45575}},{{45575}},nil,50,nil,nil,{"Bring 20 Purple Lotus to Joakim Sparkroot."},nil,{nil,nil,{{8831,20}}},nil,nil,nil,nil,nil,nil,3,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
@@ -484,3 +481,6 @@ epochQuestData[26712] = {"Life In Death",{{45731}},{{265}},nil,25,nil,nil,{"Coll
 
 -- Issue #162: The Hinterlands quest
 epochQuestData[26186] = {"Parts From Afar",{{45030}},{{4782}},nil,46,nil,nil,{"Bring the Basket of Treats to Myolor Sunderfury in Ironforge to exchange for Siege Engine Parts."},nil,nil,nil,nil,nil,nil,nil,nil,47,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+
+-- Stage the Epoch questData for later merge during compilation
+QuestieDB._epochQuestData = epochQuestData

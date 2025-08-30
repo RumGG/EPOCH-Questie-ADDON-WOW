@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+### Fixed
+- **Map pins not displaying** - Fixed critical coordinate conversion issue in HereBeDragons
+  - Added missing classic zone ID mappings for major cities (Stormwind, Ironforge, Orgrimmar, Thunder Bluff, Darnassus, Undercity)
+  - NPCs using classic zone IDs (1519, 1537, 1637, 1638, 1657, 1497) now properly show on maps
+  - Fixes issue where innkeepers and other NPCs in major cities weren't showing map pins
+
 ### Added
 - **Data Collection Enhancement** - Export now includes addon version and timestamp
   - Helps identify if data was collected with buggy or fixed version

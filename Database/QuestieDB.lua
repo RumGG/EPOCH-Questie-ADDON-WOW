@@ -357,6 +357,15 @@ function QuestieDB:Initialize()
     QuestieDB.QuestPointers = QuestieDB.QueryQuest.pointers
     QuestieDB.ObjectPointers = QuestieDB.QueryObject.pointers
     QuestieDB.ItemPointers = QuestieDB.QueryItem.pointers
+    
+    -- Debug: Check if pointers were loaded
+    local questPtrCount = 0
+    if QuestieDB.QuestPointers then
+        for _ in pairs(QuestieDB.QuestPointers) do
+            questPtrCount = questPtrCount + 1
+        end
+    end
+    Questie:Print("|cFF00FF00[QuestieDB] Initialized with " .. questPtrCount .. " quest pointers|r")
 
     QuestieDB._QueryNPC = QuestieDB.QueryNPC.Query
     QuestieDB._QueryQuest = QuestieDB.QueryQuest.Query

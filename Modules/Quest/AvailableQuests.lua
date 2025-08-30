@@ -55,6 +55,7 @@ end
 ---@param quest Quest
 function AvailableQuests.DrawAvailableQuest(quest) -- prevent recursion
     --? Some quests can be started by both an NPC and a GameObject
+    Questie:Debug(Questie.DEBUG_INFO, "[DrawAvailableQuest] Drawing quest " .. quest.Id)
 
     if quest.Starts["GameObject"] then
         local gameObjects = quest.Starts["GameObject"]
@@ -99,6 +100,19 @@ _CalculateAvailableQuests = function()
     local debugEnabled = Questie.db.profile.debugEnabled
 
     local questData = QuestieDB.QuestPointers or QuestieDB.questData
+    
+    -- Debug: Check if we have quest data
+    if not questData then
+        Questie:Print("|cFFFF0000[ERROR] No quest data available! QuestPointers and questData are both nil!|r")
+        return
+    end
+    
+    -- Debug: Count available quests
+    local questCount = 0
+    for _ in pairs(questData) do
+        questCount = questCount + 1
+    end
+    Questie:Debug(Questie.DEBUG_INFO, "[AvailableQuests] Found " .. questCount .. " quests in database")
 
     local playerLevel = QuestiePlayer.GetPlayerLevel()
     local minLevel = playerLevel - GetQuestGreenRange("player")
@@ -147,12 +161,13 @@ _CalculateAvailableQuests = function()
             return
         end
         
-        -- Don't show placeholder Epoch quests with "[Epoch] Quest XXXXX" names on the map
-        -- Also hide Epoch quests with missing or incorrect level data
-        local questName = QuestieDB.QueryQuestSingle(questId, "name")
-        if questName and string.find(questName, "^%[Epoch%] Quest %d+$") then
-            return
-        end
+        -- DISABLED: This was preventing ALL quests from showing after finding one placeholder
+        -- -- Don't show placeholder Epoch quests with "[Epoch] Quest XXXXX" names on the map
+        -- -- Also hide Epoch quests with missing or incorrect level data
+        -- local questName = QuestieDB.QueryQuestSingle(questId, "name")
+        -- if questName and string.find(questName, "^%[Epoch%] Quest %d+$") then
+        --     return
+        -- end
         
         -- TEMPORARILY DISABLED: Special Epoch quest filtering was preventing ALL quests from showing
         -- This needs to be reworked to not interfere with normal quest display
@@ -238,8 +253,13 @@ _CalculateAvailableQuests = function()
     end
 
     local questCount = 0
+    local drawnCount = 0
     for questId in pairs(questData) do
+        local wasDrawn = availableQuests[questId] or false
         _DrawQuestIfAvailable(questId)
+        if not wasDrawn and availableQuests[questId] then
+            drawnCount = drawnCount + 1
+        end
 
         -- Reset the questCount
         questCount = questCount + 1
@@ -311,8 +331,9 @@ _GetQuestIcon = function(quest)
         -- Extra validation for Epoch quests (GitHub #90)
         -- Only show repeatable icon if we're certain it's actually repeatable
         if quest.Id >= 26000 and quest.specialFlags and bitband(quest.specialFlags, 1) == 0 then
-            -- Epoch quest incorrectly marked as repeatable, use normal icon instead
+            -- Epoch quest incorrectly marked as repeatable, skip the repeatable icon
             Questie:Debug(Questie.DEBUG_INFO, "[REPEATABLE FIX] Available quest " .. quest.Id .. " was marked repeatable but specialFlags=" .. (quest.specialFlags or "nil"))
+            -- Don't return repeatable icon, let it fall through to check trivial/normal
         else
             return Questie.ICON_TYPE_REPEATABLE
         end

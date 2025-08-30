@@ -840,6 +840,15 @@ function QuestieDBCompiler:CompileObjects()
 end
 
 function QuestieDBCompiler:CompileQuests()
+    -- Debug: Check quest data before compilation
+    local questCount = 0
+    if QuestieDB.questData then
+        for _ in pairs(QuestieDB.questData) do
+            questCount = questCount + 1
+        end
+    end
+    Questie:Print("|cFF00FFFF[CompileQuests] Compiling " .. questCount .. " quests|r")
+    
     QuestieDBCompiler:CompileTableCoroutine(QuestieDB.questData, QuestieDB.questCompilerTypes, QuestieDB.questCompilerOrder, QuestieDB.questKeys, "quest", "Quest", 28)
 end
 

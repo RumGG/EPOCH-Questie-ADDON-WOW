@@ -428,6 +428,17 @@ function QuestieInit:LoadBaseDB()
         end
     end
     
+    -- Debug: Check the state of quest data before merge
+    Questie:Print("|cFFFFFF00[LoadBaseDB] questData type: " .. type(QuestieDB.questData) .. "|r")
+    Questie:Print("|cFFFFFF00[LoadBaseDB] _epochQuestData exists: " .. tostring(QuestieDB._epochQuestData ~= nil) .. "|r")
+    if QuestieDB._epochQuestData then
+        local epochCount = 0
+        for _ in pairs(QuestieDB._epochQuestData) do
+            epochCount = epochCount + 1
+        end
+        Questie:Print("|cFFFFFF00[LoadBaseDB] _epochQuestData has " .. epochCount .. " entries|r")
+    end
+    
     -- After base DB tables are loaded (converted from strings), merge Epoch supplemental data if present
     if QuestieDB._epochQuestData and type(QuestieDB.questData) == "table" then
         local added, overwritten = 0, 0
