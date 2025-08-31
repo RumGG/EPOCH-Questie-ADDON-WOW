@@ -271,11 +271,17 @@ function QuestieTracker.Initialize()
                 local tempQuestIDs = {}
                 for i = 1, currentQuestsWatched do
                     local questIndex = GetQuestIndexForWatch(i)
+                    Questie:Print("[DEBUG] Watch", i, "questIndex:", questIndex)
                     if questIndex then
                         local questId = select(8, GetQuestLogTitle(questIndex))
-                        if questId then
+                        Questie:Print("[DEBUG] Watch", i, "questId:", questId)
+                        if questId and questId > 0 then
                             tempQuestIDs[i] = questId
+                        else
+                            Questie:Print("[DEBUG] Watch", i, "has invalid questId:", questId)
                         end
+                    else
+                        Questie:Print("[DEBUG] Watch", i, "has no questIndex")
                     end
                 end
 
@@ -302,9 +308,34 @@ function QuestieTracker.Initialize()
             if QuestiePlayer and QuestiePlayer.currentQuestlog then
                 for _ in pairs(QuestiePlayer.currentQuestlog) do
                     questLogCount = questLogCount + 1
-                    break -- Just need to know if it has any entries
                 end
             end
+            Questie:Print("[DEBUG] QuestiePlayer.currentQuestlog has", questLogCount, "quests")
+            
+            -- If AutoUntrackedQuests is empty but we have quests in the log, we need to populate it
+            -- based on what was actually watched in Blizzard UI
+            if Questie.db.profile.autoTrackQuests and questLogCount > 0 then
+                if not Questie.db.char.AutoUntrackedQuests then
+                    Questie.db.char.AutoUntrackedQuests = {}
+                end
+                
+                -- If AutoUntrackedQuests is empty on login, populate it
+                -- All quests NOT in tempQuestIDs should be untracked
+                if not next(Questie.db.char.AutoUntrackedQuests) and questLogCount > 0 then
+                    Questie:Print("[DEBUG] AutoUntrackedQuests is empty, populating from quest log")
+                    local watchedQuests = {}
+                    for _, qid in pairs(tempQuestIDs) do
+                        watchedQuests[qid] = true
+                    end
+                    
+                    -- Mark all quests NOT watched as untracked
+                    for questId in pairs(QuestiePlayer.currentQuestlog) do
+                        if not watchedQuests[questId] then
+                            Questie.db.char.AutoUntrackedQuests[questId] = true
+                            Questie:Print("[DEBUG] Marking quest", questId, "as untracked (not in Blizzard watch)")
+                        end
+                    end
+                end
             
             if Questie.db.profile.autoTrackQuests and Questie.db.char.AutoUntrackedQuests and questLogCount > 0 then
                 Questie:Print("[DEBUG] Cleaning up AutoUntrackedQuests, questLogCount:", questLogCount)
@@ -2535,7 +2566,18 @@ function QuestieTracker:AQW_Insert(index, expire)
             end
             
             -- Determine if quest is currently tracked
-            local isCurrentlyTracked = not Questie.db.char.AutoUntrackedQuests[questId]
+            -- IMPORTANT: If AutoUntrackedQuests is empty or nil, we should check the actual tracker state
+            local isCurrentlyTracked = false
+            if Questie.db.char.AutoUntrackedQuests and next(Questie.db.char.AutoUntrackedQuests) then
+                -- AutoUntrackedQuests has data, use it
+                isCurrentlyTracked = not Questie.db.char.AutoUntrackedQuests[questId]
+            else
+                -- AutoUntrackedQuests is empty - need to check actual state
+                -- During initial login, assume quests are NOT tracked unless proven otherwise
+                isCurrentlyTracked = false
+                Questie:Print("[DEBUG AQW] AutoUntrackedQuests is empty, assuming quest", questId, "is NOT tracked")
+            end
+            Questie:Print("[DEBUG AQW] Quest", questId, "currently tracked:", isCurrentlyTracked)
             
             if IsShiftKeyDown() and QuestLogFrame:IsShown() then
                 -- Shift-click always untracks any quest
