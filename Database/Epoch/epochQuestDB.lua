@@ -291,6 +291,7 @@ epochQuestData[27082] = {"How to Make Friends with a Furbolg",nil,{{46012}},nil,
 epochQuestData[26847] = {"Ardo's Dirtpaw",{{45825}},{{903}},nil,24,nil,nil,{"Retrieve Ardo's Dirtpaw and bring it to Guard Howe."},nil,{nil,nil,{{62679,"Ardo's Dirtpaw"}}},nil,nil,nil,nil,nil,nil,36,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 
 -- Issue #142: A Salve for Samantha - Stranglethorn Vale
+epochQuestData[26879] = {"Swifthoof's Message",{{11748}},{{2519}},nil,34,nil,nil,{"Take Samantha Swifthoof's Message to Kin'weelay at Grom'gol in Stranglethorn Vale."},nil,nil,nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Issue #268: Delivery quest
 epochQuestData[26883] = {"A Salve for Samantha",nil,{{11748}},nil,34,nil,nil,{"Take the Finished Salve to Samantha Swifthoof, who wanders the main road through Stranglethorn Vale."},nil,nil,nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
 
 -- Issue #141: Parts From Afar - Ironforge to Hinterlands

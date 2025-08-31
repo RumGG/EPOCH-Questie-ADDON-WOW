@@ -945,7 +945,7 @@ epochNpcData[45825] = {"Buffalo Will",nil,nil,24,24,0,{[36]={{23.7,41.1}}},nil,3
 -- Note: Guard Howe (903) likely already exists in classic data
 
 -- Issue #142
-epochNpcData[11748] = {"Samantha Swifthoof",nil,nil,34,34,0,{[33]={{43.9,26.6}}},nil,33,nil,{26883},1,"H",nil,0} -- Stranglethorn Vale
+epochNpcData[11748] = {"Samantha Swifthoof",nil,nil,34,34,0,{[33]={{43.9,26.6}}},nil,33,{26879},{26883},1,"H",nil,0} -- Stranglethorn Vale, Issue #268: Added quest 26879
 
 -- Issue #141
 epochNpcData[11145] = {"Myolor Sunderfury",nil,nil,46,46,0,{[1537]={{51.9,41.1}}},nil,1537,{26187},nil,1,"A",nil,0} -- Ironforge
