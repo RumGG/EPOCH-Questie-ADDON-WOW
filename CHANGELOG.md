@@ -1,5 +1,22 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+- **28 new Epoch quests from GitHub issues #238-261**
+  - Complete quest data for The Handmaiden's Fall chain (26714, 26715)
+  - Multiple "Fit For A King" quests with different objectives
+  - Cross-faction delivery quests with proper NPC locations
+  - 11 new custom NPCs for quest givers and turn-ins
+
+### Fixed
+- **Quest 27049 faction flag corrected (Issue #261)**
+  - Changed from Alliance (8) to Horde (2) since quest sends players to Orgrimmar
+- **96 TBC/WotLK flight masters removed from maps (Issue #262)**
+  - Blacklisted all non-existent flight masters (NPCs with IDs 17000+)
+  - Fixes Suralais Farwind incorrectly showing at Forest Song in Ashenvale
+  - Removes confusing flight path markers for NPCs not present in Project Epoch
+
 ## [1.0.69] - 2024-08-31
 
 ### Added
