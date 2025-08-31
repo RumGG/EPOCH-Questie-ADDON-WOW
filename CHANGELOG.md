@@ -24,8 +24,9 @@
 
 ### Fixed
 - **Map icons showing as colored dots instead of proper icons**
-  - Fixed icon texture conversion in QuestieMap that was showing icon type numbers as textures
-  - Restored proper sword (slay), sack (loot), and cog (object) icons on map
+  - Added fallback texture handling in UpdateTexture function
+  - Ensures icon types are properly converted to texture paths
+  - Provides fallback icon when texture is invalid or missing
 
 ### Added
 - **11 new Epoch quests from GitHub issues #229-232**
