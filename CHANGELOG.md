@@ -1,6 +1,15 @@
 # Changelog
 
-## [Unreleased]
+## [1.0.65] - 2024-08-31
+
+### Added
+- **Version Check System**: Automatically checks if your Questie version is outdated
+  - Notifies players on login if a newer version is available
+  - Shows current version vs latest known version
+  - Provides direct link to GitHub releases page
+  - New slash commands: `/questieversion` or `/qversion` to manually check
+  - Can detect newer versions from other players in guild/party/raid
+  - Non-intrusive notification system with one-time display per session
 
 ### Fixed
 - **Stormwind Innkeeper Not Showing on Map**: Fixed Innkeeper Allison not appearing when tracking innkeepers

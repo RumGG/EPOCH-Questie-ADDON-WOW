@@ -638,6 +638,12 @@ function QuestieInit:Init()
     print("|cFF00FF00[Questie-Epoch]|r Version " .. currentVersion ..
           " | Check for updates at Github: https://github.com/trav346/Questie-Epoch")
     
+    -- Initialize version checker
+    local QuestieVersionCheck = QuestieLoader:ImportModule("QuestieVersionCheck")
+    if QuestieVersionCheck then
+        QuestieVersionCheck:Initialize()
+    end
+    
     ThreadLib.ThreadError(_QuestieInit.StartStageCoroutine,
                           Questie.db.profile.initDelay or 0,
                           l10n("Error during initialization!"))
