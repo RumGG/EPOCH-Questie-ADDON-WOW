@@ -402,6 +402,12 @@ function QuestieTracker:SyncWatchedQuests()
         return
     end
     
+    -- Force populate the quest log first
+    if QuestieQuest and QuestieQuest.GetAllQuestIds then
+        Questie:Print("[DEBUG] Forcing quest log population")
+        QuestieQuest:GetAllQuestIds()
+    end
+    
     if not QuestiePlayer.currentQuestlog then
         Questie:Print("[DEBUG] SyncWatchedQuests: Quest log not ready")
         return -- Quest log not ready yet
