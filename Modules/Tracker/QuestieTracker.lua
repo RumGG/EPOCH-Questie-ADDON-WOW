@@ -265,10 +265,10 @@ function QuestieTracker.Initialize()
             
             -- The questsWatched variable is populated by the Unhooked GetNumQuestWatches(). If Questie
             -- is enabled, this is always 0 unless it's run with a true var RE:GetNumQuestWatches(true).
+            local tempQuestIDs = {}  -- Move this outside the if block so it's always available
             if currentQuestsWatched > 0 then
                 -- When a quest is removed from the Watch Frame, the questIndex can change so we need to snag
                 -- the entire list and build a temp table with QuestIDs instead to ensure we remove them all.
-                local tempQuestIDs = {}
                 for i = 1, currentQuestsWatched do
                     local questIndex = GetQuestIndexForWatch(i)
                     Questie:Print("[DEBUG] Watch", i, "questIndex:", questIndex)
