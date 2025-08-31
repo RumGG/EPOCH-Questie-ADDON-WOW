@@ -765,7 +765,7 @@ function TrackerUtils:GetSortedQuestIds()
             end
         end
     end
-    Questie:Print("[TRACKER DISPLAY] GetSortedQuestIds: Total quests=", totalQuests, "Tracked=", trackedQuests)
+    -- Tracker updated
     
     -- Update quest objectives
     for questId, quest in pairs(QuestiePlayer.currentQuestlog) do

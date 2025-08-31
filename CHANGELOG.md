@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.65-hotfix2] - 2024-08-31
+
+### Fixed
+- **Removed additional debug output**
+  - Removed TRACKER DISPLAY debug message from TrackerUtils.lua
+
 ## [1.0.65-hotfix] - 2024-08-31
 
 ### Fixed
