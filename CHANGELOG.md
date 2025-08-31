@@ -3,6 +3,10 @@
 ## [Unreleased]
 
 ### Fixed
+- **Stormwind Innkeeper Not Showing on Map**: Fixed Innkeeper Allison not appearing when tracking innkeepers
+  - Corrected npcFlags from 66179 to 135 (proper innkeeper flag) in epochNpcDB.lua
+  - Fixed display ID from 1003 to 1002 to match Classic database
+  - Innkeeper now properly shows on map when innkeeper tracking is enabled
 - **Fixed overflow error for Epoch object IDs**
   - Changed object ID 40000057 to 4000057 in epochItemDB.lua to fit within 24-bit limit
   - Fixes issue #193 where QuestieStream.lua would crash with overflow error
@@ -17,6 +21,12 @@
   - Fixes tracker disappearing completely after initialization
 - **Removed debug output from database initialization**
   - Cleaned up temporary debug logging from QuestieInit.lua
+
+### Added
+- **Missing Quest Placeholders**: Added 55 placeholder quest entries from GitHub issues #198 and #209
+  - Quest IDs: 26126, 26277, 26282, 26285, 26288, 26292, 26332, 26503-26506, 26516, 26518-26520, 26537, 26540-26543, 26570, 26577, 26580, 26582, 26594, 26802, 26817, 27074-27075, 27080-27084, 27114-27116, 27126-27131, 27136, 27141, 27151-27153, 27163-27164, 28072, 28077, 28483, 28535, 28648
+  - Enables basic quest tracking functionality even without complete quest data
+  - Placeholders can be filled in later when players submit complete quest data
 
 ## [1.0.64] - 2024-08-30
 

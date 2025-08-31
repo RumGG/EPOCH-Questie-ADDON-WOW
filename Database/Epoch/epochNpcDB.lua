@@ -266,7 +266,7 @@ local epochNpcData = {
 [6577] = {"Bingles Blastenheimer",640,720,16,16,0,{[38]={{63.6,47.9}}},nil,38,{2038},{2038},11,"A",nil,0},
 [6579] = {"[Epoch] NPC 6579",680,765,17,17,0,{[1519]={{62.6,34.1}}},nil,1519,nil,nil,11,"A",nil,0},
 [5112] = {"Gwenna Firebrew",1003,1003,30,30,0,{[1519]={{74.49,54.09}}},nil,1519,nil,nil,12,"A","Barmaid",643}, -- Cathedral Square barmaid (NOT an innkeeper)
-[6740] = {"Innkeeper Allison",1003,1003,30,30,0,{[1519]={{52.62,65.7}}},nil,1519,{3790,8356},{8356,8860,9026},12,"A","Innkeeper",66179}, -- Fixed coordinates to match classic DB
+[6740] = {"Innkeeper Allison",1002,1002,30,30,0,{[1519]={{52.62,65.7}}},nil,1519,{3789,8356,9027},{8356,8860,9026},12,"A","Innkeeper",135}, -- Fixed npcFlags to match classic DB innkeeper flag
 [6778] = {"Melika Isenstrider",440,495,11,11,0,{[12]={{38.2,68.6}}},nil,12,{26780},{26779},11,"A",nil,0},
 [6928] = {"[Epoch] NPC 6928",1200,1350,30,30,0,{[14]={{51.4,41.2}}},nil,14,nil,nil,85,"H",nil,0},
 [6946] = {"[Epoch] NPC 6946",1600,1800,40,40,0,{[1519]={{78.3,71.1}}},nil,1519,nil,nil,11,"A",nil,0},
