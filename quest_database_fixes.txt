@@ -1,0 +1,141 @@
+-- Remove duplicate quest entries (keeping best version)
+-- Remove line 79: Quest 26994
+-- Remove line 305: Quest 26217
+-- Remove line 313: Quest 26282
+-- Remove line 145: Quest 26541
+-- Remove line 18: Quest 26779
+-- Remove line 83: Quest 26218
+-- Remove line 493: Quest 26218
+-- Remove line 415: Quest 26570
+-- Remove line 17: Quest 26777
+-- Remove line 421: Quest 26778
+-- Remove line 422: Quest 26781
+-- Remove line 426: Quest 26768
+-- Remove line 429: Quest 26771
+-- Remove line 461: Quest 27000
+-- Remove line 465: Quest 27167
+-- Remove line 466: Quest 27171
+-- Remove line 467: Quest 27198
+-- Remove line 317: Quest 26885
+-- Remove line 480: Quest 27168
+-- Remove line 407: Quest 27195
+-- Remove line 486: Quest 26287
+-- Remove line 487: Quest 26368
+-- Remove line 87: Quest 26374
+-- Remove line 633: Quest 26186
+-- Remove line 747: Quest 26186
+-- Remove line 165: Quest 28476
+-- Remove line 668: Quest 27483
+-- Remove line 636: Quest 26293
+-- Remove line 637: Quest 26295
+-- Remove line 380: Quest 27322
+-- Remove line 638: Quest 27335
+-- Remove line 98: Quest 28722
+-- Remove line 99: Quest 28723
+-- Remove line 110: Quest 28757
+-- Remove line 111: Quest 28758
+-- Remove line 112: Quest 28759
+-- Remove line 113: Quest 28760
+-- Remove line 117: Quest 28764
+-- Remove line 118: Quest 28765
+-- Remove line 741: Quest 26887
+-- Remove line 593: Quest 27128
+-- Remove line 757: Quest 26875
+-- Remove line 759: Quest 26932
+
+-- Add missing turn-in NPCs
+-- Quest 26529: Add turn-in NPC 45527
+-- Quest 26531: Add turn-in NPC 45528
+-- Quest 26532: Add turn-in NPC 45528
+-- Quest 26533: Add turn-in NPC 45528
+-- Quest 27254: Add turn-in NPC 46090
+-- Quest 27256: Add turn-in NPC 46090
+-- Quest 26939: Add turn-in NPC 45898
+-- Quest 26963: Add turn-in NPC 46322
+-- Quest 26965: Add turn-in NPC 46326
+-- Quest 26966: Add turn-in NPC 46322
+-- Quest 26967: Add turn-in NPC 46323
+-- Quest 26968: Add turn-in NPC 46323
+-- Quest 26969: Add turn-in NPC 46323
+-- Quest 26970: Add turn-in NPC 46326
+-- Quest 26971: Add turn-in NPC 46326
+-- Quest 26972: Add turn-in NPC 46322
+-- Quest 26973: Add turn-in NPC 46323
+-- Quest 26977: Add turn-in NPC 46324
+-- Quest 26979: Add turn-in NPC 46331
+-- Quest 26980: Add turn-in NPC 46331
+-- Quest 26981: Add turn-in NPC 46331
+-- Quest 26987: Add turn-in NPC 45939
+-- Quest 26988: Add turn-in NPC 45940
+-- Quest 26989: Add turn-in NPC 45940
+-- Quest 26218: Add turn-in NPC 2140
+-- Quest 28077: Add turn-in NPC 45604
+-- Quest 28535: Add turn-in NPC 45575
+-- Quest 28618: Add turn-in NPC 45575
+-- Quest 28722: Add turn-in NPC 46834
+-- Quest 26126: Add turn-in NPC 45549
+-- Quest 27045: Add turn-in NPC 45990
+-- Quest 26858: Add turn-in NPC 45827
+-- Quest 27659: Add turn-in NPC 5385
+-- Quest 26883: Add turn-in NPC 11748
+-- Quest 26907: Add turn-in NPC 45869
+-- Quest 26915: Add turn-in NPC 45873
+-- Quest 26784: Add turn-in NPC 45780
+-- Quest 26785: Add turn-in NPC 45782
+-- Quest 27053: Add turn-in NPC 45734
+-- Quest 28573: Add turn-in NPC 2697
+-- Quest 27243: Add turn-in NPC 46086
+-- Quest 26774: Add turn-in NPC 45775
+-- Quest 27488: Add turn-in NPC 4048
+-- Quest 27500: Add turn-in NPC 4048
+-- Quest 27501: Add turn-in NPC 4048
+-- Quest 26544: Add turn-in NPC 3544
+-- Quest 27238: Add turn-in NPC 46000
+-- Quest 26542: Add turn-in NPC 2364
+-- Quest 26802: Add turn-in NPC 2363
+-- Quest 26886: Add turn-in NPC 45845
+-- Quest 27309: Add turn-in NPC 46127
+-- Quest 27197: Add turn-in NPC 7161
+-- Quest 26376: Add turn-in NPC 9019
+-- Quest 26875: Add turn-in NPC 45841
+-- Quest 27489: Add turn-in NPC 10428
+-- Quest 27300: Add turn-in NPC 46121
+-- Quest 26817: Add turn-in NPC 2378
+-- Quest 26521: Add turn-in NPC 2317
+-- Quest 26524: Add turn-in NPC 3544
+-- Quest 27420: Add turn-in NPC 7771
+-- Quest 28901: Add turn-in NPC 46836
+-- Quest 28902: Add turn-in NPC 46836
+-- Quest 26511: Add turn-in NPC 2317
+-- Quest 27030: Add turn-in NPC 45981
+-- Quest 26293: Add turn-in NPC 45211
+-- Quest 27335: Add turn-in NPC 45211
+-- Quest 26856: Add turn-in NPC 5410
+-- Quest 26918: Add turn-in NPC 3615
+-- Quest 26597: Add turn-in NPC 7740
+-- Quest 28905: Add turn-in NPC 28945
+-- Quest 27323: Add turn-in NPC 46135
+-- Quest 27324: Add turn-in NPC 46135
+-- Quest 27325: Add turn-in NPC 46135
+-- Quest 27326: Add turn-in NPC 46135
+-- Quest 27327: Add turn-in NPC 46135
+-- Quest 27328: Add turn-in NPC 46135
+-- Quest 26180: Add turn-in NPC 45748
+-- Quest 26190: Add turn-in NPC 45777
+-- Quest 26852: Add turn-in NPC 45964
+-- Quest 26854: Add turn-in NPC 46559
+-- Quest 26855: Add turn-in NPC 46560
+-- Quest 26860: Add turn-in NPC 46563
+-- Quest 26861: Add turn-in NPC 46564
+-- Quest 26862: Add turn-in NPC 46565
+-- Quest 27103: Add turn-in NPC 47191
+-- Quest 27032: Add turn-in NPC 45983
+-- Quest 27036: Add turn-in NPC 45983
+-- Quest 26170: Add turn-in NPC 45732
+-- Quest 26171: Add turn-in NPC 45731
+-- Quest 26182: Add turn-in NPC 45774
+-- Quest 26161: Add turn-in NPC 45716
+-- Quest 28520: Add turn-in NPC 46644
+-- Quest 26863: Add turn-in NPC 46561
+-- Quest 26867: Add turn-in NPC 46570
+-- Quest 26921: Add turn-in NPC 46613
