@@ -22,6 +22,8 @@ local TrackerUtils = QuestieLoader:ImportModule("TrackerUtils")
 -------------------------
 ---@type QuestieQuest
 local QuestieQuest = QuestieLoader:ImportModule("QuestieQuest")
+---@type QuestLogCache
+local QuestLogCache = QuestieLoader:ImportModule("QuestLogCache")
 ---@type QuestieMap
 local QuestieMap = QuestieLoader:ImportModule("QuestieMap")
 ---@type QuestieTooltips
@@ -402,7 +404,13 @@ function QuestieTracker:SyncWatchedQuests()
         return
     end
     
-    -- Force populate the quest log first
+    -- Force populate the quest log cache first
+    if QuestLogCache and QuestLogCache.CheckForChanges then
+        Questie:Print("[DEBUG] Forcing QuestLogCache update")
+        QuestLogCache.CheckForChanges()
+    end
+    
+    -- Then populate QuestiePlayer.currentQuestlog
     if QuestieQuest and QuestieQuest.GetAllQuestIds then
         Questie:Print("[DEBUG] Forcing quest log population")
         QuestieQuest:GetAllQuestIds()
