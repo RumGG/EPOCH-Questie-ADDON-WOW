@@ -749,6 +749,24 @@ function TrackerUtils:GetSortedQuestIds()
     local sortedQuestIds = {}
     local questDetails = {}
     local sortObj = Questie.db.profile.trackerSortObjectives
+    
+    -- Debug: Count total quests and tracked quests
+    local totalQuests = 0
+    local trackedQuests = 0
+    for questId, quest in pairs(QuestiePlayer.currentQuestlog or {}) do
+        totalQuests = totalQuests + 1
+        if Questie.db.profile.autoTrackQuests then
+            if not Questie.db.char.AutoUntrackedQuests[questId] then
+                trackedQuests = trackedQuests + 1
+            end
+        else
+            if Questie.db.char.TrackedQuests[questId] then
+                trackedQuests = trackedQuests + 1
+            end
+        end
+    end
+    Questie:Print("[TRACKER DISPLAY] GetSortedQuestIds: Total quests=", totalQuests, "Tracked=", trackedQuests)
+    
     -- Update quest objectives
     for questId, quest in pairs(QuestiePlayer.currentQuestlog) do
         -- Skip if quest is just a number (happens when QuestieDB.GetQuest fails)

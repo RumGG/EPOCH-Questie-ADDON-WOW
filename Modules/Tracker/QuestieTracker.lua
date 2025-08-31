@@ -477,14 +477,39 @@ function QuestieTracker:SyncWatchedQuests()
     end
     Questie:Print("[TRACKING DEBUG] Blizzard has", watchedCount, "quests watched")
     
+    -- Check what's in AutoUntrackedQuests
+    local untrackedCount = 0
+    local untrackedList = {}
+    for questId in pairs(Questie.db.char.AutoUntrackedQuests or {}) do
+        if QuestiePlayer.currentQuestlog[questId] then
+            untrackedCount = untrackedCount + 1
+            table.insert(untrackedList, tostring(questId))
+        end
+    end
+    Questie:Print("[TRACKING DEBUG] AutoUntrackedQuests has", untrackedCount, "quests:", table.concat(untrackedList, ", "))
+    
+    -- In auto-track mode on initial login, we should track ALL quests by default
+    -- unless the user explicitly untracked them before
+    local shouldTrackAll = not QuestieTracker._hasEverSynced
+    if shouldTrackAll then
+        Questie:Print("[TRACKING DEBUG] First sync - will attempt to track ALL quests")
+    end
+    
     -- Try to track all quests that should be tracked
     local successCount = 0
     local failCount = 0
     local failedQuests = {}
+    local skippedCount = 0
     
     for questId, quest in pairs(QuestiePlayer.currentQuestlog) do
-        -- Skip if user manually untracked
-        if not Questie.db.char.AutoUntrackedQuests[questId] then
+        -- On first sync, try to track everything
+        -- On subsequent syncs, respect AutoUntrackedQuests
+        local shouldSkip = (not shouldTrackAll) and Questie.db.char.AutoUntrackedQuests[questId]
+        
+        if shouldSkip then
+            skippedCount = skippedCount + 1
+            Questie:Print("[TRACKING DEBUG] Skipping quest", questId, "(in AutoUntrackedQuests)")
+        else
             -- This quest should be tracked
             local questIndex = GetQuestLogIndexByID(questId)
             if questIndex and questIndex > 0 then
@@ -531,10 +556,10 @@ function QuestieTracker:SyncWatchedQuests()
             else
                 Questie:Print("[TRACKING DEBUG] No valid index for quest", questId)
             end
-        end
+        end  -- end of shouldSkip check
     end
     
-    Questie:Print("[TRACKING DEBUG] Tracking results: Success=", successCount, "Failed=", failCount)
+    Questie:Print("[TRACKING DEBUG] Tracking results: Success=", successCount, "Failed=", failCount, "Skipped=", skippedCount)
     if failCount > 0 then
         local failedList = {}
         for questId in pairs(failedQuests) do
@@ -545,7 +570,8 @@ function QuestieTracker:SyncWatchedQuests()
     
     -- Mark sync as complete
     QuestieTracker._alreadySynced = true
-    Questie:Print("[TRACKING DEBUG] ========== SYNC COMPLETE ==========")
+    QuestieTracker._hasEverSynced = true  -- Persistent flag for this session
+    Questie:Print("[TRACKING DEBUG] ========== SYNC COMPLETE ==========`)
     
     -- If AutoUntrackedQuests has very few entries compared to quest log, 
     -- it's likely corrupted or not properly initialized
