@@ -577,5 +577,29 @@ epochQuestData[28903] = {"Encrypted Memorandum",{{46836}},{{46882}},nil,1,nil,ni
 epochQuestData[26511] = {"The Perenolde Legacy",{{2317}},{{6768}},nil,38,nil,nil,{"Report the news of Aliden Perenolde's death and Elysa's request to search for General Hath to Lord Ravenholdt."},nil,nil,nil,nil,nil,nil,nil,nil,36,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Alterac Mountains: Elysa to Lord Jorach Ravenholdt
 epochQuestData[28648] = {"[Epoch] Quest 28648",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 
+-- Issue #232, #231, #230, #229: Quest data from GitHub issues (batch submission)
+-- Darkshore quests
+epochQuestData[26202] = {"The Twilight's Hammer",{{3702}},nil,nil,17,nil,nil,{"Kill 8 Twilight Thugs and 8 Twilight Disciples."},nil,{{{2523,8,"Twilight Thug"},{2525,8,"Twilight Disciple"}}},nil,nil,nil,nil,nil,nil,148,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Darkshore: Alanndarian Nightsong
+epochQuestData[26203] = {"Welcome to Auberdine",nil,{{45036}},nil,11,nil,nil,{"Report to Quartermaster Nyana in Auberdine."},nil,nil,nil,nil,nil,nil,nil,nil,148,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Darkshore: Quartermaster Nyana
+epochQuestData[26208] = {"Wanted: Grizzletooth",nil,nil,nil,18,nil,nil,{"Kill Grizzletooth and bring his teeth to the bounty board."},nil,{{{14270,nil}}},nil,nil,nil,nil,nil,nil,148,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Darkshore bounty quest
+epochQuestData[28064] = {"Commission for Gubber Blump",nil,nil,nil,10,nil,nil,{"Collect 10 Boiled Clams for Gubber Blump."},nil,{nil,nil,{{5525,10,"Boiled Clam"}}},nil,nil,nil,nil,nil,nil,148,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Darkshore commission
+epochQuestData[28521] = {"Commission for Lornan Goldleaf",{{6887}},nil,nil,20,nil,nil,{"Collect 20 Briarthorn for Lornan Goldleaf."},nil,{nil,nil,{{2450,20,"Briarthorn"}}},nil,nil,nil,nil,nil,nil,148,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Darkshore: Yalda
+
+-- Wetlands quest
+epochQuestData[27021] = {"Message to Menethil",nil,{{2086}},nil,21,nil,nil,{"Deliver the Burndural Notice to Valstag Ironjaw."},nil,nil,nil,nil,nil,nil,nil,nil,11,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Wetlands: Valstag Ironjaw
+
+-- Ashenvale quest
+epochQuestData[27038] = {"Forsaken Looters",nil,{{3663}},nil,20,nil,nil,{"Kill 5 Forsaken Scouts, 5 Forsaken Herbalists and 10 Forsaken Assassins."},nil,{{{3893,5,"Forsaken Scout"},{3733,5,"Forsaken Herbalist"},{3879,10,"Forsaken Assassin"}}},nil,nil,nil,nil,nil,nil,331,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Ashenvale: Delgren the Purifier
+
+-- The Hinterlands quest
+epochQuestData[26186] = {"Parts From Afar",nil,{{45019}},nil,46,nil,nil,{"Bring the Basket of Treats to Myolor Sunderfury in Ironforge to exchange for Siege Engine Parts."},nil,nil,nil,nil,nil,nil,nil,nil,47,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- The Hinterlands: Golith Slatestrike
+
+-- Feralas quests
+epochQuestData[26293] = {"Fit For A King",{{45211}},{{45211}},nil,45,nil,nil,{"Collect 16 Walker Branches."},nil,{nil,nil,{{60178,16,"Walker Branch"}}},nil,nil,nil,nil,nil,nil,357,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Feralas: Viggo
+epochQuestData[27335] = {"Wanted: Lost Ancient",nil,{{45211}},nil,48,nil,nil,{"Kill the Lost Ancient and bring its Hefty Ancient Log to Viggo."},nil,{{{46146,nil}},nil,{{63200,nil}}},nil,nil,nil,nil,nil,nil,357,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Feralas: Viggo
+
+-- Update placeholder for 28476
+epochQuestData[28476] = {"Commission for Watcher Dodds",nil,nil,nil,20,nil,nil,{"Commission quest for Watcher Dodds."},nil,nil,nil,nil,nil,nil,nil,nil,10,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Duskwood commission
+
 -- Stage the Epoch questData for later merge during compilation
 QuestieDB._epochQuestData = epochQuestData

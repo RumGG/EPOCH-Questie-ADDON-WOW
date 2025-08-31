@@ -21,6 +21,19 @@
   - **Hotfix**: Removed all debug print statements that were spamming chat
 
 ## [Unreleased]
+
+### Added
+- **11 new Epoch quests from GitHub issues #229-232**
+  - Darkshore: The Twilight's Hammer (26202), Welcome to Auberdine (26203), Wanted: Grizzletooth (26208)
+  - Darkshore: Commission for Gubber Blump (28064), Commission for Lornan Goldleaf (28521) 
+  - Wetlands: Message to Menethil (27021)
+  - Ashenvale: Forsaken Looters (27038)
+  - The Hinterlands: Parts From Afar (26186)
+  - Feralas: Fit For A King (26293), Wanted: Lost Ancient (27335)
+  - Duskwood: Updated placeholder for Commission for Watcher Dodds (28476)
+  
+- **9 NPCs for the new quests**
+  - Added quest givers, turn-in NPCs, and target mobs with proper coordinates
   
 - **Quests requiring two clicks to track**
   - Fixed malformed item objectives in database (e.g., `{{itemId}}` instead of `{{itemId,qty,"name"}}`)

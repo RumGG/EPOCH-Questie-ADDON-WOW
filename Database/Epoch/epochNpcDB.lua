@@ -1089,5 +1089,26 @@ epochNpcData[46575] = {"Innkeeper Tooma",nil,nil,45,45,0,{[3]={{67.5,60.6}}},nil
 epochNpcData[7882] = {"Security Chief Bilgewhizzle",nil,nil,41,41,0,{[440]={{67.0,23.8}}},nil,440,{27422},{27422},1,"A",nil,0} -- Tanaris: No One Drinks For Free quest
 epochNpcData[46237] = {"Marai Ravenwater",nil,nil,42,42,0,{[440]={{65.5,24.1}}},nil,440,{27462},{27462},1,"A",nil,0} -- Tanaris: Waste Removal quest
 
+-- Issue #232, #231, #230, #229: NPCs from GitHub quest data submissions
+-- Darkshore NPCs
+epochNpcData[3702] = {"Alanndarian Nightsong",nil,nil,17,17,0,{[148]={{37.6,40.7}}},nil,148,{26202},nil,1,"A",nil,0} -- Darkshore: The Twilight's Hammer quest giver
+epochNpcData[45036] = {"Quartermaster Nyana",nil,nil,11,11,0,{[148]={{37.7,41.0}}},nil,148,nil,{26203},1,"A",nil,0} -- Darkshore: Welcome to Auberdine turn-in
+epochNpcData[6887] = {"Yalda",nil,nil,20,20,0,{[148]={{37.4,45.2}}},nil,148,{28521},nil,1,"A",nil,0} -- Darkshore: Commission for Lornan Goldleaf quest giver
+
+-- Wetlands NPC
+epochNpcData[2086] = {"Valstag Ironjaw",nil,nil,25,25,0,{[11]={{10.1,56.8}}},nil,11,nil,{27021},1,"A",nil,0} -- Wetlands: Message to Menethil turn-in
+
+-- Ashenvale NPC  
+epochNpcData[3663] = {"Delgren the Purifier",nil,nil,20,20,0,{[331]={{26.2,38.6}}},nil,331,nil,{27038},1,"A",nil,0} -- Ashenvale: Forsaken Looters turn-in
+
+-- The Hinterlands NPC
+epochNpcData[45019] = {"Golith Slatestrike",nil,nil,46,46,0,{[47]={{14.2,48.0}}},nil,47,nil,{26186},1,"A",nil,0} -- The Hinterlands: Parts From Afar turn-in
+
+-- Feralas NPC
+epochNpcData[45211] = {"Viggo",nil,nil,48,48,0,{[357]={{51.6,47.5}}},nil,357,{26293},{ 26293,27335},1,"A",nil,0} -- Feralas: Fit For A King quest giver/turn-in, Wanted: Lost Ancient turn-in
+
+-- Feralas mob for quest 27335
+epochNpcData[46146] = {"Lost Ancient",nil,nil,48,48,0,{[357]={{58.9,61.3}}},nil,357,nil,nil,1,"A",nil,0} -- Feralas: Target for Wanted: Lost Ancient
+
 -- Stage the Epoch npcData for later merge during compilation
 QuestieDB._epochNpcData = epochNpcData
