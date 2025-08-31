@@ -14,22 +14,20 @@ epochQuestData[26773] = {"[Epoch] Quest 26773",nil,nil,nil,nil,nil,nil,nil,nil,n
 -- Removed placeholders for 26774 and 26775 (defined later with correct data)
 -- Restored original Elwynn Forest starter quests (were overwritten by Fel Elf quest which is now at 28768)
 epochQuestData[26776] = {"Swiftpaw",{{11940}},{{11940}},4,6,77,nil,{"Bring Swiftpaw's Snout to Merissa Stilwell outside Northshire Abbey."},nil,{nil,nil,{{60388,nil}}},nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26777] = {"The Soaked Barrel",{nil,{4000007}},nil,1,1,77,nil,{"Find someone in Northshire Abbey who may know the owner of the barrel."},nil,nil,nil,nil,nil,nil,nil,nil,12,nil,nil,nil,{60021},26778,nil,1,nil,nil,nil,nil,nil,nil}
-epochQuestData[26779] = {"The Demon of the Grove",{{6778},{1377}},{{6778}},nil,11,nil,nil,{"Kill Melanas and bring Melanas' Head to Melika Isenstrider in Darnassus."},nil,{{{2038,nil}},nil,{{5221,nil}}},nil,nil,{927},nil,nil,nil,141,nil,nil,nil,nil,nil,8,0,927,nil,nil,nil,nil,nil}
 
 -- Issue #86: The Argus Wake questline (Desolace)
-epochQuestData[26529] = {"The Argus Wake",{{45527}},{{45527}},nil,42,nil,nil,{"Felicity Perenolde wants you to acquire 10 Pinches of Bone Marrow from the skeletons in the Kodo Graveyard."},nil,{nil,nil,{{62691,nil}}},nil,nil,nil,{26530},nil,nil,405,nil,nil,nil,nil,26530,8,0,nil,nil,nil,nil,nil,nil} -- Desolace quest
+epochQuestData[26529] = {"The Argus Wake",{{45527}},{{45527}},{{45527}},42,nil,nil,{"Felicity Perenolde wants you to acquire 10 Pinches of Bone Marrow from the skeletons in the Kodo Graveyard."},nil,{nil,nil,{{62691,nil}}},nil,nil,nil,{26530},nil,nil,405,nil,nil,nil,nil,26530,8,0,nil,nil,nil,nil,nil,nil} -- Desolace quest
 epochQuestData[26530] = {"The Argus Wake",{{45527}},{{45527}},nil,42,nil,nil,{"Felicity Perenolde wants you to acquire 10 Vials of Vulture Blood from the vultures in the Kodo Graveyard."},nil,{nil,nil,{{62692,nil}}},nil,nil,{26529},{26531},nil,nil,405,nil,nil,nil,nil,26531,8,0,26529,nil,nil,nil,nil,nil} -- Desolace quest
-epochQuestData[26531] = {"The Argus Wake",{{45527}},{{45528}},nil,43,nil,nil,{"Felicity Perenolde wants you to subdue Zala'thria and take her to the skeleton of the patriarch in the Kodo Graveyard."},nil,{{{45529,"Zala'thria subdued"}}},nil,nil,{26530},{26532},nil,nil,405,nil,nil,nil,nil,26532,8,0,26530,nil,nil,nil,nil,nil} -- Desolace quest
-epochQuestData[26532] = {"The Argus Wake",{{45528}},{{45528}},nil,44,nil,nil,{"Felicity Perenolde wants you to interrogate Zala'thria."},nil,{{{45530,"Zala'thria interrogated"}}},nil,nil,{26531},{26533},nil,nil,405,nil,nil,nil,nil,26533,8,0,26531,nil,nil,nil,nil,nil} -- Desolace quest
-epochQuestData[26533] = {"The Argus Wake",{{45528}},{{45528}},nil,44,nil,nil,{"Felicity Perenolde wants you to kill Kratok and acquire Kratok's Horn."},nil,{{{45531,nil}},nil,{{62693,nil}}},nil,nil,{26532},nil,nil,nil,405,nil,nil,nil,nil,nil,8,0,26532,nil,nil,nil,nil,nil} -- Desolace quest
+epochQuestData[26531] = {"The Argus Wake",{{45527}},{{45528}},{{45528}},43,nil,nil,{"Felicity Perenolde wants you to subdue Zala'thria and take her to the skeleton of the patriarch in the Kodo Graveyard."},nil,{{{45529,"Zala'thria subdued"}}},nil,nil,{26530},{26532},nil,nil,405,nil,nil,nil,nil,26532,8,0,26530,nil,nil,nil,nil,nil} -- Desolace quest
+epochQuestData[26532] = {"The Argus Wake",{{45528}},{{45528}},{{45528}},44,nil,nil,{"Felicity Perenolde wants you to interrogate Zala'thria."},nil,{{{45530,"Zala'thria interrogated"}}},nil,nil,{26531},{26533},nil,nil,405,nil,nil,nil,nil,26533,8,0,26531,nil,nil,nil,nil,nil} -- Desolace quest
+epochQuestData[26533] = {"The Argus Wake",{{45528}},{{45528}},{{45528}},44,nil,nil,{"Felicity Perenolde wants you to kill Kratok and acquire Kratok's Horn."},nil,{{{45531,nil}},nil,{{62693,nil}}},nil,nil,{26532},nil,nil,nil,405,nil,nil,nil,nil,nil,8,0,26532,nil,nil,nil,nil,nil} -- Desolace quest
 
 -- Issue #260: Desolace quest
 epochQuestData[27253] = {"Massive Profits",nil,nil,nil,39,nil,nil,{"Collect 3 Fossilised Gallbladders."},nil,{nil,nil,{{63117,3,"Fossilised Gallbladder"}}},nil,nil,nil,nil,nil,nil,405,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Desolace (fossil creatures)
 
 -- Issue #203: Reagents For The Undercity questline - Desolace
-epochQuestData[27254] = {"Reagents For The Undercity",{{46090}},{{46090}},nil,33,nil,nil,{"Collect 10 Hatefury Claws and 10 Hatefury Horns for Annie Grim."},nil,{nil,nil,{{6246,10,"Hatefury Claw"},{6247,10,"Hatefury Horn"}}},nil,nil,nil,{27255},nil,nil,405,nil,nil,nil,nil,27255,8,0,nil,nil,nil,nil,nil,nil} -- Desolace quest: Annie Grim (issue #197)
-epochQuestData[27256] = {"Reagents For The Undercity",{{46090}},{{46103}},nil,40,nil,nil,{"Collect 10 Felhound Brains, 10 Nether Wings, and 10 Doomwarder Blood for Annie Grim."},nil,{nil,nil,{{6250,10,"Felhound Brain"},{6251,10,"Nether Wing"},{6252,10,"Doomwarder Blood"}}},nil,nil,{27255},{27257},nil,nil,405,nil,nil,nil,nil,27257,8,0,27255,nil,nil,nil,nil,nil} -- Desolace quest: Annie Grim to Pipjot
+epochQuestData[27254] = {"Reagents For The Undercity",{{46090}},{{46090}},{{46090}},33,nil,nil,{"Collect 10 Hatefury Claws and 10 Hatefury Horns for Annie Grim."},nil,{nil,nil,{{6246,10,"Hatefury Claw"},{6247,10,"Hatefury Horn"}}},nil,nil,nil,{27255},nil,nil,405,nil,nil,nil,nil,27255,8,0,nil,nil,nil,nil,nil,nil} -- Desolace quest: Annie Grim (issue #197)
+epochQuestData[27256] = {"Reagents For The Undercity",{{46090}},{{46103}},{{46090}},40,nil,nil,{"Collect 10 Felhound Brains, 10 Nether Wings, and 10 Doomwarder Blood for Annie Grim."},nil,{nil,nil,{{6250,10,"Felhound Brain"},{6251,10,"Nether Wing"},{6252,10,"Doomwarder Blood"}}},nil,nil,{27255},{27257},nil,nil,405,nil,nil,nil,nil,27257,8,0,27255,nil,nil,nil,nil,nil} -- Desolace quest: Annie Grim to Pipjot
 
 -- Issue #256: Tirisfal Glades quests
 epochQuestData[26925] = {"Message for the Historian",{{45885}},{{45887}},nil,8,nil,nil,{"Deliver Jasper's message to Historian Todd Page."},nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil}
@@ -38,65 +36,60 @@ epochQuestData[26933] = {"Etched Scroll",{{1569}},{{45894}},nil,1,nil,nil,{"Read
 
 -- Issue #60: Stonetalon Mountains quest data
 epochQuestData[26938] = {"[Epoch] Quest 26938",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26939] = {"Peace in Death",{{45898}},{{45898}},nil,5,nil,nil,{"Lay Joseph Strinbrow's spirit to rest."},nil,{{{60445,"Joseph Strinbrow's spirit laid to rest"}}},nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Issue #374: Added turn-in NPC, was showing as "[39] Forging the Way"
+epochQuestData[26939] = {"Peace in Death",{{45898}},{{45898}},{{45898}},5,nil,nil,{"Lay Joseph Strinbrow's spirit to rest."},nil,{{{60445,"Joseph Strinbrow's spirit laid to rest"}}},nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Issue #374: Added turn-in NPC, was showing as "[39] Forging the Way"
 epochQuestData[26940] = {"[Epoch] Quest 26940",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26941] = {"[Epoch] Quest 26941",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 
 -- Issue #61: Scholomance Academy questline - Western Plaguelands
-epochQuestData[26963] = {"[Epoch] Quest 26963",{{46322}},{{46322}},nil,53,nil,nil,nil,nil,{{{46323,nil},{46329,nil},{46326,nil},{46327,nil}}},nil,nil,nil,{26964},nil,nil,28,nil,nil,nil,nil,26964,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26963] = {"[Epoch] Quest 26963",{{46322}},{{46322}},{{46322}},53,nil,nil,nil,nil,{{{46323,nil},{46329,nil},{46326,nil},{46327,nil}}},nil,nil,nil,{26964},nil,nil,28,nil,nil,nil,nil,26964,8,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26964] = {"Observing the Dress Code",{{46322}},{{46326}},nil,53,nil,nil,{"Bring 8 Putrid Spider Silk to Isabelle Pickman at Caer Darrow."},nil,{nil,nil,{{62759,nil}}},nil,nil,{26963},{26965},nil,nil,28,nil,nil,nil,nil,26965,8,0,26963,nil,nil,nil,nil,nil}
-epochQuestData[26965] = {"Observing the Dress Code",{{46326}},{{46326}},nil,53,nil,nil,{"Kill Sharlot and bring her Spinneret to Isabelle Pickman."},nil,{nil,nil,{{62760,nil}}},nil,nil,{26964},{26966},nil,nil,28,nil,nil,nil,nil,26966,8,0,26964,nil,nil,nil,nil,nil}
-epochQuestData[26966] = {"Second Day of School",{{46322}},{{46322}},nil,53,nil,nil,{"Equip the Scholomance Academy Tabard."},nil,nil,nil,nil,{26965},nil,nil,nil,28,nil,nil,nil,nil,nil,nil,0,26965,nil,nil,nil,nil,nil}
-epochQuestData[26967] = {"Scourge Botany",{{46323}},{{46323}},nil,54,nil,nil,{"Obtain 6 Fungus Samples from the Weeping Cave and bring them to Doctor Atwood."},nil,{nil,nil,{{62762,nil}}},nil,nil,{26966},{26968},nil,nil,28,nil,nil,nil,nil,26968,8,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26968] = {"Scourge Botany",{{46323}},{{46323}},nil,54,nil,nil,{"Acquire a pure Elwynn Soil Sample from the dirt mound at the Northridge Lumber Camp."},nil,{nil,nil,{{62763,nil}}},nil,nil,{26967},{26969},nil,nil,28,nil,nil,nil,nil,26969,8,0,26967,nil,nil,nil,nil,nil}
-epochQuestData[26969] = {"Scourge Botany",{{46323}},{{46323}},nil,54,nil,nil,{"Plant the fungus samples in the prepared soil and observe the results."},nil,nil,nil,nil,{26968},nil,nil,nil,28,nil,nil,nil,{62765},nil,nil,1,26968,nil,nil,nil,nil,nil}
-epochQuestData[26970] = {"Cooking with Carrion",{{46326}},{{46326}},nil,53,nil,nil,{"Gather 4 Exceptionally Large Eggs from Carrion Vultures and bring them to Isabelle Pickman."},nil,{nil,nil,{{62768,nil}}},nil,nil,{26966},{26971},nil,nil,28,nil,nil,nil,nil,26971,8,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26971] = {"Cooking with Carrion",{{46326}},{{46326}},nil,53,nil,nil,{"Obtain a Thresher Saliva Gland from a Putrid Lake Thresher and return to Isabelle Pickman."},nil,{nil,nil,{{62757,nil}}},nil,nil,{26970},nil,nil,nil,28,nil,nil,nil,nil,nil,8,0,26970,nil,nil,nil,nil,nil}
-epochQuestData[26972] = {"Extra Credit",{{46322}},{{46322}},nil,54,nil,nil,{"Collect 4 Shadow-Resistant Notebooks from Scarlet Lumberjacks and bring them to Dean Blackwood."},nil,{nil,nil,{{62771,nil}}},nil,nil,{26966},nil,nil,nil,28,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26973] = {"Advanced Alchemy",{{46323}},{{46323}},nil,54,nil,nil,{"Use the Collection Syringe to get three samples of ooze from the Weeping Cave."},nil,nil,nil,nil,{26966},{26974},nil,nil,28,nil,nil,nil,{62756},26974,nil,1,nil,nil,nil,nil,nil,nil}
+epochQuestData[26965] = {"Observing the Dress Code",{{46326}},{{46326}},{{46326}},53,nil,nil,{"Kill Sharlot and bring her Spinneret to Isabelle Pickman."},nil,{nil,nil,{{62760,nil}}},nil,nil,{26964},{26966},nil,nil,28,nil,nil,nil,nil,26966,8,0,26964,nil,nil,nil,nil,nil}
+epochQuestData[26966] = {"Second Day of School",{{46322}},{{46322}},{{46322}},53,nil,nil,{"Equip the Scholomance Academy Tabard."},nil,nil,nil,nil,{26965},nil,nil,nil,28,nil,nil,nil,nil,nil,nil,0,26965,nil,nil,nil,nil,nil}
+epochQuestData[26967] = {"Scourge Botany",{{46323}},{{46323}},{{46323}},54,nil,nil,{"Obtain 6 Fungus Samples from the Weeping Cave and bring them to Doctor Atwood."},nil,{nil,nil,{{62762,nil}}},nil,nil,{26966},{26968},nil,nil,28,nil,nil,nil,nil,26968,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26968] = {"Scourge Botany",{{46323}},{{46323}},{{46323}},54,nil,nil,{"Acquire a pure Elwynn Soil Sample from the dirt mound at the Northridge Lumber Camp."},nil,{nil,nil,{{62763,nil}}},nil,nil,{26967},{26969},nil,nil,28,nil,nil,nil,nil,26969,8,0,26967,nil,nil,nil,nil,nil}
+epochQuestData[26969] = {"Scourge Botany",{{46323}},{{46323}},{{46323}},54,nil,nil,{"Plant the fungus samples in the prepared soil and observe the results."},nil,nil,nil,nil,{26968},nil,nil,nil,28,nil,nil,nil,{62765},nil,nil,1,26968,nil,nil,nil,nil,nil}
+epochQuestData[26970] = {"Cooking with Carrion",{{46326}},{{46326}},{{46326}},53,nil,nil,{"Gather 4 Exceptionally Large Eggs from Carrion Vultures and bring them to Isabelle Pickman."},nil,{nil,nil,{{62768,nil}}},nil,nil,{26966},{26971},nil,nil,28,nil,nil,nil,nil,26971,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26971] = {"Cooking with Carrion",{{46326}},{{46326}},{{46326}},53,nil,nil,{"Obtain a Thresher Saliva Gland from a Putrid Lake Thresher and return to Isabelle Pickman."},nil,{nil,nil,{{62757,nil}}},nil,nil,{26970},nil,nil,nil,28,nil,nil,nil,nil,nil,8,0,26970,nil,nil,nil,nil,nil}
+epochQuestData[26972] = {"Extra Credit",{{46322}},{{46322}},{{46322}},54,nil,nil,{"Collect 4 Shadow-Resistant Notebooks from Scarlet Lumberjacks and bring them to Dean Blackwood."},nil,{nil,nil,{{62771,nil}}},nil,nil,{26966},nil,nil,nil,28,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26973] = {"Advanced Alchemy",{{46323}},{{46323}},{{46323}},54,nil,nil,{"Use the Collection Syringe to get three samples of ooze from the Weeping Cave."},nil,nil,nil,nil,{26966},{26974},nil,nil,28,nil,nil,nil,{62756},26974,nil,1,nil,nil,nil,nil,nil,nil}
 epochQuestData[26974] = {"Advanced Alchemy",{{46323}},{{46327}},nil,54,nil,nil,{"Speak to Proctor Blackwood to begin the experiment."},nil,nil,nil,nil,{26973},{26975},nil,nil,28,nil,nil,nil,nil,26975,nil,0,26973,nil,nil,nil,nil,nil}
 epochQuestData[26975] = {"Advanced Alchemy",{{46327}},{{46323}},nil,54,nil,nil,{"Protect Proctor Phillips as he completes the experiment."},nil,nil,nil,nil,{26974},nil,nil,nil,28,nil,nil,nil,nil,nil,nil,0,26974,nil,nil,nil,nil,nil}
 epochQuestData[26976] = {"History 101",{{46329}},{nil,{4001056}},nil,53,nil,nil,{"Copy the text of the plaque in the basement of the Barov Sepulcher."},nil,nil,nil,nil,{26966},{26977},nil,nil,28,nil,nil,nil,nil,26977,nil,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26977] = {"History 101",{nil,{4001056}},{{46324}},nil,53,nil,nil,{"Speak to the Ghost of Alexei Barov."},nil,{{{46324,nil}}},nil,nil,{26976},{26978},nil,nil,28,nil,nil,nil,nil,26978,8,0,26976,nil,nil,nil,nil,nil}
+epochQuestData[26977] = {"History 101",{nil,{4001056}},{{46324}},{{46324}},53,nil,nil,{"Speak to the Ghost of Alexei Barov."},nil,{{{46324,nil}}},nil,nil,{26976},{26978},nil,nil,28,nil,nil,nil,nil,26978,8,0,26976,nil,nil,nil,nil,nil}
 epochQuestData[26978] = {"History 101",{{46324}},{{46329}},nil,53,nil,nil,{"Return to Professor Hanlon at Caer Darrow with this information."},nil,nil,nil,nil,{26977},nil,nil,nil,28,nil,nil,nil,nil,nil,nil,0,26977,nil,nil,nil,nil,nil}
-epochQuestData[26979] = {"Senior Prank",{{46331}},{{46331}},nil,54,nil,nil,{"Get some dung from the Scarlet Outhouse along the road leading north to Hearthglen."},nil,{nil,nil,{{62779,nil}}},nil,nil,{26966},{26980},nil,nil,28,nil,nil,nil,nil,26980,8,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26980] = {"Senior Prank",{{46331}},{{46331}},nil,54,nil,nil,{"Collect a piece of Brimstone from a Scarlet Invoker."},nil,{nil,nil,{{62780,nil}}},nil,nil,{26979},{26981},nil,nil,28,nil,nil,nil,nil,26981,8,0,26979,nil,nil,nil,nil,nil}
-epochQuestData[26981] = {"Senior Prank",{{46331}},{{46331}},nil,54,nil,nil,{"Take the bags of dung to Uther's Tomb, The Bulwark, and Chillwind Camp and light them on fire."},nil,{nil,{{4001060,nil}}},nil,nil,{26980},nil,nil,nil,28,nil,nil,nil,nil,nil,8,0,26980,nil,nil,nil,nil,nil}
+epochQuestData[26979] = {"Senior Prank",{{46331}},{{46331}},{{46331}},54,nil,nil,{"Get some dung from the Scarlet Outhouse along the road leading north to Hearthglen."},nil,{nil,nil,{{62779,nil}}},nil,nil,{26966},{26980},nil,nil,28,nil,nil,nil,nil,26980,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26980] = {"Senior Prank",{{46331}},{{46331}},{{46331}},54,nil,nil,{"Collect a piece of Brimstone from a Scarlet Invoker."},nil,{nil,nil,{{62780,nil}}},nil,nil,{26979},{26981},nil,nil,28,nil,nil,nil,nil,26981,8,0,26979,nil,nil,nil,nil,nil}
+epochQuestData[26981] = {"Senior Prank",{{46331}},{{46331}},{{46331}},54,nil,nil,{"Take the bags of dung to Uther's Tomb, The Bulwark, and Chillwind Camp and light them on fire."},nil,{nil,{{4001060,nil}}},nil,nil,{26980},nil,nil,nil,28,nil,nil,nil,nil,nil,8,0,26980,nil,nil,nil,nil,nil}
 epochQuestData[26982] = {"[Epoch] Quest 26982",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26983] = {"[Epoch] Quest 26983",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26984] = {"[Epoch] Quest 26984",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26985] = {"[Epoch] Quest 26985",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26986] = {"[Epoch] Quest 26986",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26987] = {"Homecoming",{{45939}},{{45939}},nil,13,nil,nil,nil,nil,{nil,nil,{{62859,1}}},nil,nil,nil,nil,nil,nil,40,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26988] = {"A Stubborn Man",{{45939}},{{45940}},nil,13,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,40,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26989] = {"Thumbs Up, Man Down",{{45940}},{{45940}},nil,15,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,40,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26987] = {"Homecoming",{{45939}},{{45939}},{{45939}},13,nil,nil,nil,nil,{nil,nil,{{62859,1}}},nil,nil,nil,nil,nil,nil,40,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26988] = {"A Stubborn Man",{{45939}},{{45940}},{{45940}},13,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,40,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26989] = {"Thumbs Up, Man Down",{{45940}},{{45940}},{{45940}},15,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,40,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26990] = {"[Epoch] Quest 26990",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26991] = {"[Epoch] Quest 26991",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26992] = {"[Epoch] Quest 26992",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26993] = {"[Epoch] Quest 26993",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 
 -- Issue #62: Missing quest name
-epochQuestData[26994] = {"The Killing Fields",nil,nil,10,10,5,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,40,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil}
 
 -- Issue #78: Batch quest data submission
 epochQuestData[26217] = {"Lost in the Lake",{{45044}},{{1938}},nil,16,nil,nil,nil,nil,{nil,nil,{{60137,1},{60138,1}}},nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Correct: Tirisfal Glades
-epochQuestData[26218] = {"Wreck of the Kestrel",{{2140}},nil,nil,13,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Correct: Tirisfal Glades
 epochQuestData[26368] = {"Call to Skirmish: Thousand Needles",nil,nil,nil,35,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,400,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Thousand Needles
 epochQuestData[26370] = {"Call to Skirmish: Alterac Mountains",nil,nil,nil,35,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,36,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Alterac Mountains
 epochQuestData[26372] = {"Call to Skirmish: Desolace",nil,nil,nil,35,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,405,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Desolace
-epochQuestData[26374] = {"Call to Skirmish: Arathi Highlands",nil,nil,nil,35,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,45,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Arathi Highlands
 epochQuestData[27244] = {"Drysnap Delicacy",nil,nil,nil,35,nil,nil,{"Collect 10 Oversized Drysnap Claws."},nil,{nil,nil,{{63116,10,"Oversized Drysnap Claw"}}},nil,nil,nil,nil,nil,nil,17,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Issue #260: Updated with objectives (Barrens - Drysnap creatures)
 epochQuestData[28501] = {"[Epoch] Quest 28501",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 
 -- Issue #75: Springsocket commission quests - Barrens
-epochQuestData[28077] = {"Commission for Dirk Windrattle",{{45604}},{{45604}},nil,40,nil,nil,{"Bring 10 Dragonbreath Chili to Dirk Windrattle at Springsocket."},nil,{nil,nil,{{12217,10}}},nil,nil,nil,nil,nil,nil,3,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[28535] = {"Commission for Joakim Sparkroot",{{45575}},{{45575}},nil,50,nil,nil,{"Bring 20 Purple Lotus to Joakim Sparkroot."},nil,{nil,nil,{{8831,20}}},nil,nil,nil,nil,nil,nil,3,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[28618] = {"Commission for Joakim Sparkroot",{{45575}},{{45575}},nil,40,nil,nil,{"Bring 5 Worn Dragonscale to Joakim Sparkroot at Springsocket."},nil,{nil,nil,{{8165,5}}},nil,nil,nil,nil,nil,nil,3,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[28077] = {"Commission for Dirk Windrattle",{{45604}},{{45604}},{{45604}},40,nil,nil,{"Bring 10 Dragonbreath Chili to Dirk Windrattle at Springsocket."},nil,{nil,nil,{{12217,10}}},nil,nil,nil,nil,nil,nil,3,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[28535] = {"Commission for Joakim Sparkroot",{{45575}},{{45575}},{{45575}},50,nil,nil,{"Bring 20 Purple Lotus to Joakim Sparkroot."},nil,{nil,nil,{{8831,20}}},nil,nil,nil,nil,nil,nil,3,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[28618] = {"Commission for Joakim Sparkroot",{{45575}},{{45575}},{{45575}},40,nil,nil,{"Bring 5 Worn Dragonscale to Joakim Sparkroot at Springsocket."},nil,{nil,nil,{{8165,5}}},nil,nil,nil,nil,nil,nil,3,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 
 -- Troll/Orc Starting Zone Quests (Durotar / Echo Isles area) - From issue #96
 -- Quests with correct names from data submission
-epochQuestData[28722] = {"The Darkspear Tribe",{{46834}},nil,nil,1,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Quest giver: Joz'jarz at [70, 42]
-epochQuestData[28723] = {"Thievin' Crabs",{{46834}},{{46718}},nil,2,nil,nil,{"Slay 10 Amethyst Crabs."},nil,{{{46835,10}}},nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Quest giver: Joz'jarz, turn-in: Daz'tiro, Amethyst Crab ID: 46835
 epochQuestData[28739] = {"Azsharan Idols",{{46934}},nil,nil,4,nil,nil,{"Collect 3 idols."},nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Quest giver: Uwa, needs item ID
 epochQuestData[28740] = {"Tainted Tablet",nil,{{46934}},nil,1,nil,nil,{"Read Tainted Tablet and speak to Uwa."},nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Quest giver: Unknown (not an NPC quest), turn-in: Uwa
 
@@ -107,21 +100,15 @@ epochQuestData[28752] = {"Your Seat Awaits",nil,nil,nil,1,nil,nil,nil,nil,nil,ni
 epochQuestData[28753] = {"Island Troll-kin",nil,nil,nil,2,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[28754] = {"Troll Skull Poker",nil,nil,nil,2,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[28755] = {"Smoked Boar Meat",nil,nil,nil,2,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[28757] = {"Banana Bonanza",{{46718}},{{47100}},nil,3,nil,nil,{"Collect 10 Sun-Ripened Bananas."},nil,{nil,{{188800,10,"Sun-Ripened Banana"}},{{110002,10}}},nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[28758] = {"Shell Collection",nil,nil,nil,3,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[28759] = {"Claws of the Cat",nil,nil,nil,3,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[28760] = {"Jinxed Trolls",nil,nil,nil,3,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[28761] = {"Source of the Jinx",nil,nil,nil,3,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[28762] = {"Report to Master Gadrin",nil,nil,nil,4,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[28763] = {"Report to Razor Hill",nil,nil,nil,4,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[28764] = {"The Loa of Death",nil,nil,nil,4,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Troll starting zone, interact with Second Tablet of Bwonsamdi at [73.4, 54.7] (needs object ID)
-epochQuestData[28765] = {"Tidal Menace",nil,nil,nil,5,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[28766] = {"Pouch of Strange Shells",nil,nil,nil,5,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[28767] = {"The Naga Menace",nil,nil,nil,5,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[28756] = {"Missing Quest 28756",nil,nil,nil,2,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Gap in troll sequence
 
 -- Issue #73: Springsocket fishing quest - Barrens
-epochQuestData[26126] = {"Springsocket Eels",{{45549}},{{45549}},nil,36,nil,nil,{"Collect 10 Raw Springsocket Eels."},nil,{nil,nil,{{110001,10}}},nil,nil,nil,nil,nil,nil,3,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26126] = {"Springsocket Eels",{{45549}},{{45549}},{{45549}},36,nil,nil,{"Collect 10 Raw Springsocket Eels."},nil,{nil,nil,{{110001,10}}},nil,nil,nil,nil,nil,nil,3,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 
 -- Issue #91: Additional missing quests
 epochQuestData[26282] = {"An Old Debt",nil,nil,nil,42,nil,nil,{"Find Joakim Sparkroot in Westfall."},nil,nil,nil,nil,nil,nil,nil,nil,40,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
@@ -142,7 +129,6 @@ epochQuestData[27575] = {"Nightmare Seeds",nil,nil,nil,58,nil,nil,{"Discover the
 epochQuestData[27883] = {"Battle of Warsong Gulch",nil,nil,nil,60,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,2,nil,nil,nil,nil,nil,nil}
 epochQuestData[27961] = {"The Shatterspear Festival",{{10879}},nil,nil,60,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,1497,nil,nil,nil,nil,nil,nil,2,nil,nil,nil,nil,nil,nil}
 -- Issue #82: Missing quest batch submission
-epochQuestData[26541] = {"Threats from Abroad",nil,nil,nil,32,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26547] = {"To The Hills",nil,nil,nil,37,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 -- Issue #93: Multiple Wetlands and Duskwood quests
 epochQuestData[26570] = {"Waterlogged Journal",nil,{{311}},nil,37,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,10,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Duskwood
@@ -158,14 +144,13 @@ epochQuestData[27006] = {"Eye of Zulumar",nil,{{45943}},nil,28,nil,nil,nil,nil,n
 epochQuestData[27009] = {"Evacuation Report",nil,{{45942}},nil,27,nil,nil,{"Deliver the final evacuation report to Mayor Oakmaster."},nil,nil,nil,nil,nil,nil,nil,nil,11,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Wetlands
 epochQuestData[27016] = {"Drastic Measures",nil,nil,nil,27,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,11,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Wetlands
 epochQuestData[27020] = {"With Friends Like These...",nil,nil,nil,22,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,11,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Wetlands
-epochQuestData[27045] = {"Rumbles Of The Earth",{{45990}},{{45990}},nil,23,nil,nil,{"Question 6 Peons about the rumbling earth."},nil,nil,nil,nil,nil,nil,nil,nil,331,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Issue #269: Ashenvale quest
+epochQuestData[27045] = {"Rumbles Of The Earth",{{45990}},{{45990}},{{45990}},23,nil,nil,{"Question 6 Peons about the rumbling earth."},nil,nil,nil,nil,nil,nil,nil,nil,331,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Issue #269: Ashenvale quest
 epochQuestData[27049] = {"Rumbles Of The Earth",{{45990}},{{45982}},nil,23,nil,nil,{"Locate Ezee Fastrocket within Orgrimmar and collect Foreman Springsocket's Supplies."},nil,nil,nil,nil,nil,nil,nil,nil,331,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Issue #261: Fixed faction flag to Horde (was incorrectly Alliance)
 epochQuestData[27408] = {"[Epoch] Quest 27408",nil,nil,nil,20,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,0,nil,nil,nil,nil,nil,nil} -- Placeholder
 epochQuestData[28475] = {"[Epoch] Quest 28475",nil,nil,nil,20,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,0,nil,nil,nil,nil,nil,nil} -- Placeholder
-epochQuestData[28476] = {"[Epoch] Quest 28476",nil,nil,nil,20,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,0,nil,nil,nil,nil,nil,nil} -- Placeholder
 
 -- Issue #87: Searing Gorge quest chain - Thorium Brotherhood
-epochQuestData[26858] = {"The Thorium Brotherhood",{{45827}},{{14634}},nil,44,nil,nil,{"Collect 10 Firebloom from Searing Gorge and bring them to Lookout Captain Lolo Longstriker."},nil,{nil,nil,{{4625,10}}},nil,nil,nil,nil,nil,nil,51,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26858] = {"The Thorium Brotherhood",{{45827}},{{14634}},{{45827}},44,nil,nil,{"Collect 10 Firebloom from Searing Gorge and bring them to Lookout Captain Lolo Longstriker."},nil,{nil,nil,{{4625,10}}},nil,nil,nil,nil,nil,nil,51,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26864] = {"Do Slavers Keep Records?",nil,{{45833}},nil,46,nil,nil,{"Collect Slaver's Records from Dark Iron Taskmasters and bring them to Bhurind Stoutforge."},nil,{nil,nil,{{63195,1}}},nil,nil,nil,nil,nil,nil,51,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26868] = {"Grampy Stoutforge",{{14624}},{{45834}},nil,46,nil,nil,{"Speak with Grampy Stoutforge in Searing Gorge."},nil,nil,nil,nil,nil,nil,nil,nil,51,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 
@@ -190,7 +175,7 @@ epochQuestData[26630] = {"The Sting of Betrayal",nil,nil,nil,52,nil,nil,nil,nil,
 epochQuestData[26631] = {"The Thorn in My Side",nil,nil,nil,52,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,19,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Blasted Lands
 epochQuestData[26632] = {"Glyph of the Warlord",nil,nil,nil,53,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,19,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Blasted Lands
 epochQuestData[27076] = {"Descendants of Exiles",nil,nil,nil,51,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,19,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Blasted Lands
-epochQuestData[27659] = {"Commission for High Chief Ungarl",nil,{{5385}},nil,50,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,19,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Turn-in: Watcher Mahar Ba
+epochQuestData[27659] = {"Commission for High Chief Ungarl",nil,{{5385}},{{5385}},50,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,19,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Turn-in: Watcher Mahar Ba
 epochQuestData[28634] = {"Commission for Yarr Hammerstone",{{1256}},nil,nil,5,nil,nil,{"Collect 20 Rough Stone."},nil,{nil,nil,{{2835,20,"Rough Stone"}}},nil,nil,nil,nil,nil,nil,1,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Issue #254: Dun Morogh quest
 epochQuestData[28647] = {"Commission for Strumner Flintheel",nil,{{14634}},nil,50,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,51,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Turn-in: Lookout Captain Lolo Longstriker, Searing Gorge
 
@@ -296,13 +281,12 @@ epochQuestData[26847] = {"Ardo's Dirtpaw",{{45825}},{{903}},nil,24,nil,nil,{"Ret
 
 -- Issue #142: A Salve for Samantha - Stranglethorn Vale
 epochQuestData[26879] = {"Swifthoof's Message",{{11748}},{{2519}},nil,34,nil,nil,{"Take Samantha Swifthoof's Message to Kin'weelay at Grom'gol in Stranglethorn Vale."},nil,nil,nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Issue #268: Delivery quest
-epochQuestData[26883] = {"A Salve for Samantha",nil,{{11748}},nil,34,nil,nil,{"Take the Finished Salve to Samantha Swifthoof, who wanders the main road through Stranglethorn Vale."},nil,nil,nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26883] = {"A Salve for Samantha",nil,{{11748}},{{11748}},34,nil,nil,{"Take the Finished Salve to Samantha Swifthoof, who wanders the main road through Stranglethorn Vale."},nil,nil,nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
 
 -- Issue #141: Parts From Afar - Ironforge to Hinterlands
 epochQuestData[26187] = {"Parts From Afar",{{11145}},{{45030}},nil,46,nil,nil,{"Bring the Box of Siege Engine Parts back to Chief Engineer Urul in Aerie Peak."},nil,nil,nil,nil,nil,nil,nil,nil,47,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 
 -- Issue #140: Silverpine Forest quests
-epochQuestData[26217] = {"Lost in the Lake",nil,{{45044}},nil,16,nil,nil,{"Find the Waterlogged Sword and Tarnished Bracelets."},nil,{nil,nil,{{62716,"Waterlogged Sword"},{62717,"Tarnished Bracelets"}}},nil,nil,nil,nil,nil,nil,130,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26873] = {"The Missing Initiate",nil,{{2121}},nil,18,nil,nil,{"Find the missing initiate and report back to Shadow Priest Allister."},nil,nil,nil,nil,nil,nil,nil,nil,130,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26876] = {"Tomes of Interest",nil,nil,nil,18,nil,nil,{"Collect 5 Old Tomes from the area."},nil,{nil,nil,{{62718,5,"Old Tome"}}},nil,nil,nil,nil,nil,nil,130,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
 
@@ -310,22 +294,20 @@ epochQuestData[26876] = {"Tomes of Interest",nil,nil,nil,18,nil,nil,{"Collect 5 
 epochQuestData[26890] = {"My Friend, The Skullsplitter",nil,{{45846}},nil,36,nil,nil,{"Complete the ritual with Mezzphog."},nil,{{{60459,"Ritual Completed"}}},nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
 
 -- Issue #138: Stranglethorn Vale quests batch
-epochQuestData[26282] = {"An Old Debt",nil,nil,nil,42,nil,nil,{"Slay Supervisor Grimgash to settle an old debt."},nil,{{{60460,"Supervisor Grimgash slain"}}},nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26291] = {"Troll Relics",nil,nil,nil,43,nil,nil,{"Collect 8 Troll Idols from around Stranglethorn Vale."},nil,{nil,nil,{{62719,8,"Troll Idol"}}},nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26292] = {"Tunnel Monster",nil,nil,nil,40,nil,nil,{"Slay the monster in the tunnel."},nil,{{{60461,"Monster slain"}}},nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26880] = {"A Salve for Samantha",nil,nil,nil,34,nil,nil,{"Create a salve for Samantha's wounds."},nil,nil,nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26885] = {"My Friend, The Skullsplitter",nil,{{717}},nil,36,nil,nil,{"Speak with Ajeck Rouack about the Skullsplitter tribe."},nil,nil,nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26903] = {"Ironband's Excavation",{{1356}},{{1345}},nil,8,nil,nil,{"Report to Magmar Fellhew."},nil,nil,nil,nil,nil,nil,nil,nil,38,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26906] = {"The Tablet of Zuul'daia",nil,nil,nil,36,nil,nil,{"Find the Tablet of Zuul'daia."},nil,nil,nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26907] = {"Wild Tulip",nil,{{45869}},nil,41,nil,nil,{"Find the Chest of Memories for Chel Moonwood."},nil,{nil,nil,{{62765,"Chest of Memories"}}},nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26907] = {"Wild Tulip",nil,{{45869}},{{45869}},41,nil,nil,{"Find the Chest of Memories for Chel Moonwood."},nil,{nil,nil,{{62765,"Chest of Memories"}}},nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26908] = {"Wild Tulip",{{45869}},nil,nil,41,nil,nil,{"Find Daniels Spice Box and Tulip's Music Box."},nil,{nil,nil,{{62766,"Daniels Spice Box"},{62767,"Tulip's Music Box"}}},nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26912] = {"Deathstrike Remedy",{{983}},nil,nil,40,nil,nil,{"Collect 10 Vials of Deathstrike Venom."},nil,{nil,nil,{{62768,10,"Vial of Deathstrike Venom"}}},nil,nil,nil,nil,nil,nil,38,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26915] = {"Zul'jin's Experiment",{{45873}},{{45873}},nil,42,nil,nil,{"Collect the Troll Ritual Oil and return to Zul'jin."},nil,{nil,nil,{{62769,"Troll Ritual Oil"}}},nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26915] = {"Zul'jin's Experiment",{{45873}},{{45873}},{{45873}},42,nil,nil,{"Collect the Troll Ritual Oil and return to Zul'jin."},nil,{nil,nil,{{62769,"Troll Ritual Oil"}}},nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26922] = {"Demons In Stranglethorn",nil,nil,nil,43,nil,nil,{"Investigate demon activity in Stranglethorn Vale."},nil,nil,nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
 
 -- Issue #137: Elwynn Forest quests
-epochQuestData[26784] = {"Mountainstout Ale",{{45780}},{{45780}},nil,6,nil,nil,{"Collect 6 Glistening Falls Water and 6 Northshire Reed."},nil,{nil,nil,{{62607,6,"Glistening Falls Water"},{62608,6,"Northshire Reed"}}},nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26785] = {"A Friend Indeed",{{45782}},{{45782}},nil,6,nil,nil,{"Help Dromul's friend with their task."},nil,nil,nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26784] = {"Mountainstout Ale",{{45780}},{{45780}},{{45780}},6,nil,nil,{"Collect 6 Glistening Falls Water and 6 Northshire Reed."},nil,{nil,nil,{{62607,6,"Glistening Falls Water"},{62608,6,"Northshire Reed"}}},nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26785] = {"A Friend Indeed",{{45782}},{{45782}},{{45782}},6,nil,nil,{"Help Dromul's friend with their task."},nil,nil,nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 
 -- Issue #136: Brewing Brethren
 epochQuestData[26782] = {"Brewing Brethren",{{328}},{{45783}},nil,6,nil,nil,{"Deliver Zaldimar's special brew to Brother Zaldimar."},nil,nil,nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
@@ -334,7 +316,7 @@ epochQuestData[26782] = {"Brewing Brethren",{{328}},{{45783}},nil,6,nil,nil,{"De
 epochQuestData[26781] = {"Linus Stone Tips",{{45779}},{{253}},nil,6,nil,nil,{"Deliver the Stone Tips to William Pestle."},nil,nil,nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 
 -- Issue #151, #237: Solarsal Report (turn-in updated from issue #237)
-epochQuestData[27053] = {"Solarsal Report",nil,{{45734}},nil,27,nil,nil,{"Bring the report to someone in Astranaar."},nil,nil,nil,nil,nil,nil,nil,nil,11,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27053] = {"Solarsal Report",nil,{{45734}},{{45734}},27,nil,nil,{"Bring the report to someone in Astranaar."},nil,nil,nil,nil,nil,nil,nil,nil,11,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 
 -- Issue #150/149: Azshara's Legacy (duplicate)
 epochQuestData[27091] = {"Azshara's Legacy",nil,{{46008}},nil,54,nil,nil,{"Discover Azshara's Legacy."},nil,nil,nil,nil,nil,nil,nil,nil,16,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
@@ -348,7 +330,7 @@ epochQuestData[26541] = {"Threats from Abroad",{{45546}},nil,nil,32,nil,nil,{"Sl
 -- Removed duplicate entries for quests 26768, 26771, 26774, 26775, 26794 (defined with correct data in Issue #104 section)
 
 -- Issue #146: Commission for Verner Osgood
-epochQuestData[28573] = {"Commission for Verner Osgood",{{2697}},{{2697}},nil,30,nil,nil,{"Complete Verner Osgood's commission."},nil,nil,nil,nil,nil,nil,nil,nil,36,nil,nil,nil,nil,nil,3,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[28573] = {"Commission for Verner Osgood",{{2697}},{{2697}},{{2697}},30,nil,nil,{"Complete Verner Osgood's commission."},nil,nil,nil,nil,nil,nil,nil,nil,36,nil,nil,nil,nil,nil,3,0,nil,nil,nil,nil,nil,nil}
 
 -- Issue #145: Riders In The Night
 epochQuestData[26707] = {"Riders In The Night",nil,{{264}},nil,28,nil,nil,{"Report the night rider sightings to Commander Althea Ebonlocke."},nil,nil,nil,nil,nil,nil,nil,nil,10,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
@@ -366,7 +348,7 @@ epochQuestData[26887] = {"My Friend, The Skullsplitter",nil,{{45846}},nil,36,nil
 epochQuestData[27237] = {"An End To Dread",{{46083}},{{11438}},nil,37,nil,nil,{"End the dread threat in the swamp."},nil,nil,nil,nil,nil,nil,nil,nil,38,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 
 -- Issue #130: Crazed Carrion
-epochQuestData[27243] = {"Crazed Carrion",{{46086}},{{46086}},nil,36,nil,nil,{"Deal with the crazed carrion birds."},nil,nil,nil,nil,nil,nil,nil,nil,38,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27243] = {"Crazed Carrion",{{46086}},{{46086}},{{46086}},36,nil,nil,{"Deal with the crazed carrion birds."},nil,nil,nil,nil,nil,nil,nil,nil,38,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
 
 -- Issue #129: A Mage's Advice
 epochQuestData[26780] = {"A Mage's Advice",{{6778}},{{328}},nil,5,nil,nil,{"Seek the mage's advice in Goldshire."},nil,nil,nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
@@ -377,7 +359,6 @@ epochQuestData[26779] = {"A Brother's Disgust",{{952}},{{952}},nil,5,nil,nil,{"R
 -- Issue #127, #236: Fit For A King (updated with complete data from issue #236)
 epochQuestData[26294] = {"Fit For A King",nil,{{45211}},nil,45,nil,nil,{"Collect 8 Wetland Hemp."},nil,{[61937]={8,nil,{[357]={{50.6,46.2},{51.1,45},{78.6,48.2},{79.2,48.9},{73.7,48.5},{77.4,48.8},{77.5,43.8},{74.9,40.4}}}}},nil,nil,nil,nil,nil,nil,357,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[27104] = {"Report to Scout Dura",nil,nil,nil,48,nil,nil,{"Report to Scout Dura at the forward camp."},nil,nil,nil,nil,nil,nil,nil,nil,331,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[27322] = {"Shadowguard Report",nil,nil,nil,50,nil,nil,{"Deliver the Shadowguard report."},nil,nil,nil,nil,nil,nil,nil,nil,331,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[27463] = {"Warden's Summons",nil,nil,nil,52,nil,nil,{"Answer the Warden's summons."},nil,nil,nil,nil,nil,nil,nil,nil,331,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 
 -- Issue #126: Various quests
@@ -400,11 +381,10 @@ epochQuestData[27483] = {"Demons In Fel Rock",nil,{{3610}},nil,6,nil,nil,{"Inves
 epochQuestData[26891] = {"Pilfering the Reef",nil,nil,nil,39,nil,nil,{"Pilfer treasures from the reef."},nil,nil,nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
 
 -- Issue #121: Various Silverpine quests
-epochQuestData[26218] = {"Wreck of the Kestrel",{{2140}},nil,nil,13,nil,nil,{"Investigate the wreck of the Kestrel."},nil,nil,nil,nil,nil,nil,nil,nil,130,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26218] = {"Wreck of the Kestrel",{{2140}},{{2140}},nil,13,nil,nil,{"Investigate the wreck of the Kestrel."},nil,nil,nil,nil,nil,nil,nil,nil,130,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26872] = {"Urgent Delivery",nil,nil,nil,15,nil,nil,{"Deliver the urgent package."},nil,nil,nil,nil,nil,nil,nil,nil,130,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26874] = {"Supply Run",nil,nil,nil,16,nil,nil,{"Complete the supply run."},nil,nil,nil,nil,nil,nil,nil,nil,130,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[27167] = {"Border Patrol",nil,nil,nil,17,nil,nil,{"Patrol the Silverpine border."},nil,nil,nil,nil,nil,nil,nil,nil,130,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[27195] = {"Forsaken Duties",nil,nil,nil,18,nil,nil,{"Complete your Forsaken duties."},nil,nil,nil,nil,nil,nil,nil,nil,130,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[27198] = {"The Sepulcher",nil,nil,nil,19,nil,nil,{"Report to the Sepulcher."},nil,nil,nil,nil,nil,nil,nil,nil,130,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[27200] = {"Shadow Priest's Task",nil,nil,nil,20,nil,nil,{"Complete the Shadow Priest's task."},nil,nil,nil,nil,nil,nil,nil,nil,130,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
 
@@ -412,28 +392,23 @@ epochQuestData[27200] = {"Shadow Priest's Task",nil,nil,nil,20,nil,nil,{"Complet
 epochQuestData[26778] = {"Find the Brother",{{9296}},{{9296}},nil,1,nil,nil,{"Find Brother Wilhelm."},nil,nil,nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 
 -- Issue #117: Waterlogged Journal
-epochQuestData[26570] = {"Waterlogged Journal",nil,{{4453}},nil,37,nil,nil,{"Return the waterlogged journal to Sven Yorgen."},nil,nil,nil,nil,nil,nil,nil,nil,10,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 
 -- Issues #104-116, #119, #132, #153, #155-156: Additional Epoch quest data
 -- Issue #104: Elwynn Forest quests
-epochQuestData[26774] = {"Spider Elixir",{{45775}},{{45775}},nil,9,nil,nil,{"Free 4 Webbed Miners and collect 4 Mine Spider Mandibles."},nil,{{{60801,4,"Webbed Miners freed"}},nil,{{62825,"Mine Spider Mandible",4}}},nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26774] = {"Spider Elixir",{{45775}},{{45775}},{{45775}},9,nil,nil,{"Free 4 Webbed Miners and collect 4 Mine Spider Mandibles."},nil,{{{60801,4,"Webbed Miners freed"}},nil,{{62825,"Mine Spider Mandible",4}}},nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26777] = {"The Soaked Barrel",nil,{{9296}},1,1,77,nil,{"Find the source of the barrel via 12 Red Burlap Bandana discoveries."},nil,nil,nil,nil,nil,{26778},nil,nil,12,nil,nil,nil,nil,26778,8,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26778] = {"Find the Brother",{{9296}},{{952}},1,1,77,nil,{"Bring the soaked barrel to Brother Neals."},nil,nil,nil,nil,{26777},nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,26777,nil,nil,nil,nil,nil}
-epochQuestData[26781] = {"Linus Stone Tips",{{328}},{{328}},nil,5,nil,nil,{"Collect 1 item at coordinates 42.4, 58.6."},nil,nil,nil,nil,{26780},nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,26780,nil,nil,nil,nil,nil}
 
 -- Issue #104: Elwynn Forest (continued)
 epochQuestData[26689] = {"Barroom Blitz",{{240}},{{240}},nil,12,nil,nil,{"Deal with the barroom troublemakers."},nil,nil,nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26768] = {"Just Desserts",{{45773}},{{45773}},nil,8,nil,nil,{"Collect 5 Mild Spices, 5 Simple Flour, 1 Salt, and 20 Mana Berries."},nil,{nil,nil,{{2678,"Mild Spices",5},{30817,"Simple Flour",5},{2901,"Salt",1},{62823,"Mana Berry",20}}},nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[28904] = {"Just Desserts",{{45773}},{{45773}},nil,8,nil,nil,{"Collect Mana Tainted Sludge."},nil,nil,nil,nil,{26768},{26770},nil,nil,12,nil,nil,nil,nil,26770,8,0,26768,nil,nil,nil,nil,nil} -- Changed from 26769 to avoid duplicate
 epochQuestData[26770] = {"Just Desserts",{{45773}},{{313}},nil,8,nil,nil,{"Present Sarah's cake to Theocritus."},nil,nil,nil,nil,{28904},nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,28904,nil,nil,nil,nil,nil} -- Updated reference to 28904
-epochQuestData[26771] = {"Lost Equipment",{{45777}},{{45774}},nil,9,nil,nil,{"Collect 8 Mining Equipment."},nil,{nil,nil,{{62824,"Mining Equipment",8}}},nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26775] = {"Tend to the Wounded",{{45775}},{{45775}},nil,10,nil,nil,{"Cure 5 Poisoned Miners."},nil,{{{60800,5,"Poisoned Miners cured"}}},nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26794] = {"Wanted: Big Blue",{nil,{45797}},{{45798}},nil,8,nil,nil,{"Slay Big Blue and collect the bounty."},nil,{{{60799,"Big Blue"}}},nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 
 -- Issue #105: Feralas quests
-epochQuestData[27488] = {"Bad News Has Horns",{{4048}},{{4048}},nil,28,nil,nil,{"Collect 3 Secret Notes from Thousand Needles."},nil,{nil,nil,{{12765,"Secret Note #1"},{12766,"Secret Note #2"},{12768,"Secret Note #3"}}},nil,nil,nil,nil,nil,nil,405,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[27500] = {"The Sacred Flame",{{4048}},{{4048}},nil,27,nil,nil,{"Scout the centaur artifact location at the Cloven Hoof."},nil,nil,nil,nil,nil,{27501},nil,nil,400,nil,nil,nil,nil,27501,8,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[27501] = {"The Sacred Flame",{{4048}},{{4048}},nil,30,nil,nil,{"Collect the sacred flame artifact."},nil,{nil,nil,{{10749}}},nil,nil,{27500},nil,nil,nil,400,nil,nil,nil,nil,nil,8,0,27500,nil,nil,nil,nil,nil}
+epochQuestData[27488] = {"Bad News Has Horns",{{4048}},{{4048}},{{4048}},28,nil,nil,{"Collect 3 Secret Notes from Thousand Needles."},nil,{nil,nil,{{12765,"Secret Note #1"},{12766,"Secret Note #2"},{12768,"Secret Note #3"}}},nil,nil,nil,nil,nil,nil,405,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27500] = {"The Sacred Flame",{{4048}},{{4048}},{{4048}},27,nil,nil,{"Scout the centaur artifact location at the Cloven Hoof."},nil,nil,nil,nil,nil,{27501},nil,nil,400,nil,nil,nil,nil,27501,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27501] = {"The Sacred Flame",{{4048}},{{4048}},{{4048}},30,nil,nil,{"Collect the sacred flame artifact."},nil,{nil,nil,{{10749}}},nil,nil,{27500},nil,nil,nil,400,nil,nil,nil,nil,nil,8,0,27500,nil,nil,nil,nil,nil}
 epochQuestData[27504] = {"Kristy's Delivery Service",nil,nil,nil,30,nil,nil,{"Complete Kristy's delivery service."},nil,nil,nil,nil,nil,nil,nil,nil,405,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 
 -- Issue #255: Tanaris and Thousand Needles quests batch submission
@@ -448,52 +423,44 @@ epochQuestData[27499] = {"Help The Help Help Others",{{46273}},nil,nil,32,nil,ni
 epochQuestData[27205] = {"My Sister Isabetta",nil,{{3616}},nil,14,nil,nil,{"Find information about Isabetta."},nil,nil,nil,nil,nil,nil,nil,nil,148,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 
 -- Issue #107: Hillsbrad/Horde quests
-epochQuestData[26544] = {"Who Likes Apples?",{{3544}},{{3544}},nil,35,nil,nil,{"Collect 6 apples."},nil,nil,nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Hillsbrad Foothills quest
+epochQuestData[26544] = {"Who Likes Apples?",{{3544}},{{3544}},{{3544}},35,nil,nil,{"Collect 6 apples."},nil,nil,nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Hillsbrad Foothills quest
 epochQuestData[27034] = {"Never Again!",nil,{{45982}},nil,30,nil,nil,{"Slay Gorgannon and Diathorus the Seeker in Ashenvale."},nil,{{{17300,"Gorgannon"},{6072,"Diathorus the Seeker"}}},nil,nil,nil,nil,nil,nil,331,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Issue #270: Ashenvale quest, fixed zone and objectives
-epochQuestData[27238] = {"An Imp's Bidding",{{46000}},{{46000}},nil,31,nil,nil,{"Slay 1 monster and collect Demonic Sextant."},nil,{nil,nil,{{63113,"Demonic Sextant"}}},nil,nil,nil,nil,nil,nil,405,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Desolace quest
+epochQuestData[27238] = {"An Imp's Bidding",{{46000}},{{46000}},{{46000}},31,nil,nil,{"Slay 1 monster and collect Demonic Sextant."},nil,{nil,nil,{{63113,"Demonic Sextant"}}},nil,nil,nil,nil,nil,nil,405,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Desolace quest
 
 -- Issue #266: Hillsbrad Foothills quest
 epochQuestData[26795] = {"A Lost Warrior",{{2229}},{{2418}},nil,24,nil,nil,{"Speak with Deathguard Samsa in Tarren Mill."},nil,nil,nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Hillsbrad Foothills
 
 -- Issue #108: Alliance quests (Hillsbrad/Wetlands)
-epochQuestData[26542] = {"A Rare Variety",{{2364}},{{2364}},nil,35,nil,nil,{"Collect 6 rare specimens."},nil,{nil,nil,{{11630}}},nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26802] = {"Venom Medicine",{{2363}},{{2363}},nil,23,nil,nil,{"Collect 8 Venom Sacs."},nil,{nil,nil,{{11630}}},nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[27000] = {"A Temporary Victory",{{45942}},{{2104}},nil,31,nil,nil,{"Deliver news of Burndural Victory to Captain Stoutfist."},nil,nil,nil,nil,nil,nil,nil,nil,11,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26542] = {"A Rare Variety",{{2364}},{{2364}},{{2364}},35,nil,nil,{"Collect 6 rare specimens."},nil,{nil,nil,{{11630}}},nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26802] = {"Venom Medicine",{{2363}},{{2363}},{{2363}},23,nil,nil,{"Collect 8 Venom Sacs."},nil,{nil,nil,{{11630}}},nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 
 -- Issue #109: Horde quests (various zones)
 epochQuestData[26310] = {"Trial of the Willing",nil,nil,nil,25,nil,nil,{"Slay Deor Levo, Reagle the Blessed, and Justicar Masule."},nil,nil,nil,nil,nil,nil,nil,nil,331,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Ashenvale quest
-epochQuestData[27167] = {"Foreign Technology",nil,nil,nil,19,nil,nil,{"Obtain Cognation Reconstructor."},nil,nil,nil,nil,nil,nil,nil,nil,17,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Barrens quest
-epochQuestData[27171] = {"Retrieving the Orb",nil,nil,nil,18,nil,nil,{"Obtain Korgar's Orb."},nil,nil,nil,nil,nil,nil,nil,nil,17,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Barrens quest
-epochQuestData[27198] = {"The Missing Lorespeakers",nil,nil,nil,22,nil,nil,{"Find the missing lorespeakers."},nil,nil,nil,nil,nil,nil,nil,nil,17,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Barrens quest
 epochQuestData[27882] = {"Battle of Warsong Gulch",nil,nil,nil,21,nil,nil,{"Win the Battle of Warsong Gulch."},nil,nil,nil,nil,nil,nil,nil,nil,331,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Ashenvale quest (Warsong Gulch entrance)
 
 -- Issue #111 & #116: Stranglethorn Vale quests
 epochQuestData[26885] = {"My Friend, The Skullsplitter",{{45846}},{{2497}},nil,36,nil,nil,{"Speak with Thu'tek and return his Spirit Charm to Nimboya."},nil,nil,nil,nil,nil,{26886},nil,nil,33,nil,nil,nil,nil,26886,8,0,nil,nil,nil,nil,nil,nil} -- Stranglethorn Vale quest
-epochQuestData[26886] = {"My Friend, The Skullsplitter",{{45845}},{{45846}},nil,36,nil,nil,{"Return to Lorespeaker Itzli at Grom'gol with Thu'tek's Spirit Charm."},nil,nil,nil,nil,{26885},nil,nil,nil,33,nil,nil,nil,nil,nil,8,0,26885,nil,nil,nil,nil,nil} -- Stranglethorn Vale quest
+epochQuestData[26886] = {"My Friend, The Skullsplitter",{{45845}},{{45846}},{{45845}},36,nil,nil,{"Return to Lorespeaker Itzli at Grom'gol with Thu'tek's Spirit Charm."},nil,nil,nil,nil,{26885},nil,nil,nil,33,nil,nil,nil,nil,nil,8,0,26885,nil,nil,nil,nil,nil} -- Stranglethorn Vale quest
 
 -- Issue #113: Felwood quests
 epochQuestData[26148] = {"Legion Paisa",nil,{{9996}},nil,60,nil,nil,{"Take Legion Paisa to Altadena in Booty Bay."},nil,nil,nil,nil,nil,nil,nil,nil,361,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Felwood quest
-epochQuestData[27309] = {"Mementos of the Third War",{{46127}},nil,nil,52,nil,nil,{"Take Box of Grisly Mementos to Thrall in Orgrimmar."},nil,nil,nil,nil,nil,nil,nil,nil,361,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Felwood quest
+epochQuestData[27309] = {"Mementos of the Third War",{{46127}},{{46127}},nil,52,nil,nil,{"Take Box of Grisly Mementos to Thrall in Orgrimmar."},nil,nil,nil,nil,nil,nil,nil,nil,361,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Felwood quest
 
 -- Issue #114: The Barrens quests
 epochQuestData[27166] = {"Consumed by Hatred",{{3432}},{{3432}},nil,14,nil,nil,{"Collect 10 Kolkar Heads."},nil,{nil,nil,{{63039,"Kolkar Head",10}}},nil,nil,nil,nil,nil,nil,17,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Barrens quest, Issue #264: Added quest giver
-epochQuestData[27168] = {"Lost in Battle",nil,nil,nil,14,nil,nil,{"Find 3 different clues."},nil,nil,nil,nil,nil,nil,nil,nil,17,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Barrens quest
 epochQuestData[27195] = {"Straight to the Teeth",{{46065}},{{46065}},nil,18,nil,nil,{"Collect 10 Hecklefang Teeth."},nil,nil,nil,nil,nil,nil,nil,nil,17,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Barrens quest
 epochQuestData[27196] = {"The Kolkar Report",nil,nil,nil,15,nil,nil,{"Bring Kolkar Report to Thork at The Crossroads."},nil,nil,nil,nil,nil,nil,nil,nil,17,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Barrens quest
-epochQuestData[27197] = {"The Merchant's Daughter",{{7161}},{{7161}},nil,17,nil,nil,{"Obtain Box of Treasure."},nil,{nil,nil,{{63070,"Box of Treasure"}}},nil,nil,nil,nil,nil,nil,17,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Barrens quest
+epochQuestData[27197] = {"The Merchant's Daughter",{{7161}},{{7161}},{{7161}},17,nil,nil,{"Obtain Box of Treasure."},nil,{nil,nil,{{63070,"Box of Treasure"}}},nil,nil,nil,nil,nil,nil,17,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Barrens quest
 
 -- Issue #115: Various Horde quests
-epochQuestData[26287] = {"Prismatic Scales",nil,nil,nil,40,nil,nil,{"Collect Prismatic Scale."},nil,{nil,nil,{{4354}}},nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Stranglethorn Vale quest
-epochQuestData[26368] = {"Call to Skirmish: Thousand Needles",nil,nil,nil,35,nil,nil,{"Win skirmish in Thousand Needles."},nil,nil,nil,nil,nil,nil,nil,nil,400,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Thousand Needles quest
 epochQuestData[26374] = {"Call to Skirmish: Arathi Highlands",{{12920}},{{12920}},nil,37,nil,nil,{"Kill 5 Alliance."},nil,nil,nil,nil,nil,nil,nil,nil,45,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Arathi Highlands quest
-epochQuestData[26376] = {"Call to Skirmish: Swamp of Sorrows",{{9019}},{{9019}},nil,38,nil,nil,{"Kill 5 Alliance."},nil,nil,nil,nil,nil,nil,nil,nil,8,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Swamp of Sorrows quest
+epochQuestData[26376] = {"Call to Skirmish: Swamp of Sorrows",{{9019}},{{9019}},{{9019}},38,nil,nil,{"Kill 5 Alliance."},nil,nil,nil,nil,nil,nil,nil,nil,8,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Swamp of Sorrows quest
 epochQuestData[27492] = {"Fresh Water Delivery",nil,{{4630}},nil,31,nil,nil,{"Dispense 10 water."},nil,nil,nil,nil,nil,nil,nil,nil,400,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Thousand Needles quest (Pozzik)
 
 -- Issue #132: Silverpine Forest quest (updating existing)
-epochQuestData[26218] = {"Wreck of the Kestrel",{{2140}},{{2140}},nil,13,nil,nil,{"Collect Smokywood Pastures Shipping Crate from the Ghostly Goblin."},nil,{nil,nil,{{60141,"Smokywood Pastures Shipping Crate"}}},nil,nil,nil,nil,nil,nil,130,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Silverpine Forest quest (updated)
 
 -- Issue #264: Silverpine Forest quests
-epochQuestData[26875] = {"The Missing Initiate",{{45840}},{{45841}},nil,18,nil,nil,{"Find Sage Greenhorn in Silverpine Forest."},nil,nil,nil,nil,nil,nil,nil,nil,130,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Silverpine Forest
+epochQuestData[26875] = {"The Missing Initiate",{{45840}},{{45841}},{{45841}},18,nil,nil,{"Find Sage Greenhorn in Silverpine Forest."},nil,nil,nil,nil,nil,nil,nil,nil,130,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Silverpine Forest
 epochQuestData[26877] = {"Tomes of Interest",{{45841}},{{45841}},nil,18,nil,nil,{"Slay 4 Sickly Refugees and collect 5 Gilnean Tomes."},nil,{nil,nil,{{62727,"Gilnean Tome",5}}},nil,nil,nil,nil,nil,nil,130,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Silverpine Forest
 epochQuestData[26878] = {"Tomes of Interest",{{45841}},{{45841}},nil,20,nil,nil,{"Collect The Theory of History."},nil,{nil,nil,{{62728,"The Theory of History"}}},nil,nil,nil,nil,nil,nil,130,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Silverpine Forest (duplicate name, different objectives)
 
@@ -504,7 +471,7 @@ epochQuestData[27092] = {"Azshara's Legacy",{{46006}},{{46008}},nil,54,nil,nil,{
 epochQuestData[26312] = {"Materials of the Light",nil,nil,nil,22,nil,nil,{"Collect Corrupted Kor Gem, Springvale's Blessed Ingots, Zelemar's Hammer, and Silver Hand Medallion."},nil,nil,nil,nil,nil,nil,nil,nil,331,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Ashenvale quest
 epochQuestData[27201] = {"The Triad Scrolls",nil,nil,nil,30,nil,nil,{"Collect The Triad: Founding of Thunder Bluff, Founding of Camp Mojache, and Founding of Sun Rock Retreat."},nil,nil,nil,nil,nil,nil,nil,nil,331,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Ashenvale quest
 epochQuestData[27397] = {"A Trip to the Vale",{{12043}},{{4198}},nil,27,nil,nil,{"Collect Charred Wood and Basilisk Tail."},nil,{nil,nil,{{63244,nil,"Charred Wood"},{63245,nil,"Basilisk Tail"}}},nil,nil,nil,nil,nil,nil,406,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Issue #259: Updated with quest giver, turn-in NPC, and item IDs
-epochQuestData[27489] = {"Canyon Patrol",{{10428}},{{10428}},nil,27,nil,nil,{"Kill 8 Pesterhide Hyenas."},nil,nil,nil,nil,nil,nil,nil,nil,400,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Thousand Needles quest
+epochQuestData[27489] = {"Canyon Patrol",{{10428}},{{10428}},{{10428}},27,nil,nil,{"Kill 8 Pesterhide Hyenas."},nil,nil,nil,nil,nil,nil,nil,nil,400,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Thousand Needles quest
 epochQuestData[27490] = {"Crag Stalking",nil,nil,nil,27,nil,nil,{"Complete crag stalking objectives."},nil,nil,nil,nil,nil,nil,nil,nil,400,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Thousand Needles quest
 
 -- Issue #160: Duskwood quest
@@ -525,7 +492,7 @@ epochQuestData[26680] = {"Lost Rams",{{1261}},{{1261}},nil,9,nil,nil,{"Return 3 
 epochQuestData[26684] = {"Ram Riding",{{4772}},nil,nil,40,nil,nil,{"Learn Apprentice Riding from Ultham Ironhorn."},nil,{{{60002,"Apprentice Riding Learned"}}},nil,nil,nil,nil,nil,nil,1,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26687] = {"Ore for Grumnal",{{1360}},{{1360}},nil,10,nil,nil,{"Collect 10 Kinetic Ore."},nil,{nil,nil,{{62201,10,"Kinetic Ore"}}},nil,nil,nil,nil,nil,nil,1,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Issue #254: Dun Morogh quest
 epochQuestData[27299] = {"Sniff Him Out",{{46121}},nil,nil,41,nil,nil,{"Follow the Sniffotron MK IV to find Beezil."},nil,{{{60003,"Follow the Sniffotron MK IV"}}},nil,nil,nil,nil,nil,nil,15,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[27300] = {"Beezil And The Burning Blade",{{46120}},{{46121}},nil,41,nil,nil,{"Report to Cys Craftcharge after speaking with Beezil Linkspanner."},nil,nil,nil,nil,nil,nil,nil,nil,15,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27300] = {"Beezil And The Burning Blade",{{46120}},{{46121}},{{46121}},41,nil,nil,{"Report to Cys Craftcharge after speaking with Beezil Linkspanner."},nil,nil,nil,nil,nil,nil,nil,nil,15,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[27302] = {"Burning Blade Dossier",{{46121}},{{46123}},nil,41,nil,nil,{"Bring Cys Craftcharge's Report to Watcher Wallace in Theramore."},nil,nil,nil,nil,nil,nil,nil,nil,15,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[27443] = {"Azeroth Space Society",{{46228}},{{46120}},nil,41,nil,nil,{"Deliver Kranz's message to Beezil Linkspanner in Dustwallow Marsh."},nil,nil,nil,nil,nil,nil,nil,nil,440,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 
@@ -543,7 +510,7 @@ epochQuestData[26537] = {"The Mordis Key",nil,{{2278}},nil,40,nil,nil,{"Deliver 
 epochQuestData[26504] = {"Syndicate Documents",nil,{{1182}},nil,33,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,405,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil} -- Desolace turn-in
 epochQuestData[26538] = {"The Barony Mordis",{{2378}},nil,nil,40,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil} -- Hillsbrad
 epochQuestData[26543] = {"Watermelon Punch",{{2364}},nil,nil,40,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil} -- Hillsbrad
-epochQuestData[26817] = {"Justice Left Undone",nil,{{2378}},nil,34,nil,nil,{"Kill Grandpa Vishas in Alterac Mountains."},nil,{{{3985,"Grandpa Vishas"}}},nil,nil,nil,nil,nil,nil,36,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil} -- Alterac Mountains, Issue #265: Added turn-in NPC and objectives
+epochQuestData[26817] = {"Justice Left Undone",nil,{{2378}},{{2378}},34,nil,nil,{"Kill Grandpa Vishas in Alterac Mountains."},nil,{{{3985,"Grandpa Vishas"}}},nil,nil,nil,nil,nil,nil,36,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil} -- Alterac Mountains, Issue #265: Added turn-in NPC and objectives
 epochQuestData[26822] = {"Hillsbrad Assault",nil,nil,nil,29,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil} -- Hillsbrad
 epochQuestData[26823] = {"Hillsbrad Defense",nil,nil,nil,29,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil} -- Hillsbrad
 epochQuestData[26884] = {"Looting the Looters",{{45844}},nil,nil,36,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil} -- STV
@@ -552,10 +519,10 @@ epochQuestData[27503] = {"Why Oh Wyvern",{{11826}},nil,nil,28,nil,nil,nil,nil,ni
 
 -- Issue #164 quests (skipped already existing ones: 26370, 26374, 26537, 26544)
 epochQuestData[26362] = {"Call to Skirmish: Stonetalon Mountains",nil,nil,nil,36,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,81,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Stonetalon
-epochQuestData[26521] = {"The Argus Wake",nil,{{2317}},nil,40,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,36,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Alterac turn-in
+epochQuestData[26521] = {"The Argus Wake",nil,{{2317}},{{2317}},40,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,36,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Alterac turn-in
 epochQuestData[26522] = {"The Argus Wake",nil,nil,nil,40,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Hillsbrad
 epochQuestData[26523] = {"The Ensorcelled Parchment",nil,nil,nil,40,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,36,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Alterac
-epochQuestData[26524] = {"To Ravenholdt Manor",nil,{{3544}},nil,40,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Hillsbrad turn-in
+epochQuestData[26524] = {"To Ravenholdt Manor",nil,{{3544}},{{3544}},40,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Hillsbrad turn-in
 epochQuestData[26525] = {"Felicity's Deciphering",{{6768}},{{45526}},nil,40,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,36,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Alterac
 epochQuestData[26526] = {"The Bloodstone Devices",nil,nil,nil,40,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,36,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Alterac
 epochQuestData[26539] = {"The Barony Mordis",nil,nil,nil,40,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,36,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Alterac
@@ -567,7 +534,7 @@ epochQuestData[26714] = {"The Handmaiden's Fall",nil,{{2112}},nil,28,nil,nil,nil
 epochQuestData[26715] = {"The Handmaiden's Fall",{{2112}},{{2112}},nil,28,nil,nil,{"Collect Stolen Fresh Bread and a Cask of Brightwood White."},nil,{nil,{{187600,nil,"Leftover Bread"},{187601,nil,"Cask of Brightwood White"}},{{62535,nil,"Stolen Fresh Bread"},{62536,nil,"Cask of Brightwood White"}}},nil,nil,{26714},nil,nil,nil,10,nil,nil,nil,nil,nil,8,0,26714,nil,nil,nil,nil,nil} -- Issue #240: Duskwood quest (possibly follows 26714)
 
 -- Issue #208: Two-Legged Vultures - Tanaris quest
-epochQuestData[27420] = {"Two-Legged Vultures",{{7771}},{{7771}},nil,45,nil,nil,{"Collect Marvon's Pocket Watch, Marvon's Brimmed Hat, and Marvon's Ham Radio."},nil,{nil,nil,{{63284,1,"Marvon's Pocket Watch"},{63285,1,"Marvon's Brimmed Hat"},{63286,1,"Marvon's Ham Radio"}}},nil,nil,nil,nil,nil,nil,440,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Tanaris: Quest giver and turn-in: Marvon Rivetseeker (7771)
+epochQuestData[27420] = {"Two-Legged Vultures",{{7771}},{{7771}},{{7771}},45,nil,nil,{"Collect Marvon's Pocket Watch, Marvon's Brimmed Hat, and Marvon's Ham Radio."},nil,{nil,nil,{{63284,1,"Marvon's Pocket Watch"},{63285,1,"Marvon's Brimmed Hat"},{63286,1,"Marvon's Ham Radio"}}},nil,nil,nil,nil,nil,nil,440,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Tanaris: Quest giver and turn-in: Marvon Rivetseeker (7771)
 
 -- Issues #198 and #209: Missing quest placeholders
 epochQuestData[26332] = {"[Epoch] Quest 26332",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
@@ -590,7 +557,6 @@ epochQuestData[27115] = {"[Epoch] Quest 27115",nil,nil,nil,nil,nil,nil,nil,nil,n
 epochQuestData[27116] = {"[Epoch] Quest 27116",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[27126] = {"[Epoch] Quest 27126",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[27127] = {"[Epoch] Quest 27127",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[27128] = {"[Epoch] Quest 27128",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[27129] = {"[Epoch] Quest 27129",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[27130] = {"[Epoch] Quest 27130",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[27131] = {"[Epoch] Quest 27131",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
@@ -604,11 +570,11 @@ epochQuestData[27164] = {"[Epoch] Quest 27164",nil,nil,nil,nil,nil,nil,nil,nil,n
 epochQuestData[28072] = {"[Epoch] Quest 28072",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[28483] = {"[Epoch] Quest 28483",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 -- Issue #213: Three Dun Morogh G.E.A.R. quests (reassigned IDs due to conflicts)
-epochQuestData[28901] = {"Shift into G.E.A.R.",{{46836}},{{46836}},nil,1,nil,nil,{"Kill 10 Underfed Troggs."},nil,{{{46837,10,"Underfed Trogg"}}},nil,nil,nil,nil,nil,nil,1,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Dun Morogh: Tinker Captain Whistlescrew (originally 28725)
-epochQuestData[28902] = {"No Room for Sympathy",{{46836}},{{46836}},nil,2,nil,nil,{"Kill 8 Irradiated Oozes and 4 Infected Gnomes."},nil,{{{46839,8,"Irradiated Ooze"},{46838,4,"Infected Gnome"}}},nil,nil,nil,nil,nil,nil,1,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Dun Morogh: Tinker Captain Whistlescrew (originally 28726)
+epochQuestData[28901] = {"Shift into G.E.A.R.",{{46836}},{{46836}},{{46836}},1,nil,nil,{"Kill 10 Underfed Troggs."},nil,{{{46837,10,"Underfed Trogg"}}},nil,nil,nil,nil,nil,nil,1,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Dun Morogh: Tinker Captain Whistlescrew (originally 28725)
+epochQuestData[28902] = {"No Room for Sympathy",{{46836}},{{46836}},{{46836}},2,nil,nil,{"Kill 8 Irradiated Oozes and 4 Infected Gnomes."},nil,{{{46839,8,"Irradiated Ooze"},{46838,4,"Infected Gnome"}}},nil,nil,nil,nil,nil,nil,1,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Dun Morogh: Tinker Captain Whistlescrew (originally 28726)
 epochQuestData[28903] = {"Encrypted Memorandum",{{46836}},{{46882}},nil,1,nil,nil,{"Read the Encrypted Memorandum then speak to Windle Fusespring at G.E.A.R. in Dun Morogh."},nil,nil,nil,nil,nil,nil,nil,nil,1,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Dun Morogh: Tinker Captain Whistlescrew to Windle Fusespring (originally 28731, NPC 46880→46882 due to conflict)
 -- Issue #189: The Perenolde Legacy - Alterac Mountains quest
-epochQuestData[26511] = {"The Perenolde Legacy",{{2317}},{{6768}},nil,38,nil,nil,{"Report the news of Aliden Perenolde's death and Elysa's request to search for General Hath to Lord Ravenholdt."},nil,nil,nil,nil,nil,nil,nil,nil,36,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Alterac Mountains: Elysa to Lord Jorach Ravenholdt
+epochQuestData[26511] = {"The Perenolde Legacy",{{2317}},{{6768}},{{2317}},38,nil,nil,{"Report the news of Aliden Perenolde's death and Elysa's request to search for General Hath to Lord Ravenholdt."},nil,nil,nil,nil,nil,nil,nil,nil,36,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Alterac Mountains: Elysa to Lord Jorach Ravenholdt
 epochQuestData[28648] = {"[Epoch] Quest 28648",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 
 -- Issue #232, #231, #230, #229: Quest data from GitHub issues (batch submission)
@@ -627,36 +593,32 @@ epochQuestData[27037] = {"Direct Reprisal",nil,{{45976}},nil,27,nil,nil,{"Slay L
 epochQuestData[27038] = {"Forsaken Looters",nil,{{3663}},nil,20,nil,nil,{"Kill 5 Forsaken Scouts, 5 Forsaken Herbalists and 10 Forsaken Assassins."},nil,{{{3893,5,"Forsaken Scout"},{3733,5,"Forsaken Herbalist"},{3879,10,"Forsaken Assassin"}}},nil,nil,nil,nil,nil,nil,331,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Ashenvale: Delgren the Purifier
 
 -- Issue #267: Ashenvale quest
-epochQuestData[27030] = {"CHOP!",{{45981}},{{45981}},nil,25,nil,nil,{"Protect Romgul as he lures Ashenvale Outrunners to attack him."},nil,nil,nil,nil,nil,nil,nil,nil,331,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Ashenvale event quest
+epochQuestData[27030] = {"CHOP!",{{45981}},{{45981}},{{45981}},25,nil,nil,{"Protect Romgul as he lures Ashenvale Outrunners to attack him."},nil,nil,nil,nil,nil,nil,nil,nil,331,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Ashenvale event quest
 
 -- The Hinterlands quest
-epochQuestData[26186] = {"Parts From Afar",nil,{{45019}},nil,46,nil,nil,{"Bring the Basket of Treats to Myolor Sunderfury in Ironforge to exchange for Siege Engine Parts."},nil,nil,nil,nil,nil,nil,nil,nil,47,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- The Hinterlands: Golith Slatestrike
 
 -- Feralas quests
-epochQuestData[26293] = {"Fit For A King",{{45211}},{{45211}},nil,45,nil,nil,{"Collect 16 Walker Branches."},nil,{nil,nil,{{60178,16,"Walker Branch"}}},nil,nil,nil,nil,nil,nil,357,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Feralas: Viggo
-epochQuestData[26295] = {"Fit For A King",nil,{{45211}},nil,45,nil,nil,{"Collect 20 Vials of Beast Blood."},nil,{nil,nil,{{61938,20,"Vial of Beast Blood"}}},nil,nil,nil,nil,nil,nil,357,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Issue #238: Feralas quest (another Fit For A King)
-epochQuestData[27335] = {"Wanted: Lost Ancient",nil,{{45211}},nil,48,nil,nil,{"Kill the Lost Ancient and bring its Hefty Ancient Log to Viggo."},nil,{{{46146,nil}},nil,{{63200,nil}}},nil,nil,nil,nil,nil,nil,357,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Feralas: Viggo
 
 -- Update placeholder for 28476
 epochQuestData[28476] = {"Commission for Watcher Dodds",nil,nil,nil,20,nil,nil,{"Commission quest for Watcher Dodds."},nil,nil,nil,nil,nil,nil,nil,nil,10,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Duskwood commission
 
 -- The Barrens: Exterminate the Brutes (GitHub #244)
-epochQuestData[26856] = {"Exterminate the Brutes",{{5410}},{{5410}},nil,10,nil,nil,{"Kill 5 Razormane Hunters, 5 Razormane Thornweavers, and 3 Razormane Defenders."},nil,{{{5334,5},{5335,5},{5333,3}}},nil,nil,nil,nil,nil,nil,17,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- The Barrens: Ko'gar the Thunderer
+epochQuestData[26856] = {"Exterminate the Brutes",{{5410}},{{5410}},{{5410}},10,nil,nil,{"Kill 5 Razormane Hunters, 5 Razormane Thornweavers, and 3 Razormane Defenders."},nil,{{{5334,5},{5335,5},{5333,3}}},nil,nil,nil,nil,nil,nil,17,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- The Barrens: Ko'gar the Thunderer
 
 -- The Barrens: Plainstrider Menace (GitHub #243)
-epochQuestData[26918] = {"Plainstrider Menace",{{3615}},{{3615}},nil,10,nil,nil,{"Bring 10 Greater Plainstrider Beaks to Kodo Wrangler Grish."},nil,{nil,nil,{{21510,10,"Greater Plainstrider Beak"}}},nil,nil,nil,nil,nil,nil,17,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- The Barrens: Kodo Wrangler Grish
+epochQuestData[26918] = {"Plainstrider Menace",{{3615}},{{3615}},{{3615}},10,nil,nil,{"Bring 10 Greater Plainstrider Beaks to Kodo Wrangler Grish."},nil,{nil,nil,{{21510,10,"Greater Plainstrider Beak"}}},nil,nil,nil,nil,nil,nil,17,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- The Barrens: Kodo Wrangler Grish
 
 -- Stormwind/Elwynn: Commission for Marshal Haggard (GitHub #242)
 epochQuestData[28350] = {"Commission for Marshal Haggard",{{5484}},{{14033}},nil,25,nil,nil,{"Deliver the commission to Marshal Haggard at Eastvale Logging Camp."},nil,nil,nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Stormwind quest giver, Elwynn turn-in
 
 -- Darnassus/Westfall: An Old Man's Request (GitHub #246)
-epochQuestData[26597] = {"An Old Man's Request",{{7740}},{{7740}},nil,26,nil,nil,{"Bring the head of Klaven Mortwake to Old Man Thistle in Darnassus."},nil,{{{7053,nil}},nil,{{30832,nil,"Klaven Mortwake's Head"}}},nil,nil,nil,nil,nil,nil,40,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Kill quest from Darnassus to Westfall
+epochQuestData[26597] = {"An Old Man's Request",{{7740}},{{7740}},{{7740}},26,nil,nil,{"Bring the head of Klaven Mortwake to Old Man Thistle in Darnassus."},nil,{{{7053,nil}},nil,{{30832,nil,"Klaven Mortwake's Head"}}},nil,nil,nil,nil,nil,nil,40,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Kill quest from Darnassus to Westfall
 
 -- Thunder Bluff/Silverpine: Commission for Lorekeeper Raintotem (GitHub #247)
 epochQuestData[28401] = {"Commission for Lorekeeper Raintotem",{{11071}},{{2121}},nil,10,nil,nil,{"Collect Enchanted Guardian's Bracers and deliver to Shadow Priest Allister."},nil,{nil,nil,{{65368,nil,"Enchanted Guardian's Bracers"}}},nil,nil,nil,nil,nil,nil,1638,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Thunder Bluff to Silverpine Forest
 
 -- Eastern Plaguelands: Into the Scarlet Enclave (GitHub #241)
-epochQuestData[28905] = {"Into the Scarlet Enclave",{{28945}},{{28945}},nil,58,nil,nil,{"Travel to the Scarlet Enclave in Eastern Plaguelands and kill 12 Scarlet mobs."},nil,{{{25584,12,"Scarlet mobs"}}},nil,nil,nil,nil,nil,nil,139,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Note: Used ID 28905 instead of 26769 due to duplicate
+epochQuestData[28905] = {"Into the Scarlet Enclave",{{28945}},{{28945}},{{28945}},58,nil,nil,{"Travel to the Scarlet Enclave in Eastern Plaguelands and kill 12 Scarlet mobs."},nil,{{{25584,12,"Scarlet mobs"}}},nil,nil,nil,nil,nil,nil,139,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Note: Used ID 28905 instead of 26769 due to duplicate
 
 -- Issue #271: Commission for Grif Wildheart
 epochQuestData[28561] = {"Commission for Grif Wildheart",{{1466}},{{1231}},nil,10,nil,nil,{"Collect 2 Small Leather Ammo Pouch."},nil,{[7279]={2,nil,{[1]={{44.9,46.7}}}}},nil,nil,nil,nil,nil,nil,1,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
@@ -665,7 +627,6 @@ epochQuestData[28561] = {"Commission for Grif Wildheart",{{1466}},{{1231}},nil,1
 epochQuestData[27477] = {"Attack on the Gnarlpine",nil,nil,nil,8,nil,nil,{"Slay 4 Gnarlpine Ambushers","Slay 4 Gnarlpine Warriors","Slay 4 Gnarlpine Defenders","Slay 4 Gnarlpine Shamans"},nil,{{{2151,4,"Gnarlpine Ambusher"},{2013,4,"Gnarlpine Warrior"},{2010,4,"Gnarlpine Defender"},{2009,4,"Gnarlpine Shaman"}}},nil,nil,nil,nil,nil,nil,141,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
 
 -- Issue #234: Demons In Fel Rock (incomplete data)
-epochQuestData[27483] = {"Demons In Fel Rock",nil,nil,nil,6,nil,nil,{"Collect 10 Demonic Essence."},nil,{nil,nil,{{900002,10,"Demonic Essence"}}},nil,nil,nil,nil,nil,nil,141,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
 
 -- Issue #235: Attack on the Mine
 epochQuestData[27398] = {"Attack on the Mine",{{4082}},{{4082}},nil,22,nil,nil,{"Slay 5 Windshear Geomancers","Slay 5 Windshear Overlords","Slay 10 Windshear Diggers"},nil,{{{4003,5,"Windshear Geomancer"},{4004,5,"Windshear Overlord"},{3999,10,"Windshear Digger"}}},nil,nil,nil,nil,nil,nil,406,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil}
@@ -673,19 +634,19 @@ epochQuestData[27398] = {"Attack on the Mine",{{4082}},{{4082}},nil,22,nil,nil,{
 -- Batch quest submission: The Hinterlands and Feralas quests
 epochQuestData[26169] = {"Can't Make An Omelette Without...",{{14736}},{{14736}},nil,45,nil,nil,{"Collect 12 Shadraspawn Eggs."},nil,nil,nil,nil,nil,nil,nil,nil,47,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26185] = {"Lard's Lost Beads",{{14731}},{{14731}},nil,50,nil,nil,{"Find Lard's Lost Beads."},nil,nil,nil,nil,nil,nil,nil,nil,47,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26293] = {"Fit For A King",{{45211}},{{45211}},nil,45,nil,nil,{"Prepare a meal fit for a king."},nil,nil,nil,nil,nil,nil,nil,nil,357,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26293] = {"Fit For A King",{{45211}},{{45211}},{{45211}},45,nil,nil,{"Prepare a meal fit for a king."},nil,nil,nil,nil,nil,nil,nil,nil,357,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26295] = {"Fit For A King",{{45211}},{{45211}},nil,45,nil,nil,{"Prepare a meal fit for a king."},nil,nil,nil,nil,nil,nil,nil,nil,357,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26296] = {"Fit For A King",nil,{{45211}},nil,45,nil,nil,{"Prepare a meal fit for a king."},nil,nil,nil,nil,nil,nil,nil,nil,357,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26478] = {"Deep Earth Rune",{{658}},{{658}},nil,1,nil,nil,{"Obtain a Deep Earth Rune."},nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[27322] = {"Convincing the Denied",nil,{{46135}},nil,49,nil,nil,{"Convince those in denial."},nil,nil,nil,nil,nil,nil,nil,nil,357,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[27323] = {"A Reflection of Death",nil,{{46135}},nil,49,nil,nil,{"Face your mortality."},nil,nil,nil,nil,nil,nil,nil,nil,357,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[27324] = {"Dead and Gone",nil,{{46135}},nil,49,nil,nil,{"Lay the dead to rest."},nil,nil,nil,nil,nil,nil,nil,nil,357,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[27325] = {"Dental Records",nil,{{46135}},nil,49,nil,nil,{"Collect dental records."},nil,nil,nil,nil,nil,nil,nil,nil,357,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[27326] = {"Dental Records",{{46135}},{{46135}},nil,49,nil,nil,{"Collect dental records."},nil,nil,nil,nil,nil,nil,nil,nil,357,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[27327] = {"Dental Records",nil,{{46135}},nil,49,nil,nil,{"Collect dental records."},nil,nil,nil,nil,nil,nil,nil,nil,357,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[27328] = {"Dental Records",{{46135}},{{46135}},nil,49,nil,nil,{"Collect dental records."},nil,nil,nil,nil,nil,nil,nil,nil,357,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[27335] = {"Wanted: Lost Ancient",{{46129}},{{45211}},nil,48,nil,nil,{"Hunt the Lost Ancient."},nil,nil,nil,nil,nil,nil,nil,nil,357,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[28722] = {"The Darkspear Tribe",{{46834}},{{46834}},nil,1,nil,nil,{"Report to the Darkspear tribe."},nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27323] = {"A Reflection of Death",nil,{{46135}},{{46135}},49,nil,nil,{"Face your mortality."},nil,nil,nil,nil,nil,nil,nil,nil,357,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27324] = {"Dead and Gone",nil,{{46135}},{{46135}},49,nil,nil,{"Lay the dead to rest."},nil,nil,nil,nil,nil,nil,nil,nil,357,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27325] = {"Dental Records",nil,{{46135}},{{46135}},49,nil,nil,{"Collect dental records."},nil,nil,nil,nil,nil,nil,nil,nil,357,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27326] = {"Dental Records",{{46135}},{{46135}},{{46135}},49,nil,nil,{"Collect dental records."},nil,nil,nil,nil,nil,nil,nil,nil,357,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27327] = {"Dental Records",nil,{{46135}},{{46135}},49,nil,nil,{"Collect dental records."},nil,nil,nil,nil,nil,nil,nil,nil,357,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27328] = {"Dental Records",{{46135}},{{46135}},{{46135}},49,nil,nil,{"Collect dental records."},nil,nil,nil,nil,nil,nil,nil,nil,357,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27335] = {"Wanted: Lost Ancient",{{46129}},{{45211}},{{45211}},48,nil,nil,{"Hunt the Lost Ancient."},nil,nil,nil,nil,nil,nil,nil,nil,357,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[28722] = {"The Darkspear Tribe",{{46834}},{{46834}},{{46834}},1,nil,nil,{"Report to the Darkspear tribe."},nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[28723] = {"Thievin' Crabs",{{46834}},{{46718}},nil,2,nil,nil,{"Deal with the thieving crabs."},nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[28728] = {"Glyphic Tablet",{{46718}},{{5884}},nil,1,nil,nil,{"Deliver the Glyphic Tablet."},nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[28743] = {"A Tradesman's Tools",{{1104}},{{1104}},nil,3,nil,nil,{"Retrieve the tradesman's tools."},nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}
@@ -706,19 +667,19 @@ epochQuestData[27307] = {"The Shrine of the Deceiver",nil,nil,nil,52,nil,nil,{"I
 -- Stage the Epoch questData for later merge during compilation
 QuestieDB._epochQuestData = epochQuestData
 epochQuestData[26179] = {"Hinterlands Hermit",{{45746}},{{45748}},nil,45,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,47,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26180] = {"Gromgosh's Task",{{45748}},{{45748}},nil,46,nil,nil,{"Kill 9 Razorbeak Gryphons, Kill 12 Blackrock Trackers"},nil,nil,nil,nil,nil,nil,nil,nil,47,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26190] = {"Gloomleaf Powder",{{45777}},{{45777}},nil,51,nil,nil,{"Collect 8 Gloomleaf Powder from Diseased Wolves"},nil,nil,nil,nil,nil,nil,nil,nil,50,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26180] = {"Gromgosh's Task",{{45748}},{{45748}},{{45748}},46,nil,nil,{"Kill 9 Razorbeak Gryphons, Kill 12 Blackrock Trackers"},nil,nil,nil,nil,nil,nil,nil,nil,47,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26190] = {"Gloomleaf Powder",{{45777}},{{45777}},{{45777}},51,nil,nil,{"Collect 8 Gloomleaf Powder from Diseased Wolves"},nil,nil,nil,nil,nil,nil,nil,nil,50,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26195] = {"Delivery for Deke Grindel",{{45784}},{{45785}},nil,35,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,400,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26592] = {"The Strange Ore",{{46326}},{{46327}},nil,42,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,3,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26603] = {"Scout Morgria",{{46344}},{{46345}},nil,50,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,8,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26852] = {"Scouring the Desert",{{45964}},{{45964}},nil,45,nil,nil,{"Clear the Ogre areas and retrieve the Crown of Kradel"},nil,nil,nil,nil,nil,nil,nil,nil,440,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26854] = {"Twilight Tactics",{{46559}},{{46559}},nil,45,nil,nil,{"Kill Twilight forces and gather plans"},nil,nil,nil,nil,nil,nil,nil,nil,51,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26855] = {"The Brothers Blighthammer",{{46560}},{{46560}},nil,44,nil,nil,{"Rescue brother from Dark Iron captors"},nil,nil,nil,nil,nil,nil,nil,nil,51,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26852] = {"Scouring the Desert",{{45964}},{{45964}},{{45964}},45,nil,nil,{"Clear the Ogre areas and retrieve the Crown of Kradel"},nil,nil,nil,nil,nil,nil,nil,nil,440,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26854] = {"Twilight Tactics",{{46559}},{{46559}},{{46559}},45,nil,nil,{"Kill Twilight forces and gather plans"},nil,nil,nil,nil,nil,nil,nil,nil,51,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26855] = {"The Brothers Blighthammer",{{46560}},{{46560}},{{46560}},44,nil,nil,{"Rescue brother from Dark Iron captors"},nil,nil,nil,nil,nil,nil,nil,nil,51,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26859] = {"Return to Thorium Point",{{14625}},{{46562}},nil,46,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,51,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26860] = {"The Grimesilt Digsite",{{46563}},{{46563}},nil,44,nil,nil,{"Complex excavation with multiple containers"},nil,nil,nil,nil,nil,nil,nil,nil,51,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26861] = {"The Fate of the Earthfurrow Clan",{{46564}},{{46564}},nil,44,nil,nil,{"Investigate the clan's disappearance"},nil,nil,nil,nil,nil,nil,nil,nil,51,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26862] = {"Lost for Ages",{{46565}},{{46565}},nil,44,nil,nil,{"Recover stolen relics from Dark Iron dwarves"},nil,nil,nil,nil,nil,nil,nil,nil,51,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[27103] = {"For the Warchief's Honor!",{{47191}},{{47191}},nil,47,nil,nil,{"Kill 15 Alliance forces"},nil,nil,nil,nil,nil,nil,nil,nil,3,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26860] = {"The Grimesilt Digsite",{{46563}},{{46563}},{{46563}},44,nil,nil,{"Complex excavation with multiple containers"},nil,nil,nil,nil,nil,nil,nil,nil,51,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26861] = {"The Fate of the Earthfurrow Clan",{{46564}},{{46564}},{{46564}},44,nil,nil,{"Investigate the clan's disappearance"},nil,nil,nil,nil,nil,nil,nil,nil,51,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26862] = {"Lost for Ages",{{46565}},{{46565}},{{46565}},44,nil,nil,{"Recover stolen relics from Dark Iron dwarves"},nil,nil,nil,nil,nil,nil,nil,nil,51,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27103] = {"For the Warchief's Honor!",{{47191}},{{47191}},{{47191}},47,nil,nil,{"Kill 15 Alliance forces"},nil,nil,nil,nil,nil,nil,nil,nil,3,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26927] = {"A Deductive Mind",{{2055}},{{1500}},nil,9,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26928] = {"Unwanted Visitors",{{1500}},{{1500}},nil,10,nil,nil,{"Kill 10 Maggot Eyes, Kill 10 Rotting Dead"},nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26929] = {"A Hasty Departure",{{1500}},{{5688}},nil,10,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
@@ -728,33 +689,29 @@ epochQuestData[26937] = {"Missing Courier",{{1500}},{{38895}},nil,10,nil,nil,nil
 epochQuestData[28487] = {"Commission for Rane Yorick",{{1500}},{{1518}},nil,10,nil,nil,{"Collect 3 Linen Bandage, Collect 1 Wool Bandage"},nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[27057] = {"Waves in the Ether",nil,{{9317}},nil,15,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,1637,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26676] = {"A Lost Brother...",nil,{{1374}},nil,9,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,1,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[27032] = {"Destroy the Legion",{{45983}},{{45983}},nil,30,nil,nil,{"Kill demon forces"},nil,nil,nil,nil,nil,nil,nil,nil,331,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[27036] = {"Never Again!",{{45983}},{{45983}},nil,30,nil,nil,{"Kill Gorgannon and Diathorus the Seeker"},nil,nil,nil,nil,nil,nil,nil,nil,331,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27032] = {"Destroy the Legion",{{45983}},{{45983}},{{45983}},30,nil,nil,{"Kill demon forces"},nil,nil,nil,nil,nil,nil,nil,nil,331,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27036] = {"Never Again!",{{45983}},{{45983}},{{45983}},30,nil,nil,{"Kill Gorgannon and Diathorus the Seeker"},nil,nil,nil,nil,nil,nil,nil,nil,331,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[27155] = {"Threats to Valormok",{{45472}},{{45473}},nil,50,nil,nil,{"Kill Spitelash enemies"},nil,nil,nil,nil,nil,nil,nil,nil,16,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[27225] = {"The Ersotta Stone",nil,{{313}},nil,16,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26183] = {"A Friend In Need",{{773}},{{2670}},nil,34,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26936] = {"Captain Ironhill's Orders",{{1652}},{{46634}},nil,9,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[27107] = {"Noble Relations",{{46085}},{{928}},nil,25,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,148,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26178] = {"A Greater Hunger",{{6251}},{{6251}},nil,14,nil,nil,{"Use Strahad's Summoning Candle"},nil,nil,nil,nil,nil,nil,nil,nil,17,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26170] = {"The Mad King",{{45731}},{{45732}},nil,31,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,10,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26171] = {"A Just Reward",{{45732}},{{45731}},nil,32,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,10,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26887] = {"Skhowl, The Lost Chieftain",{{46581}},{{2452}},nil,37,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,36,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26170] = {"The Mad King",{{45731}},{{45732}},{{45732}},31,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,10,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26171] = {"A Just Reward",{{45732}},{{45731}},{{45731}},32,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,10,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26167] = {"Infiltrating the Black Rock",{{382}},{{382}},nil,25,nil,nil,{"Kill 6 Blackrock Champion, Kill 4 Blackrock Sorcerer, Kill 5 Blackrock Warden"},nil,nil,nil,nil,nil,nil,nil,nil,44,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26166] = {"A Fatal Error",{{382}},{{382}},nil,25,nil,nil,{"Kill Champion Mot, Kill Champion Wyrmak"},nil,nil,nil,nil,nil,nil,nil,nil,44,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26174] = {"Southshore Sympathizers",{{2711}},{{2711}},nil,26,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26182] = {"Peril at the Farseer's Den",{{45774}},{{45774}},nil,28,nil,nil,{"Kill 7 Blackrock Mystic, Kill 7 Blackrock Sentry"},nil,nil,nil,nil,nil,nil,nil,nil,44,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26182] = {"Peril at the Farseer's Den",{{45774}},{{45774}},{{45774}},28,nil,nil,{"Kill 7 Blackrock Mystic, Kill 7 Blackrock Sentry"},nil,nil,nil,nil,nil,nil,nil,nil,44,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26181] = {"Brother Joseph's Aid",{{382}},{{45775}},nil,25,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,44,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26186] = {"Darcy's Lament",{{45776}},{{45776}},nil,52,nil,nil,{"Recover Darcy's Locket from fel orcs"},nil,nil,nil,nil,nil,nil,nil,nil,4,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[27106] = {"The Gnoll Stronghold",{{240}},{{240}},nil,15,nil,nil,{"Clear gnoll stronghold"},nil,nil,nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26161] = {"Meatloaf's Task",{{45716}},{{45716}},nil,15,nil,nil,{"Kill 10 Redridge Gnoll, Kill 7 Redridge Brute, Kill 3 Redridge Shaman"},nil,nil,nil,nil,nil,nil,nil,nil,44,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26161] = {"Meatloaf's Task",{{45716}},{{45716}},{{45716}},15,nil,nil,{"Kill 10 Redridge Gnoll, Kill 7 Redridge Brute, Kill 3 Redridge Shaman"},nil,nil,nil,nil,nil,nil,nil,nil,44,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[27128] = {"Venomous Conclusions",{{1265}},{{1265}},nil,14,nil,nil,{"Collect 10 Winter Wolf Pelts"},nil,nil,nil,nil,nil,nil,nil,nil,1,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[27133] = {"King Magni's Secret",{{2784}},{{1274}},nil,10,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,1537,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[28520] = {"The Tortured Spirit",{{46644}},{{46644}},nil,8,nil,nil,{"Collect 5 Lesser Mana Potion from murlocs"},nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[28520] = {"The Tortured Spirit",{{46644}},{{46644}},{{46644}},8,nil,nil,{"Collect 5 Lesser Mana Potion from murlocs"},nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26184] = {"Proof of Demise",{{1422}},{{1422}},nil,36,nil,nil,{"Kill Kurzen forces and collect ears"},nil,nil,nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26863] = {"Our Only Option",{{46561}},{{46561}},nil,44,nil,nil,{"Destroy Dark Iron supplies"},nil,nil,nil,nil,nil,nil,nil,nil,51,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26867] = {"A Suspicious Delivery",{{46570}},{{46570}},nil,44,nil,nil,{"Investigate suspicious shipments"},nil,nil,nil,nil,nil,nil,nil,nil,51,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26863] = {"Our Only Option",{{46561}},{{46561}},{{46561}},44,nil,nil,{"Destroy Dark Iron supplies"},nil,nil,nil,nil,nil,nil,nil,nil,51,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26867] = {"A Suspicious Delivery",{{46570}},{{46570}},{{46570}},44,nil,nil,{"Investigate suspicious shipments"},nil,nil,nil,nil,nil,nil,nil,nil,51,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26857] = {"Thorium Point Politics",{{46562}},{{14625}},nil,46,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,51,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26875] = {"Feathers and Bones",{{3488}},{{3488}},nil,26,nil,nil,{"Collect 15 Harpie Feathers, Collect 10 Centaur Bones"},nil,nil,nil,nil,nil,nil,nil,nil,17,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26188] = {"Beneath The Scarlet Grounds",{{4223}},{{4223}},nil,40,nil,nil,{"Explore underground areas and defeat cultists"},nil,nil,nil,nil,nil,nil,nil,nil,139,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26932] = {"The Corrupter's Downfall",{{2081}},{{2081}},nil,15,nil,nil,{"Kill The Corrupter"},nil,nil,nil,nil,nil,nil,nil,nil,141,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26921] = {"Splintered Leadership",{{46613}},{{46613}},nil,18,nil,nil,{"Kill gnoll leaders"},nil,nil,nil,nil,nil,nil,nil,nil,44,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26921] = {"Splintered Leadership",{{46613}},{{46613}},{{46613}},18,nil,nil,{"Kill gnoll leaders"},nil,nil,nil,nil,nil,nil,nil,nil,44,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
