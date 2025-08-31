@@ -2539,7 +2539,11 @@ function QuestieTracker.RemoveQuestWatch(index, isQuestie)
                 local now = GetTime()
                 if QuestieTracker._lastTrackedQuest and QuestieTracker._lastTrackedQuest.id == questId and 
                    (now - QuestieTracker._lastTrackedQuest.time) < 0.5 then
-                    Questie:Print("[DEBUG RemoveQuestWatch] Quest", questId, "was immediately untracked by Blizzard - marking as untrackable")
+                    -- Try to understand why Blizzard rejected it
+                    local questIndex = GetQuestLogIndexByID(questId)
+                    local title, level, tag, isHeader, isCollapsed, isComplete = GetQuestLogTitle(questIndex or index)
+                    Questie:Print("[DEBUG RemoveQuestWatch] Quest", questId, "was immediately untracked by Blizzard")
+                    Questie:Print("[DEBUG] Quest details - Complete:", isComplete, "Title:", title, "Index:", questIndex)
                     if not QuestieTracker._untrackableQuests then
                         QuestieTracker._untrackableQuests = {}
                     end
