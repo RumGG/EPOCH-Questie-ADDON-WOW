@@ -2,18 +2,6 @@
 
 ## [Unreleased]
 
-### Added
-- **21 New Epoch Quests from GitHub Issues #1-50**
-  - Issue #16: Tirisfal Glades quest chain "Our Bodies Forsaken" (26453-26461)
-  - Issue #20: Silverpine Forest "Arugal Ambush" quests (26928, 26929)
-  - Issue #29: Stonetalon Mountains "Mirkfallon Bracers" (27400)
-  - Issue #47: Badlands "Primitive Relic" quest chain (26586, 26587)
-  - Issue #49: Arathi Highlands "Commission for Indon Cliffreach" (28530)
-  - Issue #50: Mulgore starter quests (26472, 27339, 27340, 27341)
-  - Added Teldrassil quests "Shadow Mage" and "Treasures of Teldrassil" (26932, 26936)
-  - Added Barrens quest "The Ghost of the Flats" (27499)
-  - **All zones and coordinates verified for data accuracy**
-
 ### Fixed
 - **Fixed overflow error for Epoch object IDs**
   - Changed object ID 40000057 to 4000057 in epochItemDB.lua to fit within 24-bit limit
