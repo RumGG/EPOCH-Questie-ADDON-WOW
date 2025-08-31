@@ -170,6 +170,11 @@ function QuestLogCache.CheckForChanges(questIdsToCheck)
     -- Debug: Check how many quests Blizzard says we have
     local numEntries, numQuests = GetNumQuestLogEntries()
     Questie:Print("[CACHE] GetNumQuestLogEntries: entries=", numEntries, "quests=", numQuests)
+    
+    local processedCount = 0
+    local headerCount = 0
+    local noDataCount = 0
+    local cachedCount = 0
 
     for questLogIndex = 1, MAX_QUEST_LOG_INDEX do
         ----- title, level, questTag, isHeader, isCollapsed, isComplete, frequency, questID, startEvent, displayQuestID, isOnMap, hasLocalPOI, isTask, isBounty, isStory, isHidden, isScaling = GetQuestLogTitle(questLogIndex)
@@ -179,9 +184,16 @@ function QuestLogCache.CheckForChanges(questIdsToCheck)
             Questie:Print("[CACHE] GetQuestLogTitle returned nil at index", questLogIndex, "- breaking loop")
             break -- We exceeded the valid quest log entries
         end
-        if (not isHeader) and ((not questIdsToCheck) or questIdsToCheck[questId]) then -- check all quests if no list what to check, otherwise just ones in the list
+        if isHeader then
+            headerCount = headerCount + 1
+        elseif ((not questIdsToCheck) or questIdsToCheck[questId]) then -- check all quests if no list what to check, otherwise just ones in the list
+            processedCount = processedCount + 1
             questIdsChecked[questId] = true
-            if HaveQuestData(questId) then
+            if not HaveQuestData(questId) then
+                noDataCount = noDataCount + 1
+                Questie:Print("[CACHE] No quest data for quest", questId, "'", title, "' at index", questLogIndex)
+            else
+                cachedCount = cachedCount + 1
                 local cachedQuest = cache[questId]
                 local cachedObjectives = cachedQuest and cachedQuest.objectives or {}
 
@@ -296,6 +308,7 @@ function QuestLogCache.CheckForChanges(questIdsToCheck)
     for _ in pairs(cache) do
         cacheCount = cacheCount + 1
     end
+    Questie:Print("[CACHE] Processed:", processedCount, "quests, Headers:", headerCount, "NoData:", noDataCount, "Cached:", cachedCount)
     Questie:Print("[CACHE] Cache now has", cacheCount, "quests after CheckForChanges")
     
     return cacheMiss, changes
