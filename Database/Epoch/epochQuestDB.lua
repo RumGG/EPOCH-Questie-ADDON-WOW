@@ -467,7 +467,7 @@ epochQuestData[26148] = {"Legion Paisa",nil,{{9996}},nil,60,nil,nil,{"Take Legio
 epochQuestData[27309] = {"Mementos of the Third War",{{46127}},nil,nil,52,nil,nil,{"Take Box of Grisly Mementos to Thrall in Orgrimmar."},nil,nil,nil,nil,nil,nil,nil,nil,361,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Felwood quest
 
 -- Issue #114: The Barrens quests
-epochQuestData[27166] = {"Consumed by Hatred",nil,{{3432}},nil,14,nil,nil,{"Collect 10 Kolkar Heads."},nil,{nil,nil,{{63039,"Kolkar Head"}}},nil,nil,nil,nil,nil,nil,17,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Barrens quest
+epochQuestData[27166] = {"Consumed by Hatred",{{3432}},{{3432}},nil,14,nil,nil,{"Collect 10 Kolkar Heads."},nil,{nil,nil,{{63039,"Kolkar Head",10}}},nil,nil,nil,nil,nil,nil,17,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Barrens quest, Issue #264: Added quest giver
 epochQuestData[27168] = {"Lost in Battle",nil,nil,nil,14,nil,nil,{"Find 3 different clues."},nil,nil,nil,nil,nil,nil,nil,nil,17,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Barrens quest
 epochQuestData[27195] = {"Straight to the Teeth",{{46065}},{{46065}},nil,18,nil,nil,{"Collect 10 Hecklefang Teeth."},nil,nil,nil,nil,nil,nil,nil,nil,17,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Barrens quest
 epochQuestData[27196] = {"The Kolkar Report",nil,nil,nil,15,nil,nil,{"Bring Kolkar Report to Thork at The Crossroads."},nil,nil,nil,nil,nil,nil,nil,nil,17,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Barrens quest
@@ -482,6 +482,11 @@ epochQuestData[27492] = {"Fresh Water Delivery",nil,{{4630}},nil,31,nil,nil,{"Di
 
 -- Issue #132: Silverpine Forest quest (updating existing)
 epochQuestData[26218] = {"Wreck of the Kestrel",{{2140}},{{2140}},nil,13,nil,nil,{"Collect Smokywood Pastures Shipping Crate from the Ghostly Goblin."},nil,{nil,nil,{{60141,"Smokywood Pastures Shipping Crate"}}},nil,nil,nil,nil,nil,nil,130,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Silverpine Forest quest (updated)
+
+-- Issue #264: Silverpine Forest quests
+epochQuestData[26875] = {"The Missing Initiate",{{45840}},{{45841}},nil,18,nil,nil,{"Find Sage Greenhorn in Silverpine Forest."},nil,nil,nil,nil,nil,nil,nil,nil,130,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Silverpine Forest
+epochQuestData[26877] = {"Tomes of Interest",{{45841}},{{45841}},nil,18,nil,nil,{"Slay 4 Sickly Refugees and collect 5 Gilnean Tomes."},nil,{nil,nil,{{62727,"Gilnean Tome",5}}},nil,nil,nil,nil,nil,nil,130,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Silverpine Forest
+epochQuestData[26878] = {"Tomes of Interest",{{45841}},{{45841}},nil,20,nil,nil,{"Collect The Theory of History."},nil,{nil,nil,{{62728,"The Theory of History"}}},nil,nil,nil,nil,nil,nil,130,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Silverpine Forest (duplicate name, different objectives)
 
 -- Issue #155: Azshara quest
 epochQuestData[27092] = {"Azshara's Legacy",{{46006}},{{46008}},nil,54,nil,nil,{"Collect 12 Makrinni Lobstrok Eyes."},nil,{nil,nil,{{62959,"Makrinni Lobstrok Eye",12}}},nil,nil,nil,nil,nil,nil,16,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Azshara quest

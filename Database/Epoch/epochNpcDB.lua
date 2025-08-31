@@ -1038,9 +1038,13 @@ epochNpcData[9996] = {"Winna Hazzard",nil,nil,60,60,0,{[361]={{34.2,52.3}}},nil,
 epochNpcData[46127] = {"Watcher Steelsong",nil,nil,52,52,0,{[361]={{50.8,81.8}}},nil,361,{27309},{27309},1,"H",nil,0} -- Felwood
 
 -- Issue #114: The Barrens NPCs
-epochNpcData[3432] = {"Mankrik",nil,nil,14,14,0,{[17]={{51.9,31.5}}},nil,17,nil,{27166},1,"H",nil,0} -- The Barrens
+epochNpcData[3432] = {"Mankrik",nil,nil,14,14,0,{[17]={{51.9,31.5}}},nil,17,{27166},nil,1,"H",nil,0} -- The Barrens, Issue #264: Added quest starter
 epochNpcData[46065] = {"Kaliyah Stormshew",nil,nil,18,18,0,{[17]={{45.2,58.7}}},nil,17,{27195},{27195},1,"H",nil,0} -- The Barrens
 epochNpcData[7161] = {"Wrenix the Wretched",nil,nil,17,17,0,{[17]={{63.0,36.3}}},nil,17,{27197},{27197},1,"H",nil,0} -- The Barrens
+
+-- Issue #264: Silverpine Forest NPCs
+epochNpcData[45840] = {"Kevin Winter",nil,nil,18,18,0,{[130]={{63.4,56.8}}},nil,130,{26875},nil,1,"H",nil,0} -- Silverpine Forest
+epochNpcData[45841] = {"Sage Greenhorn",nil,nil,18,18,0,{[130]={{43.0,42.0}}},nil,130,{26877,26878},{26875},1,"H",nil,0} -- Silverpine Forest
 
 -- Issue #115: Various Horde NPCs
 epochNpcData[12920] = {"Doctor Gregory Victor",nil,nil,37,37,0,{[45]={{73.8,36.9}}},nil,45,{26374},{26374},1,"H",nil,0} -- Arathi Highlands
