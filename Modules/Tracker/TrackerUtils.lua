@@ -118,6 +118,12 @@ function TrackerUtils:SetTomTomTarget(title, zone, x, y)
             TomTom:RemoveWaypoint(Questie.db.char._tom_waypoint)
         end
         local uiMapId = ZoneDB:GetUiMapIdByAreaId(zone)
+        
+        -- Check if zone data is available (Project Epoch map fix)
+        if not uiMapId then
+            Questie:Debug(Questie.DEBUG_DEVELOP, "[TrackerUtils] Cannot set TomTom waypoint - missing UiMapID for zone:", zone)
+            return
+        end
 
         if QuestieCompat.Is335 then
             Questie.db.char._tom_waypoint = QuestieCompat.TomTom_AddWaypoint(title, uiMapId, x, y)
@@ -134,10 +140,14 @@ end
 function TrackerUtils:ShowObjectiveOnMap(objective)
     local spawn, zone = QuestieMap:GetNearestSpawn(objective)
     if spawn then
-        WorldMapFrame:Show()
         local uiMapId = ZoneDB:GetUiMapIdByAreaId(zone)
-        WorldMapFrame:SetMapID(uiMapId)
-        TrackerUtils:FlashObjective(objective)
+        if uiMapId then
+            WorldMapFrame:Show()
+            WorldMapFrame:SetMapID(uiMapId)
+            TrackerUtils:FlashObjective(objective)
+        else
+            Questie:Debug(Questie.DEBUG_DEVELOP, "[TrackerUtils] Cannot show objective on map - missing UiMapID for zone:", zone)
+        end
     end
 end
 
@@ -145,10 +155,14 @@ end
 function TrackerUtils:ShowFinisherOnMap(quest)
     local spawn, zone = QuestieMap:GetNearestQuestSpawn(quest)
     if spawn then
-        WorldMapFrame:Show()
         local uiMapId = ZoneDB:GetUiMapIdByAreaId(zone)
-        WorldMapFrame:SetMapID(uiMapId)
-        TrackerUtils:FlashFinisher(quest)
+        if uiMapId then
+            WorldMapFrame:Show()
+            WorldMapFrame:SetMapID(uiMapId)
+            TrackerUtils:FlashFinisher(quest)
+        else
+            Questie:Debug(Questie.DEBUG_DEVELOP, "[TrackerUtils] Cannot show finisher on map - missing UiMapID for zone:", zone)
+        end
     end
 end
 
