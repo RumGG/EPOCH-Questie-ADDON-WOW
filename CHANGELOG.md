@@ -27,6 +27,31 @@
   - Quest IDs: 26126, 26277, 26282, 26285, 26288, 26292, 26332, 26503-26506, 26516, 26518-26520, 26537, 26540-26543, 26570, 26577, 26580, 26582, 26594, 26802, 26817, 27074-27075, 27080-27084, 27114-27116, 27126-27131, 27136, 27141, 27151-27153, 27163-27164, 28072, 28077, 28483, 28535, 28648
   - Enables basic quest tracking functionality even without complete quest data
   - Placeholders can be filled in later when players submit complete quest data
+- **New Epoch Quest Data**: Processed 6 GitHub issues adding 5 complete quests
+  - Issue #213: Three Dun Morogh G.E.A.R. quests (28725, 28726, 28731)
+    - Reassigned to IDs 28901, 28902, 28903 due to ID conflicts
+    - "Shift into G.E.A.R." - Kill 10 Underfed Troggs
+    - "No Room for Sympathy" - Kill 8 Irradiated Oozes and 4 Infected Gnomes
+    - "Encrypted Memorandum" - Speak to Windle Fusespring
+    - Updated NPC 46836 (Tinker Captain Whistlescrew) quest relationships
+    - Added NPC 46882 (Windle Fusespring) as turn-in NPC
+  - Issue #189: "The Perenolde Legacy" (26511) - Alterac Mountains
+    - Quest giver: Elysa (2317)
+    - Turn-in: Lord Jorach Ravenholdt (6768)
+    - Level 38 quest reporting Aliden Perenolde's death
+  - Issue #184: "Felicity's Deciphering" (26519) - Alterac Mountains
+    - Replaced placeholder with complete quest data
+    - Quest giver: Lord Jorach Ravenholdt (6768)
+    - Turn-in: Felicity (45526)
+    - Level 40 quest to decipher Ensorcelled Parchment
+  - Issues #199, #201, #202: Duplicate submissions for quest 26505
+    - Quest "Letter to Ravenholdt" already exists with complete data
+    - Removed duplicate placeholder entry
+
+### Fixed
+- **Database Cleanup**: Removed duplicate quest 26505 placeholder
+  - Quest already exists with complete implementation
+  - Cleaned up conflicting duplicate entry
 
 ## [1.0.64] - 2024-08-30
 

@@ -87,7 +87,7 @@ local epochNpcData = {
 [1319] = {"[Epoch] NPC 1319",1200,1350,30,30,0,{[1519]={{69.2,57.6}}},nil,1519,nil,nil,11,"A",nil,0},
 [1320] = {"[Epoch] NPC 1320",1200,1350,30,30,0,{[1519]={{71.9,62.0}}},nil,1519,nil,nil,11,"A",nil,0},
 [1321] = {"[Epoch] NPC 1321",1200,1350,30,30,0,{[1519]={{71.7,62.2}}},nil,1519,nil,nil,11,"A",nil,0},
-[1323] = {"[Epoch] NPC 1323",1200,1350,30,30,0,{[1519]={{77.2,61.0}}},nil,1519,nil,nil,11,"A",nil,0},
+[1323] = {"Osric Strang",1200,1350,30,30,0,{[1519]={{77.2,61.0}}},nil,1519,nil,{26696},11,"A",nil,0}, -- Hand of Azora turn-in
 [1324] = {"[Epoch] NPC 1324",1200,1350,30,30,0,{[1519]={{77.2,57.4}}},nil,1519,nil,nil,11,"A",nil,0},
 [1325] = {"[Epoch] NPC 1325",1200,1350,30,30,0,{[1519]={{80.3,70.1}}},nil,1519,nil,nil,11,"A",nil,0},
 [1326] = {"[Epoch] NPC 1326",1000,1125,25,25,0,{[1519]={{78.6,70.9}}},nil,1519,nil,nil,11,"A",nil,0},
@@ -684,7 +684,7 @@ local epochNpcData = {
 [46012] = {"Atrasies the Ancient",1360,1530,34,34,0,{[45]={{82.82,57.34}}},nil,45,{26548,26549,26550,26557,26571},{26546,26547,26548,26549,26556,26557,26576},35,"AH",nil,0},
 [46015] = {"Rambling Earth",1440,1710,36,38,0,{[45]={{94.65,66.37},{93.95,63.57},{89.92,76.66},{90.06,77.16},{90.87,73.42},{90.34,74.12},{93.37,67.55},{92.53,68.19},{93.77,66.37},{92.19,65.52},{89.26,74.96},{90.4,75.01}}},{[45]={{94.65,66.37},{93.95,63.57},{89.92,76.66},{90.06,77.16},{90.87,73.42},{90.34,74.12},{93.37,67.55},{92.53,68.19},{93.77,66.37},{92.19,65.52},{89.26,74.96},{90.4,75.01}}},45,nil,nil,nil,nil,nil,0},
 [46016] = {"Boiling Wanderer",1440,1710,36,38,0,{[45]={{89.33,35.4},{89.03,38.06},{89.48,38.71},{87.79,37.7},{88.01,39.67},{88.74,40.7},{88.53,42.49},{89.39,43.54},{89.85,44.95},{90.97,43.85},{91.63,43.28},{92.57,43.98},{92.33,44.45},{91.6,45.17},{92.27,45.77},{93.65,46.56},{93.82,44.8},{87.14,41.9},{86.23,40.89}}},{[45]={{89.33,35.4},{89.03,38.06},{89.48,38.71},{87.79,37.7},{88.01,39.67},{88.74,40.7},{88.53,42.49},{89.39,43.54},{89.85,44.95},{90.97,43.85},{91.63,43.28},{92.57,43.98},{92.33,44.45},{91.6,45.17},{92.27,45.77},{93.65,46.56},{93.82,44.8},{87.14,41.9},{86.23,40.89}}},45,nil,nil,nil,nil,nil,0},
-[46018] = {"Paula Alestone",1200,1350,30,30,0,{[45]={{93.96,70.72}}},nil,45,{26559},{26559},11,"A",nil,0},
+[46018] = {"Paula Alestone",1200,1350,30,30,0,{[45]={{93.96,70.72}}},nil,45,{26559},{26559,26505},11,"A",nil,0},
 [46019] = {"Randal Alestone",1400,1575,35,35,0,{[45]={{90.42,71.51}}},nil,45,{26558,26560},{26558,26560},11,"A",nil,0},
 [46022] = {"Terrified Ram",200,225,5,5,0,{[45]={{92.6,67.96},{94.66,65.79},{94.04,65.24}}},nil,45,nil,nil,11,"A",nil,0},
 [46023] = {"Terrified Chicken",200,225,5,5,0,{[45]={{92.99,68.32},{94.36,64.73},{93.07,67.92}}},nil,45,nil,nil,11,"A",nil,0},
@@ -794,6 +794,7 @@ local epochNpcData = {
 [46879] = {"Sorcerer Maltarg",2280,2565,57,57,0,{[46]={{49.9,62.0}}},nil,46,nil,nil,nil,nil,nil,0},
 [46880] = {"Forgemaster Tralak",2280,2565,57,57,0,{[46]={{42.9,55.0}}},nil,46,nil,nil,nil,nil,nil,0},
 [46881] = {"Nargosh Rageblade",2320,2610,58,58,0,{[46]={{41.2,35.0}}},nil,46,nil,nil,nil,nil,nil,0},
+[46882] = {"Windle Fusespring",nil,nil,1,1,0,{[1]={{24.4,59.7}}},nil,1,nil,{28903},11,"A",nil,0}, -- Issue #213: Turn-in for Encrypted Memorandum
 [46883] = {"Gruhl Stonecreek",2120,2385,53,53,0,{[46]={{68.7,50.4}}},nil,46,{26637,26640,26641},{26639,26640,26641},35,"AH",nil,0},
 [46887] = {"Raha'glor the Inferno",2320,2610,58,58,0,{[46]={{79.1,45.9}}},nil,46,nil,nil,nil,nil,nil,0},
 [46888] = {"Myldis",2000,2250,50,50,0,{[46]={{68.4,52.7}}},nil,46,{26642},{26645},35,"AH",nil,0},
@@ -836,7 +837,7 @@ local epochNpcData = {
 [45673] = {"Nonere Duskdigger",nil,nil,17,17,0,{[1537]={{48.6,44.5}}},nil,1537,nil,{26664},11,"A",nil,0},
 
 -- Issue #32: NPCs for gnome starting area  
-[46836] = {"Tinker Captain Whistlescrew",nil,nil,5,5,0,{[1]={{53.0,65.9}}},nil,1,{27034,27035,27036},{27034,27035},11,"A",nil,0},
+[46836] = {"Tinker Captain Whistlescrew",nil,nil,5,5,0,{[1]={{24.7,59.1}}},nil,1,{27034,27035,27036,28901,28902,28903},{27034,27035,28901,28902},11,"A",nil,0}, -- Updated coordinates and added Issue #213 quests
 [47084] = {"Felix Whindlebolt",nil,nil,3,3,0,{[1]={{52.8,39.2}}},nil,1,{28726},nil,11,"A",nil,0},
 [47085] = {"Caris Sunlancer",nil,nil,4,4,0,{[1]={{33.4,72.1}}},nil,1,{28727},nil,11,"A",nil,0},
 [47086] = {"Sergeant Ralston",nil,nil,4,4,0,{[1]={{22.1,73.5}}},nil,1,nil,{28727},11,"A",nil,0},
@@ -870,7 +871,7 @@ local epochNpcData = {
 [45890] = {"Kor",nil,nil,11,11,0,{[85]={{44.4,40.5}}},nil,85,nil,{26930},85,"H",nil,0}, -- Correct: Tirisfal Glades
 
 -- Issue #75: Missing NPCs
-[45604] = {"Dirk Windrattle",nil,nil,nil,nil,nil,{[3]={{68.0,58.9}}},nil,3,{28077},{28077},3,"A",nil,0},
+[45604] = {"Dirk Windrattle",nil,nil,nil,nil,nil,{[3]={{68.0,58.9}}},nil,3,{28077},{28077,26594},3,"A",nil,0}, -- Added quest 26594 turn-in
 
 -- Issue #71: Missing NPCs
 [45769] = {"Engineer Flikswitch",nil,nil,55,55,0,{[139]={{49.1,67.6}}},nil,139,{26764},nil,85,"H",nil,0},
@@ -1072,15 +1073,21 @@ epochNpcData[2278] = {"Melisara",nil,nil,40,40,0,{[267]={{62.5,20.5}}},nil,267,n
 
 -- Issues #163, #164, #166: NPCs for new quests
 epochNpcData[1182] = {"Brother Anton",nil,nil,33,33,0,{[405]={{66.4,7.7}}},nil,405,nil,{26504},1,"A",nil,0} -- Desolace
-epochNpcData[2317] = {"Elysa",nil,nil,40,40,0,{[36]={{39.2,14.4}}},nil,36,nil,{26521},2,"H",nil,0} -- Alterac Mountains
-epochNpcData[6768] = {"Lord Jorach Ravenholdt",nil,nil,40,40,0,{[36]={{86.0,79.0}}},nil,36,{26525},nil,2,"AH",nil,0} -- Alterac Mountains
+epochNpcData[2317] = {"Elysa",nil,nil,40,40,0,{[36]={{39.2,14.4}}},nil,36,{26511},{26521,26511},2,"H",nil,0} -- Alterac Mountains: Added quest 26511 giver
+epochNpcData[6768] = {"Lord Jorach Ravenholdt",nil,nil,40,40,0,{[36]={{86.0,79.0}}},nil,36,{26525,26519},{26511},2,"AH",nil,0} -- Alterac Mountains: Added quests 26511 turn-in, 26519 giver
 epochNpcData[11826] = {"Kristy Grant",nil,nil,28,28,0,{[357]={{89.4,45.9}}},nil,357,{27503},nil,1,"A",nil,0} -- Feralas
-epochNpcData[45526] = {"Felicity",nil,nil,40,40,0,{[36]={{86.0,80.2}}},nil,36,nil,{26525},2,"AH",nil,0} -- Alterac Mountains (overriding wrong one)
+epochNpcData[45526] = {"Felicity",nil,nil,40,40,0,{[36]={{86.0,80.2}}},nil,36,nil,{26525,26519},2,"AH",nil,0} -- Alterac Mountains: Added quest 26519 turn-in
 epochNpcData[45731] = {"Sarae Dewlight",nil,nil,25,25,0,{[10]={{77.6,52.2}}},nil,10,{26713},{26713},1,"A",nil,0} -- Duskwood (overriding to add both quest giver and turn-in)
 epochNpcData[45844] = {"Shep Daltry",nil,nil,36,36,0,{[33]={{37.8,3.1}}},nil,33,{26884},nil,1,"A",nil,0} -- Stranglethorn Vale (overriding wrong one)
 epochNpcData[7771] = {"Marvon Rivetseeker",nil,nil,45,45,0,{[440]={{52.7,45.8}}},nil,440,{27420},{27420},1,"A",nil,0} -- Tanaris: Two-Legged Vultures quest
 epochNpcData[46090] = {"Annie Grim",nil,nil,40,40,0,{[405]={{25.3,67.1}}},nil,405,{27254,27256},{27254,27255,27256},2,"H",nil,0} -- Desolace: Reagents For The Undercity quest giver
 epochNpcData[46103] = {"Pipjot",nil,nil,40,40,0,{[405]={{26.0,69.9}}},nil,405,nil,{27256},2,"H",nil,0} -- Desolace: Reagents For The Undercity turn-in
+epochNpcData[5594] = {"Alchemist Pestlezugg",nil,nil,50,50,0,{[440]={{50.9,26.9}}},nil,440,{28536},{28536},1,"A",nil,0} -- Tanaris: Commission for Alchemist Pestlezugg quest
+epochNpcData[11438] = {"Bibbly F'utzbuckle",nil,nil,30,30,0,{[405]={{62.2,38.9}}},nil,405,{28617},{28617},2,"H",nil,0} -- Desolace: Commission for Bibbly F'utzbuckle quest
+epochNpcData[5641] = {"Takata Steelblade",nil,nil,35,35,0,{[405]={{52.5,54.2}}},nil,405,nil,{27255},2,"H",nil,0} -- Desolace: Reagents For The Undercity turn-in
+epochNpcData[46575] = {"Innkeeper Tooma",nil,nil,45,45,0,{[3]={{67.5,60.6}}},nil,3,{26594},nil,3,"A",nil,0} -- Badlands: WANTED: Scorchmaw quest giver (corrected ID from submission)
+epochNpcData[7882] = {"Security Chief Bilgewhizzle",nil,nil,41,41,0,{[440]={{67.0,23.8}}},nil,440,{27422},{27422},1,"A",nil,0} -- Tanaris: No One Drinks For Free quest
+epochNpcData[46237] = {"Marai Ravenwater",nil,nil,42,42,0,{[440]={{65.5,24.1}}},nil,440,{27462},{27462},1,"A",nil,0} -- Tanaris: Waste Removal quest
 
 -- Stage the Epoch npcData for later merge during compilation
 QuestieDB._epochNpcData = epochNpcData
