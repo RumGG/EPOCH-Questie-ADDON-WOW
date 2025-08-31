@@ -958,6 +958,17 @@ end
 function QuestieQuest:GetAllQuestIds()
     Questie:Debug(Questie.DEBUG_DEVELOP, "[QuestieQuest] Getting all quests")
 
+    -- Ensure QuestLogCache is loaded
+    if not QuestLogCache or not QuestLogCache.questLog_DO_NOT_MODIFY then
+        Questie:Print("[ERROR] QuestLogCache not initialized! QuestLogCache=", tostring(QuestLogCache))
+        if QuestLogCache then
+            Questie:Print("[ERROR] questLog_DO_NOT_MODIFY=", tostring(QuestLogCache.questLog_DO_NOT_MODIFY))
+        end
+        -- Initialize empty questlog and return
+        QuestiePlayer.currentQuestlog = {}
+        return
+    end
+
     -- Set flag to prevent tracker updates during population
     QuestiePlayer._populatingQuestlog = true
     QuestiePlayer.currentQuestlog = {}
@@ -1130,7 +1141,7 @@ function QuestieQuest:GetAllQuestIdsNoObjectives()
     Questie:Debug(Questie.DEBUG_DEVELOP, "[QuestieQuest] Getting all quests without objectives")
     QuestiePlayer.currentQuestlog = {}
 
-    for questId, data in pairs(QuestLogCache.questLog_DO_NOT_MODIFY) do -- DO NOT MODIFY THE RETURNED TABLE
+    for questId, data in pairs(QuestLogCache.questLog_DO_NOT_MODIFY or {}) do -- DO NOT MODIFY THE RETURNED TABLE
         if (not QuestieDB.QuestPointers[questId]) then
             -- Insert a light-weight runtime stub here as well so resets keep the tracker populated.
             local stub = _CreateRuntimeQuestStub(questId, data)
