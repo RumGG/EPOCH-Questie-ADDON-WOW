@@ -8,6 +8,11 @@
   - Multiple "Fit For A King" quests with different objectives
   - Cross-faction delivery quests with proper NPC locations
   - 11 new custom NPCs for quest givers and turn-ins
+- **6 new Epoch quests from GitHub issues #264-267**
+  - Silverpine Forest: The Missing Initiate chain (26875, 26877, 26878)
+  - Hillsbrad Foothills: A Lost Warrior (26795)
+  - Alterac Mountains: Justice Left Undone (26817) - updated with complete data
+  - Ashenvale: CHOP! (27030) - Horde event quest
 
 ### Fixed
 - **Quest 27049 faction flag corrected (Issue #261)**
@@ -16,6 +21,9 @@
   - Blacklisted all non-existent flight masters (NPCs with IDs 17000+)
   - Fixes Suralais Farwind incorrectly showing at Forest Song in Ashenvale
   - Removes confusing flight path markers for NPCs not present in Project Epoch
+- **7 Classic flight masters restored to maps**
+  - Fixed incorrect npcFlags overrides that were hiding legitimate flight masters
+  - Restored: Jarrodenus (Azshara), Mishellena (Felwood), Bibilfaz Featherwhistle (WPL), Vhulgra (Ashenvale), Khaelyn Steelwing (EPL), Georgia (EPL), Faustron (Moonglade)
 
 ## [1.0.69] - 2024-08-31
 
