@@ -83,7 +83,7 @@ epochQuestData = {
 [28767] = {"The Naga Menace",nil,nil,nil,5,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil},
 [28756] = {"Missing Quest 28756",nil,nil,nil,2,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,14,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}, -- Gap in troll sequence
 [26126] = {"Springsocket Eels",{{45549}},{{45549}},nil,36,nil,nil,{"Collect 10 Raw Springsocket Eels."},nil,{nil,nil,{{110001,10}}},nil,nil,nil,nil,nil,nil,3,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil},
-[26282] = {"An Old Debt",nil,nil,nil,42,nil,nil,{"Find Joakim Sparkroot in Westfall."},nil,nil,nil,nil,nil,nil,nil,nil,40,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil},
+[26282] = {"An Old Debt",nil,{{45206}},nil,42,nil,2,{"Slay Supervisor Grimgash."},nil,{{{60328,"Supervisor Grimgash"}}},nil,nil,nil,nil,nil,nil,15,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil}, -- Issue #458: Updated turn-in NPC and objectives
 [26283] = {"Azothan Relic",nil,nil,nil,43,nil,nil,{"Locate a historian in Ironforge."},nil,nil,nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil},
 [26284] = {"Azothan Relics",{{2916}},{{2916}},nil,43,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,1537,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil},
 [26285] = {"Deeg's Lost Pipe",{{2488}},{{2500}},nil,40,nil,2,{"Obtain Deeg's Lost Pipe."},nil,{{{45187,1,"Murklurk"}},nil,{{61920,1,"Deeg's Lost Pipe"}}},nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil}, -- Issue #427: Updated with correct data
@@ -287,6 +287,9 @@ epochQuestData = {
 [27443] = {"Azeroth Space Society",{{46228}},{{46120}},nil,41,nil,nil,{"Deliver Kranz's message to Beezil Linkspanner in Dustwallow Marsh."},nil,nil,nil,nil,nil,nil,nil,nil,440,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil},
 [27941] = {"Crafted from Crawlers",nil,{{7867}},nil,60,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,3,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}, -- Badlands quest
 [26505] = {"Letter to Ravenholdt",{{2276}},{{2378}},nil,36,nil,nil,{"Take the letter from Magistrate Henry Maleb to Lord Jorach Ravenholdt at Ravenholdt Manor in the Alterac Mountains."},nil,nil,nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil},
+
+-- Issue #416: Commission: Vegan-Friendly Recipe (First Aid profession quest)
+[26602] = {"Commission: Vegan-Friendly Recipe",{{46235}},{{46236}},{129,75},13,nil,nil,{"Bring 10 Linen Bandages and 10 Silk Bandages to Private Waldric."},nil,{nil,nil,{{1251,10,"Linen Bandage"},{6450,10,"Silk Bandage"}}},nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil}, -- Requires First Aid skill 75+
 [26516] = {"Dark Council",{{2276}},nil,nil,40,nil,nil,{"Take the Argus Spellbook to Lord Jorach Ravenholdt at Ravenholdt Manor in Alterac Mountains."},nil,nil,nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil},
 [26518] = {"The Ensorcelled Parchment",nil,nil,nil,40,nil,nil,{"Find the Ensorcelled Parchment."},nil,{nil,nil,{{62310,1,"Ensorcelled Parchment"}}},nil,nil,nil,nil,nil,nil,36,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil},
 [26537] = {"The Mordis Key",nil,{{2278}},nil,40,nil,nil,{"Deliver the Mordis Key to Melisara."},nil,nil,nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil},
@@ -370,7 +373,7 @@ epochQuestData = {
 [27398] = {"Attack on the Mine",{{4082}},{{4082}},nil,22,nil,nil,{"Slay 5 Windshear Geomancers","Slay 5 Windshear Overlords","Slay 10 Windshear Diggers"},nil,{{{4003,5,"Windshear Geomancer"},{4004,5,"Windshear Overlord"},{3999,10,"Windshear Digger"}}},nil,nil,nil,nil,nil,nil,406,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil},
 [26169] = {"Can't Make An Omelette Without...",{{14736}},{{14736}},nil,45,nil,nil,{"Collect 12 Shadraspawn Eggs."},nil,nil,nil,nil,nil,nil,nil,nil,47,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil},
 [26185] = {"Lard's Lost Beads",{{14731}},{{14731}},nil,50,nil,nil,{"Find Lard's Lost Beads."},nil,nil,nil,nil,nil,nil,nil,nil,47,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil},
-[26293] = {"Fit For A King",{{45211}},{{45211}},nil,45,nil,nil,{"Prepare a meal fit for a king."},nil,nil,nil,nil,nil,nil,nil,nil,357,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil},
+[26293] = {"Fit For A King",{{46704}},{{46704}},nil,45,nil,2,{"Collect 16 Walker Branches."},nil,{{{7584,16,"Walker Branch"}},nil,{{61936,16,"Walker Branch"}}},nil,nil,nil,nil,nil,nil,357,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil}, -- Issue #458: Updated with correct NPCs and objectives
 [26295] = {"Fit For A King",{{45211}},{{45211}},nil,45,nil,nil,{"Prepare a meal fit for a king."},nil,nil,nil,nil,nil,nil,nil,nil,357,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil},
 [26296] = {"Fit For A King",nil,{{45211}},nil,45,nil,nil,{"Prepare a meal fit for a king."},nil,nil,nil,nil,nil,nil,nil,nil,357,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil},
 [26478] = {"Deep Earth Rune",{{658}},{{658}},nil,1,nil,nil,{"Obtain a Deep Earth Rune."},nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil},
@@ -494,7 +497,7 @@ epochQuestData = {
 [26799] = {"A Scout in Need",{{45800}},{{2263}},nil,24,nil,2,{"Report to Marshal Redpath in Southshore."},nil,nil,nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil}, -- Hillsbrad Foothills
 [26558] = {"The Rumbling Fields",nil,{{45564}},nil,38,nil,2,{"Slay 7 Frantic Earth and 7 Rambling Earth."},nil,{{{45565,7,"Frantic Earth"},{45566,7,"Rambling Earth"}}},nil,nil,nil,nil,nil,nil,45,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil}, -- Arathi Highlands
 [26549] = {"A Painful Dousing",{{45548}},{{45548}},nil,37,nil,2,{"Collect 8 Raging Bindings."},nil,{{{45552,"Raging Cinders"}},nil,{{62332,8,"Raging Bindings"}}},nil,nil,nil,nil,nil,nil,45,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil}, -- Arathi Highlands
-[28489] = {"Commission for Kaliyah Stormshew",{{46065}},{{46065}},nil,20,nil,1,{"Collect 20 Wool Bandages."},nil,{nil,nil,{{3530,20,"Wool Bandage"}}},nil,nil,nil,nil,nil,nil,17,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}, -- The Barrens
+[28489] = {"Commission for Kaliyah Stormshew",nil,{{5767}},nil,20,nil,1,{"Collect 20 Wool Bandages."},nil,{nil,nil,{{3530,20,"Wool Bandage"}}},nil,nil,nil,nil,nil,nil,17,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}, -- Issue #416: Updated turn-in NPC to Nalpak
 [28675] = {"Commission for Veron Amberstill",nil,nil,nil,10,nil,3,{"Collect 2 Linen Bags."},nil,{nil,nil,{{4238,2,"Linen Bag"}}},nil,nil,nil,nil,nil,nil,1,nil,nil,nil,nil,nil,3,0,nil,nil,nil,nil,nil,nil}, -- Dun Morogh
 [28676] = {"Commission for Marleth Barleybrew",{{1703}},nil,nil,10,nil,3,{"Collect 1 Heavy Linen Gloves."},nil,{nil,nil,{{5633,1,"Heavy Linen Gloves"}}},nil,nil,nil,nil,nil,nil,1,nil,nil,nil,nil,nil,3,0,nil,nil,nil,nil,nil,nil}, -- Dun Morogh
 [26806] = {"Defense of Southshore",{{45800}},{{45800}},nil,22,nil,2,{"Collect Emily's Report, Paxton's Report, and Tristan's Report."},nil,{nil,nil,{{62596,1,"Emily's Report"},{62597,1,"Paxton's Report"},{62598,1,"Tristan's Report"}}},nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil}, -- Hillsbrad Foothills
@@ -517,6 +520,12 @@ epochQuestData = {
 -- Issue #415: High-level quests
 [26304] = {"Attunement to the Core",{{13278}},nil,nil,60,nil,nil,{"Collect Firebloom, Elemental Fire, Elemental Water, and Wintersbite."},nil,{nil,nil,{{4625,1,"Firebloom"},{7068,1,"Elemental Fire"},{7070,1,"Elemental Water"},{3819,1,"Wintersbite"}}},nil,nil,nil,nil,nil,nil,16,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}, -- Azshara
 [26341] = {"The Possible Fall of Baradin Hold",nil,{{11936}},nil,60,nil,1,nil,nil,nil,nil,nil,nil,nil,nil,nil,28,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}, -- Western Plaguelands
+
+-- Issue #463: Ashenvale quest
+[27051] = {"Rumbles Of The Earth",{{45990}},{{45990}},nil,23,nil,1,{"Locate and eliminate the source of tremors."},nil,{{{14192,1,"Source of tremors eliminated"}}},nil,nil,nil,nil,nil,nil,331,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}, -- Ashenvale
+
+-- Issue #462: Redridge Mountains quest
+[27219] = {"Auntie VanCleef",nil,{{777}},nil,25,nil,2,nil,nil,nil,nil,nil,nil,nil,nil,nil,36,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil}, -- Redridge Mountains (TODO: Quest giver missing, incomplete data)
 }
 
 QuestieDB._epochQuestData = epochQuestData

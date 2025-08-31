@@ -12,6 +12,13 @@
 - **Felicia Maline flight master location in Darkshire (Issue #419)**
   - Fixed flight master map pin showing at wrong location
   - Corrected coordinates to proper flight master position (77.4, 44.3)
+
+### Added (from GitHub issues)
+- **Commission: Vegan-Friendly Recipe (Issue #416)**
+  - First Aid profession quest requiring skill level 75+
+  - Properly marked with requiredSkill field for profession filtering
+  - Quest giver: Garrison Grader in Tirisfal Glades
+  - Turn-in: Private Waldric in Elwynn Forest
 - **28 new Epoch quests from GitHub issues #238-261**
   - Complete quest data for The Handmaiden's Fall chain (26714, 26715)
   - Multiple "Fit For A King" quests with different objectives

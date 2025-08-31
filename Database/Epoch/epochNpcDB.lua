@@ -268,7 +268,7 @@ local epochNpcData = {
 [6237] = {"[Epoch] NPC 6237",1800,2025,45,45,0,{[1519]={{51.8,68.2},{51.8,67.7},{51.3,68.8},{51.1,68.7}}},nil,1519,nil,nil,11,"A",nil,0},
 [6267] = {"[Epoch] NPC 6267",800,900,20,20,0,{[1519]={{39.1,83.5}}},nil,1519,nil,nil,11,"A",nil,0},
 [6577] = {"Bingles Blastenheimer",640,720,16,16,0,{[38]={{63.6,47.9}}},nil,38,{2038},{2038},11,"A",nil,0},
-[6579] = {"[Epoch] NPC 6579",680,765,17,17,0,{[1519]={{62.6,34.1}}},nil,1519,nil,nil,11,"A",nil,0},
+[6579] = {"Shoni the Shilent",680,765,17,17,0,{[1519]={{62.6,34.1}}},nil,1519,nil,{26540},11,"A",nil,0}, -- Issue #413: Updated with name and quest turn-in
 [5112] = {"Gwenna Firebrew",1003,1003,30,30,0,{[1519]={{74.49,54.09}}},nil,1519,nil,nil,12,"A","Barmaid",643}, -- Cathedral Square barmaid (NOT an innkeeper)
 [6740] = {"Innkeeper Allison",1002,1002,30,30,0,{[1519]={{52.62,65.7}}},nil,1519,{3789,8356,9027},{8356,8860,9026},12,"A","Innkeeper",65671}, -- Fixed npcFlags to include INNKEEPER flag (65536) + VENDOR(128) + REPAIR(4) + QUEST_GIVER(2) + GOSSIP(1)
 [6778] = {"Melika Isenstrider",440,495,11,11,0,{[12]={{38.2,68.6}}},nil,12,{26780},{26779},11,"A",nil,0},
@@ -697,7 +697,7 @@ local epochNpcData = {
 [45976] = {"Tyraeth Morningshade",nil,nil,27,27,0,{[331]={{34.7,49.7}}},nil,331,nil,{27037},11,"A",nil,0}, -- Issue #258: Fixed from incorrect Peach/Thousand Needles data
 [45977] = {"Race Invigilator",1160,1305,29,29,0,{[400]={{82.52,82.55},{82.49,82.81},{84.62,69.58},{84.66,69.3},{81.4,58.74},{81.42,58.48},{78.33,73.89},{78.31,73.64}}},{[400]={{82.52,82.55},{82.49,82.81},{84.62,69.58},{84.66,69.3},{81.4,58.74},{81.42,58.48},{78.33,73.89},{78.31,73.64}}},400,nil,nil,35,"AH",nil,0},
 [45982] = {"Xirith",nil,nil,23,23,0,{[331]={{74.2,62.6}}},nil,331,nil,{27034,27049},2,"H",nil,0}, -- Issue #270: Added quest 27034 turn-in
-[45990] = {"Foreman Springsocket",nil,nil,23,23,0,{[331]={{73.1,59.3}}},nil,331,{27045,27049},{27045},2,"H",nil,0}, -- Issue #269: Added quest 27045
+[45990] = {"Foreman Springsocket",nil,nil,23,23,0,{[331]={{73.1,59.3}}},nil,331,{27045,27049,27051},{27045,27051},1,"H",nil,0}, -- Issue #269 & #463: Added quests 27045 and 27051
 [46012] = {"Atrasies the Ancient",1360,1530,34,34,0,{[45]={{82.82,57.34}}},nil,45,{26548,26549,26550,26557,26571},{26546,26547,26548,26549,26556,26557,26576},35,"AH",nil,0},
 -- Batch quest submission NPCs
 [1092] = {"Captain Rugelfuss",nil,nil,9,9,0,{[38]={{23.1,73.7}}},nil,38,nil,nil,2,"A",nil,0}, -- Loch Modan
@@ -1055,6 +1055,10 @@ local epochNpcData = {
 -- Issue #419: Fix Felicia Maline flight master coordinates in Darkshire
 [2409] = {"Felicia Maline",nil,nil,55,55,0,{[10]={{77.4,44.3}}},nil,10,nil,nil,8,"A","Gryphon Master",0}, -- Darkshire Flight Master
 
+-- Issue #416: Commission: Vegan-Friendly Recipe NPCs (First Aid profession quest)
+[46235] = {"Garrison Grader",nil,nil,13,13,0,{[85]={{60.4,66.9}}},nil,85,{26602},nil,1,"H",nil,0}, -- Tirisfal Glades quest giver
+[46236] = {"Private Waldric",nil,nil,13,13,0,{[12]={{36.2,86.2}}},nil,12,nil,{26602},1,"A",nil,0}, -- Elwynn Forest turn-in
+
 -- Issues #104-116, #119, #132, #153, #155-156: Additional NPCs
 -- Issue #104: Elwynn Forest NPCs
 [9296] = {"Milly Osworth",nil,nil,1,1,0,{[12]={{50.7,39.4}}},nil,12,{26778},{26777},1,"A",nil,0}, -- Elwynn Forest
@@ -1255,6 +1259,9 @@ local epochNpcData = {
 [13278] = {"Duke Hydraxis",nil,nil,60,60,0,{[16]={{79.2,73.6}}},nil,16,{26304},nil,nil,nil,nil,0}, -- Azshara
 [11936] = {"Artist Renfray",nil,nil,60,60,0,{[28]={{65.7,75.3}}},nil,28,nil,{26341},nil,nil,nil,0}, -- Western Plaguelands
 [3945] = {"Caravaneer Ruzzgot",nil,nil,52,52,0,{[33]={{27.3,74.0}}},nil,33,{27130},nil,1,"H",nil,0}, -- Stranglethorn Vale
+-- Issue #413: Alterac Mountains Murlocs
+[45544] = {"Murloc Lake Hunter",nil,nil,32,32,0,{[36]={{25.3,46.8}}},nil,36,nil,nil,0,nil,nil,0}, -- Quest 26540 mob
+[45545] = {"Murloc Lake Oracle",nil,nil,32,32,0,{[36]={{25.3,46.8}}},nil,36,nil,nil,0,nil,nil,0}, -- Quest 26540 mob
 
 -- Issue #429: Desolace quest NPCs
 [674] = {"Venture Co. Strip Miner",nil,nil,37,38,0,{[405]={{35.0,42.0}}},nil,405,{26289},nil,3,nil,nil,0}, -- Quest giver for Renegade Naga
@@ -1310,6 +1317,12 @@ local epochNpcData = {
 
 -- Issue #417: Silverpine Forest NPCs
 [5748] = {"Killian Sanatha",nil,nil,5,5,0,{[130]={{32.9,17.6}}},nil,130,nil,{28513},1,"H",nil,0}, -- Commission for Killian Sanatha turn-in
+
+-- Issue #416: Wailing Caverns NPCs
+[5767] = {"Nalpak",nil,nil,20,20,0,{[17]={{51.9,55.4}}},nil,17,nil,{28489},1,"H",nil,0}, -- Commission for Kaliyah Stormshew turn-in
+
+-- Issue #462: Redridge Mountains NPC
+[777] = {"Amy Davenport",nil,nil,25,25,0,{[36]={{29.0,47.4}}},nil,36,nil,{27219},2,"A",nil,0}, -- Auntie VanCleef turn-in
 
 -- Stage the Epoch npcData for later merge during compilation
 }
