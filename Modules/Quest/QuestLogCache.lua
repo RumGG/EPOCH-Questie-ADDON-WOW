@@ -167,6 +167,17 @@ function QuestLogCache.CheckForChanges(questIdsToCheck)
     local changes = {} -- table key = questid of the changed quest, table value = list of changed objective ids
     local questIdsChecked = {} -- for debug / error detection
     
+    -- Debug: Check questIdsToCheck parameter
+    if questIdsToCheck then
+        local checkCount = 0
+        for _ in pairs(questIdsToCheck) do
+            checkCount = checkCount + 1
+        end
+        Questie:Print("[CACHE] CheckForChanges called with", checkCount, "specific quest IDs")
+    else
+        Questie:Print("[CACHE] CheckForChanges called with nil (check ALL quests)")
+    end
+    
     -- Debug: Check how many quests Blizzard says we have
     local numEntries, numQuests = GetNumQuestLogEntries()
     Questie:Print("[CACHE] GetNumQuestLogEntries: entries=", numEntries, "quests=", numQuests)
@@ -236,6 +247,9 @@ function QuestLogCache.CheckForChanges(questIdsToCheck)
                             objectives = newObjectives,
                         }
                         changes[questId] = changedObjIds
+                        Questie:Print("[CACHE] Saved quest", questId, "to cache")
+                    else
+                        Questie:Print("[CACHE] No changes for quest", questId, "- not updating cache")
                     end
                 else
                     cacheMiss = true
