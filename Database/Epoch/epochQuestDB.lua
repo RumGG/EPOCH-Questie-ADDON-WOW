@@ -446,6 +446,9 @@ epochQuestData[26544] = {"Who Likes Apples?",{{3544}},{{3544}},nil,35,nil,nil,{"
 epochQuestData[27034] = {"Never Again!",nil,nil,nil,30,nil,nil,{"Complete the task - Never Again!"},nil,nil,nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Hillsbrad Foothills quest
 epochQuestData[27238] = {"An Imp's Bidding",{{46000}},{{46000}},nil,31,nil,nil,{"Slay 1 monster and collect Demonic Sextant."},nil,{nil,nil,{{63113,"Demonic Sextant"}}},nil,nil,nil,nil,nil,nil,405,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Desolace quest
 
+-- Issue #266: Hillsbrad Foothills quest
+epochQuestData[26795] = {"A Lost Warrior",{{2229}},{{2418}},nil,24,nil,nil,{"Speak with Deathguard Samsa in Tarren Mill."},nil,nil,nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Hillsbrad Foothills
+
 -- Issue #108: Alliance quests (Hillsbrad/Wetlands)
 epochQuestData[26542] = {"A Rare Variety",{{2364}},{{2364}},nil,35,nil,nil,{"Collect 6 rare specimens."},nil,{nil,nil,{{11630}}},nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26802] = {"Venom Medicine",{{2363}},{{2363}},nil,23,nil,nil,{"Collect 8 Venom Sacs."},nil,{nil,nil,{{11630}}},nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
