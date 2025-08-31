@@ -532,5 +532,27 @@ epochQuestData[26545] = {"Who Likes Watermelons?",nil,nil,nil,40,nil,nil,nil,nil
 -- Issue #166 quest
 epochQuestData[26713] = {"Life In Death",{{45731}},{{45731}},nil,25,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,10,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil} -- Duskwood
 
+-- Issues #16, #20, #28, #29, #47, #49, #50 - New quest data from GitHub issues #1-50
+epochQuestData[26453] = {"Our Bodies Forsaken",{{45242}},{{45242}},nil,12,nil,nil,{"Hear what The Fallen Knight has to say."},nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Tirisfal Glades
+epochQuestData[26456] = {"Our Bodies Forsaken",{{45242}},{{5665}},nil,12,nil,nil,{"Speak with Alyssa Blaye."},nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Tirisfal Glades  
+epochQuestData[26457] = {"Our Bodies Forsaken",{{5665}},{{5665}},nil,13,nil,nil,{"Collect 4 Linen Cloth."},nil,{nil,nil,{{2589,4}}},nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Tirisfal Glades
+epochQuestData[26458] = {"Our Bodies Forsaken",{{5665}},{{5665}},nil,13,nil,nil,{"Collect 10 Linen Cloth."},nil,{nil,nil,{{2589,10}}},nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Tirisfal Glades
+epochQuestData[26459] = {"Our Bodies Forsaken",{{5665}},{{5665}},nil,13,nil,nil,{"Kill 8 Scarlet Crusaders."},nil,{{{46851,8}}},nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Tirisfal Glades
+epochQuestData[26460] = {"Our Bodies Forsaken",{{5665}},{{5665}},nil,13,nil,nil,{"Kill 8 Scarlet Crusaders and collect 3 Linen Cloth."},nil,{{{46851,8}},nil,{{2589,3}}},nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Tirisfal Glades
+epochQuestData[26461] = {"Our Bodies Forsaken",{{5665}},{{5665}},nil,14,nil,nil,{"Kill 10 Scarlet Crusaders."},nil,{{{46851,10}}},nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Tirisfal Glades
+epochQuestData[26928] = {"Arugal Ambush",{{45888}},{{45888}},nil,11,nil,nil,{"Collect the item."},nil,{nil,nil,{{60000,1}}},nil,nil,nil,nil,nil,nil,130,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Silverpine Forest
+epochQuestData[26929] = {"Arugal Ambush",{{45888}},{{45888}},nil,11,nil,nil,{"Collect 8 and 4 items."},nil,{nil,nil,{{60000,8},{60001,4}}},nil,nil,nil,nil,nil,nil,130,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Silverpine Forest
+epochQuestData[26932] = {"Shadow Mage",{{45887}},{{45887}},nil,9,nil,nil,{"Find the Shadow Mage."},nil,nil,nil,nil,nil,nil,nil,nil,141,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Teldrassil
+epochQuestData[26936] = {"Treasures of Teldrassil",{{45887}},{{45887}},nil,10,nil,nil,{"Find the treasures."},nil,nil,nil,nil,nil,nil,nil,nil,141,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Teldrassil
+epochQuestData[27400] = {"Mirkfallon Bracers",nil,{{11864}},nil,23,nil,nil,{"Turn in the bracers."},nil,nil,nil,nil,nil,nil,nil,nil,406,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Stonetalon Mountains
+epochQuestData[27499] = {"The Ghost of the Flats",nil,nil,nil,35,nil,nil,{"Find the ghost."},nil,nil,nil,nil,nil,nil,nil,nil,17,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Barrens
+epochQuestData[26586] = {"Primitive Relic",{{45599}},{{45598}},nil,40,nil,nil,{"Collect Primitive Relic."},nil,{nil,nil,{{62370,1}}},nil,nil,nil,nil,nil,nil,19,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Badlands
+epochQuestData[26587] = {"Primitive Relic",{{45598}},{{2910}},nil,40,nil,nil,{"Take the relic to Prospector Ryedol."},nil,nil,nil,nil,nil,nil,nil,nil,19,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Badlands
+epochQuestData[28530] = {"Commission for Indon Cliffreach",{{45549}},{{45549}},nil,40,nil,nil,{"Bring 20 Goldthorn to Indon Cliffreach."},nil,{nil,nil,{{3821,20}}},nil,nil,nil,nil,nil,nil,45,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Arathi Highlands
+epochQuestData[26472] = {"In Favor of the Sun",{{45512}},{{2981}},nil,4,nil,nil,{"Report to Chief Hawkwind."},nil,nil,nil,nil,nil,nil,nil,nil,215,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Mulgore
+epochQuestData[27339] = {"Grimtotem Encroachment",{{2980}},{{2980}},nil,4,nil,nil,{"Slay 8 Grimtotem."},nil,{{{46000,8}}},nil,nil,nil,nil,nil,nil,215,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Mulgore
+epochQuestData[27340] = {"Finding Mone",{{45503}},{{46153}},nil,4,nil,nil,{"Find Mone Sunmane."},nil,nil,nil,nil,nil,nil,nil,nil,215,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Mulgore
+epochQuestData[27341] = {"Finding Mone",{{46153}},{{45503}},nil,4,nil,nil,{"Bring Simple Green Pendant to Kaya Sunmane."},nil,{nil,nil,{{60010,1}}},nil,nil,nil,nil,nil,nil,215,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Mulgore
+
 -- Stage the Epoch questData for later merge during compilation
 QuestieDB._epochQuestData = epochQuestData

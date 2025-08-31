@@ -1079,5 +1079,21 @@ epochNpcData[45526] = {"Felicity",nil,nil,40,40,0,{[36]={{86.0,80.2}}},nil,36,ni
 epochNpcData[45731] = {"Sarae Dewlight",nil,nil,25,25,0,{[10]={{77.6,52.2}}},nil,10,{26713},{26713},1,"A",nil,0} -- Duskwood (overriding to add both quest giver and turn-in)
 epochNpcData[45844] = {"Shep Daltry",nil,nil,36,36,0,{[33]={{37.8,3.1}}},nil,33,{26884},nil,1,"A",nil,0} -- Stranglethorn Vale (overriding wrong one)
 
+-- Issues #16, #20, #28, #29, #47, #49, #50 - NPCs from GitHub issues #1-50
+epochNpcData[45242] = {"The Fallen Knight",nil,nil,12,12,0,{[85]={{53.0,31.3}}},nil,85,{26453,26456},{26453},8,"H",nil,0} -- Tirisfal Glades
+epochNpcData[5665] = {"Alyssa Blaye",nil,nil,12,12,0,{[85]={{46.8,27.4}}},nil,85,{26457,26458,26459,26460,26461},{26456,26457,26458,26459,26460,26461},8,"H",nil,0} -- Tirisfal Glades (corrected zone from old data)
+epochNpcData[45888] = {"Deathguard Kitsapell",nil,nil,11,11,0,{[130]={{49.6,31.1}}},nil,130,{26928,26929},{26928,26929},8,"H",nil,0} -- Silverpine Forest
+epochNpcData[45887] = {"A Box of Relics Handler",nil,nil,9,9,0,{[141]={{56.0,59.0}}},nil,141,{26926,26932,26936},{26932,26936},8,"A",nil,0} -- Teldrassil
+epochNpcData[11864] = {"Tammra Windfield",nil,nil,23,23,0,{[406]={{47.5,58.3}}},nil,406,nil,{27400},8,"H",nil,0} -- Stonetalon Mountains
+epochNpcData[45599] = {"Earthen Spirit",nil,nil,40,40,0,{[19]={{76.7,26.4}}},nil,19,{26586},nil,8,"A",nil,0} -- Badlands
+epochNpcData[45598] = {"Gapple",nil,nil,40,40,0,{[19]={{69.2,56.5}}},nil,19,nil,{26586},8,"A",nil,0} -- Badlands
+epochNpcData[2910] = {"Prospector Ryedol",nil,nil,40,40,0,{[19]={{53.4,43.4}}},nil,19,nil,{26587},8,"A",nil,0} -- Badlands
+epochNpcData[45549] = {"Indon Cliffreach",nil,nil,40,40,0,{[45]={{45.7,45.8}}},nil,45,{28530},{28530},8,"A",nil,0} -- Arathi Highlands
+epochNpcData[45512] = {"Magrum Mistrunner",nil,nil,4,4,0,{[215]={{45.0,76.0}}},nil,215,{26472},nil,8,"H",nil,0} -- Mulgore
+epochNpcData[2981] = {"Chief Hawkwind",nil,nil,4,4,0,{[215]={{44.2,76.1}}},nil,215,nil,{26472},8,"H",nil,0} -- Mulgore
+epochNpcData[2980] = {"Grull Hawkwind",nil,nil,4,4,0,{[215]={{44.8,77.2}}},nil,215,{27339},{27339},8,"H",nil,0} -- Mulgore
+epochNpcData[45503] = {"Kaya Sunmane",nil,nil,4,4,0,{[215]={{45.2,76.9}}},nil,215,{27340},{27341},8,"H",nil,0} -- Mulgore
+epochNpcData[46153] = {"Mone Sunmane",nil,nil,4,4,0,{[215]={{54.7,76.0}}},nil,215,{27341},{27340},8,"H",nil,0} -- Mulgore
+
 -- Stage the Epoch npcData for later merge during compilation
 QuestieDB._epochNpcData = epochNpcData
