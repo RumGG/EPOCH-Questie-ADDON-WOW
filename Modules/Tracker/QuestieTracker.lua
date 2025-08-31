@@ -404,6 +404,8 @@ function QuestieTracker:SyncWatchedQuests()
         return
     end
     
+    Questie:Print("[TRACKING DEBUG] ========== STARTING SYNC ==========")
+    
     -- Force populate the quest log cache first
     if QuestLogCache and QuestLogCache.CheckForChanges then
         Questie:Print("[DEBUG] Forcing QuestLogCache update")
@@ -460,6 +462,90 @@ function QuestieTracker:SyncWatchedQuests()
         Questie.db.char.AutoUntrackedQuests[questId] = nil
         Questie:Print("[DEBUG] Removed quest", questId, "from AutoUntrackedQuests (not in log)")
     end
+    
+    -- Track which quests Blizzard thinks are watched
+    local blizzardWatched = {}
+    local watchedCount = 0
+    for i = 1, GetNumQuestLogEntries() do
+        local _, _, _, isHeader, _, _, _, questId = GetQuestLogTitle(i)
+        if not isHeader and questId and questId > 0 then
+            if IsQuestWatched(i) then
+                blizzardWatched[questId] = true
+                watchedCount = watchedCount + 1
+            end
+        end
+    end
+    Questie:Print("[TRACKING DEBUG] Blizzard has", watchedCount, "quests watched")
+    
+    -- Try to track all quests that should be tracked
+    local successCount = 0
+    local failCount = 0
+    local failedQuests = {}
+    
+    for questId, quest in pairs(QuestiePlayer.currentQuestlog) do
+        -- Skip if user manually untracked
+        if not Questie.db.char.AutoUntrackedQuests[questId] then
+            -- This quest should be tracked
+            local questIndex = GetQuestLogIndexByID(questId)
+            if questIndex and questIndex > 0 then
+                if not IsQuestWatched(questIndex) then
+                    -- Try to track it
+                    Questie:Print("[TRACKING DEBUG] Attempting to track quest", questId, "at index", questIndex)
+                    AddQuestWatch(questIndex)
+                    
+                    -- Check if it worked
+                    if IsQuestWatched(questIndex) then
+                        successCount = successCount + 1
+                        Questie:Print("[TRACKING DEBUG] SUCCESS: Tracked quest", questId)
+                    else
+                        failCount = failCount + 1
+                        failedQuests[questId] = true
+                        
+                        -- Get quest details to understand why it failed
+                        local title, level, tag, isHeader, isCollapsed, isComplete = GetQuestLogTitle(questIndex)
+                        Questie:Print("[TRACKING DEBUG] FAILED: Could not track quest", questId, "'", title, "' Level:", level, "Complete:", isComplete)
+                        
+                        -- Check objectives to see if they're malformed
+                        local numObjectives = GetNumQuestLeaderBoards(questIndex)
+                        Questie:Print("[TRACKING DEBUG] Quest", questId, "has", numObjectives, "objectives")
+                        for objIndex = 1, numObjectives do
+                            local text, objectiveType, finished = GetQuestLogLeaderBoard(objIndex, questIndex)
+                            if not text or text == "" then
+                                Questie:Print("[TRACKING DEBUG] Quest", questId, "has invalid objective", objIndex, "type:", objectiveType)
+                            else
+                                Questie:Print("[TRACKING DEBUG] Quest", questId, "obj", objIndex, ":", text, "type:", objectiveType, "finished:", finished)
+                            end
+                        end
+                        
+                        -- Check if it's a runtime stub or Epoch quest
+                        if quest and quest.__isRuntimeStub then
+                            Questie:Print("[TRACKING DEBUG] Quest", questId, "is a runtime stub")
+                        end
+                        if quest and quest.name and string.find(quest.name, "^%[Epoch%]") then
+                            Questie:Print("[TRACKING DEBUG] Quest", questId, "is an Epoch quest")
+                        end
+                    end
+                else
+                    successCount = successCount + 1
+                end
+            else
+                Questie:Print("[TRACKING DEBUG] No valid index for quest", questId)
+            end
+        end
+    end
+    
+    Questie:Print("[TRACKING DEBUG] Tracking results: Success=", successCount, "Failed=", failCount)
+    if failCount > 0 then
+        local failedList = {}
+        for questId in pairs(failedQuests) do
+            table.insert(failedList, tostring(questId))
+        end
+        Questie:Print("[TRACKING DEBUG] Failed quests:", table.concat(failedList, ", "))
+    end
+    
+    -- Mark sync as complete
+    QuestieTracker._alreadySynced = true
+    Questie:Print("[TRACKING DEBUG] ========== SYNC COMPLETE ==========")
     
     -- If AutoUntrackedQuests has very few entries compared to quest log, 
     -- it's likely corrupted or not properly initialized
