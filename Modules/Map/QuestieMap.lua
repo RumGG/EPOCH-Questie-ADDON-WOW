@@ -633,18 +633,7 @@ function QuestieMap:DrawWorldIcon(data, areaID, x, y, showFlag)
     iconMap.AreaID = areaID
     iconMap.UiMapID = uiMapId
     iconMap.miniMapIcon = false;
-    -- Debug: Check what's being passed
-    local iconTexture = Questie.usedIcons[data.Icon]
-    if not iconTexture then
-        Questie:Print("[ICON DEBUG] No texture found for icon type:", data.Icon, "usedIcons exists:", Questie.usedIcons ~= nil)
-        if Questie.usedIcons then
-            Questie:Print("[ICON DEBUG] usedIcons[1]=", Questie.usedIcons[1])
-            Questie:Print("[ICON DEBUG] usedIcons[2]=", Questie.usedIcons[2])
-            Questie:Print("[ICON DEBUG] usedIcons[4]=", Questie.usedIcons[4])
-        end
-        iconTexture = "Interface\\Icons\\INV_Misc_QuestionMark"
-    end
-    iconMap:UpdateTexture(iconTexture);
+    iconMap:UpdateTexture(Questie.usedIcons[data.Icon]);
 
     ---@type IconFrame
     local iconMinimap = QuestieFramePool:GetFrame()
