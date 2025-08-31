@@ -1205,5 +1205,6 @@ local epochNpcData = {
 [45473] = {"Grox Muckswagger",0,0,1,1,0,{[16]={{{27.0,50.1}}}},nil,16,nil,{27155},0,"AH",nil,0},
 
 -- Stage the Epoch npcData for later merge during compilation
-QuestieDB._epochNpcData = epochNpcData
 }
+
+QuestieDB._epochNpcData = epochNpcData
