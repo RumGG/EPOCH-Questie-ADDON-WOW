@@ -1110,5 +1110,11 @@ epochNpcData[45211] = {"Viggo",nil,nil,48,48,0,{[357]={{51.6,47.5}}},nil,357,{26
 -- Feralas mob for quest 27335
 epochNpcData[46146] = {"Lost Ancient",nil,nil,48,48,0,{[357]={{58.9,61.3}}},nil,357,nil,nil,1,"A",nil,0} -- Feralas: Target for Wanted: Lost Ancient
 
+-- The Barrens NPCs for quest 26856 (GitHub #244)
+epochNpcData[5410] = {"Ko'gar the Thunderer",nil,nil,10,10,0,{[17]={{63.9,54.5}}},nil,17,{26856},{26856},1,"H",nil,0} -- The Barrens: Quest giver/turn-in for Exterminate the Brutes
+epochNpcData[5333] = {"Razormane Defender",nil,nil,10,11,0,{[17]={{43.0,51.0},{43.0,49.0},{42.0,50.0}}},nil,17,nil,nil,1,"H",nil,0} -- The Barrens: Kill target
+epochNpcData[5334] = {"Razormane Hunter",nil,nil,10,11,0,{[17]={{43.0,51.0},{43.0,49.0},{42.0,50.0}}},nil,17,nil,nil,1,"H",nil,0} -- The Barrens: Kill target
+epochNpcData[5335] = {"Razormane Thornweaver",nil,nil,10,11,0,{[17]={{43.0,51.0},{43.0,49.0},{42.0,50.0}}},nil,17,nil,nil,1,"H",nil,0} -- The Barrens: Kill target
+
 -- Stage the Epoch npcData for later merge during compilation
 QuestieDB._epochNpcData = epochNpcData

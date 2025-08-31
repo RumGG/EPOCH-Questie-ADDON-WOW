@@ -26,7 +26,16 @@ If you find this version of Questie with data collection helpful, consider [buyi
 
 **Not feeling up to it?** No problem! Just use Questie normally. `/qdc disable`
 
-## v1.0.68 - Latest Release
+## v1.0.69 - Latest Release
+
+### New Quest Data
+
+**Added:**
+- **New Epoch quest from GitHub issue #244**
+  - The Barrens: Exterminate the Brutes (26856)
+  - Added quest giver Ko'gar the Thunderer and Razormane targets
+
+## v1.0.68
 
 ### Quest Tracking Fixes
 

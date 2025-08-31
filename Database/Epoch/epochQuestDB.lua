@@ -601,5 +601,8 @@ epochQuestData[27335] = {"Wanted: Lost Ancient",nil,{{45211}},nil,48,nil,nil,{"K
 -- Update placeholder for 28476
 epochQuestData[28476] = {"Commission for Watcher Dodds",nil,nil,nil,20,nil,nil,{"Commission quest for Watcher Dodds."},nil,nil,nil,nil,nil,nil,nil,nil,10,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Duskwood commission
 
+-- The Barrens: Exterminate the Brutes (GitHub #244)
+epochQuestData[26856] = {"Exterminate the Brutes",{{5410}},{{5410}},nil,10,nil,nil,{"Kill 5 Razormane Hunters, 5 Razormane Thornweavers, and 3 Razormane Defenders."},nil,{{{5334,5},{5335,5},{5333,3}}},nil,nil,nil,nil,nil,nil,17,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- The Barrens: Ko'gar the Thunderer
+
 -- Stage the Epoch questData for later merge during compilation
 QuestieDB._epochQuestData = epochQuestData

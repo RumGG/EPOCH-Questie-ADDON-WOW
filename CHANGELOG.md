@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.69] - 2024-08-31
+
+### Added
+- **New Epoch quest from GitHub issue #244**
+  - The Barrens: Exterminate the Brutes (26856)
+  - Added quest giver Ko'gar the Thunderer and target mobs (Razormane Hunters, Thornweavers, and Defenders)
+
 ## [1.0.68] - 2024-08-31
 
 ### Fixed
