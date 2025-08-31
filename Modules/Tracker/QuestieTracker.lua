@@ -460,11 +460,36 @@ function QuestieTracker:SyncWatchedQuests()
     if (questCount >= 20 and untrackedCount <= 5) or (questCount >= 10 and untrackedCount == 0) then
         Questie:Print("[DEBUG] Detected corrupted AutoUntrackedQuests state - resetting")
         Questie:Print("[DEBUG] Had", questCount, "quests but only", untrackedCount, "untracked")
-        -- Mark all quests as untracked initially
-        for questId in pairs(QuestiePlayer.currentQuestlog) do
-            Questie.db.char.AutoUntrackedQuests[questId] = true
+        
+        -- Clear and rebuild AutoUntrackedQuests
+        Questie.db.char.AutoUntrackedQuests = {}
+        
+        -- Mark MOST quests as untracked, but keep some tracked to show in tracker
+        local trackedCount = 0
+        local maxToTrack = math.min(5, questCount)  -- Track up to 5 quests
+        
+        for questId, quest in pairs(QuestiePlayer.currentQuestlog) do
+            -- Check if quest is complete - always untrack complete quests
+            local isComplete = false
+            if quest and quest.IsComplete then
+                isComplete = quest:IsComplete() == 1
+            end
+            
+            -- Check if quest is untrackable
+            local isUntrackable = QuestieTracker._untrackableQuests and QuestieTracker._untrackableQuests[questId]
+            
+            -- Track incomplete, trackable quests up to our limit
+            if not isComplete and not isUntrackable and trackedCount < maxToTrack then
+                -- This quest will be tracked (not in AutoUntrackedQuests)
+                trackedCount = trackedCount + 1
+                Questie:Print("[DEBUG] Keeping quest", questId, "tracked")
+            else
+                -- Mark as untracked
+                Questie.db.char.AutoUntrackedQuests[questId] = true
+            end
         end
-        Questie:Print("[DEBUG] Reset AutoUntrackedQuests - all", questCount, "quests marked as untracked")
+        
+        Questie:Print("[DEBUG] Reset AutoUntrackedQuests - kept", trackedCount, "tracked,", (questCount - trackedCount), "untracked")
     else
         Questie:Print("[DEBUG] AutoUntrackedQuests state looks OK:", untrackedCount, "untracked out of", questCount, "total")
     end
@@ -2495,6 +2520,18 @@ function QuestieTracker.RemoveQuestWatch(index, isQuestie)
             end
 
             if questId then
+                -- Check if this was just added (within last 0.5 seconds)
+                -- If so, Blizzard is rejecting the track - mark as untrackable
+                local now = GetTime()
+                if QuestieTracker._lastTrackedQuest and QuestieTracker._lastTrackedQuest.id == questId and 
+                   (now - QuestieTracker._lastTrackedQuest.time) < 0.5 then
+                    Questie:Print("[DEBUG RemoveQuestWatch] Quest", questId, "was immediately untracked by Blizzard - marking as untrackable")
+                    if not QuestieTracker._untrackableQuests then
+                        QuestieTracker._untrackableQuests = {}
+                    end
+                    QuestieTracker._untrackableQuests[questId] = true
+                end
+                
                 Questie:Print("[DEBUG RemoveQuestWatch] Calling UntrackQuestId for:", questId)
                 QuestieTracker:UntrackQuestId(questId)
                 Questie:Debug(Questie.DEBUG_DEVELOP, "[QuestieTracker.RemoveQuestWatch] - by Blizzard")
@@ -2646,6 +2683,9 @@ function QuestieTracker:AQW_Insert(index, expire)
                     Questie.db.char.AutoUntrackedQuests[questId] = nil
                     Questie:Print("[DEBUG AQW] Manual track:", questId, "(was untracked)")
                 end
+                
+                -- Remember this quest was just tracked (for detecting immediate untracks)
+                QuestieTracker._lastTrackedQuest = {id = questId, time = GetTime()}
             else
                 -- Quest acceptance, initialization sync, or other automatic tracking
                 if QuestieTracker._syncingWatchedQuests then
