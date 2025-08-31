@@ -1,13 +1,5 @@
 # Changelog
 
-## [1.0.68] - 2024-08-31
-
-### Changed
-- **Removed colored background glow from map pins**
-  - Map icons now display without the colored background/border
-  - Cleaner appearance for quest objective markers
-  - Glow code commented out but preserved for future reference
-
 ## [1.0.67] - 2024-08-31
 
 ### Fixed

@@ -251,8 +251,6 @@ function _Qframe:BaseOnShow()
     if data and data.Type and data.Type == "complete" then
         self:SetFrameLevel(self:GetFrameLevel() + 1)
     end
-    -- Glow disabled - no colored background behind icons
-    --[[
     if ((self.miniMapIcon and Questie.db.profile.alwaysGlowMinimap) or ((not self.miniMapIcon) and Questie.db.profile.alwaysGlowMap)) and
         data and data.ObjectiveData and
         data.ObjectiveData.Color and
@@ -265,7 +263,6 @@ function _Qframe:BaseOnShow()
         self.glow:Show()
         -- Textures don't have frame level, they use draw layer instead
     end
-    --]]
 end
 
 function _Qframe:BaseOnHide()
