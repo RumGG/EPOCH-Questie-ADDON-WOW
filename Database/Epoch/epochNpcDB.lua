@@ -1111,6 +1111,9 @@ epochNpcData[2086] = {"Valstag Ironjaw",nil,nil,25,25,0,{[11]={{10.1,56.8}}},nil
 -- Ashenvale NPC  
 epochNpcData[3663] = {"Delgren the Purifier",nil,nil,20,20,0,{[331]={{26.2,38.6}}},nil,331,nil,{27038},1,"A",nil,0} -- Ashenvale: Forsaken Looters turn-in
 
+-- Issue #267: Ashenvale NPC
+epochNpcData[45981] = {"Taskmaster Baran",nil,nil,25,25,0,{[331]={{70.0,71.0}}},nil,331,{27030},{27030},1,"H",nil,0} -- Ashenvale
+
 -- The Hinterlands NPC
 epochNpcData[45019] = {"Golith Slatestrike",nil,nil,46,46,0,{[47]={{14.2,48.0}}},nil,47,nil,{26186},1,"A",nil,0} -- The Hinterlands: Parts From Afar turn-in
 

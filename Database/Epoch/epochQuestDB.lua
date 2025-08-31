@@ -620,6 +620,9 @@ epochQuestData[27021] = {"Message to Menethil",nil,{{2086}},nil,21,nil,nil,{"Del
 epochQuestData[27037] = {"Direct Reprisal",nil,{{45976}},nil,27,nil,nil,{"Slay Lady Sarevess."},nil,{{{4831,"Lady Sarevess"}}},nil,nil,nil,nil,nil,nil,331,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Issue #258: Ashenvale quest
 epochQuestData[27038] = {"Forsaken Looters",nil,{{3663}},nil,20,nil,nil,{"Kill 5 Forsaken Scouts, 5 Forsaken Herbalists and 10 Forsaken Assassins."},nil,{{{3893,5,"Forsaken Scout"},{3733,5,"Forsaken Herbalist"},{3879,10,"Forsaken Assassin"}}},nil,nil,nil,nil,nil,nil,331,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Ashenvale: Delgren the Purifier
 
+-- Issue #267: Ashenvale quest
+epochQuestData[27030] = {"CHOP!",{{45981}},{{45981}},nil,25,nil,nil,{"Protect Romgul as he lures Ashenvale Outrunners to attack him."},nil,nil,nil,nil,nil,nil,nil,nil,331,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Ashenvale event quest
+
 -- The Hinterlands quest
 epochQuestData[26186] = {"Parts From Afar",nil,{{45019}},nil,46,nil,nil,{"Bring the Basket of Treats to Myolor Sunderfury in Ironforge to exchange for Siege Engine Parts."},nil,nil,nil,nil,nil,nil,nil,nil,47,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- The Hinterlands: Golith Slatestrike
 
