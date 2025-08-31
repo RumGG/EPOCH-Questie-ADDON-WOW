@@ -27,6 +27,10 @@ epochQuestData[26531] = {"The Argus Wake",{{45527}},{{45528}},nil,43,nil,nil,{"F
 epochQuestData[26532] = {"The Argus Wake",{{45528}},{{45528}},nil,44,nil,nil,{"Felicity Perenolde wants you to interrogate Zala'thria."},nil,{{{45530,"Zala'thria interrogated"}}},nil,nil,{26531},{26533},nil,nil,405,nil,nil,nil,nil,26533,8,0,26531,nil,nil,nil,nil,nil} -- Desolace quest
 epochQuestData[26533] = {"The Argus Wake",{{45528}},{{45528}},nil,44,nil,nil,{"Felicity Perenolde wants you to kill Kratok and acquire Kratok's Horn."},nil,{{{45531,nil}},nil,{{62693,nil}}},nil,nil,{26532},nil,nil,nil,405,nil,nil,nil,nil,nil,8,0,26532,nil,nil,nil,nil,nil} -- Desolace quest
 
+-- Issue #203: Reagents For The Undercity questline - Desolace
+epochQuestData[27254] = {"Reagents For The Undercity",{{46090}},{{46090}},nil,33,nil,nil,{"Collect 10 Hatefury Claws and 10 Hatefury Horns for Annie Grim."},nil,{nil,nil,{{6246,10,"Hatefury Claw"},{6247,10,"Hatefury Horn"}}},nil,nil,nil,{27255},nil,nil,405,nil,nil,nil,nil,27255,8,0,nil,nil,nil,nil,nil,nil} -- Desolace quest: Annie Grim (issue #197)
+epochQuestData[27256] = {"Reagents For The Undercity",{{46090}},{{46103}},nil,40,nil,nil,{"Collect 10 Felhound Brains, 10 Nether Wings, and 10 Doomwarder Blood for Annie Grim."},nil,{nil,nil,{{6250,10,"Felhound Brain"},{6251,10,"Nether Wing"},{6252,10,"Doomwarder Blood"}}},nil,nil,{27255},{27257},nil,nil,405,nil,nil,nil,nil,27257,8,0,27255,nil,nil,nil,nil,nil} -- Desolace quest: Annie Grim to Pipjot
+
 -- Issue #60: Stonetalon Mountains quest data
 epochQuestData[26938] = {"[Epoch] Quest 26938",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26939] = {"Forging the Way",{{10299}},{{10299}},nil,39,nil,nil,{"Collect 6 Gnome Artificial Arms from Rogue Gnome Artificers and bring them to Keeper Ordanus in Stonetalon Mountains."},nil,{{{45807,nil},{45809,nil}},nil,{{62994,nil}}},nil,nil,nil,nil,nil,nil,406,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
@@ -182,6 +186,7 @@ epochQuestData[27659] = {"Commission for High Chief Ungarl",nil,{{5385}},nil,50,
 epochQuestData[28647] = {"Commission for Strumner Flintheel",nil,{{14634}},nil,50,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,51,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Turn-in: Lookout Captain Lolo Longstriker, Searing Gorge
 
 -- Issue #94: Westfall quests from user data submission
+epochQuestData[26698] = {"Hand of Azora",{{45700}},{{45702}},nil,13,nil,nil,{"Complete the Hand of Azora task for Karlain and report to Revil Kost."},nil,nil,nil,nil,nil,nil,nil,nil,40,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Quest giver: Karlain (45700), Turn-in: Revil Kost (45702)
 epochQuestData[26994] = {"The Killing Fields",{{237}},{{233}},nil,10,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,40,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Quest giver: Farmer Furlbrow, Turn-in: Farmer Saldean
 epochQuestData[26995] = {"The Killing Fields",{{233}},{{233}},nil,12,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,40,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Quest giver and turn-in: Farmer Saldean
 epochQuestData[26996] = {"The Killing Fields",{{233}},nil,nil,14,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,40,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil} -- Quest giver: Farmer Saldean
@@ -531,6 +536,9 @@ epochQuestData[26545] = {"Who Likes Watermelons?",nil,nil,nil,40,nil,nil,nil,nil
 
 -- Issue #166 quest
 epochQuestData[26713] = {"Life In Death",{{45731}},{{45731}},nil,25,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,10,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil} -- Duskwood
+
+-- Issue #208: Two-Legged Vultures - Tanaris quest
+epochQuestData[27420] = {"Two-Legged Vultures",{{7771}},{{7771}},nil,45,nil,nil,{"Collect Marvon's Pocket Watch, Marvon's Brimmed Hat, and Marvon's Ham Radio."},nil,{nil,nil,{{63284,1,"Marvon's Pocket Watch"},{63285,1,"Marvon's Brimmed Hat"},{63286,1,"Marvon's Ham Radio"}}},nil,nil,nil,nil,nil,nil,440,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Tanaris: Quest giver and turn-in: Marvon Rivetseeker (7771)
 
 -- Stage the Epoch questData for later merge during compilation
 QuestieDB._epochQuestData = epochQuestData

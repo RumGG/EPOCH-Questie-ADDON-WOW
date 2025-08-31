@@ -341,6 +341,17 @@ local epochItemData = {
 -- Issue #73: Missing quest batch submission items
 [110001] = {"Raw Springsocket Eel",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,{26126}},
 [63195] = {"Slaver's Records",{5844,5846,5843},nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,{26864}}, -- Dark Iron Taskmasters drop
+
+-- Issue #208: Two-Legged Vultures quest items (Tanaris)
+[63284] = {"Marvon's Pocket Watch",{46196},nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,{27420}}, -- Ravenous Looter drop
+[63285] = {"Marvon's Brimmed Hat",{46196},nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,{27420}}, -- Ravenous Looter drop
+[63286] = {"Marvon's Ham Radio",{46196},nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,{27420}}, -- Ravenous Looter drop
+
+-- Issue #203: Reagents For The Undercity quest items (Desolace)
+[6246] = {"Hatefury Claw",{4670,4671,4672,4673},nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,{27254}}, -- Hatefury creatures drop (issue #197)
+[6247] = {"Hatefury Horn",{4670,4671,4672,4673},nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,{27254}}, -- Hatefury creatures drop (issue #197)
+[6250] = {"Felhound Brain",{4676,4677},nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,{27256}}, -- Ley Hunters, Mage Hunters drop
+[6251] = {"Nether Wing",{4684,4686},nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,{27256}}, -- Nether Sorceresses, Nether Sister drop
 }
 
 -- Stage the Epoch itemData for later merge during compilation

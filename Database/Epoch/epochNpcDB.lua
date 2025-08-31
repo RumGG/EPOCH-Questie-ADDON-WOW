@@ -1078,6 +1078,9 @@ epochNpcData[11826] = {"Kristy Grant",nil,nil,28,28,0,{[357]={{89.4,45.9}}},nil,
 epochNpcData[45526] = {"Felicity",nil,nil,40,40,0,{[36]={{86.0,80.2}}},nil,36,nil,{26525},2,"AH",nil,0} -- Alterac Mountains (overriding wrong one)
 epochNpcData[45731] = {"Sarae Dewlight",nil,nil,25,25,0,{[10]={{77.6,52.2}}},nil,10,{26713},{26713},1,"A",nil,0} -- Duskwood (overriding to add both quest giver and turn-in)
 epochNpcData[45844] = {"Shep Daltry",nil,nil,36,36,0,{[33]={{37.8,3.1}}},nil,33,{26884},nil,1,"A",nil,0} -- Stranglethorn Vale (overriding wrong one)
+epochNpcData[7771] = {"Marvon Rivetseeker",nil,nil,45,45,0,{[440]={{52.7,45.8}}},nil,440,{27420},{27420},1,"A",nil,0} -- Tanaris: Two-Legged Vultures quest
+epochNpcData[46090] = {"Annie Grim",nil,nil,40,40,0,{[405]={{25.3,67.1}}},nil,405,{27254,27256},{27254,27255,27256},2,"H",nil,0} -- Desolace: Reagents For The Undercity quest giver
+epochNpcData[46103] = {"Pipjot",nil,nil,40,40,0,{[405]={{26.0,69.9}}},nil,405,nil,{27256},2,"H",nil,0} -- Desolace: Reagents For The Undercity turn-in
 
 -- Stage the Epoch npcData for later merge during compilation
 QuestieDB._epochNpcData = epochNpcData
