@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.68] - 2024-08-31
+
+### Fixed
+- **Shift-click quest tracking in quest log now works correctly**
+  - Fixed bug where shift-clicking quests would only track quests with no objectives
+  - Shift-click now properly toggles tracking for ALL quests (tracks if untracked, untracks if tracked)
+  - Maintains compatibility with shift-click to link quest in chat
+
 ## [1.0.67] - 2024-08-31
 
 ### Fixed

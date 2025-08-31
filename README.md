@@ -26,7 +26,17 @@ If you find this version of Questie with data collection helpful, consider [buyi
 
 **Not feeling up to it?** No problem! Just use Questie normally. `/qdc disable`
 
-## v1.0.67 - Latest Release
+## v1.0.68 - Latest Release
+
+### Quest Tracking Fixes
+
+**Fixed:**
+- **Shift-click quest tracking now works properly**
+  - Fixed issue where shift-clicking quests in quest log would only track quests with no objectives
+  - Shift-click now correctly toggles tracking for ALL quests
+  - Maintains shift-click to link quest in chat functionality
+
+## v1.0.67
 
 ### Critical Bug Fixes
 
