@@ -240,20 +240,6 @@ function QuestLogCache.CheckForChanges(questIdsToCheck)
                 else
                     cacheMiss = true
                 end
-            else
-                Questie:Debug(Questie.DEBUG_CRITICAL, "[QuestLogCache.CheckForChanges] HaveQuestData() == false. questId, index:", questId, questLogIndex)
-
-                -- In theory this shouldn't happen. This is not error but an edge case.
-
-                -- Game's quest log has the questId, but game doesn't have data of the quest right now.
-                -- Use earlier cached version of the quest. This may very well be nonexisting version, which is okey.
-                -- Query with HaveQuestData() triggers game to get the data and fire QUEST_LOG_UPDATE once game has the data.
-                --   Does NOT trigger getting objectives data! (read: item data related to objectives)
-
-                -- Speed up caching of objective items as HaveQuestData() won't trigger game to cache those.
-                C_QuestLog_GetQuestObjectives(questId, questLogIndex)
-
-                cacheMiss = true
             end
         end
     end
