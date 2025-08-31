@@ -908,302 +908,303 @@ local epochNpcData = {
 }
 
 -- Issue #91: NPCs for additional quests
-epochNpcData[2488] = {"Deeg",nil,nil,40,40,0,{[33]={{26.9,77.3}}},nil,33,nil,nil,0,"A","Quest Giver",0}
-epochNpcData[2498] = {"Crank Fizzlebub",nil,nil,43,43,0,{[33]={{27.1,77.2}}},nil,33,nil,nil,0,"A","Quest Giver",0}
-epochNpcData[2916] = {"Historian Karnik",nil,nil,43,43,0,{[1537]={{77.3,11.5}}},nil,1537,nil,nil,0,"A","Quest Giver",0}
+[2488] = {"Deeg",nil,nil,40,40,0,{[33]={{26.9,77.3}}},nil,33,nil,nil,0,"A","Quest Giver",0}
+[2498] = {"Crank Fizzlebub",nil,nil,43,43,0,{[33]={{27.1,77.2}}},nil,33,nil,nil,0,"A","Quest Giver",0}
+[2916] = {"Historian Karnik",nil,nil,43,43,0,{[1537]={{77.3,11.5}}},nil,1537,nil,nil,0,"A","Quest Giver",0}
 
 -- Issue #93: Wetlands and Duskwood NPCs
-epochNpcData[311] = {"Sven Yorgen",nil,nil,45,45,0,{[10]={{7.8,34.1}}},nil,10,nil,nil,0,"A","Quest Giver",0} -- Duskwood
-epochNpcData[45942] = {"Mayor Oakmaster",nil,nil,30,30,0,{[11]={{27.9,66.6}}},nil,11,nil,nil,0,"A","Quest Giver",0} -- Wetlands
-epochNpcData[45943] = {"Scout Barleybrew",nil,nil,30,30,0,{[11]={{39.1,55.4}}},nil,11,nil,nil,0,"A","Quest Giver",0} -- Wetlands
-epochNpcData[45953] = {"Corporal Mountainview",nil,nil,30,30,0,{[11]={{26.6,59.6}}},nil,11,nil,nil,0,"A","Quest Giver",0} -- Wetlands
+[311] = {"Sven Yorgen",nil,nil,45,45,0,{[10]={{7.8,34.1}}},nil,10,nil,nil,0,"A","Quest Giver",0} -- Duskwood
+[45942] = {"Mayor Oakmaster",nil,nil,30,30,0,{[11]={{27.9,66.6}}},nil,11,nil,nil,0,"A","Quest Giver",0} -- Wetlands
+[45943] = {"Scout Barleybrew",nil,nil,30,30,0,{[11]={{39.1,55.4}}},nil,11,nil,nil,0,"A","Quest Giver",0} -- Wetlands
+[45953] = {"Corporal Mountainview",nil,nil,30,30,0,{[11]={{26.6,59.6}}},nil,11,nil,nil,0,"A","Quest Giver",0} -- Wetlands
 
 -- Issue #96: Troll starting zone NPCs (Durotar)
-epochNpcData[46718] = {"Daz'tiro",nil,nil,5,5,0,{[14]={{70.8,45.9}}},nil,14,{28757},nil,0,"H","Quest Giver",0} -- Durotar, quest giver for Banana Bonanza
-epochNpcData[47100] = {"Azisary",nil,nil,5,5,0,{[14]={{72.92,49.14}}},nil,14,nil,{28757},0,"H","Quest Turn-in",0} -- Durotar, turn-in NPC for Banana Bonanza
-epochNpcData[46834] = {"Joz'jarz",nil,nil,5,5,0,{[14]={{70.1,42}}},nil,14,nil,nil,0,"H","Quest Giver",0} -- Durotar, quest giver for Thievin' Crabs
-epochNpcData[46835] = {"Amethyst Crab",nil,nil,2,2,0,{[14]={{70.2,42},{69.6,42.6},{69.5,42.2}}},nil,14,nil,nil,0,nil,nil,0} -- Durotar, spawn locations from data collection
-epochNpcData[46934] = {"Uwa",nil,nil,5,5,0,nil,nil,14,nil,nil,0,"H","Quest Giver",0} -- Durotar, needs coordinates
+[46718] = {"Daz'tiro",nil,nil,5,5,0,{[14]={{70.8,45.9}}},nil,14,{28757},nil,0,"H","Quest Giver",0} -- Durotar, quest giver for Banana Bonanza
+[47100] = {"Azisary",nil,nil,5,5,0,{[14]={{72.92,49.14}}},nil,14,nil,{28757},0,"H","Quest Turn-in",0} -- Durotar, turn-in NPC for Banana Bonanza
+[46834] = {"Joz'jarz",nil,nil,5,5,0,{[14]={{70.1,42}}},nil,14,nil,nil,0,"H","Quest Giver",0} -- Durotar, quest giver for Thievin' Crabs
+[46835] = {"Amethyst Crab",nil,nil,2,2,0,{[14]={{70.2,42},{69.6,42.6},{69.5,42.2}}},nil,14,nil,nil,0,nil,nil,0} -- Durotar, spawn locations from data collection
+[46934] = {"Uwa",nil,nil,5,5,0,nil,nil,14,nil,nil,0,"H","Quest Giver",0} -- Durotar, needs coordinates
 
 -- Issue #97: Blasted Lands NPCs from user data submission
-epochNpcData[8178] = {"Nina Lightbrew",nil,nil,52,52,0,{[19]={{65.1,19.4}}},nil,19,{26598},nil,nil,"A",nil,0} -- Blasted Lands
-epochNpcData[5393] = {"Quartermaster Lungertz",nil,nil,50,50,0,{[19]={{66.4,21.3}}},nil,19,{26599,26600},nil,nil,"A",nil,0} -- Blasted Lands
-epochNpcData[5385] = {"Watcher Mahar Ba",nil,nil,51,51,0,{[19]={{67.5,19.1}}},nil,19,{26614,26615,26616},{27659},nil,"A",nil,0} -- Blasted Lands, also turn-in for 27659
-epochNpcData[45613] = {"Eunna",nil,nil,52,52,0,{[19]={{63.4,20.2}}},nil,19,{26618},nil,nil,"A",nil,0} -- Blasted Lands (Hildar in submission but Eunna in quest text)
-epochNpcData[8022] = {"Spirit of the Exorcist",nil,nil,50,50,0,{[19]={{66.9,19.4}}},nil,19,{26626},nil,nil,"A",nil,0} -- Blasted Lands
+[8178] = {"Nina Lightbrew",nil,nil,52,52,0,{[19]={{65.1,19.4}}},nil,19,{26598},nil,nil,"A",nil,0} -- Blasted Lands
+[5393] = {"Quartermaster Lungertz",nil,nil,50,50,0,{[19]={{66.4,21.3}}},nil,19,{26599,26600},nil,nil,"A",nil,0} -- Blasted Lands
+[5385] = {"Watcher Mahar Ba",nil,nil,51,51,0,{[19]={{67.5,19.1}}},nil,19,{26614,26615,26616},{27659},nil,"A",nil,0} -- Blasted Lands, also turn-in for 27659
+[45613] = {"Eunna",nil,nil,52,52,0,{[19]={{63.4,20.2}}},nil,19,{26618},nil,nil,"A",nil,0} -- Blasted Lands (Hildar in submission but Eunna in quest text)
+[8022] = {"Spirit of the Exorcist",nil,nil,50,50,0,{[19]={{66.9,19.4}}},nil,19,{26626},nil,nil,"A",nil,0} -- Blasted Lands
 
 -- Issue #99: Additional NPCs
 -- Stranglethorn Vale NPCs
-epochNpcData[2488] = {"Deeg",nil,nil,40,40,0,{[33]={{26.7,73.7}}},nil,33,{26285,26287,26290},nil,1,"H",nil,0} -- Grom'gol Base Camp
-epochNpcData[48086] = {"Venture Co. Tinkerer",nil,nil,42,42,0,{[33]={{43.5,71.1}}},nil,33,{26904},{26905},1,"H",nil,0} -- Gurubashi Arena
-epochNpcData[9317] = {"Scooty",nil,nil,45,45,0,{[33]={{27.6,77.5}}},nil,33,{26905},{26904},3,"H",nil,0} -- Booty Bay Engineering
-epochNpcData[48167] = {"Captain Hecklebury Smotts",nil,nil,30,30,0,{[33]={{26.9,77.1}}},nil,33,{28073},nil,3,nil,nil,0} -- Booty Bay
+[2488] = {"Deeg",nil,nil,40,40,0,{[33]={{26.7,73.7}}},nil,33,{26285,26287,26290},nil,1,"H",nil,0} -- Grom'gol Base Camp
+[48086] = {"Venture Co. Tinkerer",nil,nil,42,42,0,{[33]={{43.5,71.1}}},nil,33,{26904},{26905},1,"H",nil,0} -- Gurubashi Arena
+[9317] = {"Scooty",nil,nil,45,45,0,{[33]={{27.6,77.5}}},nil,33,{26905},{26904},3,"H",nil,0} -- Booty Bay Engineering
+[48167] = {"Captain Hecklebury Smotts",nil,nil,30,30,0,{[33]={{26.9,77.1}}},nil,33,{28073},nil,3,nil,nil,0} -- Booty Bay
 
 -- The Barrens NPCs
-epochNpcData[3432] = {"Mankrik",nil,nil,15,15,0,{[17]={{52.0,31.6}}},nil,17,{27168,27174},nil,1,"H",nil,0} -- Crossroads
-epochNpcData[48110] = {"Shin'Zil",nil,nil,17,17,0,{[17]={{55.2,31.4}}},nil,17,{27170,27171,27172,27173},{27169},1,"H",nil,0} -- Stagnant Oasis entrance
-epochNpcData[48111] = {"Nadia",nil,nil,20,20,0,{[17]={{51.9,29.8}}},nil,17,{27176},{27175},1,"H",nil,0} -- Crossroads
-epochNpcData[48112] = {"Corrupted Scorpid",nil,nil,16,16,0,{[17]={{55.0,32.0},{54.8,31.6},{55.3,31.2}}},nil,17,nil,nil,1,nil,nil,0} -- Stagnant Oasis
-epochNpcData[48113] = {"Shadowy Assassin",nil,nil,16,16,0,{[17]={{55.1,31.8},{55.4,31.5}}},nil,17,nil,nil,1,nil,nil,0} -- Stagnant Oasis
-epochNpcData[48114] = {"Baron Geddon's Essence",nil,nil,17,17,0,{[17]={{55.5,31.0}}},nil,17,nil,nil,1,nil,nil,0} -- Stagnant Oasis depths
-epochNpcData[48115] = {"Felguard Commander",nil,nil,17,17,0,{[17]={{55.2,30.8}}},nil,17,nil,nil,1,nil,nil,0} -- Stagnant Oasis depths
-epochNpcData[48116] = {"Summoned Demon",nil,nil,18,18,0,{[17]={{55.0,31.0}}},nil,17,nil,nil,1,nil,nil,0} -- Ritual site
+[3432] = {"Mankrik",nil,nil,15,15,0,{[17]={{52.0,31.6}}},nil,17,{27168,27174},nil,1,"H",nil,0} -- Crossroads
+[48110] = {"Shin'Zil",nil,nil,17,17,0,{[17]={{55.2,31.4}}},nil,17,{27170,27171,27172,27173},{27169},1,"H",nil,0} -- Stagnant Oasis entrance
+[48111] = {"Nadia",nil,nil,20,20,0,{[17]={{51.9,29.8}}},nil,17,{27176},{27175},1,"H",nil,0} -- Crossroads
+[48112] = {"Corrupted Scorpid",nil,nil,16,16,0,{[17]={{55.0,32.0},{54.8,31.6},{55.3,31.2}}},nil,17,nil,nil,1,nil,nil,0} -- Stagnant Oasis
+[48113] = {"Shadowy Assassin",nil,nil,16,16,0,{[17]={{55.1,31.8},{55.4,31.5}}},nil,17,nil,nil,1,nil,nil,0} -- Stagnant Oasis
+[48114] = {"Baron Geddon's Essence",nil,nil,17,17,0,{[17]={{55.5,31.0}}},nil,17,nil,nil,1,nil,nil,0} -- Stagnant Oasis depths
+[48115] = {"Felguard Commander",nil,nil,17,17,0,{[17]={{55.2,30.8}}},nil,17,nil,nil,1,nil,nil,0} -- Stagnant Oasis depths
+[48116] = {"Summoned Demon",nil,nil,18,18,0,{[17]={{55.0,31.0}}},nil,17,nil,nil,1,nil,nil,0} -- Ritual site
 
 -- Fix Fight Promoter NPCs showing as innkeepers (remove INNKEEPER flag)
 -- Original flags: 65537 = INNKEEPER (65536) + GOSSIP (1)
 -- Fixed to just: 1 = GOSSIP only (no innkeeper functionality)
 -- These NPCs are Arena Battlemaster's Assistants but arenas don't exist in Project Epoch
-epochNpcData[26760] = {"Fight Promoter",1,1,70,70,0,{[85]={{31.99,64.53},{61.55,53.2}},[1497]={{66.17,9.9}},[3487]={{74.28,79.24}},[3430]={{47.67,47.15},{39.0,20.79}},[1638]={{37.86,61.04}},[215]={{46.88,60.34},{44.42,76.35}},[1637]={{51.79,76.1}},[14]={{52.28,42.4},{42.47,68.44}},[1]={{46.49,52.47},{28.78,69.86}},[1537]={{32.56,64.24}},[1519]={{62.89,71.63}},[12]={{42.81,65.63},{48.09,42.13}},[3557]={{76.46,55.73}},[3524]={{48.87,50.1},{80.2,47.55}},[1657]={{61.94,40.59}},[141]={{55.92,58.55},{58.73,44.62}}},nil,1519,nil,nil,35,"AH","Arena Battlemaster's Assistant",1} -- Multiple cities, use Stormwind as main zone
-epochNpcData[26765] = {"[DND] TAR Pedestal - Fight Promoter",1,1,70,70,0,{[85]={{31.99,64.53},{61.55,53.2}},[1497]={{66.17,9.9}},[3487]={{74.28,79.24}},[3430]={{47.67,47.15},{39.0,20.79}},[1638]={{37.86,61.04}},[215]={{46.88,60.34},{44.42,76.35}},[1637]={{51.79,76.1}},[14]={{52.28,42.4},{42.47,68.44}},[1]={{46.49,52.47},{28.78,69.86}},[1537]={{32.56,64.24}},[1519]={{62.89,71.63}},[12]={{42.81,65.63},{48.09,42.13}},[3557]={{76.46,55.73}},[3524]={{48.87,50.1},{80.2,47.55}},[1657]={{61.94,40.59}},[141]={{55.92,58.55},{58.73,44.62}}},nil,1519,nil,nil,35,"AH","",1} -- Multiple cities, use Stormwind as main zone
+[26760] = {"Fight Promoter",1,1,70,70,0,{[85]={{31.99,64.53},{61.55,53.2}},[1497]={{66.17,9.9}},[3487]={{74.28,79.24}},[3430]={{47.67,47.15},{39.0,20.79}},[1638]={{37.86,61.04}},[215]={{46.88,60.34},{44.42,76.35}},[1637]={{51.79,76.1}},[14]={{52.28,42.4},{42.47,68.44}},[1]={{46.49,52.47},{28.78,69.86}},[1537]={{32.56,64.24}},[1519]={{62.89,71.63}},[12]={{42.81,65.63},{48.09,42.13}},[3557]={{76.46,55.73}},[3524]={{48.87,50.1},{80.2,47.55}},[1657]={{61.94,40.59}},[141]={{55.92,58.55},{58.73,44.62}}},nil,1519,nil,nil,35,"AH","Arena Battlemaster's Assistant",1} -- Multiple cities, use Stormwind as main zone
+[26765] = {"[DND] TAR Pedestal - Fight Promoter",1,1,70,70,0,{[85]={{31.99,64.53},{61.55,53.2}},[1497]={{66.17,9.9}},[3487]={{74.28,79.24}},[3430]={{47.67,47.15},{39.0,20.79}},[1638]={{37.86,61.04}},[215]={{46.88,60.34},{44.42,76.35}},[1637]={{51.79,76.1}},[14]={{52.28,42.4},{42.47,68.44}},[1]={{46.49,52.47},{28.78,69.86}},[1537]={{32.56,64.24}},[1519]={{62.89,71.63}},[12]={{42.81,65.63},{48.09,42.13}},[3557]={{76.46,55.73}},[3524]={{48.87,50.1},{80.2,47.55}},[1657]={{61.94,40.59}},[141]={{55.92,58.55},{58.73,44.62}}},nil,1519,nil,nil,35,"AH","",1} -- Multiple cities, use Stormwind as main zone
 
 -- NPCs from quest data submissions
 -- Issue #144
-epochNpcData[46012] = {"Nolg",nil,nil,52,52,0,{[16]={{52.8,9.6}}},nil,16,nil,{27082},1,"H",nil,0} -- Azshara
+[46012] = {"Nolg",nil,nil,52,52,0,{[16]={{52.8,9.6}}},nil,16,nil,{27082},1,"H",nil,0} -- Azshara
 
 -- Issue #143
-epochNpcData[45825] = {"Buffalo Will",nil,nil,24,24,0,{[36]={{23.7,41.1}}},nil,36,{26847},nil,1,"A",nil,0} -- Redridge Mountains
+[45825] = {"Buffalo Will",nil,nil,24,24,0,{[36]={{23.7,41.1}}},nil,36,{26847},nil,1,"A",nil,0} -- Redridge Mountains
 -- Note: Guard Howe (903) likely already exists in classic data
 
 -- Issue #142
-epochNpcData[11748] = {"Samantha Swifthoof",nil,nil,34,34,0,{[33]={{43.9,26.6}}},nil,33,{26879},{26883},1,"H",nil,0} -- Stranglethorn Vale, Issue #268: Added quest 26879
+[11748] = {"Samantha Swifthoof",nil,nil,34,34,0,{[33]={{43.9,26.6}}},nil,33,{26879},{26883},1,"H",nil,0} -- Stranglethorn Vale, Issue #268: Added quest 26879
 
 -- Issue #141
-epochNpcData[11145] = {"Myolor Sunderfury",nil,nil,46,46,0,{[1537]={{51.9,41.1}}},nil,1537,{26187},nil,1,"A",nil,0} -- Ironforge
+[11145] = {"Myolor Sunderfury",nil,nil,46,46,0,{[1537]={{51.9,41.1}}},nil,1537,{26187},nil,1,"A",nil,0} -- Ironforge
 
 -- Issue #140
-epochNpcData[45044] = {"Ainslie Yance",nil,nil,16,16,0,{[130]={{43.1,41.2}}},nil,130,nil,{26217},1,"H",nil,0} -- Silverpine Forest
+[45044] = {"Ainslie Yance",nil,nil,16,16,0,{[130]={{43.1,41.2}}},nil,130,nil,{26217},1,"H",nil,0} -- Silverpine Forest
 -- Note: Shadow Priest Allister (2121) likely already exists in classic data
 
 -- Issue #139
-epochNpcData[45846] = {"Lorespeaker Itzli",nil,nil,36,36,0,{[33]={{32.2,27.6}}},nil,33,nil,{26890},1,"H",nil,0} -- Stranglethorn Vale
+[45846] = {"Lorespeaker Itzli",nil,nil,36,36,0,{[33]={{32.2,27.6}}},nil,33,nil,{26890},1,"H",nil,0} -- Stranglethorn Vale
 
 -- Issue #138
 -- Note: Ajeck Rouack (717) already exists in classic data
-epochNpcData[45869] = {"Chel Moonwood",nil,nil,41,41,0,{[33]={{28.2,75.8}}},nil,33,{26908},{26907},1,"N",nil,0} -- Stranglethorn Vale
+[45869] = {"Chel Moonwood",nil,nil,41,41,0,{[33]={{28.2,75.8}}},nil,33,{26908},{26907},1,"N",nil,0} -- Stranglethorn Vale
 -- Note: Thultazor (983) likely already exists in classic data
-epochNpcData[45873] = {"Zul'jin",nil,nil,42,42,0,{[33]={{38.5,51.1}}},nil,33,{26915},{26915},1,"H",nil,0} -- Stranglethorn Vale
+[45873] = {"Zul'jin",nil,nil,42,42,0,{[33]={{38.5,51.1}}},nil,33,{26915},{26915},1,"H",nil,0} -- Stranglethorn Vale
 
 -- Issue #137
-epochNpcData[45780] = {"Dromul Oddrink",nil,nil,6,6,0,{[12]={{54.0,16.6}}},nil,12,{26784},{26784},1,"A",nil,0} -- Elwynn Forest
-epochNpcData[45782] = {"Friend of Dromul",nil,nil,6,6,0,{[12]={{54.0,16.5}}},nil,12,{26785},{26785},1,"A",nil,0} -- Elwynn Forest
+[45780] = {"Dromul Oddrink",nil,nil,6,6,0,{[12]={{54.0,16.6}}},nil,12,{26784},{26784},1,"A",nil,0} -- Elwynn Forest
+[45782] = {"Friend of Dromul",nil,nil,6,6,0,{[12]={{54.0,16.5}}},nil,12,{26785},{26785},1,"A",nil,0} -- Elwynn Forest
 
 -- Issue #136
-epochNpcData[45783] = {"Brother Zaldimar",nil,nil,6,6,0,{[12]={{39.0,70.7}}},nil,12,nil,{26782},1,"A",nil,0} -- Elwynn Forest
+[45783] = {"Brother Zaldimar",nil,nil,6,6,0,{[12]={{39.0,70.7}}},nil,12,nil,{26782},1,"A",nil,0} -- Elwynn Forest
 
 -- Issue #135
-epochNpcData[45779] = {"Linus Stone",nil,nil,6,6,0,{[12]={{37.8,68.2}}},nil,12,{26781},nil,1,"A",nil,0} -- Elwynn Forest
+[45779] = {"Linus Stone",nil,nil,6,6,0,{[12]={{37.8,68.2}}},nil,12,{26781},nil,1,"A",nil,0} -- Elwynn Forest
 
 -- Additional NPCs from issues #151-117
 -- Issue #151
-epochNpcData[45946] = {"Commander Strongborn",nil,nil,27,27,0,{[11]={{34.2,62.6}}},nil,11,nil,{27053},1,"A",nil,0} -- Wetlands
+[45946] = {"Commander Strongborn",nil,nil,27,27,0,{[11]={{34.2,62.6}}},nil,11,nil,{27053},1,"A",nil,0} -- Wetlands
 
 -- Issue #150/149
-epochNpcData[46008] = {"Master Leander",nil,nil,54,54,0,{[16]={{21.7,50.0}}},nil,16,nil,{27091,27092},1,"H",nil,0} -- Azshara
+[46008] = {"Master Leander",nil,nil,54,54,0,{[16]={{21.7,50.0}}},nil,16,nil,{27091,27092},1,"H",nil,0} -- Azshara
 
 -- Issue #148
-epochNpcData[45546] = {"Private Noit",nil,nil,32,32,0,{[267]={{48.1,60.1}}},nil,267,{26540,26541},nil,1,"A",nil,0} -- Hillsbrad Foothills
+[45546] = {"Private Noit",nil,nil,32,32,0,{[267]={{48.1,60.1}}},nil,267,{26540,26541},nil,1,"A",nil,0} -- Hillsbrad Foothills
 
 -- Issue #147, #159
-epochNpcData[45773] = {"Sarah Templeworth",nil,nil,8,8,0,{[12]={{64.2,69}}},nil,12,{26768},nil,1,"A",nil,0} -- Elwynn Forest (Just Desserts)
-epochNpcData[45774] = {"Robert Miston",nil,nil,9,9,0,{[12]={{42.5,69.2}}},nil,12,nil,{26771},1,"A",nil,0} -- Elwynn Forest (Lost Equipment turn-in)
-epochNpcData[45775] = {"Matron Darcy",nil,nil,9,9,0,{[12]={{41.8,67}}},nil,12,{26774,26775},{26774},1,"A",nil,0} -- Elwynn Forest (Spider Elixir, Tend to the Wounded)
-epochNpcData[45777] = {"Webbed Miner",nil,nil,9,9,0,{[12]={{60.4,49.7}}},nil,12,{26771},nil,1,"A",nil,0} -- Elwynn Forest (Lost Equipment quest giver)
-epochNpcData[45797] = {"Wanted Poster",nil,nil,8,8,0,{[12]={{48.9,41.6}}},nil,12,{26794},nil,35,"A",nil,0} -- Elwynn Forest (Wanted: Big Blue)
+[45773] = {"Sarah Templeworth",nil,nil,8,8,0,{[12]={{64.2,69}}},nil,12,{26768},nil,1,"A",nil,0} -- Elwynn Forest (Just Desserts)
+[45774] = {"Robert Miston",nil,nil,9,9,0,{[12]={{42.5,69.2}}},nil,12,nil,{26771},1,"A",nil,0} -- Elwynn Forest (Lost Equipment turn-in)
+[45775] = {"Matron Darcy",nil,nil,9,9,0,{[12]={{41.8,67}}},nil,12,{26774,26775},{26774},1,"A",nil,0} -- Elwynn Forest (Spider Elixir, Tend to the Wounded)
+[45777] = {"Webbed Miner",nil,nil,9,9,0,{[12]={{60.4,49.7}}},nil,12,{26771},nil,1,"A",nil,0} -- Elwynn Forest (Lost Equipment quest giver)
+[45797] = {"Wanted Poster",nil,nil,8,8,0,{[12]={{48.9,41.6}}},nil,12,{26794},nil,35,"A",nil,0} -- Elwynn Forest (Wanted: Big Blue)
 
 -- Issue #146
-epochNpcData[2697] = {"Clyde Ranthal",nil,nil,30,30,0,{[36]={{89.0,70.7}}},nil,36,{28573},{28573},1,"A",nil,0} -- Redridge Mountains
+[2697] = {"Clyde Ranthal",nil,nil,30,30,0,{[36]={{89.0,70.7}}},nil,36,{28573},{28573},1,"A",nil,0} -- Redridge Mountains
 
 -- Issue #131
-epochNpcData[46083] = {"Apprentice Fess",nil,nil,37,37,0,{[38]={{50.0,55.0}}},nil,38,{27237},nil,1,"A",nil,0} -- Swamp of Sorrows
+[46083] = {"Apprentice Fess",nil,nil,37,37,0,{[38]={{50.0,55.0}}},nil,38,{27237},nil,1,"A",nil,0} -- Swamp of Sorrows
 
 -- Issue #130
-epochNpcData[46086] = {"Holaaru",nil,nil,36,36,0,{[38]={{25.9,32.4}}},nil,38,{27243},{27243},1,"N",nil,0} -- Swamp of Sorrows
+[46086] = {"Holaaru",nil,nil,36,36,0,{[38]={{25.9,32.4}}},nil,38,{27243},{27243},1,"N",nil,0} -- Swamp of Sorrows
 
 -- Issue #126
-epochNpcData[45383] = {"Sentinel Arynia Cloudsbreak",nil,nil,12,12,0,{[141]={{55.7,50.4}}},nil,141,{26455},nil,1,"A",nil,0} -- Teldrassil
-epochNpcData[45887] = {"Priestess A'moora",nil,nil,9,9,0,{[141]={{56.7,53.5}}},nil,141,{26926},nil,1,"A",nil,0} -- Teldrassil
+[45383] = {"Sentinel Arynia Cloudsbreak",nil,nil,12,12,0,{[141]={{55.7,50.4}}},nil,141,{26455},nil,1,"A",nil,0} -- Teldrassil
+[45887] = {"Priestess A'moora",nil,nil,9,9,0,{[141]={{56.7,53.5}}},nil,141,{26926},nil,1,"A",nil,0} -- Teldrassil
 
 -- Issue #121
-epochNpcData[2140] = {"Edwin Harly",nil,nil,13,13,0,{[130]={{44.0,39.9}}},nil,130,{26218},{26218},1,"H",nil,0} -- Silverpine Forest
+[2140] = {"Edwin Harly",nil,nil,13,13,0,{[130]={{44.0,39.9}}},nil,130,{26218},{26218},1,"H",nil,0} -- Silverpine Forest
 
 -- Issues #104-116, #119, #132, #153, #155-156: Additional NPCs
 -- Issue #104: Elwynn Forest NPCs
-epochNpcData[9296] = {"Milly Osworth",nil,nil,1,1,0,{[12]={{50.7,39.4}}},nil,12,{26778},{26777},1,"A",nil,0} -- Elwynn Forest
-epochNpcData[952] = {"Brother Neals",nil,nil,1,1,0,{[12]={{49.4,41.5}}},nil,12,{26779},{26778},1,"A",nil,0} -- Elwynn Forest
-epochNpcData[45798] = {"Lorkiz Quietbit",nil,nil,8,8,0,{[12]={{42.1,67.2}}},nil,12,nil,{26794},1,"A",nil,0} -- Elwynn Forest
+[9296] = {"Milly Osworth",nil,nil,1,1,0,{[12]={{50.7,39.4}}},nil,12,{26778},{26777},1,"A",nil,0} -- Elwynn Forest
+[952] = {"Brother Neals",nil,nil,1,1,0,{[12]={{49.4,41.5}}},nil,12,{26779},{26778},1,"A",nil,0} -- Elwynn Forest
+[45798] = {"Lorkiz Quietbit",nil,nil,8,8,0,{[12]={{42.1,67.2}}},nil,12,nil,{26794},1,"A",nil,0} -- Elwynn Forest
 
 -- Issue #105: Feralas NPCs
-epochNpcData[4048] = {"Falfindel Waywarder",nil,nil,28,28,0,{[405]={{89.6,46.4}}},nil,405,{27488,27500,27501},{27488,27500,27501},1,"A",nil,0} -- Feralas
+[4048] = {"Falfindel Waywarder",nil,nil,28,28,0,{[405]={{89.6,46.4}}},nil,405,{27488,27500,27501},{27488,27500,27501},1,"A",nil,0} -- Feralas
 
 -- Issue #106: Darkshore NPCs  
-epochNpcData[3616] = {"Onu",nil,nil,14,14,0,{[148]={{43.5,76.3}}},nil,148,nil,{27205},1,"A",nil,0} -- Darkshore
+[3616] = {"Onu",nil,nil,14,14,0,{[148]={{43.5,76.3}}},nil,148,nil,{27205},1,"A",nil,0} -- Darkshore
 
 -- Issue #107: Hillsbrad/Desolace NPCs
-epochNpcData[3544] = {"Jason Lemieux",nil,nil,40,40,0,{[267]={{60.9,20.4}}},nil,267,{26544},{26524,26544},2,"H",nil,0} -- Hillsbrad Foothills
-epochNpcData[46000] = {"Pipjot",nil,nil,31,31,0,{[405]={{26.0,69.9}}},nil,405,{27238},{27238},1,"H",nil,0} -- Desolace
+[3544] = {"Jason Lemieux",nil,nil,40,40,0,{[267]={{60.9,20.4}}},nil,267,{26544},{26524,26544},2,"H",nil,0} -- Hillsbrad Foothills
+[46000] = {"Pipjot",nil,nil,31,31,0,{[405]={{26.0,69.9}}},nil,405,{27238},{27238},1,"H",nil,0} -- Desolace
 
 -- Issue #108: Alliance NPCs
-epochNpcData[2364] = {"Neema",nil,nil,40,40,0,{[267]={{51.1,59.1}}},nil,267,{26542,26543},{26542},1,"A",nil,0} -- Hillsbrad Foothills
-epochNpcData[2363] = {"Apprentice Honeywell",nil,nil,23,23,0,{[267]={{50.7,56.8}}},nil,267,{26802},{26802},1,"A",nil,0} -- Hillsbrad Foothills
-epochNpcData[45942] = {"Mayor Oakmaster",nil,nil,31,31,0,{[11]={{27.9,66.6}}},nil,11,{27000},{27000},1,"A",nil,0} -- Wetlands
-epochNpcData[2104] = {"Captain Stoutfist",nil,nil,31,31,0,{[11]={{9.8,57.4}}},nil,11,nil,{27000},1,"A",nil,0} -- Wetlands
+[2364] = {"Neema",nil,nil,40,40,0,{[267]={{51.1,59.1}}},nil,267,{26542,26543},{26542},1,"A",nil,0} -- Hillsbrad Foothills
+[2363] = {"Apprentice Honeywell",nil,nil,23,23,0,{[267]={{50.7,56.8}}},nil,267,{26802},{26802},1,"A",nil,0} -- Hillsbrad Foothills
+[45942] = {"Mayor Oakmaster",nil,nil,31,31,0,{[11]={{27.9,66.6}}},nil,11,{27000},{27000},1,"A",nil,0} -- Wetlands
+[2104] = {"Captain Stoutfist",nil,nil,31,31,0,{[11]={{9.8,57.4}}},nil,11,nil,{27000},1,"A",nil,0} -- Wetlands
 
 -- Issue #111 & #116: Stranglethorn Vale NPCs
-epochNpcData[45846] = {"Lorespeaker Itzli",nil,nil,36,36,0,{[33]={{32.2,27.6}}},nil,33,{26886},{26885},1,"H",nil,0} -- Stranglethorn Vale
-epochNpcData[2497] = {"Nimboya",nil,nil,36,36,0,{[33]={{32.2,27.7}}},nil,33,nil,{26885},1,"H",nil,0} -- Stranglethorn Vale
-epochNpcData[45845] = {"Thu'tek",nil,nil,36,36,0,{[33]={{26.3,12.2}}},nil,33,{26886},{26886},1,"H",nil,0} -- Stranglethorn Vale
+[45846] = {"Lorespeaker Itzli",nil,nil,36,36,0,{[33]={{32.2,27.6}}},nil,33,{26886},{26885},1,"H",nil,0} -- Stranglethorn Vale
+[2497] = {"Nimboya",nil,nil,36,36,0,{[33]={{32.2,27.7}}},nil,33,nil,{26885},1,"H",nil,0} -- Stranglethorn Vale
+[45845] = {"Thu'tek",nil,nil,36,36,0,{[33]={{26.3,12.2}}},nil,33,{26886},{26886},1,"H",nil,0} -- Stranglethorn Vale
 
 -- Issue #113: Felwood NPCs
-epochNpcData[9996] = {"Winna Hazzard",nil,nil,60,60,0,{[361]={{34.2,52.3}}},nil,361,nil,{26148},1,"H",nil,0} -- Felwood
-epochNpcData[46127] = {"Watcher Steelsong",nil,nil,52,52,0,{[361]={{50.8,81.8}}},nil,361,{27309},{27309},1,"H",nil,0} -- Felwood
+[9996] = {"Winna Hazzard",nil,nil,60,60,0,{[361]={{34.2,52.3}}},nil,361,nil,{26148},1,"H",nil,0} -- Felwood
+[46127] = {"Watcher Steelsong",nil,nil,52,52,0,{[361]={{50.8,81.8}}},nil,361,{27309},{27309},1,"H",nil,0} -- Felwood
 
 -- Issue #114: The Barrens NPCs
-epochNpcData[3432] = {"Mankrik",nil,nil,14,14,0,{[17]={{51.9,31.5}}},nil,17,{27166},nil,1,"H",nil,0} -- The Barrens, Issue #264: Added quest starter
-epochNpcData[46065] = {"Kaliyah Stormshew",nil,nil,18,18,0,{[17]={{45.2,58.7}}},nil,17,{27195},{27195},1,"H",nil,0} -- The Barrens
-epochNpcData[7161] = {"Wrenix the Wretched",nil,nil,17,17,0,{[17]={{63.0,36.3}}},nil,17,{27197},{27197},1,"H",nil,0} -- The Barrens
+[3432] = {"Mankrik",nil,nil,14,14,0,{[17]={{51.9,31.5}}},nil,17,{27166},nil,1,"H",nil,0} -- The Barrens, Issue #264: Added quest starter
+[46065] = {"Kaliyah Stormshew",nil,nil,18,18,0,{[17]={{45.2,58.7}}},nil,17,{27195},{27195},1,"H",nil,0} -- The Barrens
+[7161] = {"Wrenix the Wretched",nil,nil,17,17,0,{[17]={{63.0,36.3}}},nil,17,{27197},{27197},1,"H",nil,0} -- The Barrens
 
 -- Issue #264: Silverpine Forest NPCs
-epochNpcData[45840] = {"Kevin Winter",nil,nil,18,18,0,{[130]={{63.4,56.8}}},nil,130,{26875},nil,1,"H",nil,0} -- Silverpine Forest
-epochNpcData[45841] = {"Sage Greenhorn",nil,nil,18,18,0,{[130]={{43.0,42.0}}},nil,130,{26877,26878},{26875},1,"H",nil,0} -- Silverpine Forest
+[45840] = {"Kevin Winter",nil,nil,18,18,0,{[130]={{63.4,56.8}}},nil,130,{26875},nil,1,"H",nil,0} -- Silverpine Forest
+[45841] = {"Sage Greenhorn",nil,nil,18,18,0,{[130]={{43.0,42.0}}},nil,130,{26877,26878},{26875},1,"H",nil,0} -- Silverpine Forest
 
 -- Issue #115: Various Horde NPCs
-epochNpcData[12920] = {"Doctor Gregory Victor",nil,nil,37,37,0,{[45]={{73.8,36.9}}},nil,45,{26374},{26374},1,"H",nil,0} -- Arathi Highlands
-epochNpcData[9019] = {"Nyagga",nil,nil,38,38,0,{[8]={{47.0,54.8}}},nil,8,{26376},{26376},1,"H",nil,0} -- Swamp of Sorrows
-epochNpcData[4630] = {"Pozzik",nil,nil,31,31,0,{[400]={{78.1,77.1}}},nil,400,nil,{27492},1,"N",nil,0} -- Thousand Needles
+[12920] = {"Doctor Gregory Victor",nil,nil,37,37,0,{[45]={{73.8,36.9}}},nil,45,{26374},{26374},1,"H",nil,0} -- Arathi Highlands
+[9019] = {"Nyagga",nil,nil,38,38,0,{[8]={{47.0,54.8}}},nil,8,{26376},{26376},1,"H",nil,0} -- Swamp of Sorrows
+[4630] = {"Pozzik",nil,nil,31,31,0,{[400]={{78.1,77.1}}},nil,400,nil,{27492},1,"N",nil,0} -- Thousand Needles
 
 -- Issue #155: Azshara NPCs
-epochNpcData[46006] = {"Relko",nil,nil,54,54,0,{[16]={{23.1,50.8}}},nil,16,nil,{27092},1,"H",nil,0} -- Azshara
+[46006] = {"Relko",nil,nil,54,54,0,{[16]={{23.1,50.8}}},nil,16,nil,{27092},1,"H",nil,0} -- Azshara
 
 -- Issue #156: Various NPCs
-epochNpcData[12043] = {"Kulwia",nil,nil,27,27,0,{[406]={{45.4,59.3}}},nil,406,nil,{27397},1,"H",nil,0} -- Stonetalon Mountains
-epochNpcData[10428] = {"Motega Firemane",nil,nil,27,27,0,{[400]={{21.6,32.2}}},nil,400,{27489},{27489},1,"H",nil,0} -- Thousand Needles
-epochNpcData[45939] = {"Donald Eastworth",nil,nil,13,13,0,{[40]={{65.8,63.1}}},nil,40,{26987,26988},{26987},1,"A","Quest Giver",0} -- Westfall
-epochNpcData[45940] = {"Nancy Eastworth",nil,nil,13,13,0,{[40]={{56.7,50.4}}},nil,40,{26989},{26988,26989},1,"A","Quest Giver",0} -- Westfall
+[12043] = {"Kulwia",nil,nil,27,27,0,{[406]={{45.4,59.3}}},nil,406,nil,{27397},1,"H",nil,0} -- Stonetalon Mountains
+[10428] = {"Motega Firemane",nil,nil,27,27,0,{[400]={{21.6,32.2}}},nil,400,{27489},{27489},1,"H",nil,0} -- Thousand Needles
+[45939] = {"Donald Eastworth",nil,nil,13,13,0,{[40]={{65.8,63.1}}},nil,40,{26987,26988},{26987},1,"A","Quest Giver",0} -- Westfall
+[45940] = {"Nancy Eastworth",nil,nil,13,13,0,{[40]={{56.7,50.4}}},nil,40,{26989},{26988,26989},1,"A","Quest Giver",0} -- Westfall
 
 -- Issue #177: Azshara NPC
 -- Note: NPC ID 46019 conflicts with "Randal Alestone" in zone 45, but this is Lemaira for Azshara quest 27094
-epochNpcData[46019] = {"Lemaira",nil,nil,54,54,0,{[16]={{63.4,86.1}}},nil,16,nil,{27094},nil,nil,nil,0} -- Azshara
+[46019] = {"Lemaira",nil,nil,54,54,0,{[16]={{63.4,86.1}}},nil,16,nil,{27094},nil,nil,nil,0} -- Azshara
 
 -- Issue #174: Batch quest data submission NPCs
-epochNpcData[5411] = {"Krinkle Goodsteel",nil,nil,43,43,0,{[440]={{56.6,81.5}}},nil,440,nil,{26288},1,"A",nil,0} -- Tanaris
-epochNpcData[1261] = {"Veron Amberstill",nil,nil,9,9,0,{[1]={{63.4,50.6}}},nil,1,{26680},nil,1,"A",nil,0} -- Dun Morogh
-epochNpcData[4772] = {"Ultham Ironhorn",nil,nil,40,40,0,{[1]={{63.9,50.1}}},nil,1,{26684},nil,1,"A",nil,0} -- Dun Morogh
-epochNpcData[46120] = {"Beezil Linkspanner",nil,nil,41,41,0,{[15]={{52.1,66.0}}},nil,15,{27300},{27443},1,"A",nil,0} -- Dustwallow Marsh
-epochNpcData[46123] = {"Watcher Wallace",nil,nil,41,41,0,{[15]={{66.9,53.2}}},nil,15,nil,{27302},1,"A",nil,0} -- Dustwallow Marsh
-epochNpcData[46228] = {"Kranz",nil,nil,41,41,0,{[440]={{56.6,81.1}}},nil,440,{27443},nil,1,"A",nil,0} -- Tanaris
+[5411] = {"Krinkle Goodsteel",nil,nil,43,43,0,{[440]={{56.6,81.5}}},nil,440,nil,{26288},1,"A",nil,0} -- Tanaris
+[1261] = {"Veron Amberstill",nil,nil,9,9,0,{[1]={{63.4,50.6}}},nil,1,{26680},nil,1,"A",nil,0} -- Dun Morogh
+[4772] = {"Ultham Ironhorn",nil,nil,40,40,0,{[1]={{63.9,50.1}}},nil,1,{26684},nil,1,"A",nil,0} -- Dun Morogh
+[46120] = {"Beezil Linkspanner",nil,nil,41,41,0,{[15]={{52.1,66.0}}},nil,15,{27300},{27443},1,"A",nil,0} -- Dustwallow Marsh
+[46123] = {"Watcher Wallace",nil,nil,41,41,0,{[15]={{66.9,53.2}}},nil,15,nil,{27302},1,"A",nil,0} -- Dustwallow Marsh
+[46228] = {"Kranz",nil,nil,41,41,0,{[440]={{56.6,81.1}}},nil,440,{27443},nil,1,"A",nil,0} -- Tanaris
 
 -- Issue #170-173: Azshara's Legacy quest chain NPCs
-epochNpcData[8395] = {"Sanath Lim-yo",nil,nil,54,54,0,{[16]={{28.0,50.0}}},nil,16,{27093},nil,1,"H",nil,0} -- Azshara
-epochNpcData[7867] = {"Thorkaf Dragoneye",nil,nil,60,60,0,{[3]={{62.6,57.5}}},nil,3,nil,{27941},1,"H",nil,0} -- Badlands
+[8395] = {"Sanath Lim-yo",nil,nil,54,54,0,{[16]={{28.0,50.0}}},nil,16,{27093},nil,1,"H",nil,0} -- Azshara
+[7867] = {"Thorkaf Dragoneye",nil,nil,60,60,0,{[3]={{62.6,57.5}}},nil,3,nil,{27941},1,"H",nil,0} -- Badlands
 
 -- Issues #167, #169: Various NPCs
-epochNpcData[2276] = {"Magistrate Henry Maleb",nil,nil,36,36,0,{[267]={{48.1,59.2}}},nil,267,{26505,26516},nil,1,"A",nil,0} -- Hillsbrad Foothills
-epochNpcData[2378] = {"Kundric Zanden",nil,nil,40,40,0,{[267]={{48.7,59.1}}},nil,267,{26538},{26505,26817},1,"A",nil,0} -- Hillsbrad Foothills, Issue #265: Added quest 26817 turn-in  
-epochNpcData[2278] = {"Melisara",nil,nil,40,40,0,{[267]={{62.5,20.5}}},nil,267,nil,{26537},8,"H",nil,0} -- Hillsbrad Foothills
+[2276] = {"Magistrate Henry Maleb",nil,nil,36,36,0,{[267]={{48.1,59.2}}},nil,267,{26505,26516},nil,1,"A",nil,0} -- Hillsbrad Foothills
+[2378] = {"Kundric Zanden",nil,nil,40,40,0,{[267]={{48.7,59.1}}},nil,267,{26538},{26505,26817},1,"A",nil,0} -- Hillsbrad Foothills, Issue #265: Added quest 26817 turn-in  
+[2278] = {"Melisara",nil,nil,40,40,0,{[267]={{62.5,20.5}}},nil,267,nil,{26537},8,"H",nil,0} -- Hillsbrad Foothills
 
 -- Issues #163, #164, #166: NPCs for new quests
-epochNpcData[1182] = {"Brother Anton",nil,nil,33,33,0,{[405]={{66.4,7.7}}},nil,405,nil,{26504},1,"A",nil,0} -- Desolace
-epochNpcData[2317] = {"Elysa",nil,nil,40,40,0,{[36]={{39.2,14.4}}},nil,36,{26511},{26521,26511},2,"H",nil,0} -- Alterac Mountains: Added quest 26511 giver
-epochNpcData[6768] = {"Lord Jorach Ravenholdt",nil,nil,40,40,0,{[36]={{86.0,79.0}}},nil,36,{26525,26519},{26511},2,"AH",nil,0} -- Alterac Mountains: Added quests 26511 turn-in, 26519 giver
-epochNpcData[11826] = {"Kristy Grant",nil,nil,28,28,0,{[357]={{89.4,45.9}}},nil,357,{27503},nil,1,"A",nil,0} -- Feralas
-epochNpcData[45526] = {"Felicity",nil,nil,40,40,0,{[36]={{86.0,80.2}}},nil,36,nil,{26525,26519},2,"AH",nil,0} -- Alterac Mountains: Added quest 26519 turn-in
-epochNpcData[45731] = {"Sarae Dewlight",nil,nil,25,25,0,{[10]={{77.6,52.2}}},nil,10,{26713},{26713},1,"A",nil,0} -- Duskwood (overriding to add both quest giver and turn-in)
-epochNpcData[45734] = {"Jack Archer",nil,nil,21,21,0,{[10]={{72.3,56.7}}},nil,10,{26719},{27053},1,"A",nil,0} -- Duskwood, Issue #237
-epochNpcData[45844] = {"Shep Daltry",nil,nil,36,36,0,{[33]={{37.8,3.1}}},nil,33,{26884},nil,1,"A",nil,0} -- Stranglethorn Vale (overriding wrong one)
-epochNpcData[7771] = {"Marvon Rivetseeker",nil,nil,45,45,0,{[440]={{52.7,45.8}}},nil,440,{27420},{27420},1,"A",nil,0} -- Tanaris: Two-Legged Vultures quest
-epochNpcData[46090] = {"Annie Grim",nil,nil,40,40,0,{[405]={{25.3,67.1}}},nil,405,{27254,27256},{27254,27255,27256},2,"H",nil,0} -- Desolace: Reagents For The Undercity quest giver
-epochNpcData[46103] = {"Pipjot",nil,nil,40,40,0,{[405]={{26.0,69.9}}},nil,405,nil,{27256},2,"H",nil,0} -- Desolace: Reagents For The Undercity turn-in
-epochNpcData[5594] = {"Alchemist Pestlezugg",nil,nil,50,50,0,{[440]={{50.9,26.9}}},nil,440,{28536},{28536},1,"A",nil,0} -- Tanaris: Commission for Alchemist Pestlezugg quest
-epochNpcData[11438] = {"Bibbly F'utzbuckle",nil,nil,30,30,0,{[405]={{62.2,38.9}}},nil,405,{28617},{28617},2,"H",nil,0} -- Desolace: Commission for Bibbly F'utzbuckle quest
-epochNpcData[5641] = {"Takata Steelblade",nil,nil,35,35,0,{[405]={{52.5,54.2}}},nil,405,nil,{27255},2,"H",nil,0} -- Desolace: Reagents For The Undercity turn-in
-epochNpcData[46575] = {"Innkeeper Tooma",nil,nil,45,45,0,{[3]={{67.5,60.6}}},nil,3,{26594},nil,3,"A",nil,0} -- Badlands: WANTED: Scorchmaw quest giver (corrected ID from submission)
-epochNpcData[7882] = {"Security Chief Bilgewhizzle",nil,nil,41,41,0,{[440]={{67.0,23.8}}},nil,440,{27422},{27422},1,"A",nil,0} -- Tanaris: No One Drinks For Free quest
-epochNpcData[46237] = {"Marai Ravenwater",nil,nil,42,42,0,{[440]={{65.5,24.1}}},nil,440,{27462},{27462},1,"A",nil,0} -- Tanaris: Waste Removal quest
+[1182] = {"Brother Anton",nil,nil,33,33,0,{[405]={{66.4,7.7}}},nil,405,nil,{26504},1,"A",nil,0} -- Desolace
+[2317] = {"Elysa",nil,nil,40,40,0,{[36]={{39.2,14.4}}},nil,36,{26511},{26521,26511},2,"H",nil,0} -- Alterac Mountains: Added quest 26511 giver
+[6768] = {"Lord Jorach Ravenholdt",nil,nil,40,40,0,{[36]={{86.0,79.0}}},nil,36,{26525,26519},{26511},2,"AH",nil,0} -- Alterac Mountains: Added quests 26511 turn-in, 26519 giver
+[11826] = {"Kristy Grant",nil,nil,28,28,0,{[357]={{89.4,45.9}}},nil,357,{27503},nil,1,"A",nil,0} -- Feralas
+[45526] = {"Felicity",nil,nil,40,40,0,{[36]={{86.0,80.2}}},nil,36,nil,{26525,26519},2,"AH",nil,0} -- Alterac Mountains: Added quest 26519 turn-in
+[45731] = {"Sarae Dewlight",nil,nil,25,25,0,{[10]={{77.6,52.2}}},nil,10,{26713},{26713},1,"A",nil,0} -- Duskwood (overriding to add both quest giver and turn-in)
+[45734] = {"Jack Archer",nil,nil,21,21,0,{[10]={{72.3,56.7}}},nil,10,{26719},{27053},1,"A",nil,0} -- Duskwood, Issue #237
+[45844] = {"Shep Daltry",nil,nil,36,36,0,{[33]={{37.8,3.1}}},nil,33,{26884},nil,1,"A",nil,0} -- Stranglethorn Vale (overriding wrong one)
+[7771] = {"Marvon Rivetseeker",nil,nil,45,45,0,{[440]={{52.7,45.8}}},nil,440,{27420},{27420},1,"A",nil,0} -- Tanaris: Two-Legged Vultures quest
+[46090] = {"Annie Grim",nil,nil,40,40,0,{[405]={{25.3,67.1}}},nil,405,{27254,27256},{27254,27255,27256},2,"H",nil,0} -- Desolace: Reagents For The Undercity quest giver
+[46103] = {"Pipjot",nil,nil,40,40,0,{[405]={{26.0,69.9}}},nil,405,nil,{27256},2,"H",nil,0} -- Desolace: Reagents For The Undercity turn-in
+[5594] = {"Alchemist Pestlezugg",nil,nil,50,50,0,{[440]={{50.9,26.9}}},nil,440,{28536},{28536},1,"A",nil,0} -- Tanaris: Commission for Alchemist Pestlezugg quest
+[11438] = {"Bibbly F'utzbuckle",nil,nil,30,30,0,{[405]={{62.2,38.9}}},nil,405,{28617},{28617},2,"H",nil,0} -- Desolace: Commission for Bibbly F'utzbuckle quest
+[5641] = {"Takata Steelblade",nil,nil,35,35,0,{[405]={{52.5,54.2}}},nil,405,nil,{27255},2,"H",nil,0} -- Desolace: Reagents For The Undercity turn-in
+[46575] = {"Innkeeper Tooma",nil,nil,45,45,0,{[3]={{67.5,60.6}}},nil,3,{26594},nil,3,"A",nil,0} -- Badlands: WANTED: Scorchmaw quest giver (corrected ID from submission)
+[7882] = {"Security Chief Bilgewhizzle",nil,nil,41,41,0,{[440]={{67.0,23.8}}},nil,440,{27422},{27422},1,"A",nil,0} -- Tanaris: No One Drinks For Free quest
+[46237] = {"Marai Ravenwater",nil,nil,42,42,0,{[440]={{65.5,24.1}}},nil,440,{27462},{27462},1,"A",nil,0} -- Tanaris: Waste Removal quest
 
 -- Issue #232, #231, #230, #229: NPCs from GitHub quest data submissions
 -- Darkshore NPCs
-epochNpcData[3702] = {"Alanndarian Nightsong",nil,nil,17,17,0,{[148]={{37.6,40.7}}},nil,148,{26202},nil,1,"A",nil,0} -- Darkshore: The Twilight's Hammer quest giver
-epochNpcData[45036] = {"Quartermaster Nyana",nil,nil,11,11,0,{[148]={{37.7,41.0}}},nil,148,nil,{26203},1,"A",nil,0} -- Darkshore: Welcome to Auberdine turn-in
-epochNpcData[6887] = {"Yalda",nil,nil,20,20,0,{[148]={{37.4,45.2}}},nil,148,{28521},nil,1,"A",nil,0} -- Darkshore: Commission for Lornan Goldleaf quest giver
+[3702] = {"Alanndarian Nightsong",nil,nil,17,17,0,{[148]={{37.6,40.7}}},nil,148,{26202},nil,1,"A",nil,0} -- Darkshore: The Twilight's Hammer quest giver
+[45036] = {"Quartermaster Nyana",nil,nil,11,11,0,{[148]={{37.7,41.0}}},nil,148,nil,{26203},1,"A",nil,0} -- Darkshore: Welcome to Auberdine turn-in
+[6887] = {"Yalda",nil,nil,20,20,0,{[148]={{37.4,45.2}}},nil,148,{28521},nil,1,"A",nil,0} -- Darkshore: Commission for Lornan Goldleaf quest giver
 
 -- Wetlands NPC
-epochNpcData[2086] = {"Valstag Ironjaw",nil,nil,25,25,0,{[11]={{10.1,56.8}}},nil,11,nil,{27021},1,"A",nil,0} -- Wetlands: Message to Menethil turn-in
+[2086] = {"Valstag Ironjaw",nil,nil,25,25,0,{[11]={{10.1,56.8}}},nil,11,nil,{27021},1,"A",nil,0} -- Wetlands: Message to Menethil turn-in
 
 -- Ashenvale NPC  
-epochNpcData[3663] = {"Delgren the Purifier",nil,nil,20,20,0,{[331]={{26.2,38.6}}},nil,331,nil,{27038},1,"A",nil,0} -- Ashenvale: Forsaken Looters turn-in
+[3663] = {"Delgren the Purifier",nil,nil,20,20,0,{[331]={{26.2,38.6}}},nil,331,nil,{27038},1,"A",nil,0} -- Ashenvale: Forsaken Looters turn-in
 
 -- Issue #267: Ashenvale NPC
-epochNpcData[45981] = {"Taskmaster Baran",nil,nil,25,25,0,{[331]={{70.0,71.0}}},nil,331,{27030},{27030},1,"H",nil,0} -- Ashenvale
+[45981] = {"Taskmaster Baran",nil,nil,25,25,0,{[331]={{70.0,71.0}}},nil,331,{27030},{27030},1,"H",nil,0} -- Ashenvale
 
 -- The Hinterlands NPC
-epochNpcData[45019] = {"Golith Slatestrike",nil,nil,46,46,0,{[47]={{14.2,48.0}}},nil,47,nil,{26186},1,"A",nil,0} -- The Hinterlands: Parts From Afar turn-in
+[45019] = {"Golith Slatestrike",nil,nil,46,46,0,{[47]={{14.2,48.0}}},nil,47,nil,{26186},1,"A",nil,0} -- The Hinterlands: Parts From Afar turn-in
 
 -- Feralas NPC
-epochNpcData[45211] = {"Viggo",nil,nil,48,48,0,{[357]={{51.6,47.5}}},nil,357,{26293},{ 26293,27335},1,"A",nil,0} -- Feralas: Fit For A King quest giver/turn-in, Wanted: Lost Ancient turn-in
+[45211] = {"Viggo",nil,nil,48,48,0,{[357]={{51.6,47.5}}},nil,357,{26293},{ 26293,27335},1,"A",nil,0} -- Feralas: Fit For A King quest giver/turn-in, Wanted: Lost Ancient turn-in
 
 -- Feralas mob for quest 27335
-epochNpcData[46146] = {"Lost Ancient",nil,nil,48,48,0,{[357]={{58.9,61.3}}},nil,357,nil,nil,1,"A",nil,0} -- Feralas: Target for Wanted: Lost Ancient
+[46146] = {"Lost Ancient",nil,nil,48,48,0,{[357]={{58.9,61.3}}},nil,357,nil,nil,1,"A",nil,0} -- Feralas: Target for Wanted: Lost Ancient
 
 -- The Barrens NPCs for quest 26856 (GitHub #244)
-epochNpcData[5410] = {"Ko'gar the Thunderer",nil,nil,10,10,0,{[17]={{63.9,54.5}}},nil,17,{26856},{26856},1,"H",nil,0} -- The Barrens: Quest giver/turn-in for Exterminate the Brutes
-epochNpcData[5333] = {"Razormane Defender",nil,nil,10,11,0,{[17]={{43.0,51.0},{43.0,49.0},{42.0,50.0}}},nil,17,nil,nil,1,"H",nil,0} -- The Barrens: Kill target
-epochNpcData[5334] = {"Razormane Hunter",nil,nil,10,11,0,{[17]={{43.0,51.0},{43.0,49.0},{42.0,50.0}}},nil,17,nil,nil,1,"H",nil,0} -- The Barrens: Kill target
-epochNpcData[5335] = {"Razormane Thornweaver",nil,nil,10,11,0,{[17]={{43.0,51.0},{43.0,49.0},{42.0,50.0}}},nil,17,nil,nil,1,"H",nil,0} -- The Barrens: Kill target
+[5410] = {"Ko'gar the Thunderer",nil,nil,10,10,0,{[17]={{63.9,54.5}}},nil,17,{26856},{26856},1,"H",nil,0} -- The Barrens: Quest giver/turn-in for Exterminate the Brutes
+[5333] = {"Razormane Defender",nil,nil,10,11,0,{[17]={{43.0,51.0},{43.0,49.0},{42.0,50.0}}},nil,17,nil,nil,1,"H",nil,0} -- The Barrens: Kill target
+[5334] = {"Razormane Hunter",nil,nil,10,11,0,{[17]={{43.0,51.0},{43.0,49.0},{42.0,50.0}}},nil,17,nil,nil,1,"H",nil,0} -- The Barrens: Kill target
+[5335] = {"Razormane Thornweaver",nil,nil,10,11,0,{[17]={{43.0,51.0},{43.0,49.0},{42.0,50.0}}},nil,17,nil,nil,1,"H",nil,0} -- The Barrens: Kill target
 
 -- Elwynn Forest NPC for quest 28350 (GitHub #242)
-epochNpcData[14033] = {"Marshal Haggard",nil,nil,25,25,0,{[12]={{84.1,36.6}}},nil,12,nil,{28350},1,"A",nil,0} -- Elwynn Forest: Commission turn-in at Eastvale Logging Camp
+[14033] = {"Marshal Haggard",nil,nil,25,25,0,{[12]={{84.1,36.6}}},nil,12,nil,{28350},1,"A",nil,0} -- Elwynn Forest: Commission turn-in at Eastvale Logging Camp
 
 -- Darnassus/Westfall NPCs for quest 26597 (GitHub #246)
-epochNpcData[7740] = {"Old Man Thistle",2718,2718,55,55,0,{[1657]={{42.3,85.4}}},nil,1657,{26597},{26597},80,"A",nil,2} -- Darnassus: Quest giver/turn-in (Note: Classic DB has this as Gracina Spiritmight)
-epochNpcData[7053] = {"Klaven Mortwake",3000,3000,26,26,1,{[40]={{70.5,73.7}}},nil,40,nil,nil,27,"H",nil,0} -- Westfall: Kill target for quest
+[7740] = {"Old Man Thistle",2718,2718,55,55,0,{[1657]={{42.3,85.4}}},nil,1657,{26597},{26597},80,"A",nil,2} -- Darnassus: Quest giver/turn-in (Note: Classic DB has this as Gracina Spiritmight)
+[7053] = {"Klaven Mortwake",3000,3000,26,26,1,{[40]={{70.5,73.7}}},nil,40,nil,nil,27,"H",nil,0} -- Westfall: Kill target for quest
 
 -- Eastern Plaguelands NPCs for quest 28905/26769 (GitHub #241)
-epochNpcData[28945] = {"Knight-Commander Entari",nil,nil,60,60,0,{[139]={{53.9,18.7}}},nil,139,{28905},{28905},1,"A",nil,0} -- Eastern Plaguelands: Quest giver/turn-in for Into the Scarlet Enclave
-epochNpcData[25584] = {"Scarlet Preacher",nil,nil,58,59,0,{[139]={{85.0,35.0},{84.0,34.0},{83.0,33.0}}},nil,139,nil,nil,1,"H",nil,0} -- Eastern Plaguelands: Kill target
+[28945] = {"Knight-Commander Entari",nil,nil,60,60,0,{[139]={{53.9,18.7}}},nil,139,{28905},{28905},1,"A",nil,0} -- Eastern Plaguelands: Quest giver/turn-in for Into the Scarlet Enclave
+[25584] = {"Scarlet Preacher",nil,nil,58,59,0,{[139]={{85.0,35.0},{84.0,34.0},{83.0,33.0}}},nil,139,nil,nil,1,"H",nil,0} -- Eastern Plaguelands: Kill target
 
 -- The Barrens NPCs for quest 26918 (GitHub #243)
-epochNpcData[3615] = {"Kodo Wrangler Grish",nil,nil,10,10,0,{[17]={{52.3,31.9}}},nil,17,{26918},{26918},1,"H",nil,0} -- The Barrens: Quest giver/turn-in for Plainstrider Menace
-epochNpcData[3244] = {"Greater Plainstrider",nil,nil,9,10,0,{[17]={{49.6,21.9},{48.7,22.7},{48.2,22.0},{47.6,21.3},{46.9,20.8},{46.0,23.3},{45.7,25.0},{46.8,27.1},{47.0,29.3},{48.3,31.8},{49.9,34.0},{50.0,36.2},{50.2,38.3},{49.9,41.4},{49.3,43.9},{48.6,46.0},{47.6,48.2},{46.9,50.4},{46.3,52.6},{46.2,55.4},{46.0,57.3},{45.8,60.1},{45.9,61.9},{45.9,64.1}}},nil,17,nil,nil,1,"H",nil,0} -- The Barrens: Loot target
-epochNpcData[3245] = {"Ornery Plainstrider",nil,nil,10,11,0,{[17]={{49.6,21.9},{48.7,22.7},{48.2,22.0},{47.6,21.3},{46.9,20.8},{46.0,23.3},{45.7,25.0},{46.8,27.1},{47.0,29.3},{48.3,31.8},{49.9,34.0},{50.0,36.2},{50.2,38.3},{49.9,41.4},{49.3,43.9},{48.6,46.0},{47.6,48.2},{46.9,50.4},{46.3,52.6},{46.2,55.4},{46.0,57.3},{45.8,60.1},{45.9,61.9},{45.9,64.1}}},nil,17,nil,nil,1,"H",nil,0} -- The Barrens: Loot target
-epochNpcData[3246] = {"Elder Plainstrider",nil,nil,10,11,0,{[17]={{49.6,21.9},{48.7,22.7},{48.2,22.0},{47.6,21.3},{46.9,20.8},{46.0,23.3},{45.7,25.0},{46.8,27.1},{47.0,29.3},{48.3,31.8},{49.9,34.0},{50.0,36.2},{50.2,38.3},{49.9,41.4},{49.3,43.9},{48.6,46.0},{47.6,48.2},{46.9,50.4},{46.3,52.6},{46.2,55.4},{46.0,57.3},{45.8,60.1},{45.9,61.9},{45.9,64.1}}},nil,17,nil,nil,1,"H",nil,0} -- The Barrens: Loot target
+[3615] = {"Kodo Wrangler Grish",nil,nil,10,10,0,{[17]={{52.3,31.9}}},nil,17,{26918},{26918},1,"H",nil,0} -- The Barrens: Quest giver/turn-in for Plainstrider Menace
+[3244] = {"Greater Plainstrider",nil,nil,9,10,0,{[17]={{49.6,21.9},{48.7,22.7},{48.2,22.0},{47.6,21.3},{46.9,20.8},{46.0,23.3},{45.7,25.0},{46.8,27.1},{47.0,29.3},{48.3,31.8},{49.9,34.0},{50.0,36.2},{50.2,38.3},{49.9,41.4},{49.3,43.9},{48.6,46.0},{47.6,48.2},{46.9,50.4},{46.3,52.6},{46.2,55.4},{46.0,57.3},{45.8,60.1},{45.9,61.9},{45.9,64.1}}},nil,17,nil,nil,1,"H",nil,0} -- The Barrens: Loot target
+[3245] = {"Ornery Plainstrider",nil,nil,10,11,0,{[17]={{49.6,21.9},{48.7,22.7},{48.2,22.0},{47.6,21.3},{46.9,20.8},{46.0,23.3},{45.7,25.0},{46.8,27.1},{47.0,29.3},{48.3,31.8},{49.9,34.0},{50.0,36.2},{50.2,38.3},{49.9,41.4},{49.3,43.9},{48.6,46.0},{47.6,48.2},{46.9,50.4},{46.3,52.6},{46.2,55.4},{46.0,57.3},{45.8,60.1},{45.9,61.9},{45.9,64.1}}},nil,17,nil,nil,1,"H",nil,0} -- The Barrens: Loot target
+[3246] = {"Elder Plainstrider",nil,nil,10,11,0,{[17]={{49.6,21.9},{48.7,22.7},{48.2,22.0},{47.6,21.3},{46.9,20.8},{46.0,23.3},{45.7,25.0},{46.8,27.1},{47.0,29.3},{48.3,31.8},{49.9,34.0},{50.0,36.2},{50.2,38.3},{49.9,41.4},{49.3,43.9},{48.6,46.0},{47.6,48.2},{46.9,50.4},{46.3,52.6},{46.2,55.4},{46.0,57.3},{45.8,60.1},{45.9,61.9},{45.9,64.1}}},nil,17,nil,nil,1,"H",nil,0} -- The Barrens: Loot target
 
 -- NPCs for new quests from GitHub issues
-epochNpcData[45746] = {"Dol'grom Kragstorm",0,0,1,1,0,{[47]={{{60.1,69.5}}}},nil,47,{26179},nil,0,"AH",nil,0}
-epochNpcData[45748] = {"Old Man Gromgosh",0,0,1,1,0,{[47]={{{75.0,66.9}}}},nil,47,{26180},{26179,26180},0,"AH",nil,0}
-epochNpcData[45777] = {"Gilder Stompbone",0,0,1,1,0,{[50]={{{53.9,73.8}}}},nil,50,{26190},{26190},0,"AH",nil,0}
-epochNpcData[45784] = {"Nezzil Whipsaw",0,0,1,1,0,{[400]={{{52.0,51.8}}}},nil,400,{26195},nil,0,"AH",nil,0}
-epochNpcData[45785] = {"Deke Grindel",0,0,1,1,0,{[400]={{{59.6,23.8}}}},nil,400,nil,{26195},0,"AH",nil,0}
-epochNpcData[46326] = {"Historian Rebecca Keller",0,0,1,1,0,{[3]={{{40.9,11.8}}}},nil,3,{26592},nil,0,"AH",nil,0}
-epochNpcData[46327] = {"Garret Underhill",0,0,1,1,0,{[51]={{{38.9,50.0}}}},nil,51,nil,{26592},0,"AH",nil,0}
-epochNpcData[46344] = {"Sier Reishan",0,0,1,1,0,{[8]={{{34.5,49.7}}}},nil,8,{26603},nil,0,"AH",nil,0},
-epochNpcData[46345] = {"Scout Morgria",0,0,1,1,0,{[8]={{{77.7,59.5}}}},nil,8,nil,{26603},0,"AH",nil,0},
-epochNpcData[45964] = {"Commander Samaul",0,0,1,1,0,{[440]={{{51.7,29.0}}}},nil,440,{26852},{26852},0,"AH",nil,0},
-epochNpcData[46559] = {"Tinkmaster Fizzlegrim",0,0,1,1,0,{[51]={{{41.8,52.5}}}},nil,51,{26854},{26854},0,"AH",nil,0},
-epochNpcData[46560] = {"Kris Blighthammer",0,0,1,1,0,{[51]={{{68.0,53.5}}}},nil,51,{26855},{26855},0,"AH",nil,0},
-epochNpcData[46561] = {"Brother Ignatious",0,0,1,1,0,{[51]={{{45.2,36.6}}}},nil,51,{26863},{26863},0,"AH",nil,0},
-epochNpcData[46562] = {"Jorun Ironbore",0,0,1,1,0,{[51]={{{38.5,28.0}}}},nil,51,{26857},{26859},0,"AH",nil,0},
-epochNpcData[46563] = {"Dargan Ashleaf",0,0,1,1,0,{[51]={{{56.8,60.1}}}},nil,51,{26860},{26860},0,"AH",nil,0},
-epochNpcData[46564] = {"Gina Toothsplinter",0,0,1,1,0,{[51]={{{44.5,61.3}}}},nil,51,{26861},{26861},0,"AH",nil,0},
-epochNpcData[46565] = {"Torin Stoneshield",0,0,1,1,0,{[51]={{{63.2,38.9}}}},nil,51,{26862},{26862},0,"AH",nil,0},
-epochNpcData[46567] = {"Matty Marlston",0,0,1,1,0,{[51]={{{71.5,16.1}}}},nil,51,{26864},{26864},0,"AH",nil,0},
-epochNpcData[46570] = {"Master Smith Lekon",0,0,1,1,0,{[51]={{{36.5,28.5}}}},nil,51,{26867},{26867},0,"AH",nil,0},
-epochNpcData[46571] = {"Shola Starbringer",0,0,1,1,0,{[51]={{{32.8,65.5}}}},nil,51,{26868},{26868},0,"AH",nil,0},
-epochNpcData[47191] = {"Captain Stronk",0,0,1,1,0,{[3]={{{61.3,14.1}}}},nil,3,{27103},{27103},0,"AH",nil,0},
-epochNpcData[46634] = {"Captain Ironhill",0,0,1,1,0,{[85]={{{84.0,34.9}}}},nil,85,nil,{26936},0,"AH",nil,0},
-epochNpcData[46085] = {"Kristoff",0,0,1,1,0,{[148]={{{44.6,82.3}}}},nil,148,{27107},nil,0,"AH",nil,0},
-epochNpcData[45731] = {"Terri Smallfoot",0,0,1,1,0,{[10]={{{73.9,47.1}}}},nil,10,{26170},{26171},0,"AH",nil,0},
-epochNpcData[45732] = {"Mad King Morgrim",0,0,1,1,0,{[10]={{{25.1,34.7}}}},nil,10,{26171},{26170},0,"AH",nil,0},
-epochNpcData[46581] = {"Kark Gravelturner",0,0,1,1,0,{[36]={{{36.4,66.8}}}},nil,36,{26887},nil,0,"AH",nil,0}
-epochNpcData[45774] = {"Lieutenant Valorcall",0,0,1,1,0,{[44]={{{27.4,47.3}}}},nil,44,{26182},{26182},0,"AH",nil,0}
-epochNpcData[45775] = {"Brother Joseph",0,0,1,1,0,{[44]={{{21.0,46.2}}}},nil,44,nil,{26181},0,"AH",nil,0}
-epochNpcData[45776] = {"Darcy Cobb",0,0,1,1,0,{[4]={{{66.5,21.3}}}},nil,4,{26186},{26186},0,"AH",nil,0}
-epochNpcData[45716] = {"Meatloaf",0,0,1,1,0,{[44]={{{26.3,42.5}}}},nil,44,{26161},{26161},0,"AH",nil,0}
-epochNpcData[46644] = {"Acolyte Grynwald",0,0,1,1,0,{[85]={{{53.7,58.0}}}},nil,85,{28520},{28520},0,"AH",nil,0}
-epochNpcData[46613] = {"Captain Tharran",0,0,1,1,0,{[44]={{{28.6,40.7}}}},nil,44,{26921},{26921},0,"AH",nil,0}
-epochNpcData[45791] = {"Sister Elsington",0,0,1,1,0,{[10]={{{18.5,57.4}}}},nil,10,{26204},{26204},0,"AH",nil,0}
-epochNpcData[45983] = {"Sentinel Maithryn",0,0,1,1,0,{[331]={{{41.8,71.0}}}},nil,331,{27032,27036},{27032,27036},0,"AH",nil,0}
-epochNpcData[45472] = {"Haggrum Bloodfist",0,0,1,1,0,{[16]={{{22.2,51.4}}}},nil,16,{27155},nil,0,"AH",nil,0}
-epochNpcData[45473] = {"Grox Muckswagger",0,0,1,1,0,{[16]={{{27.0,50.1}}}},nil,16,nil,{27155},0,"AH",nil,0}
+[45746] = {"Dol'grom Kragstorm",0,0,1,1,0,{[47]={{{60.1,69.5}}}},nil,47,{26179},nil,0,"AH",nil,0}
+[45748] = {"Old Man Gromgosh",0,0,1,1,0,{[47]={{{75.0,66.9}}}},nil,47,{26180},{26179,26180},0,"AH",nil,0}
+[45777] = {"Gilder Stompbone",0,0,1,1,0,{[50]={{{53.9,73.8}}}},nil,50,{26190},{26190},0,"AH",nil,0}
+[45784] = {"Nezzil Whipsaw",0,0,1,1,0,{[400]={{{52.0,51.8}}}},nil,400,{26195},nil,0,"AH",nil,0}
+[45785] = {"Deke Grindel",0,0,1,1,0,{[400]={{{59.6,23.8}}}},nil,400,nil,{26195},0,"AH",nil,0}
+[46326] = {"Historian Rebecca Keller",0,0,1,1,0,{[3]={{{40.9,11.8}}}},nil,3,{26592},nil,0,"AH",nil,0}
+[46327] = {"Garret Underhill",0,0,1,1,0,{[51]={{{38.9,50.0}}}},nil,51,nil,{26592},0,"AH",nil,0}
+[46344] = {"Sier Reishan",0,0,1,1,0,{[8]={{{34.5,49.7}}}},nil,8,{26603},nil,0,"AH",nil,0},
+[46345] = {"Scout Morgria",0,0,1,1,0,{[8]={{{77.7,59.5}}}},nil,8,nil,{26603},0,"AH",nil,0}
+[45964] = {"Commander Samaul",0,0,1,1,0,{[440]={{{51.7,29.0}}}},nil,440,{26852},{26852},0,"AH",nil,0},
+[46559] = {"Tinkmaster Fizzlegrim",0,0,1,1,0,{[51]={{{41.8,52.5}}}},nil,51,{26854},{26854},0,"AH",nil,0},
+[46560] = {"Kris Blighthammer",0,0,1,1,0,{[51]={{{68.0,53.5}}}},nil,51,{26855},{26855},0,"AH",nil,0},
+[46561] = {"Brother Ignatious",0,0,1,1,0,{[51]={{{45.2,36.6}}}},nil,51,{26863},{26863},0,"AH",nil,0},
+[46562] = {"Jorun Ironbore",0,0,1,1,0,{[51]={{{38.5,28.0}}}},nil,51,{26857},{26859},0,"AH",nil,0},
+[46563] = {"Dargan Ashleaf",0,0,1,1,0,{[51]={{{56.8,60.1}}}},nil,51,{26860},{26860},0,"AH",nil,0},
+[46564] = {"Gina Toothsplinter",0,0,1,1,0,{[51]={{{44.5,61.3}}}},nil,51,{26861},{26861},0,"AH",nil,0},
+[46565] = {"Torin Stoneshield",0,0,1,1,0,{[51]={{{63.2,38.9}}}},nil,51,{26862},{26862},0,"AH",nil,0},
+[46567] = {"Matty Marlston",0,0,1,1,0,{[51]={{{71.5,16.1}}}},nil,51,{26864},{26864},0,"AH",nil,0},
+[46570] = {"Master Smith Lekon",0,0,1,1,0,{[51]={{{36.5,28.5}}}},nil,51,{26867},{26867},0,"AH",nil,0},
+[46571] = {"Shola Starbringer",0,0,1,1,0,{[51]={{{32.8,65.5}}}},nil,51,{26868},{26868},0,"AH",nil,0},
+[47191] = {"Captain Stronk",0,0,1,1,0,{[3]={{{61.3,14.1}}}},nil,3,{27103},{27103},0,"AH",nil,0},
+[46634] = {"Captain Ironhill",0,0,1,1,0,{[85]={{{84.0,34.9}}}},nil,85,nil,{26936},0,"AH",nil,0},
+[46085] = {"Kristoff",0,0,1,1,0,{[148]={{{44.6,82.3}}}},nil,148,{27107},nil,0,"AH",nil,0},
+[45731] = {"Terri Smallfoot",0,0,1,1,0,{[10]={{{73.9,47.1}}}},nil,10,{26170},{26171},0,"AH",nil,0},
+[45732] = {"Mad King Morgrim",0,0,1,1,0,{[10]={{{25.1,34.7}}}},nil,10,{26171},{26170},0,"AH",nil,0},
+[46581] = {"Kark Gravelturner",0,0,1,1,0,{[36]={{{36.4,66.8}}}},nil,36,{26887},nil,0,"AH",nil,0}
+[45774] = {"Lieutenant Valorcall",0,0,1,1,0,{[44]={{{27.4,47.3}}}},nil,44,{26182},{26182},0,"AH",nil,0}
+[45775] = {"Brother Joseph",0,0,1,1,0,{[44]={{{21.0,46.2}}}},nil,44,nil,{26181},0,"AH",nil,0}
+[45776] = {"Darcy Cobb",0,0,1,1,0,{[4]={{{66.5,21.3}}}},nil,4,{26186},{26186},0,"AH",nil,0}
+[45716] = {"Meatloaf",0,0,1,1,0,{[44]={{{26.3,42.5}}}},nil,44,{26161},{26161},0,"AH",nil,0}
+[46644] = {"Acolyte Grynwald",0,0,1,1,0,{[85]={{{53.7,58.0}}}},nil,85,{28520},{28520},0,"AH",nil,0}
+[46613] = {"Captain Tharran",0,0,1,1,0,{[44]={{{28.6,40.7}}}},nil,44,{26921},{26921},0,"AH",nil,0}
+[45791] = {"Sister Elsington",0,0,1,1,0,{[10]={{{18.5,57.4}}}},nil,10,{26204},{26204},0,"AH",nil,0}
+[45983] = {"Sentinel Maithryn",0,0,1,1,0,{[331]={{{41.8,71.0}}}},nil,331,{27032,27036},{27032,27036},0,"AH",nil,0}
+[45472] = {"Haggrum Bloodfist",0,0,1,1,0,{[16]={{{22.2,51.4}}}},nil,16,{27155},nil,0,"AH",nil,0}
+[45473] = {"Grox Muckswagger",0,0,1,1,0,{[16]={{{27.0,50.1}}}},nil,16,nil,{27155},0,"AH",nil,0}
 
 -- Stage the Epoch npcData for later merge during compilation
 QuestieDB._epochNpcData = epochNpcData
+}
