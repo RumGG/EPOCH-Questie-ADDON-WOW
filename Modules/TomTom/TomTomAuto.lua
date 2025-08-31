@@ -25,11 +25,16 @@ local lastWaypoint
 function TomTomAuto:GetTomTomAutoTargetQuest()
     if not TomTom or not Questie.db.profile.tomtomAutoTargetMode then return nil end
 
+    -- Don't run if quest log is being populated or isn't ready
+    if QuestiePlayer._populatingQuestlog or not QuestiePlayer.currentQuestlog or next(QuestiePlayer.currentQuestlog) == nil then
+        return nil
+    end
+
     local closestQuest = nil
     local closestDistance = math.huge
 
     -- Iterate all quests in the player's quest log
-    for questId, quest in pairs(QuestiePlayer.currentQuestlog or {}) do
+    for questId, quest in pairs(QuestiePlayer.currentQuestlog) do
         if quest and type(quest) == "table" then
             -- Skip completed quests
             local isComplete = 0
@@ -79,8 +84,14 @@ function TomTomAuto:StartTomTomAutoTracking()
         tomtomAutoTrackTimer = nil
     end
 
-    tomtomAutoTrackTimer = C_Timer.NewTicker(5.0, function()
-        TomTomAuto:updateQuestWaypoint()
+    -- Delay initial start to ensure quest log is populated
+    C_Timer.After(1.0, function()
+        tomtomAutoTrackTimer = C_Timer.NewTicker(5.0, function()
+            -- Only update if quest log is populated and not currently being updated
+            if not QuestiePlayer._populatingQuestlog and QuestiePlayer.currentQuestlog and next(QuestiePlayer.currentQuestlog) ~= nil then
+                TomTomAuto:updateQuestWaypoint()
+            end
+        end)
     end)
 end
 

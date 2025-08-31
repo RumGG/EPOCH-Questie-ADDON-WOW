@@ -1,5 +1,27 @@
 # Changelog
 
+## [Unreleased]
+
+### Fixed
+- **Tracker showing only 4 quests after login**
+  - Fixed race condition where proximity/TomTom timers interfered with quest log population
+  - Added defensive checks to prevent timers running with empty quest log
+  - Added `_populatingQuestlog` flag to prevent tracker updates during initialization
+  - TomTom auto-tracking and proximity sorting now wait for quest log to be ready
+  - Delays timer starts by 1 second to ensure quest log is populated
+  
+- **Quests requiring two clicks to track**
+  - Fixed malformed item objectives in database (e.g., `{{itemId}}` instead of `{{itemId,qty,"name"}}`)
+  - Added runtime fix to handle both proper and malformed item objective formats
+  - Automatically retrieves item names from database when missing
+  - Fixed specific quests: "Stromgarde Badges" (682) and "Hostile Takeover" (213)
+  - Runtime fix handles 8000+ malformed entries without requiring database changes
+
+- **Duplicate placeholder quest entries**
+  - Removed 25 duplicate placeholder entries that were overwriting real quest data
+  - Quest IDs cleaned: 26126, 26277, 26282, 26288, 26292, 26504, 26516, 26518, 26537, 26540, 26541, 26542, 26543, 26570, 26770, 26778, 26780, 26802, 26817, 26942, 27081, 27082, 27273, 28077, 28535
+  - Each quest ID now has only one entry with actual data intact
+
 ## [1.0.65] - 2024-08-31
 
 ### Added

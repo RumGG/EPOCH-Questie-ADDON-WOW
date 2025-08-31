@@ -1477,12 +1477,40 @@ function QuestieDB.GetQuest(questId) -- /dump QuestieDB.GetQuest(867)
         if objectives[3] then
             for _, itemObjective in pairs(objectives[3]) do
                 if itemObjective then
-                    ---@type ItemObjective
-                    QO.ObjectiveData[#QO.ObjectiveData+1] = {
-                        Type = "item",
-                        Id = itemObjective[1],
-                        Text = itemObjective[2]
-                    }
+                    local itemId = nil
+                    local itemText = nil
+                    
+                    -- Handle both malformed {{itemId}} and proper {{itemId, qty, "name"}} formats
+                    if type(itemObjective) == "number" then
+                        -- Malformed: single number like 182 instead of {182, 1, "Head"}
+                        itemId = itemObjective
+                        -- Try to get item name from database
+                        local itemName = QuestieDB.QueryItemSingle(itemId, "name")
+                        itemText = itemName or ("Item " .. tostring(itemId))
+                    elseif type(itemObjective) == "table" then
+                        -- Proper format: {itemId, quantity, "name"}
+                        itemId = itemObjective[1]
+                        if itemObjective[3] then
+                            -- Has name in third position: {itemId, qty, "name"}
+                            itemText = tostring(itemObjective[2]) .. " " .. itemObjective[3]
+                        elseif itemObjective[2] then
+                            -- Has text/quantity in second position
+                            itemText = itemObjective[2]
+                        else
+                            -- No text, try to get from database
+                            local itemName = QuestieDB.QueryItemSingle(itemId, "name")
+                            itemText = itemName or ("Item " .. tostring(itemId))
+                        end
+                    end
+                    
+                    if itemId then
+                        ---@type ItemObjective
+                        QO.ObjectiveData[#QO.ObjectiveData+1] = {
+                            Type = "item",
+                            Id = itemId,
+                            Text = itemText
+                        }
+                    end
                 end
             end
         end

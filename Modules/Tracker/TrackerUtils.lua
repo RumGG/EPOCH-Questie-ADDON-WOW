@@ -955,12 +955,18 @@ function TrackerUtils:GetSortedQuestIds()
             Questie:Debug(Questie.DEBUG_DEVELOP, "[TrackerUtils:GetSortedQuestIds] - Zone Proximity Timer Started!")
 
             local playerPosition
-            questZoneProximityTimer = C_Timer.NewTicker(5.0, function()
-                if IsInInstance() and questZoneProximityTimer then
-                    Questie:Debug(Questie.DEBUG_DEVELOP, "[TrackerUtils:GetSortedQuestIds] - Zone Proximity Timer Stoped!")
-                    questZoneProximityTimer:Cancel()
-                    questZoneProximityTimer = nil
-                else
+            -- Delay start to ensure quest log is populated
+            C_Timer.After(1.0, function()
+                questZoneProximityTimer = C_Timer.NewTicker(5.0, function()
+                    -- Don't run if quest log is being populated or isn't ready
+                    if QuestiePlayer._populatingQuestlog or not QuestiePlayer.currentQuestlog or next(QuestiePlayer.currentQuestlog) == nil then
+                        return
+                    end
+                    if IsInInstance() and questZoneProximityTimer then
+                        Questie:Debug(Questie.DEBUG_DEVELOP, "[TrackerUtils:GetSortedQuestIds] - Zone Proximity Timer Stoped!")
+                        questZoneProximityTimer:Cancel()
+                        questZoneProximityTimer = nil
+                    else
                     local position = _GetWorldPlayerPosition()
                     if position then
                         local distance = playerPosition and _GetDistance(position.x, position.y, playerPosition.x, playerPosition.y)
@@ -992,6 +998,7 @@ function TrackerUtils:GetSortedQuestIds()
                         end
                     end
                 end
+                end)
             end)
         end
     elseif sortObj == "byProximity" or sortObj == "byProximityReversed" then
@@ -1065,12 +1072,18 @@ function TrackerUtils:GetSortedQuestIds()
             Questie:Debug(Questie.DEBUG_DEVELOP, "[TrackerUtils:GetSortedQuestIds] - Proximity Timer Started!")
 
             local playerPosition
-            questProximityTimer = C_Timer.NewTicker(5.0, function()
-                if IsInInstance() and questProximityTimer then
-                    Questie:Debug(Questie.DEBUG_DEVELOP, "[TrackerUtils:GetSortedQuestIds] - Proximity Timer Stoped!")
-                    questProximityTimer:Cancel()
-                    questProximityTimer = nil
-                else
+            -- Delay start to ensure quest log is populated
+            C_Timer.After(1.0, function()
+                questProximityTimer = C_Timer.NewTicker(5.0, function()
+                    -- Don't run if quest log is being populated or isn't ready
+                    if QuestiePlayer._populatingQuestlog or not QuestiePlayer.currentQuestlog or next(QuestiePlayer.currentQuestlog) == nil then
+                        return
+                    end
+                    if IsInInstance() and questProximityTimer then
+                        Questie:Debug(Questie.DEBUG_DEVELOP, "[TrackerUtils:GetSortedQuestIds] - Proximity Timer Stoped!")
+                        questProximityTimer:Cancel()
+                        questProximityTimer = nil
+                    else
                     local position = _GetWorldPlayerPosition()
                     if position then
                         local distance = playerPosition and _GetDistance(position.x, position.y, playerPosition.x, playerPosition.y)
@@ -1102,6 +1115,7 @@ function TrackerUtils:GetSortedQuestIds()
                         end
                     end
                 end
+                end)
             end)
         end
     end

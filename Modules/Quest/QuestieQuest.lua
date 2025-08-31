@@ -958,6 +958,8 @@ end
 function QuestieQuest:GetAllQuestIds()
     Questie:Debug(Questie.DEBUG_DEVELOP, "[QuestieQuest] Getting all quests")
 
+    -- Set flag to prevent tracker updates during population
+    QuestiePlayer._populatingQuestlog = true
     QuestiePlayer.currentQuestlog = {}
 
     for questId, data in pairs(QuestLogCache.questLog_DO_NOT_MODIFY) do -- DO NOT MODIFY THE RETURNED TABLE
@@ -999,6 +1001,9 @@ function QuestieQuest:GetAllQuestIds()
     -- Update runtime stubs to ensure they have current objective progress data
     -- This is especially important after reload/relog when stubs are recreated
     QuestieQuest:UpdateRuntimeStubs()
+    
+    -- Clear flag after population is complete
+    QuestiePlayer._populatingQuestlog = false
     
     -- Schedule another update with a delay to ensure quest log is fully populated
     C_Timer.After(0.5, function()
