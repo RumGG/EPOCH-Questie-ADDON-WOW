@@ -173,14 +173,14 @@ function QuestLogCache.CheckForChanges(questIdsToCheck)
         for _ in pairs(questIdsToCheck) do
             checkCount = checkCount + 1
         end
-        Questie:Print("[CACHE] CheckForChanges called with", checkCount, "specific quest IDs")
+        -- Check specific quests
     else
-        Questie:Print("[CACHE] CheckForChanges called with nil (check ALL quests)")
+        -- Check all quests
     end
     
     -- Debug: Check how many quests Blizzard says we have
     local numEntries, numQuests = GetNumQuestLogEntries()
-    Questie:Print("[CACHE] GetNumQuestLogEntries: entries=", numEntries, "quests=", numQuests)
+    -- Check quest log counts
     
     local processedCount = 0
     local headerCount = 0
@@ -192,7 +192,7 @@ function QuestLogCache.CheckForChanges(questIdsToCheck)
 
         local title, _, questTag, isHeader, _, isComplete, _, questId = GetQuestLogTitle(questLogIndex)
         if (not title) then
-            Questie:Print("[CACHE] GetQuestLogTitle returned nil at index", questLogIndex, "- breaking loop")
+            -- End of quest log
             break -- We exceeded the valid quest log entries
         end
         if isHeader then
@@ -202,7 +202,7 @@ function QuestLogCache.CheckForChanges(questIdsToCheck)
             questIdsChecked[questId] = true
             if not HaveQuestData(questId) then
                 noDataCount = noDataCount + 1
-                Questie:Print("[CACHE] No quest data for quest", questId, "'", title, "' at index", questLogIndex)
+                -- No quest data available
             else
                 cachedCount = cachedCount + 1
                 local cachedQuest = cache[questId]
@@ -247,9 +247,9 @@ function QuestLogCache.CheckForChanges(questIdsToCheck)
                             objectives = newObjectives,
                         }
                         changes[questId] = changedObjIds
-                        Questie:Print("[CACHE] Saved quest", questId, "to cache")
+                        -- Quest saved to cache
                     else
-                        Questie:Print("[CACHE] No changes for quest", questId, "- not updating cache")
+                        -- No changes detected
                     end
                 else
                     cacheMiss = true
@@ -308,8 +308,7 @@ function QuestLogCache.CheckForChanges(questIdsToCheck)
     for _ in pairs(cache) do
         cacheCount = cacheCount + 1
     end
-    Questie:Print("[CACHE] Processed:", processedCount, "quests, Headers:", headerCount, "NoData:", noDataCount, "Cached:", cachedCount)
-    Questie:Print("[CACHE] Cache now has", cacheCount, "quests after CheckForChanges")
+    -- Cache update complete
     
     return cacheMiss, changes
 end

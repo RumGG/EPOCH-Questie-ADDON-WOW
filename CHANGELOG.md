@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## [1.0.65-hotfix] - 2024-08-31
 
 ### Fixed
 - **Tracker showing random number of quests after login instead of all tracked quests**
@@ -12,6 +12,9 @@
   - Fixed undefined tempQuestIDs variable reference in tracker module
   - Fixed syntax error with orphaned code block in QuestLogCache
   - All 25 quests now properly tracked and displayed after login
+  - **Hotfix**: Removed all debug print statements that were spamming chat
+
+## [Unreleased]
   
 - **Quests requiring two clicks to track**
   - Fixed malformed item objectives in database (e.g., `{{itemId}}` instead of `{{itemId,qty,"name"}}`)
