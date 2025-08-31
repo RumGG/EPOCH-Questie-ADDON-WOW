@@ -3,9 +3,11 @@
 ## [1.0.69] - 2024-08-31
 
 ### Added
-- **New Epoch quest from GitHub issue #244**
+- **New Epoch quests from GitHub issues #243-244**
   - The Barrens: Exterminate the Brutes (26856)
-  - Added quest giver Ko'gar the Thunderer and target mobs (Razormane Hunters, Thornweavers, and Defenders)
+    - Added quest giver Ko'gar the Thunderer and target mobs (Razormane Hunters, Thornweavers, and Defenders)
+  - The Barrens: Plainstrider Menace (26918)
+    - Added quest giver Kodo Wrangler Grish and loot targets (Greater, Ornery, and Elder Plainstriders)
 
 ## [1.0.68] - 2024-08-31
 

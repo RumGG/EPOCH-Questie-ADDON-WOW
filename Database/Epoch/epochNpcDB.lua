@@ -1116,5 +1116,11 @@ epochNpcData[5333] = {"Razormane Defender",nil,nil,10,11,0,{[17]={{43.0,51.0},{4
 epochNpcData[5334] = {"Razormane Hunter",nil,nil,10,11,0,{[17]={{43.0,51.0},{43.0,49.0},{42.0,50.0}}},nil,17,nil,nil,1,"H",nil,0} -- The Barrens: Kill target
 epochNpcData[5335] = {"Razormane Thornweaver",nil,nil,10,11,0,{[17]={{43.0,51.0},{43.0,49.0},{42.0,50.0}}},nil,17,nil,nil,1,"H",nil,0} -- The Barrens: Kill target
 
+-- The Barrens NPCs for quest 26918 (GitHub #243)
+epochNpcData[3615] = {"Kodo Wrangler Grish",nil,nil,10,10,0,{[17]={{52.3,31.9}}},nil,17,{26918},{26918},1,"H",nil,0} -- The Barrens: Quest giver/turn-in for Plainstrider Menace
+epochNpcData[3244] = {"Greater Plainstrider",nil,nil,9,10,0,{[17]={{49.6,21.9},{48.7,22.7},{48.2,22.0},{47.6,21.3},{46.9,20.8},{46.0,23.3},{45.7,25.0},{46.8,27.1},{47.0,29.3},{48.3,31.8},{49.9,34.0},{50.0,36.2},{50.2,38.3},{49.9,41.4},{49.3,43.9},{48.6,46.0},{47.6,48.2},{46.9,50.4},{46.3,52.6},{46.2,55.4},{46.0,57.3},{45.8,60.1},{45.9,61.9},{45.9,64.1}}},nil,17,nil,nil,1,"H",nil,0} -- The Barrens: Loot target
+epochNpcData[3245] = {"Ornery Plainstrider",nil,nil,10,11,0,{[17]={{49.6,21.9},{48.7,22.7},{48.2,22.0},{47.6,21.3},{46.9,20.8},{46.0,23.3},{45.7,25.0},{46.8,27.1},{47.0,29.3},{48.3,31.8},{49.9,34.0},{50.0,36.2},{50.2,38.3},{49.9,41.4},{49.3,43.9},{48.6,46.0},{47.6,48.2},{46.9,50.4},{46.3,52.6},{46.2,55.4},{46.0,57.3},{45.8,60.1},{45.9,61.9},{45.9,64.1}}},nil,17,nil,nil,1,"H",nil,0} -- The Barrens: Loot target
+epochNpcData[3246] = {"Elder Plainstrider",nil,nil,10,11,0,{[17]={{49.6,21.9},{48.7,22.7},{48.2,22.0},{47.6,21.3},{46.9,20.8},{46.0,23.3},{45.7,25.0},{46.8,27.1},{47.0,29.3},{48.3,31.8},{49.9,34.0},{50.0,36.2},{50.2,38.3},{49.9,41.4},{49.3,43.9},{48.6,46.0},{47.6,48.2},{46.9,50.4},{46.3,52.6},{46.2,55.4},{46.0,57.3},{45.8,60.1},{45.9,61.9},{45.9,64.1}}},nil,17,nil,nil,1,"H",nil,0} -- The Barrens: Loot target
+
 -- Stage the Epoch npcData for later merge during compilation
 QuestieDB._epochNpcData = epochNpcData

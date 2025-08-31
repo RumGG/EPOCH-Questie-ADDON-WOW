@@ -31,9 +31,9 @@ If you find this version of Questie with data collection helpful, consider [buyi
 ### New Quest Data
 
 **Added:**
-- **New Epoch quest from GitHub issue #244**
-  - The Barrens: Exterminate the Brutes (26856)
-  - Added quest giver Ko'gar the Thunderer and Razormane targets
+- **New Epoch quests from GitHub issues #243-244**
+  - The Barrens: Exterminate the Brutes (26856) - Kill Razormane mobs
+  - The Barrens: Plainstrider Menace (26918) - Collect Greater Plainstrider Beaks
 
 ## v1.0.68
 

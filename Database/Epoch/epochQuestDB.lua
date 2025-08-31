@@ -604,5 +604,8 @@ epochQuestData[28476] = {"Commission for Watcher Dodds",nil,nil,nil,20,nil,nil,{
 -- The Barrens: Exterminate the Brutes (GitHub #244)
 epochQuestData[26856] = {"Exterminate the Brutes",{{5410}},{{5410}},nil,10,nil,nil,{"Kill 5 Razormane Hunters, 5 Razormane Thornweavers, and 3 Razormane Defenders."},nil,{{{5334,5},{5335,5},{5333,3}}},nil,nil,nil,nil,nil,nil,17,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- The Barrens: Ko'gar the Thunderer
 
+-- The Barrens: Plainstrider Menace (GitHub #243)
+epochQuestData[26918] = {"Plainstrider Menace",{{3615}},{{3615}},nil,10,nil,nil,{"Bring 10 Greater Plainstrider Beaks to Kodo Wrangler Grish."},nil,{nil,nil,{{21510,10,"Greater Plainstrider Beak"}}},nil,nil,nil,nil,nil,nil,17,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- The Barrens: Kodo Wrangler Grish
+
 -- Stage the Epoch questData for later merge during compilation
 QuestieDB._epochQuestData = epochQuestData
