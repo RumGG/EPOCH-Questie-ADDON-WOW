@@ -3,12 +3,15 @@
 ## [Unreleased]
 
 ### Fixed
-- **Tracker showing only 4 quests after login**
-  - Fixed race condition where proximity/TomTom timers interfered with quest log population
-  - Added defensive checks to prevent timers running with empty quest log
-  - Added `_populatingQuestlog` flag to prevent tracker updates during initialization
-  - TomTom auto-tracking and proximity sorting now wait for quest log to be ready
-  - Delays timer starts by 1 second to ensure quest log is populated
+- **Tracker showing random number of quests after login instead of all tracked quests**
+  - Removed flawed "corruption detection" logic that incorrectly reset tracked quests
+  - Fixed logic that considered having all quests tracked (0 untracked) as corrupted state
+  - Added SyncWatchedQuests function to properly initialize tracking state on login
+  - Fixed multiple nil reference errors in QuestLogCache and QuestieQuest modules
+  - Added defensive checks for uninitialized QuestLogCache.questLog_DO_NOT_MODIFY
+  - Fixed undefined tempQuestIDs variable reference in tracker module
+  - Fixed syntax error with orphaned code block in QuestLogCache
+  - All 25 quests now properly tracked and displayed after login
   
 - **Quests requiring two clicks to track**
   - Fixed malformed item objectives in database (e.g., `{{itemId}}` instead of `{{itemId,qty,"name"}}`)
