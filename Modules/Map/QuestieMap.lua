@@ -633,32 +633,16 @@ function QuestieMap:DrawWorldIcon(data, areaID, x, y, showFlag)
     iconMap.AreaID = areaID
     iconMap.UiMapID = uiMapId
     iconMap.miniMapIcon = false;
-    -- Get the texture, handling both icon types and direct texture paths
-    local iconTexture = data.Icon
-    local originalIcon = data.Icon
-    if type(iconTexture) == "number" then
-        if Questie.usedIcons and Questie.usedIcons[iconTexture] then
-            iconTexture = Questie.usedIcons[iconTexture]
-        else
-            -- usedIcons not initialized yet, try direct icon lookup
-            local iconName = ({
-                [1] = "slay",
-                [2] = "loot", 
-                [3] = "event",
-                [4] = "object",
-                [5] = "talk"
-            })[iconTexture]
-            if iconName and Questie.icons and Questie.icons[iconName] then
-                iconTexture = Questie.icons[iconName]
-                Questie:Warning("[DrawWorldIcon] Using fallback icon lookup for type", originalIcon, "->", iconName, "->", iconTexture)
-            else
-                iconTexture = "Interface\\Icons\\INV_Misc_QuestionMark"
-                Questie:Warning("[DrawWorldIcon] No icon found for type", originalIcon, "using question mark")
-            end
+    -- Debug: Check what's being passed
+    local iconTexture = Questie.usedIcons[data.Icon]
+    if not iconTexture then
+        Questie:Print("[ICON DEBUG] No texture found for icon type:", data.Icon, "usedIcons exists:", Questie.usedIcons ~= nil)
+        if Questie.usedIcons then
+            Questie:Print("[ICON DEBUG] usedIcons[1]=", Questie.usedIcons[1])
+            Questie:Print("[ICON DEBUG] usedIcons[2]=", Questie.usedIcons[2])
+            Questie:Print("[ICON DEBUG] usedIcons[4]=", Questie.usedIcons[4])
         end
-    elseif not iconTexture then
         iconTexture = "Interface\\Icons\\INV_Misc_QuestionMark"
-        Questie:Warning("[DrawWorldIcon] data.Icon was nil, using question mark")
     end
     iconMap:UpdateTexture(iconTexture);
 
@@ -672,7 +656,7 @@ function QuestieMap:DrawWorldIcon(data, areaID, x, y, showFlag)
     --data.refMiniMap = iconMinimap -- used for removing
     --Are we a minimap note?
     iconMinimap.miniMapIcon = true;
-    iconMinimap:UpdateTexture(iconTexture);
+    iconMinimap:UpdateTexture(Questie.usedIcons[data.Icon]);
 
     if (not iconMinimap.FadeLogic) then
         function iconMinimap:SetFade(value)

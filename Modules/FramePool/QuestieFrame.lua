@@ -285,28 +285,6 @@ function _Qframe:UpdateTexture(texture)
         alpha = 1;
     end
 
-    -- Check if texture is nil or not a string path
-    if not texture or type(texture) == "number" then
-        -- If texture is a number (icon type), convert it
-        if type(texture) == "number" and Questie.usedIcons and Questie.usedIcons[texture] then
-            texture = Questie.usedIcons[texture]
-            -- Debug: Print what we're converting
-            if texture then
-                Questie:Debug(Questie.DEBUG_DEVELOP, "[UpdateTexture] Converted icon type", self.data.Icon, "to texture:", texture)
-            end
-        else
-            -- Fallback to a default icon if conversion fails
-            texture = Questie.icons and Questie.icons["loot"] or "Interface\\Icons\\INV_Misc_QuestionMark"
-            Questie:Debug(Questie.DEBUG_DEVELOP, "[UpdateTexture] Using fallback texture:", texture)
-        end
-    end
-    
-    -- Debug: Check if the texture path looks valid
-    if texture and not string.find(texture, "\\") and not string.find(texture, "/") then
-        Questie:Warning("[UpdateTexture] Invalid texture path:", texture, "for icon type:", self.data.Icon)
-        texture = "Interface\\Icons\\INV_Misc_QuestionMark"
-    end
-
     self.texture:SetTexture(texture)
     --self.data.Icon = texture;
     local colors = { 1, 1, 1 }
