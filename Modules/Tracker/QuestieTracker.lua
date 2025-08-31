@@ -336,8 +336,8 @@ function QuestieTracker.Initialize()
                         end
                     end
                 end
-            
-            if Questie.db.profile.autoTrackQuests and Questie.db.char.AutoUntrackedQuests and questLogCount > 0 then
+                
+                -- Now clean up AutoUntrackedQuests
                 Questie:Print("[DEBUG] Cleaning up AutoUntrackedQuests, questLogCount:", questLogCount)
                 local toRemove = {}
                 local keepCount = 0
@@ -371,6 +371,7 @@ function QuestieTracker.Initialize()
                     remaining = remaining + 1
                 end
                 Questie:Print("[DEBUG] After cleanup, AutoUntrackedQuests has", remaining, "quests")
+            end
             elseif Questie.db.char.TrackedQuests and questLogCount > 0 then
                 for trackedQuestId in pairs(Questie.db.char.TrackedQuests) do
                     if not QuestiePlayer.currentQuestlog[trackedQuestId] then
