@@ -270,12 +270,15 @@ function QuestieTracker.Initialize()
                 end
 
                 -- Remove quest from the Blizzard Quest Watch and populate the tracker.
+                -- Set flag to indicate we're syncing during initialization
+                QuestieTracker._syncingWatchedQuests = true
                 for _, questId in pairs(tempQuestIDs) do
                     local questIndex = GetQuestLogIndexByID(questId)
                     if questIndex then
                         QuestieTracker:AQW_Insert(questIndex, QUEST_WATCH_NO_EXPIRE)
                     end
                 end
+                QuestieTracker._syncingWatchedQuests = false
             end
 
             -- Look for any QuestID's that don't belong in the Questie.db.char.TrackedQuests or
@@ -2484,7 +2487,8 @@ function QuestieTracker:AQW_Insert(index, expire)
             -- This function is called both when accepting quests AND when manually clicking tracker checkbox
             
             -- Check if this is a manual tracking toggle (quest log is open and not shift-clicking)
-            local isManualToggle = QuestLogFrame and QuestLogFrame:IsShown() and not IsShiftKeyDown()
+            -- During initialization sync, treat as automatic tracking (not manual toggle)
+            local isManualToggle = QuestLogFrame and QuestLogFrame:IsShown() and not IsShiftKeyDown() and not QuestieTracker._syncingWatchedQuests
             
             if not Questie.db.char.AutoUntrackedQuests then
                 Questie.db.char.AutoUntrackedQuests = {}
@@ -2511,12 +2515,25 @@ function QuestieTracker:AQW_Insert(index, expire)
                     Questie:Debug(Questie.DEBUG_INFO, "[AQW_Insert] Manual track:", questId)
                 end
             else
-                -- Quest acceptance or other automatic tracking
-                -- In auto-track mode, new quests should be tracked by default
-                -- Remove from untracked list if it's there
-                if Questie.db.char.AutoUntrackedQuests[questId] then
-                    Questie.db.char.AutoUntrackedQuests[questId] = nil
-                    Questie:Debug(Questie.DEBUG_INFO, "[AQW_Insert] Auto-tracking newly accepted quest:", questId)
+                -- Quest acceptance, initialization sync, or other automatic tracking
+                if QuestieTracker._syncingWatchedQuests then
+                    -- During initialization, watched quests should stay tracked
+                    -- Don't add them to the untracked list
+                    if Questie.db.char.AutoUntrackedQuests[questId] then
+                        -- Quest was manually untracked before, respect that choice
+                        Questie:Debug(Questie.DEBUG_INFO, "[AQW_Insert] Keeping quest untracked during sync:", questId)
+                    else
+                        -- Quest is watched in Blizzard UI, ensure it's tracked in Questie
+                        Questie:Debug(Questie.DEBUG_INFO, "[AQW_Insert] Syncing watched quest:", questId)
+                    end
+                else
+                    -- Normal quest acceptance or automatic tracking
+                    -- In auto-track mode, new quests should be tracked by default
+                    -- Remove from untracked list if it's there
+                    if Questie.db.char.AutoUntrackedQuests[questId] then
+                        Questie.db.char.AutoUntrackedQuests[questId] = nil
+                        Questie:Debug(Questie.DEBUG_INFO, "[AQW_Insert] Auto-tracking newly accepted quest:", questId)
+                    end
                 end
             end
         end
