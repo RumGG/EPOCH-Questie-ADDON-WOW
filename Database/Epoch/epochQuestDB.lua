@@ -445,7 +445,7 @@ epochQuestData[27205] = {"My Sister Isabetta",nil,{{3616}},nil,14,nil,nil,{"Find
 
 -- Issue #107: Hillsbrad/Horde quests
 epochQuestData[26544] = {"Who Likes Apples?",{{3544}},{{3544}},nil,35,nil,nil,{"Collect 6 apples."},nil,nil,nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Hillsbrad Foothills quest
-epochQuestData[27034] = {"Never Again!",nil,nil,nil,30,nil,nil,{"Complete the task - Never Again!"},nil,nil,nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Hillsbrad Foothills quest
+epochQuestData[27034] = {"Never Again!",nil,{{45982}},nil,30,nil,nil,{"Slay Gorgannon and Diathorus the Seeker in Ashenvale."},nil,{{{17300,"Gorgannon"},{6072,"Diathorus the Seeker"}}},nil,nil,nil,nil,nil,nil,331,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Issue #270: Ashenvale quest, fixed zone and objectives
 epochQuestData[27238] = {"An Imp's Bidding",{{46000}},{{46000}},nil,31,nil,nil,{"Slay 1 monster and collect Demonic Sextant."},nil,{nil,nil,{{63113,"Demonic Sextant"}}},nil,nil,nil,nil,nil,nil,405,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Desolace quest
 
 -- Issue #266: Hillsbrad Foothills quest
