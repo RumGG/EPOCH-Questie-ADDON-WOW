@@ -206,6 +206,11 @@ function QuestieTracker.Initialize()
     -- Insures all other data we're getting from other addons and WoW is loaded. There are edge
     -- cases where Questie loads too fast before everything else is available.
     -- IMPORTANT: This must run AFTER QuestieQuest:GetAllQuestIds() populates currentQuestlog
+    
+    -- Try immediate sync first
+    C_Timer.After(0.1, function()
+        QuestieTracker:SyncWatchedQuests()
+    end)
 
     C_Timer.After(1.5, function()
         -- Hide frames during startup
@@ -248,60 +253,9 @@ function QuestieTracker.Initialize()
             -- Sync and populate the QuestieTracker - this should only run when a player has loaded
             -- Questie for the first time or when Re-enabling the QuestieTracker after it's disabled.
 
-            -- Get the current number of watched quests NOW, not from file load time
-            -- The file-level questsWatched variable is stale on initial login
-            local currentQuestsWatched = GetNumQuestWatches(true) or GetNumQuestWatches() or 0
-            Questie:Debug(Questie.DEBUG_DEVELOP, "[QuestieTracker] Syncing watched quests, count:", currentQuestsWatched)
-            
-            -- Debug: Log the state before syncing
-            Questie:Print("[DEBUG] Starting quest sync. Watched quests from Blizzard:", currentQuestsWatched)
-            if Questie.db.char.AutoUntrackedQuests then
-                local count = 0
-                for k in pairs(Questie.db.char.AutoUntrackedQuests) do
-                    count = count + 1
-                end
-                Questie:Print("[DEBUG] AutoUntrackedQuests before sync:", count, "quests")
-            end
-            
-            -- The questsWatched variable is populated by the Unhooked GetNumQuestWatches(). If Questie
-            -- is enabled, this is always 0 unless it's run with a true var RE:GetNumQuestWatches(true).
-            local tempQuestIDs = {}  -- Move this outside the if block so it's always available
-            if currentQuestsWatched > 0 then
-                -- GetQuestIndexForWatch doesn't work reliably in 3.3.5 on initial login
-                -- Instead, iterate through the quest log and check which are watched
-                Questie:Print("[DEBUG] GetQuestIndexForWatch not working, trying alternative method")
-                local numEntries = select(2, GetNumQuestLogEntries())
-                for i = 1, numEntries do
-                    local title, level, tag, isHeader, isCollapsed, isComplete, frequency, questId = GetQuestLogTitle(i)
-                    if not isHeader and questId and questId > 0 then
-                        -- Use the original IsQuestWatched to check Blizzard's state
-                        local isWatched = QuestieTracker.IsQuestWatched and QuestieTracker.IsQuestWatched(i)
-                        if isWatched then
-                            table.insert(tempQuestIDs, questId)
-                            Questie:Print("[DEBUG] Found watched quest:", questId, title)
-                        end
-                    end
-                end
-                Questie:Print("[DEBUG] Alternative method found", #tempQuestIDs, "watched quests")
-
-                -- Remove quest from the Blizzard Quest Watch and populate the tracker.
-                -- Set flag to indicate we're syncing during initialization
-                if #tempQuestIDs > 0 then
-                    QuestieTracker._syncingWatchedQuests = true
-                    Questie:Print("[DEBUG] Syncing", #tempQuestIDs, "watched quests from Blizzard UI")
-                    for i, questId in pairs(tempQuestIDs) do
-                        Questie:Print("[DEBUG] Syncing quest", i, "ID:", questId)
-                        local questIndex = GetQuestLogIndexByID(questId)
-                        if questIndex then
-                            QuestieTracker:AQW_Insert(questIndex, QUEST_WATCH_NO_EXPIRE)
-                        end
-                    end
-                    QuestieTracker._syncingWatchedQuests = false
-                    Questie:Print("[DEBUG] Sync complete")
-                else
-                    Questie:Print("[DEBUG] No watched quests found to sync")
-                end
-            end
+            -- Sync is now done in a separate function that can be called multiple times
+            -- Try to sync again here in case the first attempt failed
+            QuestieTracker:SyncWatchedQuests()
 
             -- Look for any QuestID's that don't belong in the Questie.db.char.TrackedQuests or
             -- the Questie.db.char.AutoUntrackedQuests tables. They can get out of sync.
@@ -426,6 +380,71 @@ function QuestieTracker.Initialize()
             -- Don't hide the tracker after initialization!
         end)
     end)
+end
+
+-- New function to sync watched quests - can be called multiple times
+function QuestieTracker:SyncWatchedQuests()
+    if not Questie.db.profile.autoTrackQuests then
+        return -- Only needed in auto-track mode
+    end
+    
+    -- Don't sync more than once per session
+    if QuestieTracker._alreadySynced then
+        return
+    end
+    
+    if not QuestiePlayer.currentQuestlog then
+        return -- Quest log not ready yet
+    end
+    
+    -- Count quests in log
+    local questCount = 0
+    for _ in pairs(QuestiePlayer.currentQuestlog) do
+        questCount = questCount + 1
+    end
+    
+    if questCount == 0 then
+        return -- No quests to process
+    end
+    
+    Questie:Print("[DEBUG] SyncWatchedQuests: Processing", questCount, "quests")
+    
+    -- Initialize AutoUntrackedQuests if needed
+    if not Questie.db.char.AutoUntrackedQuests then
+        Questie.db.char.AutoUntrackedQuests = {}
+    end
+    
+    -- Remove quests no longer in log
+    local toRemove = {}
+    for questId in pairs(Questie.db.char.AutoUntrackedQuests) do
+        if not QuestiePlayer.currentQuestlog[questId] then
+            toRemove[questId] = true
+        end
+    end
+    for questId in pairs(toRemove) do
+        Questie.db.char.AutoUntrackedQuests[questId] = nil
+        Questie:Print("[DEBUG] Removed quest", questId, "from AutoUntrackedQuests (not in log)")
+    end
+    
+    -- If AutoUntrackedQuests has very few entries compared to quest log, 
+    -- it's likely corrupted or not properly initialized
+    local untrackedCount = 0
+    for _ in pairs(Questie.db.char.AutoUntrackedQuests) do
+        untrackedCount = untrackedCount + 1
+    end
+    
+    -- If we have many quests but very few untracked, something's wrong
+    -- This happens when the SavedVariables get corrupted or reset
+    if questCount >= 20 and untrackedCount <= 5 then
+        Questie:Print("[DEBUG] Detected corrupted AutoUntrackedQuests state - resetting")
+        -- Mark all quests as untracked initially
+        for questId in pairs(QuestiePlayer.currentQuestlog) do
+            Questie.db.char.AutoUntrackedQuests[questId] = true
+        end
+        Questie:Print("[DEBUG] Reset AutoUntrackedQuests - all", questCount, "quests marked as untracked")
+    end
+    
+    QuestieTracker._alreadySynced = true
 end
 
 function QuestieTracker:CheckStatus()
