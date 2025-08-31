@@ -38,7 +38,7 @@ epochQuestData[26933] = {"Etched Scroll",{{1569}},{{45894}},nil,1,nil,nil,{"Read
 
 -- Issue #60: Stonetalon Mountains quest data
 epochQuestData[26938] = {"[Epoch] Quest 26938",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26939] = {"Peace in Death",{{45898}},nil,nil,5,nil,nil,{"Lay Joseph Strinbrow's spirit to rest."},nil,{{{60445,"Joseph Strinbrow's spirit laid to rest"}}},nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Issue #256: Updated from Stonetalon to Tirisfal
+epochQuestData[26939] = {"Peace in Death",{{45898}},{{45898}},nil,5,nil,nil,{"Lay Joseph Strinbrow's spirit to rest."},nil,{{{60445,"Joseph Strinbrow's spirit laid to rest"}}},nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil} -- Issue #374: Added turn-in NPC, was showing as "[39] Forging the Way"
 epochQuestData[26940] = {"[Epoch] Quest 26940",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26941] = {"[Epoch] Quest 26941",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 
