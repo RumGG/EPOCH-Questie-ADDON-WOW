@@ -189,10 +189,15 @@ epochQuestData = {
 [27053] = {"Solarsal Report",nil,{{45734}},nil,27,nil,nil,{"Bring the report to someone in Astranaar."},nil,nil,nil,nil,nil,nil,nil,nil,11,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil},
 [27091] = {"Azshara's Legacy",nil,{{46008}},nil,54,nil,nil,{"Discover Azshara's Legacy."},nil,nil,nil,nil,nil,nil,nil,nil,16,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil},
 [26499] = {"Magical Materiel",{{2543}},nil,nil,35,nil,nil,{"Collect 30 Magic Materiel."},nil,{nil,nil,{{62503,30,"Magic Materiel"}}},nil,nil,nil,nil,nil,nil,36,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil},
-[26540] = {"Threats from Abroad",{{45546}},nil,nil,32,nil,nil,{"Slay 10 Murloc Lake Hunters and 8 Murloc Lake Oracles."},nil,{{{60540,10,"Murloc Lake Hunter slain"},{60541,8,"Murloc Lake Oracle slain"}}},nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil},
+[26540] = {"Threats from Abroad",{{45546}},{{6579}},nil,32,nil,2,{"Slay 10 Murloc Lake Hunters and 8 Murloc Lake Oracles."},nil,{{{45544,10,"Murloc Lake Hunter slain"},{45545,8,"Murloc Lake Oracle slain"}}},nil,nil,nil,nil,nil,nil,36,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil}, -- Issue #413: Updated with turn-in NPC and correct mob IDs
 [26541] = {"Threats from Abroad",{{45546}},nil,nil,32,nil,nil,{"Slay 10 Yetis."},nil,{{{60542,10,"Yetis slain"}}},nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil},
 [28573] = {"Commission for Verner Osgood",{{2697}},{{2697}},nil,30,nil,nil,{"Complete Verner Osgood's commission."},nil,nil,nil,nil,nil,nil,nil,nil,36,nil,nil,nil,nil,nil,3,0,nil,nil,nil,nil,nil,nil},
 [26707] = {"Riders In The Night",nil,{{264}},nil,28,nil,nil,{"Report the night rider sightings to Commander Althea Ebonlocke."},nil,nil,nil,nil,nil,nil,nil,nil,10,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil},
+[26701] = {"Hand of Azora",nil,nil,nil,15,nil,2,{"Clear the Gold Coast Quarry."},nil,nil,nil,nil,nil,{26702},nil,nil,40,nil,nil,nil,nil,26702,2,0,nil,nil,nil,nil,nil,nil}, -- Issue #418: Westfall quest chain
+[26702] = {"Hand of Azora",nil,{{313}},nil,15,nil,2,{"Return to Theocritus at Tower of Azora."},nil,nil,nil,nil,{26701},{26703},nil,nil,40,nil,nil,nil,nil,26703,2,0,26701,nil,nil,nil,nil,nil}, -- Issue #418: Westfall quest chain
+[26703] = {"Hand of Azora",nil,{{313}},nil,15,nil,2,{"Speak to Karlain."},nil,nil,nil,nil,{26702},nil,nil,nil,12,nil,nil,nil,nil,nil,2,0,26702,nil,nil,nil,nil,nil}, -- Issue #418: Elwynn Forest quest chain
+[28063] = {"Commission for Tomas",nil,nil,nil,5,nil,2,{"Collect 10 Brilliant Smallfish."},nil,{nil,nil,{{6291,10,"Brilliant Smallfish"}}},nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil}, -- Issue #418: Commission quest
+[28564] = {"Commission for Scout Galiaan",nil,nil,nil,20,nil,2,{"Collect 2 Dark Leather Boots."},nil,{nil,nil,{{2317,2,"Dark Leather Boots"}}},nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil}, -- Issue #418: Commission quest
 [26711] = {"Life In Death",{{45731}},{{273}},nil,25,nil,nil,{"Collect 8 Brightwood Bloom."},nil,{nil,nil,{{62530,nil}}},nil,nil,nil,nil,nil,nil,10,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil},
 [27081] = {"How to Make Friends with a Furbolg",{{46012}},{{8420}},nil,52,nil,nil,{"Learn how to befriend the furbolg."},nil,nil,nil,nil,nil,nil,nil,nil,16,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil},
 [26887] = {"My Friend, The Skullsplitter",nil,nil,nil,36,nil,nil,{"Complete the Skullsplitter ritual."},nil,nil,nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil},
@@ -314,7 +319,7 @@ epochQuestData = {
 [26520] = {"[Epoch] Quest 26520",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil},
 [26577] = {"[Epoch] Quest 26577",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil},
 [26580] = {"[Epoch] Quest 26580",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil},
-[26582] = {"[Epoch] Quest 26582",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil},
+[26582] = {"Amulet Shakedown",{{45206}},{{2860}},nil,43,nil,2,{"Collect 10 Dustbelcher Amulets."},nil,{nil,nil,{{62365,10,"Dustbelcher Amulet"}}},nil,nil,nil,nil,nil,nil,15,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil}, -- Issue #412: Badlands quest
 [26594] = {"[Epoch] Quest 26594",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil},
 [27074] = {"[Epoch] Quest 27074",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil},
 [27075] = {"[Epoch] Quest 27075",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil},
@@ -327,7 +332,7 @@ epochQuestData = {
 [27126] = {"[Epoch] Quest 27126",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil},
 [27127] = {"[Epoch] Quest 27127",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil},
 [27129] = {"[Epoch] Quest 27129",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil},
-[27130] = {"[Epoch] Quest 27130",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil},
+[27130] = {"The Furbolg -- Goblin Trade Network",{{3945}},{{45206}},nil,52,nil,1,nil,nil,nil,nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}, -- Issue #415: STV to Badlands
 [27131] = {"[Epoch] Quest 27131",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil},
 [27136] = {"[Epoch] Quest 27136",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil},
 [27141] = {"[Epoch] Quest 27141",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil},
@@ -485,28 +490,14 @@ epochQuestData = {
 [26486] = {"Call of Fire",{{45520}},{{45520}},nil,11,nil,2,{"Obtain Glowing Ember from Minor Manifestation of Fire."},nil,{{{5893,"Minor Manifestation of Fire"}},nil,{{6655,"Glowing Ember"}}},nil,nil,{26485},{26487},nil,nil,38,nil,nil,nil,nil,26487,2,0,26485,nil,nil,nil,nil,nil}, -- Loch Modan
 [26487] = {"Call of Fire",{{45520}},{{45519}},nil,11,nil,2,{"Bring the Torch of Eternal Flame to Orgorn Strongbrow at South Gate Outpost in Dun Morogh."},nil,nil,nil,nil,{26486},nil,nil,nil,1,nil,nil,nil,nil,nil,2,0,26486,nil,nil,nil,nil,nil}, -- Loch Modan to Dun Morogh
 [26560] = {"When Life Gives You... Berries?",nil,{{45564}},nil,38,nil,2,{"Collect 8 Bushel of Shadowberry."},nil,{nil,nil,{{62338,8,"Bushel of Shadowberry"}}},nil,nil,nil,nil,nil,nil,45,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil}, -- Arathi Highlands
-
--- Issue #429: Call to Skirmish quest
 [26382] = {"Call to Skirmish: Stranglethorn Vale",nil,nil,nil,40,nil,3,{"Report to the battleground for Stranglethorn Vale skirmish."},nil,nil,nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,3,0,nil,nil,nil,nil,nil,nil}, -- Stranglethorn Vale
-
--- Issue #452: Hillsbrad Foothills quest
 [26799] = {"A Scout in Need",{{45800}},{{2263}},nil,24,nil,2,{"Report to Marshal Redpath in Southshore."},nil,nil,nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil}, -- Hillsbrad Foothills
-
--- Issue #433: Arathi Highlands quest  
 [26558] = {"The Rumbling Fields",nil,{{45564}},nil,38,nil,2,{"Slay 7 Frantic Earth and 7 Rambling Earth."},nil,{{{45565,7,"Frantic Earth"},{45566,7,"Rambling Earth"}}},nil,nil,nil,nil,nil,nil,45,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil}, -- Arathi Highlands
-
--- Issue #459: Arathi Highlands quest
 [26549] = {"A Painful Dousing",{{45548}},{{45548}},nil,37,nil,2,{"Collect 8 Raging Bindings."},nil,{{{45552,"Raging Cinders"}},nil,{{62332,8,"Raging Bindings"}}},nil,nil,nil,nil,nil,nil,45,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil}, -- Arathi Highlands
-
--- Issue #461: The Barrens quest
 [28489] = {"Commission for Kaliyah Stormshew",{{46065}},{{46065}},nil,20,nil,1,{"Collect 20 Wool Bandages."},nil,{nil,nil,{{3530,20,"Wool Bandage"}}},nil,nil,nil,nil,nil,nil,17,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}, -- The Barrens
-
--- Issue #422: Commission quests
 [28675] = {"Commission for Veron Amberstill",nil,nil,nil,10,nil,3,{"Collect 2 Linen Bags."},nil,{nil,nil,{{4238,2,"Linen Bag"}}},nil,nil,nil,nil,nil,nil,1,nil,nil,nil,nil,nil,3,0,nil,nil,nil,nil,nil,nil}, -- Dun Morogh
 [28676] = {"Commission for Marleth Barleybrew",{{1703}},nil,nil,10,nil,3,{"Collect 1 Heavy Linen Gloves."},nil,{nil,nil,{{5633,1,"Heavy Linen Gloves"}}},nil,nil,nil,nil,nil,nil,1,nil,nil,nil,nil,nil,3,0,nil,nil,nil,nil,nil,nil}, -- Dun Morogh
-
--- Issue #458: Batch quest submission (29 quests)
--- Missing quests to add:
+[26806] = {"Defense of Southshore",{{45800}},{{45800}},nil,22,nil,2,{"Collect Emily's Report, Paxton's Report, and Tristan's Report."},nil,{nil,nil,{{62596,1,"Emily's Report"},{62597,1,"Paxton's Report"},{62598,1,"Tristan's Report"}}},nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil}, -- Hillsbrad Foothills
 [26909] = {"Wild Tulip",{{45869}},nil,nil,41,nil,2,{"Complete the Wild Tulip questline."},nil,nil,nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil}, -- Stranglethorn Vale
 [26910] = {"Wild Tulip",nil,nil,nil,41,nil,2,{"Collect Daniels Pendant and Tulip's Pendant."},nil,{nil,nil,{{62771,1,"Daniels Pendant"},{62769,1,"Tulip's Pendant"}}},nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil}, -- Stranglethorn Vale
 [26911] = {"Wild Tulip",nil,nil,nil,41,nil,2,{"Witness Chel Moonwood's Ritual."},nil,nil,nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil}, -- Stranglethorn Vale
@@ -514,16 +505,18 @@ epochQuestData = {
 [27462] = {"Waste Removal",nil,{{46237}},nil,42,nil,2,{"Oil Spills Removed: 6/6"},nil,{{{nil,6,"Oil Spills Removed"}}},nil,nil,nil,nil,nil,nil,440,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil}, -- Issue #455: Tanaris - Waste Removal quest
 [28619] = {"Lair of the Abyssal",nil,nil,nil,48,nil,2,{"Enter the Lair of the Abyssal."},nil,nil,nil,nil,nil,nil,nil,nil,357,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil}, -- Feralas
 [28620] = {"The Hermit's Wisdom",nil,nil,nil,48,nil,2,{"Seek the hermit's wisdom."},nil,nil,nil,nil,nil,nil,nil,nil,357,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil}, -- Feralas
--- Issue #426: Ring of Strength quest series
 [26895] = {"The Ring of Strength: Brokenhorn",nil,nil,nil,43,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}, -- Stranglethorn Vale
 [26896] = {"The Ring of Strength: The Twins",nil,nil,nil,43,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}, -- Stranglethorn Vale
 [26897] = {"The Ring of Strength: Stonegaze",{{45857}},nil,nil,43,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}, -- Stranglethorn Vale
 [26898] = {"The Ring of Strength: Winston",nil,nil,nil,43,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}, -- Stranglethorn Vale
 [26899] = {"The Ring of Strength: Dekked",{{45857}},nil,nil,43,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}, -- Stranglethorn Vale
 [26900] = {"The Ring of Strength: Warlord Rhurg",nil,nil,nil,43,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}, -- Stranglethorn Vale
--- Issue #460: Additional Barrens quests
 [27177] = {"Operation: Northwatch Hold",{{46061}},nil,nil,20,nil,1,{"Collect Crate of Assorted Armor."},nil,{nil,nil,{{63056,"Crate of Assorted Armor"}}},nil,nil,nil,nil,nil,nil,17,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}, -- The Barrens
 [27204] = {"WANTED: Deepskin",nil,nil,nil,14,nil,1,{"Kill Deepskin."},nil,{{{60874,"Deepskin"}}},nil,nil,nil,nil,nil,nil,17,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}, -- The Barrens
+[28513] = {"Commission for Killian Sanatha",nil,{{5748}},nil,5,nil,1,{"Collect 20 Raw Slitherskin Mackerel."},nil,{nil,nil,{{6303,20,"Raw Slitherskin Mackerel"}}},nil,nil,nil,nil,nil,nil,130,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}, -- Silverpine Forest
+-- Issue #415: High-level quests
+[26304] = {"Attunement to the Core",{{13278}},nil,nil,60,nil,nil,{"Collect Firebloom, Elemental Fire, Elemental Water, and Wintersbite."},nil,{nil,nil,{{4625,1,"Firebloom"},{7068,1,"Elemental Fire"},{7070,1,"Elemental Water"},{3819,1,"Wintersbite"}}},nil,nil,nil,nil,nil,nil,16,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}, -- Azshara
+[26341] = {"The Possible Fall of Baradin Hold",nil,{{11936}},nil,60,nil,1,nil,nil,nil,nil,nil,nil,nil,nil,nil,28,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}, -- Western Plaguelands
 }
 
 QuestieDB._epochQuestData = epochQuestData

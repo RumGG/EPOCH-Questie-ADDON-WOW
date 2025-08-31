@@ -7,6 +7,11 @@
   - Data collector now captures object IDs when accepting quests from interactable objects
   - Export format includes object quest starters with proper database entries
   - Displays object information in quest tracking and export windows
+
+### Fixed
+- **Felicia Maline flight master location in Darkshire (Issue #419)**
+  - Fixed flight master map pin showing at wrong location
+  - Corrected coordinates to proper flight master position (77.4, 44.3)
 - **28 new Epoch quests from GitHub issues #238-261**
   - Complete quest data for The Handmaiden's Fall chain (26714, 26715)
   - Multiple "Fit For A King" quests with different objectives

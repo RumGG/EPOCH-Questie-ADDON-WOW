@@ -166,6 +166,7 @@ local epochNpcData = {
 [2533] = {"[Epoch] NPC 2533",40,45,1,1,0,{[1519]={{58.3,64.7}}},nil,1519,nil,nil,11,"A",nil,0},
 [2708] = {"[Epoch] NPC 2708",1600,1800,40,40,0,{[1519]={{50.5,87.5}}},nil,1519,nil,nil,11,"A",nil,0},
 [2795] = {"[Epoch] NPC 2795",1400,1575,35,35,0,{[1519]={{72.8,58.9}}},nil,1519,nil,nil,11,"A",nil,0},
+[2860] = {"Sigrun Ironhew",nil,nil,43,43,0,{[15]={{53.7,43.5}}},nil,15,nil,{26582},2,"A",nil,0}, -- Issue #412: Amulet Shakedown turn-in
 [2879] = {"[Epoch] NPC 2879",1600,1800,40,40,0,{[1519]={{67.7,36.8}}},nil,1519,nil,nil,11,"A",nil,0},
 [3139] = {"Gar'Thok",400,450,10,10,0,{[14]={{51.9,43.8}}},nil,14,{27274},nil,1,"H",nil,0}, -- The Cursed Fleet quest giver
 [3142] = {"[Epoch] NPC 3142",720,810,18,18,0,{[14]={{52.3,43.7}}},nil,14,{27276},nil,85,"H",nil,0},
@@ -462,7 +463,7 @@ local epochNpcData = {
 [45202] = {"Silverwing Ambusher",1000,1125,25,25,0,{[331]={{74.2,72.7},{73.9,73.9},{73.9,76.0},{73.1,72.0},{73.1,72.0},{75.1,74.1},{72.5,75.3},{72.4,76.8},{71.3,76.1},{70.5,76.1},{70.1,74.5},{70.6,74.4},{71.5,72.3}}},{[331]={{74.2,72.7},{73.9,73.9},{73.9,76.0},{73.1,72.0},{73.1,72.0},{75.1,74.1},{72.5,75.3},{72.4,76.8},{71.3,76.1},{70.5,76.1},{70.1,74.5},{70.6,74.4},{71.5,72.3}}},331,nil,nil,11,"A",nil,0},
 [45204] = {"Gortak",840,945,21,21,0,{[17]={{40.7,45.2}}},nil,17,nil,nil,nil,nil,nil,0},
 [45205] = {"Nadia",600,675,15,15,0,{[17]={{43.4,48.2}}},nil,17,{26345,27175},{27174,27175},85,"H",nil,0},
-[45206] = {"Shin'Zil",600,675,15,15,0,{[17]={{51.6,23.3}}},nil,17,{27171,27172,27173},{27170,27171,27172},85,"H",nil,0},
+[45206] = {"Joakim Sparkroot",nil,nil,43,43,0,{[15]={{68,62.1}}},nil,15,{26582},nil,2,"A",nil,0}, -- Issue #412: Amulet Shakedown quest giver (Badlands)
 [45207] = {"Lorespeaker On'ju",nil,nil,43,43,0,{[1637]={{35.5,87.7}}},nil,1637,nil,{26291},85,"H",nil,0}, -- Issue #442: Orgrimmar, Troll Relics turn-in
 [45208] = {"Captured Refugee",360,405,9,9,0,{[17]={{54.0,43.0}}},nil,17,nil,nil,35,"AH",nil,0},
 [45209] = {"Captured Refugee",400,450,10,10,0,{[17]={{54.6,46.8}}},nil,17,nil,nil,85,"H",nil,0},
@@ -1051,6 +1052,9 @@ local epochNpcData = {
 -- Issue #121
 [48172] = {"Edwin Harly",nil,nil,13,13,0,{[130]={{44.0,39.9}}},nil,130,{26218},{26218},1,"H",nil,0}, -- Silverpine Forest
 
+-- Issue #419: Fix Felicia Maline flight master coordinates in Darkshire
+[2409] = {"Felicia Maline",nil,nil,55,55,0,{[10]={{77.4,44.3}}},nil,10,nil,nil,8,"A","Gryphon Master",0}, -- Darkshire Flight Master
+
 -- Issues #104-116, #119, #132, #153, #155-156: Additional NPCs
 -- Issue #104: Elwynn Forest NPCs
 [9296] = {"Milly Osworth",nil,nil,1,1,0,{[12]={{50.7,39.4}}},nil,12,{26778},{26777},1,"A",nil,0}, -- Elwynn Forest
@@ -1247,6 +1251,10 @@ local epochNpcData = {
 [45857] = {"Fik Fizzfingers",nil,nil,43,43,0,{[33]={{42.1,27.4}}},nil,33,{26897,26899},nil,nil,nil,nil,0}, -- Issue #426: Ring of Strength quests
 [3478] = {"Traugh",nil,nil,19,19,0,{[17]={{51.3,28.9}}},nil,17,nil,{27167},1,"H",nil,0}, -- Issue #460: Foreign Technology turn-in
 [46061] = {"Zephrix",nil,nil,20,20,0,{[17]={{62.2,51.4}}},nil,17,{27177},nil,1,"H",nil,0}, -- Issue #460: Operation: Northwatch Hold
+-- Issue #415: High-level quest NPCs
+[13278] = {"Duke Hydraxis",nil,nil,60,60,0,{[16]={{79.2,73.6}}},nil,16,{26304},nil,nil,nil,nil,0}, -- Azshara
+[11936] = {"Artist Renfray",nil,nil,60,60,0,{[28]={{65.7,75.3}}},nil,28,nil,{26341},nil,nil,nil,0}, -- Western Plaguelands
+[3945] = {"Caravaneer Ruzzgot",nil,nil,52,52,0,{[33]={{27.3,74.0}}},nil,33,{27130},nil,1,"H",nil,0}, -- Stranglethorn Vale
 
 -- Issue #429: Desolace quest NPCs
 [674] = {"Venture Co. Strip Miner",nil,nil,37,38,0,{[405]={{35.0,42.0}}},nil,405,{26289},nil,3,nil,nil,0}, -- Quest giver for Renegade Naga
@@ -1255,8 +1263,12 @@ local epochNpcData = {
 [4713] = {"Gnash",nil,nil,39,39,0,{[405]={{33.0,10.0}}},nil,405,nil,nil,0,nil,nil,0}, -- Quest 26289 objective
 
 -- Issue #452: Hillsbrad Foothills NPCs
-[45800] = {"Captain Thallen",nil,nil,24,24,0,{[267]={{46.6,50.3}}},nil,267,{26799},nil,2,"A",nil,0}, -- Quest giver for A Scout in Need
+[45800] = {"Captain Thallen",nil,nil,24,24,0,{[267]={{46.6,50.3},{46.6,50.4}}},nil,267,{26799,26806},{26806},2,"A",nil,0}, -- Quest giver for A Scout in Need and Defense of Southshore
 [2263] = {"Marshal Redpath",nil,nil,30,30,0,{[267]={{49.5,58.6}}},nil,267,nil,{26799},2,"A",nil,0}, -- Quest turn-in for A Scout in Need
+
+-- Issue #420: Hillsbrad Foothills NPCs for Defense of Southshore
+[46692] = {"Guard Emily",nil,nil,22,22,0,{[267]={{69.9,78.9}}},nil,267,nil,nil,2,"A",nil,0}, -- Defense of Southshore - Emily's Report
+[45809] = {"Guard Tristan",nil,nil,22,22,0,{[267]={{30.5,42.7}}},nil,267,nil,nil,2,"A",nil,0}, -- Defense of Southshore - Tristan's Report
 
 -- Issue #427: Stranglethorn Vale NPCs
 [2500] = {"Captain Hecklebury Smotts",nil,nil,40,40,0,{[33]={{26.7,73.6}}},nil,33,nil,{26285},2,"A",nil,0}, -- Quest turn-in for Deeg's Lost Pipe
@@ -1295,6 +1307,9 @@ local epochNpcData = {
 -- Feralas NPCs (zone 357)  
 [46704] = {"Viggo",nil,nil,45,45,0,{[357]={{51.6,47.5}}},nil,357,{26293,26294,26295,26296},{26293,26294,26295,26296},2,"A",nil,0}, -- Fit For A King quest giver/turn-in
 [46705] = {"Mek'nell",nil,nil,43,43,0,{[357]={{51.8,46.7}}},nil,357,{27313},nil,3,"AH",nil,0}, -- Meat! quest giver
+
+-- Issue #417: Silverpine Forest NPCs
+[5748] = {"Killian Sanatha",nil,nil,5,5,0,{[130]={{32.9,17.6}}},nil,130,nil,{28513},1,"H",nil,0}, -- Commission for Killian Sanatha turn-in
 
 -- Stage the Epoch npcData for later merge during compilation
 }
