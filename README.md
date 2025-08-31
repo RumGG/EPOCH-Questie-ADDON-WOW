@@ -33,7 +33,8 @@ If you find this version of Questie with data collection helpful, consider [buyi
 **Fixed:**
 - **Shift-click quest tracking now works properly**
   - Fixed issue where shift-clicking quests in quest log would only track quests with no objectives
-  - Shift-click now correctly toggles tracking for ALL quests
+  - Fixed auto-tracking mode preventing shift-click from tracking (only untracking worked)
+  - Shift-click now correctly toggles tracking for ALL quests in both manual and auto-track modes
   - Maintains shift-click to link quest in chat functionality
 
 ## v1.0.67

@@ -5,6 +5,8 @@
 ### Fixed
 - **Shift-click quest tracking in quest log now works correctly**
   - Fixed bug where shift-clicking quests would only track quests with no objectives
+  - Fixed auto-tracking mode conflict that prevented shift-click from tracking quests
+  - Removed duplicate shift-click handling in AQW_Insert that was overriding the toggle behavior
   - Shift-click now properly toggles tracking for ALL quests (tracks if untracked, untracks if tracked)
   - Maintains compatibility with shift-click to link quest in chat
 

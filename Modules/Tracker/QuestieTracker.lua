@@ -2777,12 +2777,9 @@ function QuestieTracker:AQW_Insert(index, expire)
             end
             -- Check tracking status
             
-            if IsShiftKeyDown() and QuestLogFrame:IsShown() then
-                -- Shift-click always untracks any quest
-                -- Allow users to untrack any quest including Epoch quests
-                Questie.db.char.AutoUntrackedQuests[questId] = true
-                -- Shift+Click untrack
-            elseif isManualToggle then
+            -- Don't handle shift-click here - it's already handled in Hooks.lua
+            -- which properly toggles tracking. This was causing shift-click to only untrack.
+            if isManualToggle then
                 -- Manual toggle from quest log checkbox
                 if isCurrentlyTracked then
                     -- Currently tracked, untrack it
