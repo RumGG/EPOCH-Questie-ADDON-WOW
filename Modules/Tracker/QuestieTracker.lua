@@ -267,37 +267,40 @@ function QuestieTracker.Initialize()
             -- is enabled, this is always 0 unless it's run with a true var RE:GetNumQuestWatches(true).
             local tempQuestIDs = {}  -- Move this outside the if block so it's always available
             if currentQuestsWatched > 0 then
-                -- When a quest is removed from the Watch Frame, the questIndex can change so we need to snag
-                -- the entire list and build a temp table with QuestIDs instead to ensure we remove them all.
-                for i = 1, currentQuestsWatched do
-                    local questIndex = GetQuestIndexForWatch(i)
-                    Questie:Print("[DEBUG] Watch", i, "questIndex:", questIndex)
-                    if questIndex then
-                        local questId = select(8, GetQuestLogTitle(questIndex))
-                        Questie:Print("[DEBUG] Watch", i, "questId:", questId)
-                        if questId and questId > 0 then
-                            tempQuestIDs[i] = questId
-                        else
-                            Questie:Print("[DEBUG] Watch", i, "has invalid questId:", questId)
+                -- GetQuestIndexForWatch doesn't work reliably in 3.3.5 on initial login
+                -- Instead, iterate through the quest log and check which are watched
+                Questie:Print("[DEBUG] GetQuestIndexForWatch not working, trying alternative method")
+                local numEntries = select(2, GetNumQuestLogEntries())
+                for i = 1, numEntries do
+                    local title, level, tag, isHeader, isCollapsed, isComplete, frequency, questId = GetQuestLogTitle(i)
+                    if not isHeader and questId and questId > 0 then
+                        -- Use the original IsQuestWatched to check Blizzard's state
+                        local isWatched = QuestieTracker.IsQuestWatched and QuestieTracker.IsQuestWatched(i)
+                        if isWatched then
+                            table.insert(tempQuestIDs, questId)
+                            Questie:Print("[DEBUG] Found watched quest:", questId, title)
                         end
-                    else
-                        Questie:Print("[DEBUG] Watch", i, "has no questIndex")
                     end
                 end
+                Questie:Print("[DEBUG] Alternative method found", #tempQuestIDs, "watched quests")
 
                 -- Remove quest from the Blizzard Quest Watch and populate the tracker.
                 -- Set flag to indicate we're syncing during initialization
-                QuestieTracker._syncingWatchedQuests = true
-                Questie:Print("[DEBUG] Syncing", #tempQuestIDs, "watched quests from Blizzard UI")
-                for i, questId in pairs(tempQuestIDs) do
-                    Questie:Print("[DEBUG] Syncing quest", i, "ID:", questId)
-                    local questIndex = GetQuestLogIndexByID(questId)
-                    if questIndex then
-                        QuestieTracker:AQW_Insert(questIndex, QUEST_WATCH_NO_EXPIRE)
+                if #tempQuestIDs > 0 then
+                    QuestieTracker._syncingWatchedQuests = true
+                    Questie:Print("[DEBUG] Syncing", #tempQuestIDs, "watched quests from Blizzard UI")
+                    for i, questId in pairs(tempQuestIDs) do
+                        Questie:Print("[DEBUG] Syncing quest", i, "ID:", questId)
+                        local questIndex = GetQuestLogIndexByID(questId)
+                        if questIndex then
+                            QuestieTracker:AQW_Insert(questIndex, QUEST_WATCH_NO_EXPIRE)
+                        end
                     end
+                    QuestieTracker._syncingWatchedQuests = false
+                    Questie:Print("[DEBUG] Sync complete")
+                else
+                    Questie:Print("[DEBUG] No watched quests found to sync")
                 end
-                QuestieTracker._syncingWatchedQuests = false
-                Questie:Print("[DEBUG] Sync complete")
             end
 
             -- Look for any QuestID's that don't belong in the Questie.db.char.TrackedQuests or
