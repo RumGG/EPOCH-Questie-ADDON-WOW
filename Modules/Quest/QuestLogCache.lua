@@ -166,12 +166,17 @@ function QuestLogCache.CheckForChanges(questIdsToCheck)
     local cacheMiss = false
     local changes = {} -- table key = questid of the changed quest, table value = list of changed objective ids
     local questIdsChecked = {} -- for debug / error detection
+    
+    -- Debug: Check how many quests Blizzard says we have
+    local numEntries, numQuests = GetNumQuestLogEntries()
+    Questie:Print("[CACHE] GetNumQuestLogEntries: entries=", numEntries, "quests=", numQuests)
 
     for questLogIndex = 1, MAX_QUEST_LOG_INDEX do
         ----- title, level, questTag, isHeader, isCollapsed, isComplete, frequency, questID, startEvent, displayQuestID, isOnMap, hasLocalPOI, isTask, isBounty, isStory, isHidden, isScaling = GetQuestLogTitle(questLogIndex)
 
         local title, _, questTag, isHeader, _, isComplete, _, questId = GetQuestLogTitle(questLogIndex)
         if (not title) then
+            Questie:Print("[CACHE] GetQuestLogTitle returned nil at index", questLogIndex, "- breaking loop")
             break -- We exceeded the valid quest log entries
         end
         if (not isHeader) and ((not questIdsToCheck) or questIdsToCheck[questId]) then -- check all quests if no list what to check, otherwise just ones in the list
@@ -286,6 +291,13 @@ function QuestLogCache.CheckForChanges(questIdsToCheck)
     QuestLogCache.DebugPrintCacheChanges(cacheMiss, changes)
 ]]--
 
+    -- Debug: Report what we cached
+    local cacheCount = 0
+    for _ in pairs(cache) do
+        cacheCount = cacheCount + 1
+    end
+    Questie:Print("[CACHE] Cache now has", cacheCount, "quests after CheckForChanges")
+    
     return cacheMiss, changes
 end
 
