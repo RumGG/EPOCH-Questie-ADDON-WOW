@@ -26,6 +26,7 @@ local GetQuestGreenRange = GetQuestGreenRange
 local yield = coroutine.yield
 local tinsert = table.insert
 local NewThread = ThreadLib.ThreadSimple
+local bitband = bit.band
 
 local QUESTS_PER_YIELD = 24
 

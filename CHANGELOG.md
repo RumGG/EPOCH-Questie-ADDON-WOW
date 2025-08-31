@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.67] - 2024-08-31
+
+### Fixed
+- **Critical Lua error with bitband function**
+  - Fixed "attempt to call global 'bitband' (a nil value)" error
+  - Added missing bitband imports to AvailableQuests.lua and QuestieQuest.lua
+  - Resolves error when accepting quests
+
 ## [1.0.66] - 2024-08-31
 
 ### Fixed

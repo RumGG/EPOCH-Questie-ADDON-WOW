@@ -62,6 +62,7 @@ local pairs = pairs;
 local ipairs = ipairs;
 local yield = coroutine.yield
 local NewThread = ThreadLib.ThreadSimple
+local bitband = bit.band
 
 local NOP_FUNCTION = function()
 end
