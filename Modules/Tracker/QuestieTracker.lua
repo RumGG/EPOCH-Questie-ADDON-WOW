@@ -580,10 +580,9 @@ function QuestieTracker:SyncWatchedQuests()
         untrackedCount = untrackedCount + 1
     end
     
-    -- If we have many quests but very few untracked, something's wrong
-    -- This happens when the SavedVariables get corrupted or reset
-    -- Also check if untrackedCount is much less than questCount
-    if (questCount >= 20 and untrackedCount <= 5) or (questCount >= 10 and untrackedCount == 0) then
+    -- REMOVED: This logic was flawed - having all quests tracked is valid!
+    -- Only reset if we just loaded and have NO data at all
+    if false then  -- Disabled this broken reset logic
         Questie:Print("[DEBUG] Detected corrupted AutoUntrackedQuests state - resetting")
         Questie:Print("[DEBUG] Had", questCount, "quests but only", untrackedCount, "untracked")
         
