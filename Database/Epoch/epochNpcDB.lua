@@ -905,12 +905,11 @@ local epochNpcData = {
 
 -- Issue #82: Missing NPCs for Wetlands quests
 [45946] = {"Commander Strongborn",1910,1910,30,30,0,{[11]={{34.1,62.5}}},nil,11,nil,{27002},12,"A",nil,2},
-}
 
 -- Issue #91: NPCs for additional quests
-[2488] = {"Deeg",nil,nil,40,40,0,{[33]={{26.9,77.3}}},nil,33,nil,nil,0,"A","Quest Giver",0}
-[2498] = {"Crank Fizzlebub",nil,nil,43,43,0,{[33]={{27.1,77.2}}},nil,33,nil,nil,0,"A","Quest Giver",0}
-[2916] = {"Historian Karnik",nil,nil,43,43,0,{[1537]={{77.3,11.5}}},nil,1537,nil,nil,0,"A","Quest Giver",0}
+[2488] = {"Deeg",nil,nil,40,40,0,{[33]={{26.9,77.3}}},nil,33,nil,nil,0,"A","Quest Giver",0},
+[2498] = {"Crank Fizzlebub",nil,nil,43,43,0,{[33]={{27.1,77.2}}},nil,33,nil,nil,0,"A","Quest Giver",0},
+[2916] = {"Historian Karnik",nil,nil,43,43,0,{[1537]={{77.3,11.5}}},nil,1537,nil,nil,0,"A","Quest Giver",0},
 
 -- Issue #93: Wetlands and Duskwood NPCs
 [311] = {"Sven Yorgen",nil,nil,45,45,0,{[10]={{7.8,34.1}}},nil,10,nil,nil,0,"A","Quest Giver",0} -- Duskwood
