@@ -571,7 +571,7 @@ function QuestieTracker:SyncWatchedQuests()
     -- Mark sync as complete
     QuestieTracker._alreadySynced = true
     QuestieTracker._hasEverSynced = true  -- Persistent flag for this session
-    Questie:Print("[TRACKING DEBUG] ========== SYNC COMPLETE ==========`)
+    Questie:Print("[TRACKING DEBUG] ========== SYNC COMPLETE ==========")
     
     -- If AutoUntrackedQuests has very few entries compared to quest log, 
     -- it's likely corrupted or not properly initialized
