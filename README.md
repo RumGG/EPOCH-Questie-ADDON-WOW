@@ -26,22 +26,28 @@ If you find this version of Questie with data collection helpful, consider [buyi
 
 **Not feeling up to it?** No problem! Just use Questie normally. `/qdc disable`
 
-## v1.0.64 - Latest Release
+## v1.0.67 - Latest Release
 
-### Major Database Architecture Overhaul
+### Critical Bug Fixes
 
-**Critical Fixes:**
-- **Eliminated WotLK database contamination!**
-  - No more phantom quests appearing in Classic zones
-  - Fixed incorrect NPC locations (Stormwind innkeeper now in correct spot)
-  - Prevents ~13,000 non-existent WotLK quests from showing
-  - Classic database now used as foundation with selective WotLK imports
+**Fixed:**
+- **Critical Lua error with bitband function**
+  - Fixed "attempt to call global 'bitband' (a nil value)" error that occurred when accepting quests
+  - Added missing bitband imports to AvailableQuests.lua and QuestieQuest.lua
+
+## v1.0.66
+
+### Map Icons & Quest Data
+
+**Fixed:**
+- **Map icons displaying correctly with borders**
+  - Icons now show properly with background borders for better visibility
+  - Reverted icon handling to stable version
 
 **New Content:**
-- **45+ new Epoch quests added** from community submissions
-  - Azshara's Legacy complete quest chain
-  - Multiple Dustwallow, Tanaris, and zone quests
-  - All data verified for accuracy
+- **11 new Epoch quests added** from GitHub issues #229-232
+  - Darkshore, Wetlands, Ashenvale, Hinterlands, Feralas, and Duskwood quests
+  - Added 9 corresponding NPCs with proper coordinates
 
 ## v1.0.63
 
