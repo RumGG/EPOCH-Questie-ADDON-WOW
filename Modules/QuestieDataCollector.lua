@@ -1001,12 +1001,18 @@ function QuestieDataCollector:OnQuestAccepted(questId)
             QuestieDataCollection.quests[questId].objectives = {}
         end
         
-        -- Capture quest giver data
+        -- Capture quest giver data (NPC or Object)
         if _lastQuestGiver and (time() - _lastQuestGiver.timestamp < 5) then
             QuestieDataCollection.quests[questId].questGiver = _lastQuestGiver
-            -- Quest giver captured
+            DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DATA] Quest Giver: " .. _lastQuestGiver.name .. 
+                " (NPC ID: " .. _lastQuestGiver.npcId .. ")|r", 0, 1, 0)
+        elseif _lastInteractedObject and (time() - _lastInteractedObject.timestamp < 5) then
+            -- Quest was accepted from an object (wanted poster, book, etc.)
+            QuestieDataCollection.quests[questId].questStartObject = _lastInteractedObject
+            DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DATA] Quest Object: " .. _lastInteractedObject.name .. 
+                (_lastInteractedObject.id and " (Object ID: " .. _lastInteractedObject.id .. ")" or " (ID unknown)") .. "|r", 0, 1, 0)
         else
-            DebugMessage("|cFFFFFF00Tip: Target the quest giver when accepting to capture their location|r", 1, 1, 0)
+            DebugMessage("|cFFFFFF00Tip: Target/hover the quest giver when accepting to capture their location|r", 1, 1, 0)
         end
         
         -- Get quest details from log
@@ -2025,6 +2031,13 @@ function QuestieDataCollector:ExportQuest(questId)
             data.questGiver.name, data.questGiver.npcId, 
             data.questGiver.coords.x, data.questGiver.coords.y,
             data.questGiver.zone or "Unknown"), 0, 1, 0)
+    elseif data.questStartObject then
+        DEFAULT_CHAT_FRAME:AddMessage(string.format("Quest Object: %s%s at %.1f, %.1f in %s",
+            data.questStartObject.name, 
+            data.questStartObject.id and " (ID: " .. data.questStartObject.id .. ")" or " (ID unknown)",
+            data.questStartObject.coords and data.questStartObject.coords.x or 0,
+            data.questStartObject.coords and data.questStartObject.coords.y or 0,
+            data.questStartObject.zone or "Unknown"), 0, 1, 0)
     end
     
     -- Turn in info
@@ -2134,6 +2147,12 @@ function QuestieDataCollector:ShowTrackedQuests()
             DEFAULT_CHAT_FRAME:AddMessage(string.format("  Giver: %s (%d) at [%.1f, %.1f]", 
                 data.questGiver.name, data.questGiver.npcId, 
                 data.questGiver.coords.x, data.questGiver.coords.y), 0.7, 0.7, 0.7)
+        elseif data.questStartObject then
+            DEFAULT_CHAT_FRAME:AddMessage(string.format("  Object: %s%s at [%.1f, %.1f]", 
+                data.questStartObject.name,
+                data.questStartObject.id and " (" .. data.questStartObject.id .. ")" or " (ID unknown)",
+                data.questStartObject.coords and data.questStartObject.coords.x or 0,
+                data.questStartObject.coords and data.questStartObject.coords.y or 0), 0.7, 0.7, 0.7)
         elseif data.wasAlreadyAccepted then
             DEFAULT_CHAT_FRAME:AddMessage("  |cFFFF0000Quest Giver: MISSING (quest was already accepted)|r", 1, 0.5, 0)
         end
@@ -2629,6 +2648,14 @@ function QuestieDataCollector:GenerateExportText(questId, data, skipInstructions
         text = text .. "  NPC: " .. data.questGiver.name .. " (ID: " .. data.questGiver.npcId .. ")\n"
         text = text .. "  Location: [" .. data.questGiver.coords.x .. ", " .. data.questGiver.coords.y .. "]\n"
         text = text .. "  Zone: " .. data.questGiver.zone .. "\n\n"
+    elseif data.questStartObject then
+        text = text .. "QUEST START OBJECT:\n"
+        text = text .. "  Object: " .. data.questStartObject.name .. 
+            (data.questStartObject.id and " (ID: " .. data.questStartObject.id .. ")" or " (ID unknown)") .. "\n"
+        if data.questStartObject.coords then
+            text = text .. "  Location: [" .. data.questStartObject.coords.x .. ", " .. data.questStartObject.coords.y .. "]\n"
+        end
+        text = text .. "  Zone: " .. (data.questStartObject.zone or "Unknown") .. "\n\n"
     end
     
     if data.objectives and #data.objectives > 0 then
@@ -2792,11 +2819,19 @@ function QuestieDataCollector:GenerateExportText(questId, data, skipInstructions
     text = text .. "DATABASE ENTRIES:\n"
     text = text .. "-- Add to epochQuestDB.lua:\n"
     
-    local questGiver = data.questGiver and "{{" .. data.questGiver.npcId .. "}}" or "nil"
+    -- Determine quest starter (NPC or Object)
+    local questStarter = "nil"
+    if data.questGiver then
+        questStarter = "{{" .. data.questGiver.npcId .. "}}"
+    elseif data.questStartObject and data.questStartObject.id then
+        -- Object quest starters go in the third element of startedBy
+        questStarter = "{nil,nil,{" .. data.questStartObject.id .. "}}"
+    end
+    
     local turnIn = data.turnInNpc and "{{" .. data.turnInNpc.npcId .. "}}" or "nil"
     
     text = text .. string.format('[%d] = {"%s",%s,%s,nil,%d,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil},\n\n',
-        questId, data.name or "Unknown", questGiver, turnIn, data.level or 1)
+        questId, data.name or "Unknown", questStarter, turnIn, data.level or 1)
     
     if data.questGiver then
         text = text .. "-- Add to epochNpcDB.lua:\n"
@@ -2809,6 +2844,14 @@ function QuestieDataCollector:GenerateExportText(questId, data, skipInstructions
         text = text .. string.format('[%d] = {"%s",nil,nil,%d,%d,0,{[85]={{%.1f,%.1f}}},nil,85,nil,{%d},nil,nil,nil,0},\n',
             data.turnInNpc.npcId, data.turnInNpc.name, data.level or 1, data.level or 1,
             data.turnInNpc.coords.x, data.turnInNpc.coords.y, questId)
+    end
+    
+    if data.questStartObject and data.questStartObject.id then
+        text = text .. "\n-- Add to epochObjectDB.lua:\n"
+        local coords = data.questStartObject.coords or {x=0, y=0}
+        text = text .. string.format('[%d] = {"%s",{[85]={{%.1f,%.1f}}},{%d}},\n',
+            data.questStartObject.id, data.questStartObject.name, 
+            coords.x, coords.y, questId)
     end
     
     return text

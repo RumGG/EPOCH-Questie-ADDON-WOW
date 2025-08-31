@@ -1,8 +1,12 @@
 # Changelog
 
-## [Unreleased]
+## [1.0.70] - 2024-08-31
 
 ### Added
+- **Object ID capture for quest-starting objects (wanted posters, books, etc.)**
+  - Data collector now captures object IDs when accepting quests from interactable objects
+  - Export format includes object quest starters with proper database entries
+  - Displays object information in quest tracking and export windows
 - **28 new Epoch quests from GitHub issues #238-261**
   - Complete quest data for The Handmaiden's Fall chain (26714, 26715)
   - Multiple "Fit For A King" quests with different objectives

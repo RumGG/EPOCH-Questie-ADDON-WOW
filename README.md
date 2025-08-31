@@ -11,6 +11,16 @@ If you find this version of Questie with data collection helpful, consider [buyi
 
 ---
 
+## v1.0.70 - Object Quest Giver Support!
+
+### New Features
+- **Object ID Capture for Quest-Starting Objects**
+  - Automatically captures object IDs when accepting quests from wanted posters, books, signs, etc.
+  - Export format now includes proper object database entries
+  - Shows object information in quest tracking displays
+
+---
+
 ### 📝 Want to Help? Easy Data Collection!
 
 **⚠️ IMPORTANT: Only submit data collected with Questie v1.0.63 or newer!**

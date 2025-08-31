@@ -1,0 +1,4 @@
+NPC ID Changes
+========================================
+Line 1039: NPC 46153 'Shadowhide Brute' → 48168
+Line 867: NPC 48211 'Scout Morgria' → 48169
