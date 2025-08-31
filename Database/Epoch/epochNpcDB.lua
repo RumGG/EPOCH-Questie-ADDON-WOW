@@ -1119,6 +1119,10 @@ epochNpcData[5335] = {"Razormane Thornweaver",nil,nil,10,11,0,{[17]={{43.0,51.0}
 -- Elwynn Forest NPC for quest 28350 (GitHub #242)
 epochNpcData[14033] = {"Marshal Haggard",nil,nil,25,25,0,{[12]={{84.1,36.6}}},nil,12,nil,{28350},1,"A",nil,0} -- Elwynn Forest: Commission turn-in at Eastvale Logging Camp
 
+-- Darnassus/Westfall NPCs for quest 26597 (GitHub #246)
+epochNpcData[7740] = {"Old Man Thistle",2718,2718,55,55,0,{[1657]={{42.3,85.4}}},nil,1657,{26597},{26597},80,"A",nil,2} -- Darnassus: Quest giver/turn-in (Note: Classic DB has this as Gracina Spiritmight)
+epochNpcData[7053] = {"Klaven Mortwake",3000,3000,26,26,1,{[40]={{70.5,73.7}}},nil,40,nil,nil,27,"H",nil,0} -- Westfall: Kill target for quest
+
 -- The Barrens NPCs for quest 26918 (GitHub #243)
 epochNpcData[3615] = {"Kodo Wrangler Grish",nil,nil,10,10,0,{[17]={{52.3,31.9}}},nil,17,{26918},{26918},1,"H",nil,0} -- The Barrens: Quest giver/turn-in for Plainstrider Menace
 epochNpcData[3244] = {"Greater Plainstrider",nil,nil,9,10,0,{[17]={{49.6,21.9},{48.7,22.7},{48.2,22.0},{47.6,21.3},{46.9,20.8},{46.0,23.3},{45.7,25.0},{46.8,27.1},{47.0,29.3},{48.3,31.8},{49.9,34.0},{50.0,36.2},{50.2,38.3},{49.9,41.4},{49.3,43.9},{48.6,46.0},{47.6,48.2},{46.9,50.4},{46.3,52.6},{46.2,55.4},{46.0,57.3},{45.8,60.1},{45.9,61.9},{45.9,64.1}}},nil,17,nil,nil,1,"H",nil,0} -- The Barrens: Loot target

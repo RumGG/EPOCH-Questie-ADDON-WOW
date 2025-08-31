@@ -610,5 +610,8 @@ epochQuestData[26918] = {"Plainstrider Menace",{{3615}},{{3615}},nil,10,nil,nil,
 -- Stormwind/Elwynn: Commission for Marshal Haggard (GitHub #242)
 epochQuestData[28350] = {"Commission for Marshal Haggard",{{5484}},{{14033}},nil,25,nil,nil,{"Deliver the commission to Marshal Haggard at Eastvale Logging Camp."},nil,nil,nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Stormwind quest giver, Elwynn turn-in
 
+-- Darnassus/Westfall: An Old Man's Request (GitHub #246)
+epochQuestData[26597] = {"An Old Man's Request",{{7740}},{{7740}},nil,26,nil,nil,{"Bring the head of Klaven Mortwake to Old Man Thistle in Darnassus."},nil,{{{7053,nil}},nil,{{30832,nil,"Klaven Mortwake's Head"}}},nil,nil,nil,nil,nil,nil,40,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Kill quest from Darnassus to Westfall
+
 -- Stage the Epoch questData for later merge during compilation
 QuestieDB._epochQuestData = epochQuestData
