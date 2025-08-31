@@ -269,11 +269,16 @@ end
 
 function QuestieMenu.buildTownsfolkMenu()
     local townsfolkMenu = {}
+    local addedKeys = {} -- Track which keys we've already added to prevent duplicates
+    
     for key in pairs(Questie.db.global.townsfolk) do
         tinsert(townsfolkMenu, build(key))
+        addedKeys[key] = true
     end
     for key in pairs(Questie.db.char.townsfolk) do
-        tinsert(townsfolkMenu, build(key))
+        if not addedKeys[key] then -- Only add if not already in menu
+            tinsert(townsfolkMenu, build(key))
+        end
     end
     return townsfolkMenu
 end
