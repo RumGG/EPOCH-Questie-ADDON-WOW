@@ -3,7 +3,7 @@
 ## [1.0.69] - 2024-08-31
 
 ### Added
-- **New Epoch quests from GitHub issues #242-244, #246**
+- **New Epoch quests from GitHub issues #241-244, #246**
   - The Barrens: Exterminate the Brutes (26856)
     - Added quest giver Ko'gar the Thunderer and target mobs (Razormane Hunters, Thornweavers, and Defenders)
   - The Barrens: Plainstrider Menace (26918)
@@ -16,6 +16,15 @@
     - Quest giver/turn-in: Old Man Thistle in Darnassus
     - Kill target: Klaven Mortwake in Westfall
     - Note: NPC 7740 is Gracina Spiritmight in Classic but renamed for Epoch
+  - Eastern Plaguelands: Into the Scarlet Enclave (28905 - originally 26769)
+    - Quest giver/turn-in: Knight-Commander Entari
+    - Kill 12 Scarlet mobs in the Scarlet Enclave
+    - Note: Changed to ID 28905 due to duplicate quest ID conflict
+
+### Fixed
+- **Duplicate quest ID issue**
+  - Quest 26769 was defined twice (Gnarlier Than Thou and Just Desserts)
+  - Moved "Just Desserts" part 1 to ID 28904 to resolve conflict
 
 ## [1.0.68] - 2024-08-31
 

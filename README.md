@@ -31,11 +31,13 @@ If you find this version of Questie with data collection helpful, consider [buyi
 ### New Quest Data
 
 **Added:**
-- **New Epoch quests from GitHub issues #242-244, #246**
+- **New Epoch quests from GitHub issues #241-244, #246**
   - The Barrens: Exterminate the Brutes (26856) - Kill Razormane mobs
   - The Barrens: Plainstrider Menace (26918) - Collect Greater Plainstrider Beaks
   - Stormwind/Elwynn: Commission for Marshal Haggard (28350) - Delivery quest
   - Darnassus/Westfall: An Old Man's Request (26597) - Kill Klaven Mortwake
+  - Eastern Plaguelands: Into the Scarlet Enclave (28905) - Kill Scarlet mobs
+- **Fixed duplicate quest ID conflicts**
 
 ## v1.0.68
 

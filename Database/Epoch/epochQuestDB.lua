@@ -409,8 +409,8 @@ epochQuestData[26781] = {"Linus Stone Tips",{{328}},{{328}},nil,5,nil,nil,{"Coll
 -- Issue #104: Elwynn Forest (continued)
 epochQuestData[26689] = {"Barroom Blitz",{{240}},{{240}},nil,12,nil,nil,{"Deal with the barroom troublemakers."},nil,nil,nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26768] = {"Just Desserts",{{45773}},{{45773}},nil,8,nil,nil,{"Collect 5 Mild Spices, 5 Simple Flour, 1 Salt, and 20 Mana Berries."},nil,{nil,nil,{{2678,"Mild Spices",5},{30817,"Simple Flour",5},{2901,"Salt",1},{62823,"Mana Berry",20}}},nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
-epochQuestData[26769] = {"Just Desserts",{{45773}},{{45773}},nil,8,nil,nil,{"Collect Mana Tainted Sludge."},nil,nil,nil,nil,{26768},{26770},nil,nil,12,nil,nil,nil,nil,26770,8,0,26768,nil,nil,nil,nil,nil}
-epochQuestData[26770] = {"Just Desserts",{{45773}},{{313}},nil,8,nil,nil,{"Present Sarah's cake to Theocritus."},nil,nil,nil,nil,{26769},nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,26769,nil,nil,nil,nil,nil}
+epochQuestData[28904] = {"Just Desserts",{{45773}},{{45773}},nil,8,nil,nil,{"Collect Mana Tainted Sludge."},nil,nil,nil,nil,{26768},{26770},nil,nil,12,nil,nil,nil,nil,26770,8,0,26768,nil,nil,nil,nil,nil} -- Changed from 26769 to avoid duplicate
+epochQuestData[26770] = {"Just Desserts",{{45773}},{{313}},nil,8,nil,nil,{"Present Sarah's cake to Theocritus."},nil,nil,nil,nil,{28904},nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,28904,nil,nil,nil,nil,nil} -- Updated reference to 28904
 epochQuestData[26771] = {"Lost Equipment",{{45777}},{{45774}},nil,9,nil,nil,{"Collect 8 Mining Equipment."},nil,{nil,nil,{{62824,"Mining Equipment",8}}},nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26775] = {"Tend to the Wounded",{{45775}},{{45775}},nil,10,nil,nil,{"Cure 5 Poisoned Miners."},nil,{{{60800,5,"Poisoned Miners cured"}}},nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26794] = {"Wanted: Big Blue",{nil,{45797}},{{45798}},nil,8,nil,nil,{"Slay Big Blue and collect the bounty."},nil,{{{60799,"Big Blue"}}},nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
@@ -612,6 +612,9 @@ epochQuestData[28350] = {"Commission for Marshal Haggard",{{5484}},{{14033}},nil
 
 -- Darnassus/Westfall: An Old Man's Request (GitHub #246)
 epochQuestData[26597] = {"An Old Man's Request",{{7740}},{{7740}},nil,26,nil,nil,{"Bring the head of Klaven Mortwake to Old Man Thistle in Darnassus."},nil,{{{7053,nil}},nil,{{30832,nil,"Klaven Mortwake's Head"}}},nil,nil,nil,nil,nil,nil,40,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Kill quest from Darnassus to Westfall
+
+-- Eastern Plaguelands: Into the Scarlet Enclave (GitHub #241)
+epochQuestData[28905] = {"Into the Scarlet Enclave",{{28945}},{{28945}},nil,58,nil,nil,{"Travel to the Scarlet Enclave in Eastern Plaguelands and kill 12 Scarlet mobs."},nil,{{{25584,12,"Scarlet mobs"}}},nil,nil,nil,nil,nil,nil,139,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Note: Used ID 28905 instead of 26769 due to duplicate
 
 -- Stage the Epoch questData for later merge during compilation
 QuestieDB._epochQuestData = epochQuestData
