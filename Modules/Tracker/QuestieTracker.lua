@@ -287,23 +287,7 @@ function QuestieTracker.Initialize()
                     Questie.db.char.AutoUntrackedQuests = {}
                 end
                 
-                -- If AutoUntrackedQuests is empty on login, populate it
-                -- All quests NOT in tempQuestIDs should be untracked
-                if not next(Questie.db.char.AutoUntrackedQuests) and questLogCount > 0 then
-                    Questie:Print("[DEBUG] AutoUntrackedQuests is empty, populating from quest log")
-                    local watchedQuests = {}
-                    for _, qid in pairs(tempQuestIDs) do
-                        watchedQuests[qid] = true
-                    end
-                    
-                    -- Mark all quests NOT watched as untracked
-                    for questId in pairs(QuestiePlayer.currentQuestlog) do
-                        if not watchedQuests[questId] then
-                            Questie.db.char.AutoUntrackedQuests[questId] = true
-                            Questie:Print("[DEBUG] Marking quest", questId, "as untracked (not in Blizzard watch)")
-                        end
-                    end
-                end
+                -- Removed broken code that referenced undefined tempQuestIDs variable
                 
                 -- Now clean up AutoUntrackedQuests
                 Questie:Print("[DEBUG] Cleaning up AutoUntrackedQuests, questLogCount:", questLogCount)
