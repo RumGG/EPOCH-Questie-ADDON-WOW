@@ -8,6 +8,7 @@ epochQuestData[26766] = {"The Warging Way",{{46292}},{{46292}},nil,58,nil,nil,{"
 epochQuestData[26767] = {"Like Fish In A Barrel",{{46292}},{{46292}},nil,58,nil,nil,{"Kill Howling Keena, Gnash, and Rogan Thunderhorn."},nil,{{{46375,nil},{46376,nil},{46377,nil}}},nil,nil,nil,nil,nil,nil,1497,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26768] = {"Barrel Down",{{46292}},{{46292}},nil,58,nil,nil,{"Destroy the Worgen explosives."},nil,{nil,{{187980,nil},{187981,nil},{187982,nil}}},nil,nil,nil,nil,nil,nil,1497,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26769] = {"Gnarlier Than Thou",{{46292}},{{46292}},nil,59,nil,nil,{"Slay the Old Gnarled Root."},nil,{{{46379,nil}}},nil,nil,nil,nil,nil,nil,1497,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26770] = {"[Epoch] Quest 26770",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26771] = {"The High Isle of Fel High Elves",{{46293}},{{46293}},nil,60,nil,nil,{"Kill 15 Fel High Elves and collect 5 books: Book of Lost Souls, Book of Dark Magic, Book of Forbidden Knowledge, Book of Elven Torture, and Book of Deadly Poisons."},nil,{{{46381,nil},{46382,nil},{46383,nil},{46384,nil},{46385,nil},{46386,nil}},nil,{{62836,nil},{62837,nil},{62838,nil},{62839,nil},{62840,nil}}},nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26772] = {"Necromancy and You",{{46294}},{{46294}},nil,60,nil,nil,{"Kill 15 Undead and the Necromancer Overlord in the cave on High Isle."},nil,{{{46387,nil},{46388,nil},{46389,nil},{46390,nil}}},nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26773] = {"[Epoch] Quest 26773",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
@@ -15,7 +16,9 @@ epochQuestData[26773] = {"[Epoch] Quest 26773",nil,nil,nil,nil,nil,nil,nil,nil,n
 -- Restored original Elwynn Forest starter quests (were overwritten by Fel Elf quest which is now at 28768)
 epochQuestData[26776] = {"Swiftpaw",{{11940}},{{11940}},4,6,77,nil,{"Bring Swiftpaw's Snout to Merissa Stilwell outside Northshire Abbey."},nil,{nil,nil,{{60388,nil}}},nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26777] = {"The Soaked Barrel",{nil,{4000007}},nil,1,1,77,nil,{"Find someone in Northshire Abbey who may know the owner of the barrel."},nil,nil,nil,nil,nil,nil,nil,nil,12,nil,nil,nil,{60021},26778,nil,1,nil,nil,nil,nil,nil,nil}
+epochQuestData[26778] = {"[Epoch] Quest 26778",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26779] = {"The Demon of the Grove",{{6778},{1377}},{{6778}},nil,11,nil,nil,{"Kill Melanas and bring Melanas' Head to Melika Isenstrider in Darnassus."},nil,{{{2038,nil}},nil,{{5221,nil}}},nil,nil,{927},nil,nil,nil,141,nil,nil,nil,nil,nil,8,0,927,nil,nil,nil,nil,nil}
+epochQuestData[26780] = {"[Epoch] Quest 26780",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 
 -- Issue #86: The Argus Wake questline (Desolace)
 epochQuestData[26529] = {"The Argus Wake",{{45527}},{{45527}},nil,42,nil,nil,{"Felicity Perenolde wants you to acquire 10 Pinches of Bone Marrow from the skeletons in the Kodo Graveyard."},nil,{nil,nil,{{62691,nil}}},nil,nil,nil,{26530},nil,nil,405,nil,nil,nil,nil,26530,8,0,nil,nil,nil,nil,nil,nil} -- Desolace quest
@@ -33,6 +36,7 @@ epochQuestData[26938] = {"[Epoch] Quest 26938",nil,nil,nil,nil,nil,nil,nil,nil,n
 epochQuestData[26939] = {"Forging the Way",{{10299}},{{10299}},nil,39,nil,nil,{"Collect 6 Gnome Artificial Arms from Rogue Gnome Artificers and bring them to Keeper Ordanus in Stonetalon Mountains."},nil,{{{45807,nil},{45809,nil}},nil,{{62994,nil}}},nil,nil,nil,nil,nil,nil,406,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26940] = {"[Epoch] Quest 26940",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26941] = {"[Epoch] Quest 26941",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26942] = {"[Epoch] Quest 26942",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 
 -- Issue #61: Scholomance Academy questline - Western Plaguelands
 epochQuestData[26963] = {"[Epoch] Quest 26963",{{46322}},{{46322}},nil,53,nil,nil,nil,nil,{{{46323,nil},{46329,nil},{46326,nil},{46327,nil}}},nil,nil,nil,{26964},nil,nil,28,nil,nil,nil,nil,26964,8,0,nil,nil,nil,nil,nil,nil}
@@ -78,6 +82,7 @@ epochQuestData[26370] = {"Call to Skirmish: Alterac Mountains",nil,nil,nil,35,ni
 epochQuestData[26372] = {"Call to Skirmish: Desolace",nil,nil,nil,35,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,405,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Desolace
 epochQuestData[26374] = {"Call to Skirmish: Arathi Highlands",nil,nil,nil,35,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,45,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Arathi Highlands
 epochQuestData[27244] = {"Drysnap Delicacy",nil,nil,nil,35,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,17,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Barrens (Drysnap creatures are in the Barrens)
+epochQuestData[27273] = {"[Epoch] Quest 27273",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[28501] = {"[Epoch] Quest 28501",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 
 -- Issue #75: Springsocket commission quests - Barrens
@@ -536,19 +541,37 @@ epochQuestData[26713] = {"Life In Death",{{45731}},{{45731}},nil,25,nil,nil,nil,
 epochQuestData[27420] = {"Two-Legged Vultures",{{7771}},{{7771}},nil,45,nil,nil,{"Collect Marvon's Pocket Watch, Marvon's Brimmed Hat, and Marvon's Ham Radio."},nil,{nil,nil,{{63284,1,"Marvon's Pocket Watch"},{63285,1,"Marvon's Brimmed Hat"},{63286,1,"Marvon's Ham Radio"}}},nil,nil,nil,nil,nil,nil,440,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Tanaris: Quest giver and turn-in: Marvon Rivetseeker (7771)
 
 -- Issues #198 and #209: Missing quest placeholders
+epochQuestData[26126] = {"[Epoch] Quest 26126",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26277] = {"[Epoch] Quest 26277",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26282] = {"[Epoch] Quest 26282",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26288] = {"[Epoch] Quest 26288",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26292] = {"[Epoch] Quest 26292",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26332] = {"[Epoch] Quest 26332",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26503] = {"[Epoch] Quest 26503",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26504] = {"[Epoch] Quest 26504",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 -- epochQuestData[26505] placeholder removed - quest already exists with complete data
 epochQuestData[26506] = {"[Epoch] Quest 26506",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26516] = {"[Epoch] Quest 26516",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26518] = {"[Epoch] Quest 26518",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26519] = {"Felicity's Deciphering",{{6768}},{{45526}},nil,40,nil,nil,{"Take the Ensorcelled Parchment to Felicity for deciphering."},nil,nil,nil,nil,nil,nil,nil,nil,36,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Issue #184: Alterac Mountains - Lord Jorach Ravenholdt to Felicity
 epochQuestData[26520] = {"[Epoch] Quest 26520",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26537] = {"[Epoch] Quest 26537",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26540] = {"[Epoch] Quest 26540",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26541] = {"[Epoch] Quest 26541",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26542] = {"[Epoch] Quest 26542",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26543] = {"[Epoch] Quest 26543",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26570] = {"[Epoch] Quest 26570",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26577] = {"[Epoch] Quest 26577",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26580] = {"[Epoch] Quest 26580",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26582] = {"[Epoch] Quest 26582",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[26594] = {"[Epoch] Quest 26594",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26802] = {"[Epoch] Quest 26802",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[26817] = {"[Epoch] Quest 26817",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[27074] = {"[Epoch] Quest 27074",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[27075] = {"[Epoch] Quest 27075",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[27080] = {"[Epoch] Quest 27080",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27081] = {"[Epoch] Quest 27081",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[27082] = {"[Epoch] Quest 27082",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[27083] = {"[Epoch] Quest 27083",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[27084] = {"[Epoch] Quest 27084",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[27114] = {"[Epoch] Quest 27114",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
@@ -568,7 +591,9 @@ epochQuestData[27153] = {"[Epoch] Quest 27153",nil,nil,nil,nil,nil,nil,nil,nil,n
 epochQuestData[27163] = {"[Epoch] Quest 27163",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[27164] = {"[Epoch] Quest 27164",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[28072] = {"[Epoch] Quest 28072",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[28077] = {"[Epoch] Quest 28077",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 epochQuestData[28483] = {"[Epoch] Quest 28483",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
+epochQuestData[28535] = {"[Epoch] Quest 28535",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}
 -- Issue #213: Three Dun Morogh G.E.A.R. quests (reassigned IDs due to conflicts)
 epochQuestData[28901] = {"Shift into G.E.A.R.",{{46836}},{{46836}},nil,1,nil,nil,{"Kill 10 Underfed Troggs."},nil,{{{46837,10,"Underfed Trogg"}}},nil,nil,nil,nil,nil,nil,1,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Dun Morogh: Tinker Captain Whistlescrew (originally 28725)
 epochQuestData[28902] = {"No Room for Sympathy",{{46836}},{{46836}},nil,2,nil,nil,{"Kill 8 Irradiated Oozes and 4 Infected Gnomes."},nil,{{{46839,8,"Irradiated Ooze"},{46838,4,"Infected Gnome"}}},nil,nil,nil,nil,nil,nil,1,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Dun Morogh: Tinker Captain Whistlescrew (originally 28726)
