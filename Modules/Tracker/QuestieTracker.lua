@@ -207,8 +207,13 @@ function QuestieTracker.Initialize()
     -- cases where Questie loads too fast before everything else is available.
     -- IMPORTANT: This must run AFTER QuestieQuest:GetAllQuestIds() populates currentQuestlog
     
-    -- Try immediate sync first
-    C_Timer.After(0.1, function()
+    -- Delay sync until quest log is populated
+    -- Try multiple times to catch the quest log when it's ready
+    C_Timer.After(0.5, function()
+        QuestieTracker:SyncWatchedQuests()
+    end)
+    
+    C_Timer.After(1.0, function()
         QuestieTracker:SyncWatchedQuests()
     end)
 
@@ -253,9 +258,13 @@ function QuestieTracker.Initialize()
             -- Sync and populate the QuestieTracker - this should only run when a player has loaded
             -- Questie for the first time or when Re-enabling the QuestieTracker after it's disabled.
 
-            -- Sync is now done in a separate function that can be called multiple times
-            -- Try to sync again here in case the first attempt failed
+            -- Final sync attempt after everything is loaded
             QuestieTracker:SyncWatchedQuests()
+            
+            -- One more attempt a bit later
+            C_Timer.After(1.0, function()
+                QuestieTracker:SyncWatchedQuests()
+            end)
 
             -- Look for any QuestID's that don't belong in the Questie.db.char.TrackedQuests or
             -- the Questie.db.char.AutoUntrackedQuests tables. They can get out of sync.
@@ -394,6 +403,7 @@ function QuestieTracker:SyncWatchedQuests()
     end
     
     if not QuestiePlayer.currentQuestlog then
+        Questie:Print("[DEBUG] SyncWatchedQuests: Quest log not ready")
         return -- Quest log not ready yet
     end
     
@@ -401,6 +411,17 @@ function QuestieTracker:SyncWatchedQuests()
     local questCount = 0
     for _ in pairs(QuestiePlayer.currentQuestlog) do
         questCount = questCount + 1
+    end
+    
+    -- Also check actual quest log entries
+    local actualQuestCount = select(2, GetNumQuestLogEntries()) or 0
+    
+    Questie:Print("[DEBUG] SyncWatchedQuests: QuestiePlayer has", questCount, "quests, Blizzard has", actualQuestCount)
+    
+    -- If QuestiePlayer has significantly fewer quests than Blizzard, it's not ready
+    if actualQuestCount > 10 and questCount < (actualQuestCount * 0.5) then
+        Questie:Print("[DEBUG] Quest log not fully populated yet, will retry")
+        return
     end
     
     if questCount == 0 then
@@ -435,13 +456,17 @@ function QuestieTracker:SyncWatchedQuests()
     
     -- If we have many quests but very few untracked, something's wrong
     -- This happens when the SavedVariables get corrupted or reset
-    if questCount >= 20 and untrackedCount <= 5 then
+    -- Also check if untrackedCount is much less than questCount
+    if (questCount >= 20 and untrackedCount <= 5) or (questCount >= 10 and untrackedCount == 0) then
         Questie:Print("[DEBUG] Detected corrupted AutoUntrackedQuests state - resetting")
+        Questie:Print("[DEBUG] Had", questCount, "quests but only", untrackedCount, "untracked")
         -- Mark all quests as untracked initially
         for questId in pairs(QuestiePlayer.currentQuestlog) do
             Questie.db.char.AutoUntrackedQuests[questId] = true
         end
         Questie:Print("[DEBUG] Reset AutoUntrackedQuests - all", questCount, "quests marked as untracked")
+    else
+        Questie:Print("[DEBUG] AutoUntrackedQuests state looks OK:", untrackedCount, "untracked out of", questCount, "total")
     end
     
     QuestieTracker._alreadySynced = true
