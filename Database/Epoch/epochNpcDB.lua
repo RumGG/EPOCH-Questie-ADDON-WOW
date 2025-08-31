@@ -1078,7 +1078,7 @@ epochNpcData[7867] = {"Thorkaf Dragoneye",nil,nil,60,60,0,{[3]={{62.6,57.5}}},ni
 
 -- Issues #167, #169: Various NPCs
 epochNpcData[2276] = {"Magistrate Henry Maleb",nil,nil,36,36,0,{[267]={{48.1,59.2}}},nil,267,{26505,26516},nil,1,"A",nil,0} -- Hillsbrad Foothills
-epochNpcData[2378] = {"Kundric Zanden",nil,nil,40,40,0,{[267]={{48.7,59.1}}},nil,267,{26538},{26505},1,"A",nil,0} -- Hillsbrad Foothills  
+epochNpcData[2378] = {"Kundric Zanden",nil,nil,40,40,0,{[267]={{48.7,59.1}}},nil,267,{26538},{26505,26817},1,"A",nil,0} -- Hillsbrad Foothills, Issue #265: Added quest 26817 turn-in  
 epochNpcData[2278] = {"Melisara",nil,nil,40,40,0,{[267]={{62.5,20.5}}},nil,267,nil,{26537},8,"H",nil,0} -- Hillsbrad Foothills
 
 -- Issues #163, #164, #166: NPCs for new quests
