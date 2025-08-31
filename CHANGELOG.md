@@ -11,8 +11,10 @@
   - questsWatched was being captured at file load time instead of during initialization
   - Tracker sync was running before QuestiePlayer.currentQuestlog was populated
   - AutoUntrackedQuests cleanup was removing valid quests due to empty quest log
-  - Now waits 2 seconds and checks if quest log is populated before cleanup
+  - Removed erroneous trackerBaseFrame:Hide() that was hiding tracker after init
+  - Now waits 1.5 seconds and checks if quest log is populated before cleanup
   - Fixes issue where quests couldn't be manually tracked after login
+  - Fixes tracker disappearing completely after initialization
 - **Removed debug output from database initialization**
   - Cleaned up temporary debug logging from QuestieInit.lua
 

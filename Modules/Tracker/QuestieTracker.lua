@@ -206,9 +206,8 @@ function QuestieTracker.Initialize()
     -- Insures all other data we're getting from other addons and WoW is loaded. There are edge
     -- cases where Questie loads too fast before everything else is available.
     -- IMPORTANT: This must run AFTER QuestieQuest:GetAllQuestIds() populates currentQuestlog
-    -- On initial login, we need to wait longer for the quest log to be populated
 
-    C_Timer.After(2.0, function()
+    C_Timer.After(1.5, function()
         -- Hide frames during startup
         if QuestieTracker.alreadyHooked then
             if Questie.db.profile.stickyDurabilityFrame then DurabilityFrame:Hide() end
@@ -360,7 +359,7 @@ function QuestieTracker.Initialize()
 
             if QuestLogFrame:IsShown() then QuestLog_Update() end
             QuestieTracker:Update()
-            trackerBaseFrame:Hide()
+            -- Don't hide the tracker after initialization!
         end)
     end)
 end
