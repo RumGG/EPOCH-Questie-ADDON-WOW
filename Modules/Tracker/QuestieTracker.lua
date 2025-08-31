@@ -301,13 +301,14 @@ function QuestieTracker.Initialize()
                         local quest = QuestiePlayer.currentQuestlog[untrackedQuestId]
                         if quest and quest.__isRuntimeStub then
                             -- Runtime stub quests should be tracked by default when autoTrackQuests is on
-                            toRemove[untrackedQuestId] = true
-                            Questie:Debug(Questie.DEBUG_INFO, "[QuestieTracker] Re-tracking runtime stub quest:", untrackedQuestId)
-                        elseif untrackedQuestId >= 26000 then
-                            -- Epoch quests should also be tracked by default
-                            toRemove[untrackedQuestId] = true
-                            Questie:Debug(Questie.DEBUG_INFO, "[QuestieTracker] Re-tracking Epoch quest:", untrackedQuestId)
+                            -- BUT: Only re-track if this is the first time we're seeing this stub
+                            -- Users should still be able to manually untrack stub quests
+                            -- This is commented out to respect user choice
+                            -- toRemove[untrackedQuestId] = true
+                            Questie:Debug(Questie.DEBUG_INFO, "[QuestieTracker] Keeping runtime stub quest untracked per user choice:", untrackedQuestId)
                         end
+                        -- Removed automatic re-tracking of Epoch quests (>= 26000)
+                        -- Users should be able to untrack any quest they want
                     end
                 end
                 for questId in pairs(toRemove) do
