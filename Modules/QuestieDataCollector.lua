@@ -973,6 +973,9 @@ function QuestieDataCollector:OnQuestAccepted(questId)
         -- ALERT! Missing quest detected!
         local questTitle = QuestieCompat.GetQuestLogTitle(QuestieDataCollector:GetQuestLogIndexById(questId))
         
+        -- Debug: Show what's being tracked
+        DebugMessage(string.format("|cFF00FF00[DATA] Tracking quest %d: %s|r", questId, questTitle or "Unknown"), 0, 1, 0)
+        
         -- Silently track the quest without alert messages
         -- User requested to remove all printing
         
@@ -1062,6 +1065,9 @@ function QuestieDataCollector:OnQuestAccepted(questId)
         C_Timer.After(0.5, function()
             QuestieDataCollector:UpdateQuestObjectives(questId)
         end)
+    else
+        -- Quest not tracked - show why
+        DebugMessage(string.format("|cFFFFFF00[DATA] Quest %d not tracked (vanilla quest with complete data)|r", questId), 1, 1, 0)
     end
 end
 
@@ -2300,20 +2306,28 @@ end
 
 -- Export window for completed quests
 function QuestieDataCollector:ShowExportWindow(questId)
+    -- Ensure data structure exists
+    if not QuestieDataCollection then
+        QuestieDataCollection = {
+            quests = {},
+            version = 1,
+            sessionStart = date("%Y-%m-%d %H:%M:%S"),
+            enableDataCollection = Questie.db.profile.enableDataCollection or false
+        }
+    end
+    if not QuestieDataCollection.quests then
+        QuestieDataCollection.quests = {}
+    end
+    
     -- If no questId specified, show ALL quests
     if not questId then
         -- Check if we have any data at all
-        if not QuestieDataCollection or not QuestieDataCollection.quests or not next(QuestieDataCollection.quests) then
+        if not next(QuestieDataCollection.quests) then
             DebugMessage("|cFFFF0000[QUESTIE] No quest data to export. Complete some Epoch quests first!|r", 1, 0, 0)
             return
         end
     else
         -- Specific quest requested
-        if not QuestieDataCollection or not QuestieDataCollection.quests then
-            DebugMessage("|cFFFF0000[QUESTIE] No quest data available!|r", 1, 0, 0)
-            return
-        end
-        
         local data = QuestieDataCollection.quests[questId]
         if not data then 
             DebugMessage("|cFFFF0000[QUESTIE] No data for quest " .. questId .. "!|r", 1, 0, 0)
@@ -2488,10 +2502,12 @@ function QuestieDataCollector:ShowExportWindow(questId)
         purgeButton:SetHeight(25)
         purgeButton:SetText("|cFF00FF00Step 3:|r Close & Purge Data")
         purgeButton:SetScript("OnClick", function()
-            -- Clear ALL quest data from the saved variable
+            -- Clear ALL quest data from the saved variable but maintain structure
             _G.QuestieDataCollection = {
                 quests = {},
-                enableDataCollection = QuestieDataCollection and QuestieDataCollection.enableDataCollection or false
+                enableDataCollection = QuestieDataCollection and QuestieDataCollection.enableDataCollection or false,
+                version = 1,
+                sessionStart = date("%Y-%m-%d %H:%M:%S")
             }
             -- Also clear the local reference
             QuestieDataCollection = _G.QuestieDataCollection

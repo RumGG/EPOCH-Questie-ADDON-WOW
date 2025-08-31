@@ -1,0 +1,43 @@
+=== QUEST DATA PARSING SUMMARY ===
+Total quests parsed: 35
+Complete quests (with quest giver): 11
+Incomplete quests: 24
+
+COMPLETE QUESTS:
+  26185: Lard's Lost Beads (Level 50, The Hinterlands)
+  26293: Fit For A King (Level 45, Feralas)
+  26294: Fit For A King (Level 45, Feralas)
+  26295: Fit For A King (Level 45, Feralas)
+  27326: Dental Records (Level 49, Feralas)
+  27328: Dental Records (Level 49, Feralas)
+  27335: Wanted: Lost Ancient (Level 48, Feralas)
+  28722: The Darkspear Tribe (Level 1, Durotar)
+  28723: Thievin' Crabs (Level 2, Durotar)
+  28728: Glyphic Tablet (Level 1, Durotar)
+  28757: Banana Bonanza (Level 3, Durotar)
+
+INCOMPLETE QUESTS (need more data):
+  26169: Can't Make An Omelette Without... (Marked as incomplete)
+  26291: Troll Relics (Missing quest giver)
+  26296: Fit For A King (Missing quest giver)
+  26297: Fit For A King (Missing quest giver)
+  26478: Deep Earth Rune (Marked as incomplete)
+  26859: The Elements, Corrupted (Missing quest giver)
+  26860: The Grimesilt Digsite (Missing quest giver)
+  26862: The Shadowforge Librarian (Missing quest giver)
+  27069: A Piece of De Action (Missing quest giver)
+  27121: Spoils of De Ancient Land (Missing quest giver)
+  27142: The Shattered Strand Commander (Missing quest giver)
+  27148: The Winter Ahead (Missing quest giver)
+  27158: Threats to Valormok (Missing quest giver)
+  27322: Convincing the Denied (Missing quest giver)
+  27323: A Reflection of Death (Missing quest giver)
+  27324: Dead and Gone (Missing quest giver)
+  27325: Dental Records (Missing quest giver)
+  27327: Dental Records (Missing quest giver)
+  28743: A Tradesman's Tools (Marked as incomplete)
+  28758: Shell Collection (Marked as incomplete)
+  28759: Claws of the Cat (Marked as incomplete)
+  28760: Jinxed Trolls (Marked as incomplete)
+  28764: The Loa of Death (Marked as incomplete)
+  28765: Tidal Menace (Marked as incomplete)
