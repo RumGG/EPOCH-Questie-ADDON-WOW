@@ -31,9 +31,10 @@ If you find this version of Questie with data collection helpful, consider [buyi
 ### New Quest Data
 
 **Added:**
-- **New Epoch quests from GitHub issues #243-244**
+- **New Epoch quests from GitHub issues #242-244**
   - The Barrens: Exterminate the Brutes (26856) - Kill Razormane mobs
   - The Barrens: Plainstrider Menace (26918) - Collect Greater Plainstrider Beaks
+  - Stormwind/Elwynn: Commission for Marshal Haggard (28350) - Delivery quest
 
 ## v1.0.68
 

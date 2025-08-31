@@ -215,7 +215,7 @@ local epochNpcData = {
 [5480] = {"[Epoch] NPC 5480",1600,1800,40,40,0,{[1519]={{80.4,59.8}}},nil,1519,nil,nil,11,"A",nil,0},
 [5482] = {"[Epoch] NPC 5482",1400,1575,35,35,0,{[1519]={{78.2,53.1}}},nil,1519,nil,nil,11,"A",nil,0},
 [5483] = {"[Epoch] NPC 5483",1200,1350,30,30,0,{[1519]={{78.5,52.9}}},nil,1519,nil,nil,11,"A",nil,0},
-[5484] = {"[Epoch] NPC 5484",1600,1800,40,40,0,{[1519]={{50.6,44.5}}},nil,1519,nil,nil,11,"A",nil,0},
+[5484] = {"Brother Benjamin",1752,1752,40,40,0,{[1519]={{51.0,15.2}}},nil,1519,{28350},nil,12,"A","Priest",17}, -- Updated for Commission quest, coords near Cathedral
 [5489] = {"[Epoch] NPC 5489",2000,2250,50,50,0,{[1519]={{49.5,45.2}}},nil,1519,nil,nil,11,"A",nil,0},
 [5491] = {"[Epoch] NPC 5491",1600,1800,40,40,0,{[1519]={{49.6,49.8}}},nil,1519,nil,nil,11,"A",nil,0},
 [5492] = {"[Epoch] NPC 5492",2000,2250,50,50,0,{[1519]={{48.5,49.1}}},nil,1519,nil,nil,11,"A",nil,0},
@@ -1115,6 +1115,9 @@ epochNpcData[5410] = {"Ko'gar the Thunderer",nil,nil,10,10,0,{[17]={{63.9,54.5}}
 epochNpcData[5333] = {"Razormane Defender",nil,nil,10,11,0,{[17]={{43.0,51.0},{43.0,49.0},{42.0,50.0}}},nil,17,nil,nil,1,"H",nil,0} -- The Barrens: Kill target
 epochNpcData[5334] = {"Razormane Hunter",nil,nil,10,11,0,{[17]={{43.0,51.0},{43.0,49.0},{42.0,50.0}}},nil,17,nil,nil,1,"H",nil,0} -- The Barrens: Kill target
 epochNpcData[5335] = {"Razormane Thornweaver",nil,nil,10,11,0,{[17]={{43.0,51.0},{43.0,49.0},{42.0,50.0}}},nil,17,nil,nil,1,"H",nil,0} -- The Barrens: Kill target
+
+-- Elwynn Forest NPC for quest 28350 (GitHub #242)
+epochNpcData[14033] = {"Marshal Haggard",nil,nil,25,25,0,{[12]={{84.1,36.6}}},nil,12,nil,{28350},1,"A",nil,0} -- Elwynn Forest: Commission turn-in at Eastvale Logging Camp
 
 -- The Barrens NPCs for quest 26918 (GitHub #243)
 epochNpcData[3615] = {"Kodo Wrangler Grish",nil,nil,10,10,0,{[17]={{52.3,31.9}}},nil,17,{26918},{26918},1,"H",nil,0} -- The Barrens: Quest giver/turn-in for Plainstrider Menace

@@ -3,11 +3,15 @@
 ## [1.0.69] - 2024-08-31
 
 ### Added
-- **New Epoch quests from GitHub issues #243-244**
+- **New Epoch quests from GitHub issues #242-244**
   - The Barrens: Exterminate the Brutes (26856)
     - Added quest giver Ko'gar the Thunderer and target mobs (Razormane Hunters, Thornweavers, and Defenders)
   - The Barrens: Plainstrider Menace (26918)
     - Added quest giver Kodo Wrangler Grish and loot targets (Greater, Ornery, and Elder Plainstriders)
+  - Stormwind/Elwynn Forest: Commission for Marshal Haggard (28350)
+    - Quest giver: Brother Benjamin in Stormwind (coords adjusted from user data)
+    - Turn-in: Marshal Haggard at Eastvale Logging Camp
+    - Note: Corrected coordinate inconsistencies in submitted data
 
 ## [1.0.68] - 2024-08-31
 

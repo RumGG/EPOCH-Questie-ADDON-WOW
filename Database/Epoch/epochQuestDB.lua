@@ -607,5 +607,8 @@ epochQuestData[26856] = {"Exterminate the Brutes",{{5410}},{{5410}},nil,10,nil,n
 -- The Barrens: Plainstrider Menace (GitHub #243)
 epochQuestData[26918] = {"Plainstrider Menace",{{3615}},{{3615}},nil,10,nil,nil,{"Bring 10 Greater Plainstrider Beaks to Kodo Wrangler Grish."},nil,{nil,nil,{{21510,10,"Greater Plainstrider Beak"}}},nil,nil,nil,nil,nil,nil,17,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- The Barrens: Kodo Wrangler Grish
 
+-- Stormwind/Elwynn: Commission for Marshal Haggard (GitHub #242)
+epochQuestData[28350] = {"Commission for Marshal Haggard",{{5484}},{{14033}},nil,25,nil,nil,{"Deliver the commission to Marshal Haggard at Eastvale Logging Camp."},nil,nil,nil,nil,nil,nil,nil,nil,12,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil} -- Stormwind quest giver, Elwynn turn-in
+
 -- Stage the Epoch questData for later merge during compilation
 QuestieDB._epochQuestData = epochQuestData
