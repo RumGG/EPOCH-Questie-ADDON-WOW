@@ -22,6 +22,11 @@
 
 ## [Unreleased]
 
+### Fixed
+- **Map icons showing as colored dots instead of proper icons**
+  - Fixed icon texture conversion in QuestieMap that was showing icon type numbers as textures
+  - Restored proper sword (slay), sack (loot), and cog (object) icons on map
+
 ### Added
 - **11 new Epoch quests from GitHub issues #229-232**
   - Darkshore: The Twilight's Hammer (26202), Welcome to Auberdine (26203), Wanted: Grizzletooth (26208)

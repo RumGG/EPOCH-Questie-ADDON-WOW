@@ -505,7 +505,13 @@ function QuestieMap:DrawManualIcon(data, areaID, x, y, typ)
         return nil, nil
     end
     -- set the icon
-    local texture = data.Icon or "Interface\\WorldMap\\WorldMapPartyIcon"
+    local texture = data.Icon
+    -- Convert icon type number to texture path
+    if type(texture) == "number" and Questie.usedIcons[texture] then
+        texture = Questie.usedIcons[texture]
+    elseif not texture then
+        texture = "Interface\\WorldMap\\WorldMapPartyIcon"
+    end
     -- Save new zone ID format, used in QuestieFramePool
     -- create a list for all frames belonging to a NPC (id > 0) or an object (id < 0)
     typ = typ or "any"
