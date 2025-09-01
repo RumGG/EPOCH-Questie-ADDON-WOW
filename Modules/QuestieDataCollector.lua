@@ -368,6 +368,7 @@ function QuestieDataCollector:RegisterEvents()
     frame:RegisterEvent("BANKFRAME_CLOSED")
     frame:RegisterEvent("GUILDBANKFRAME_OPENED")
     frame:RegisterEvent("GUILDBANKFRAME_CLOSED")
+    frame:RegisterEvent("TAXIMAP_OPENED")
     
     -- XP tracking events
     frame:RegisterEvent("CHAT_MSG_COMBAT_XP_GAIN")
@@ -498,6 +499,9 @@ function QuestieDataCollector:OnEvent(event, ...)
         
     elseif event == "GUILDBANKFRAME_OPENED" then
         QuestieDataCollector:CaptureServiceNPC("guild_banker")
+        
+    elseif event == "TAXIMAP_OPENED" then
+        QuestieDataCollector:CaptureServiceNPC("flight_master")
         
     elseif event == "CHAT_MSG_COMBAT_XP_GAIN" then
         local message = ...
