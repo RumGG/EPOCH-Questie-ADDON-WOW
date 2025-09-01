@@ -8,21 +8,42 @@ body:
     attributes:
       label: Quest ID
       placeholder: e.g. 26505
+    validations:
+      required: true
   - type: input
     id: quest_name
     attributes:
       label: Quest Name
       placeholder: e.g. Letter to Ravenholdt
-  - type: input
-    id: questgiver_id
+    validations:
+      required: true
+  - type: dropdown
+    id: quest_type
     attributes:
-      label: Quest Giver NPC ID
-      placeholder: e.g. 8383
+      label: Quest Type
+      description: Is this a commission quest or regular quest?
+      options:
+        - Regular Quest
+        - Commission Quest
+        - Unknown
+    validations:
+      required: true
+  - type: textarea
+    id: qdc_export
+    attributes:
+      label: QuestieDataCollector Export
+      description: |
+        If you have QuestieDataCollector enabled, paste the output from `/qdc export <questId>` here.
+        This provides the most accurate quest data.
+      placeholder: |
+        Paste the complete output from /qdc export here...
   - type: textarea
     id: quest_data
     attributes:
-      label: Addon Data Snippet
-      description: Paste the quest entry in Questie-Epoch addon format.
+      label: Manual Quest Data (if no QDC export)
+      description: |
+        If you don't have QDC data, you can manually provide quest information in Questie format.
+        Include quest giver/finisher NPCs with IDs and coordinates if known.
       placeholder: |
         [QUEST_ID] = {
           [questKeys.name] = "QUEST_NAME",
@@ -30,6 +51,7 @@ body:
           [questKeys.finishedBy] = { {QUEST_ENDER_ID}, },
           [questKeys.requiredLevel] = LEVEL_REQ,
           [questKeys.questLevel] = LEVEL,
+          [questKeys.requiredSkill] = {PROFESSION_ID, SKILL_LEVEL}, -- For commission quests
           [questKeys.objectivesText] = {"..."},
           [questKeys.objectives] = {
             [objectiveKeys.npc] = { {NPC_ID, ZONE_ID, {X, Y}}, },
@@ -37,8 +59,19 @@ body:
             [objectiveKeys.object] = { {OBJECT_ID, ZONE_ID, {X, Y}}, },
           },
         },
+  - type: input
+    id: quest_chain
+    attributes:
+      label: Quest Chain Information
+      description: If this quest is part of a chain, provide previous/next quest IDs
+      placeholder: e.g. Previous: 26504, Next: 26506
   - type: textarea
     id: notes
     attributes:
-      label: Notes / Context
-      description: Any extra details (zone, screenshots, wowhead links, spawn coords).
+      label: Additional Notes
+      description: |
+        Any extra details such as:
+        - Zone where quest is given/completed
+        - Screenshots of quest text
+        - Wowhead or other database links
+        - Special requirements or conditions
