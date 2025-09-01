@@ -291,7 +291,7 @@ epochQuestData = {
 [27489] = {"Canyon Patrol",{{10428}},{{10428}},nil,27,nil,nil,{"Kill 8 Pesterhide Hyenas."},nil,nil,nil,nil,nil,nil,nil,nil,400,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}, -- Thousand Needles quest
 [27490] = {"Crag Stalking",nil,nil,nil,27,nil,nil,{"Complete crag stalking objectives."},nil,nil,nil,nil,nil,nil,nil,nil,400,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}, -- Thousand Needles quest
 [26712] = {"Life In Death",{{45731}},{{265}},nil,25,nil,nil,{"Collect 5 Fresh Bone Powder and Grave Moss."},nil,{nil,{{187564,"Grave Moss"}},{{62531,"Fresh Bone Powder",5}}},nil,nil,nil,nil,nil,nil,10,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil},
-[26186] = {"Parts From Afar",{{45030}},{{4782}},nil,46,nil,nil,{"Bring the Basket of Treats to Myolor Sunderfury in Ironforge to exchange for Siege Engine Parts."},nil,nil,nil,nil,nil,nil,nil,nil,47,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil},
+[26186] = {"Parts From Afar",{{45019}},{{11145}},nil,46,nil,2,{"Bring the Basket of Treats to Myolor Sunderfury in Ironforge to exchange for Siege Engine Parts."},nil,nil,nil,nil,nil,nil,nil,nil,47,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil}, -- Issue #414: Fixed quest giver and turn-in NPCs
 [27093] = {"Azshara's Legacy",{{8395}},{{8379}},nil,54,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,16,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}, -- Azshara quest
 [27094] = {"Azshara's Legacy",nil,{{46019}},nil,54,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,16,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil},
 [26288] = {"Reclaiming Tools",nil,{{45787}},nil,43,nil,2,{"Collect 20 Recovered Tools."},nil,{nil,nil,{{13136,20,"Recovered Tools"}}},nil,nil,nil,nil,nil,nil,1519,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil}, -- Issue #356: Updated turn-in to Derek Bradford in Stormwind City
@@ -544,7 +544,7 @@ epochQuestData = {
 [26898] = {"The Ring of Strength: Winston",nil,nil,nil,43,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}, -- Stranglethorn Vale
 [26899] = {"The Ring of Strength: Dekked",{{45857}},nil,nil,43,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}, -- Stranglethorn Vale
 [26900] = {"The Ring of Strength: Warlord Rhurg",nil,nil,nil,43,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,33,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}, -- Stranglethorn Vale
-[27177] = {"Operation: Northwatch Hold",{{46061}},nil,nil,20,nil,1,{"Collect Crate of Assorted Armor."},nil,{nil,nil,{{63056,"Crate of Assorted Armor"}}},nil,nil,nil,nil,nil,nil,17,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}, -- The Barrens
+[27177] = {"Operation: Northwatch Hold",{{46061}},{{3391}},nil,20,nil,1,{"Collect Crate of Assorted Armor."},nil,{nil,nil,{{63050,1,"Crate of Assorted Armor"}}},nil,nil,nil,nil,nil,nil,17,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}, -- Issue #328: Added turn-in NPC Gazlowe, updated item ID
 [27204] = {"WANTED: Deepskin",nil,nil,nil,14,nil,1,{"Kill Deepskin."},nil,{{{60874,"Deepskin"}}},nil,nil,nil,nil,nil,nil,17,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}, -- The Barrens
 [28513] = {"Commission for Killian Sanatha",nil,{{5748}},nil,5,nil,1,{"Collect 20 Raw Slitherskin Mackerel."},nil,{nil,nil,{{6303,20,"Raw Slitherskin Mackerel"}}},nil,nil,nil,nil,nil,nil,130,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}, -- Silverpine Forest
 [26304] = {"Attunement to the Core",{{13278}},nil,nil,60,nil,nil,{"Collect Firebloom, Elemental Fire, Elemental Water, and Wintersbite."},nil,{nil,nil,{{4625,1,"Firebloom"},{7068,1,"Elemental Fire"},{7070,1,"Elemental Water"},{3819,1,"Wintersbite"}}},nil,nil,nil,nil,nil,nil,16,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil}, -- Azshara
@@ -570,7 +570,7 @@ epochQuestData = {
 
 -- Issue #379: Missing quests from GitHub submission  
 [27031] = {"Destroy the Legion",{{45982}},nil,nil,30,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}, -- Tirisfal Glades
-[27040] = {"Practical Science",nil,{{12867}},nil,25,nil,nil,{"Vile Concoction Tested: 0/5"},nil,{{{nil,"Vile Concoction Tested",5}}},nil,nil,nil,nil,nil,nil,331,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}, -- Ashenvale, Issue #369: Fixed zone and turn-in NPC
+[27040] = {"Practical Science",{{45984}},{{45984}},nil,25,nil,1,{"Test the Vile Concoction on 5 targets."},nil,{{{nil,"Vile Concoction Tested",5}}},nil,nil,nil,nil,nil,nil,331,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}, -- Issue #310: Updated quest giver to Apothecary Viktor
 [27041] = {"Practical Science",{{45984}},{{45984}},nil,26,nil,1,{"Test the Vile Concoction on 5 targets."},nil,{{{nil,"Vile Concoction Tested",5}}},nil,nil,nil,nil,nil,nil,331,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil}, -- Issue #313: Ashenvale quest with objectives
 [27048] = {"Rumbles Of The Earth",nil,nil,nil,23,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}, -- Tirisfal Glades
 [27050] = {"Rumbles Of The Earth",nil,{{45990}},nil,23,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil}, -- Tirisfal Glades

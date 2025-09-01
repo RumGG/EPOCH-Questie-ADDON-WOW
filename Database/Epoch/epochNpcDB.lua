@@ -917,10 +917,10 @@ local epochNpcData = {
 [7877] = {"Latronicus Moonspear",nil,nil,42,42,0,{[357]={{30.3,46.1}}},nil,357,nil,{26289},11,"A",nil,0},
 
 -- Issue #70: The Hinterlands NPCs
-[4782] = {"Truk Wildbeard",nil,nil,48,48,0,{[47]={{14.4,42.4}}},nil,47,{26167,28906},{26167,26186,28906},11,"A",nil,0}, -- Issue #296: Added quest 28906 "A Sticky Situation"
+[4782] = {"Truk Wildbeard",nil,nil,48,48,0,{[47]={{14.4,42.4}}},nil,47,{26167,28906},{26167,28906},11,"A",nil,0}, -- Issue #296: Added quest 28906 "A Sticky Situation", Issue #414: Removed incorrect quest 26186 turn-in
 [11813] = {"Kerr Ironsight",nil,nil,45,45,0,{[47]={{15.9,47.1}}},nil,47,{26168},{26168},11,"A",nil,0},
 [48250] = {"Tizzie Sparkcraft",nil,nil,48,48,0,{[47]={{10,43.5}}},nil,47,{26171},{26171},11,"A",nil,0},
-[48251] = {"Chief Engineer Urul",nil,nil,46,46,0,{[47]={{14,43.3}}},nil,47,{26186},{26187},11,"A",nil,0},
+[48251] = {"Chief Engineer Urul",nil,nil,46,46,0,{[47]={{14,43.3}}},nil,47,nil,{26187},11,"A",nil,0}, -- Issue #414: Removed incorrect quest 26186 (moved to Golith Slatestrike)
 [48252] = {"Gryphon Master Stonemace",nil,nil,46,46,0,{[47]={{9.6,44.1}}},nil,47,nil,nil,11,"A",nil,0},
 [5636] = {"Gryphon Master Talonaxe",nil,nil,55,55,0,{[47]={{9.7,44.3}}},nil,47,{26188},{26188},11,"A",nil,0},
 
@@ -1007,7 +1007,7 @@ local epochNpcData = {
 [11748] = {"Samantha Swifthoof",nil,nil,34,34,0,{[33]={{43.9,26.6}}},nil,33,{26879},{26883},1,"H",nil,0}, -- Stranglethorn Vale, Issue #268: Added quest 26879
 
 -- Issue #141
-[11145] = {"Myolor Sunderfury",nil,nil,46,46,0,{[1537]={{51.9,41.1}}},nil,1537,{26187},nil,1,"A",nil,0}, -- Ironforge
+[11145] = {"Myolor Sunderfury",nil,nil,46,46,0,{[1537]={{51.9,41.1}}},nil,1537,{26187},{26186,26187},1,"A",nil,0}, -- Issue #414: Added Parts From Afar (26186) turn-in
 
 -- Issue #140
 [48177] = {"Ainslie Yance",nil,nil,16,16,0,{[130]={{43.1,41.2}}},nil,130,nil,{26217},1,"H",nil,0}, -- Silverpine Forest
@@ -1190,10 +1190,10 @@ local epochNpcData = {
 -- Issue #267: Ashenvale NPC
 [45981] = {"Taskmaster Baran",nil,nil,25,25,0,{[331]={{70.0,71.0}}},nil,331,{27030,27039},{27030},1,"H",nil,0}, -- Issue #402: Removed incorrect quest 27043 turn-in, Issue #465: Added quest 27039
 [45985] = {"Apprentice Donelly",nil,nil,26,26,0,{[331]={{75.1,72.0}}},nil,331,{27043},nil,1,"H",nil,0}, -- Issue #421: Ashenvale quest giver
-[45984] = {"Apothecary Viktor",nil,nil,26,26,0,{[331]={{75.1,72.1}}},nil,331,nil,{27043},1,"H",nil,0}, -- Issue #402: Ethical Quandary turn-in
+[45984] = {"Apothecary Viktor",nil,nil,26,26,0,{[331]={{75.1,72.1}}},nil,331,{27040,27041},{27040,27041,27043},1,"H",nil,0}, -- Issue #310: Practical Science (27040), Issue #313: Practical Science (27041), Issue #402: Ethical Quandary turn-in
 
 -- The Hinterlands NPC
-[45019] = {"Golith Slatestrike",nil,nil,46,46,0,{[47]={{14.2,48.0}}},nil,47,nil,{26186},1,"A",nil,0}, -- The Hinterlands: Parts From Afar turn-in
+[45019] = {"Golith Slatestrike",nil,nil,46,46,0,{[47]={{14.2,48.0}}},nil,47,{26186},nil,1,"A",nil,0}, -- Issue #414: Parts From Afar quest giver
 
 -- Feralas NPC
 [48179] = {"Viggo",nil,nil,48,48,0,{[357]={{51.6,47.5}}},nil,357,{26293},{ 26293,27335},1,"A",nil,0}, -- Feralas: Fit For A King quest giver/turn-in, Wanted: Lost Ancient turn-in
@@ -1415,7 +1415,7 @@ local epochNpcData = {
 [8479] = {"Kalaran Windblade",nil,nil,48,48,0,{[51]={{39.1,38.8}}},nil,51,nil,{27104},1,"H",nil,0}, -- Searing Gorge, turn-in for Report to Scout Dura
 
 -- Issue #369: Missing NPC from GitHub submission
-[12867] = {"Kuray'bin",nil,nil,25,25,0,{[331]={{71.1,68.1}}},nil,331,nil,{27040},1,"H",nil,0}, -- Ashenvale, turn-in for Practical Science
+[12867] = {"Kuray'bin",nil,nil,25,25,0,{[331]={{71.1,68.1}}},nil,331,nil,nil,1,"H",nil,0}, -- Issue #310: Removed quest 27040 turn-in (moved to Apothecary Viktor)
 
 -- Issue #295: Missing NPCs from GitHub submission
 [4046] = {"Magatha Grimtotem",nil,nil,30,30,0,{[88]={{70.2,30.8}}},nil,88,{27247},nil,1,"H",nil,0}, -- Thunder Bluff, quest giver for Gloombreak Mesa
@@ -1430,6 +1430,9 @@ local epochNpcData = {
 -- Issue #357: Missing NPCs from GitHub submission
 [3433] = {"Tatternack Steelforge",nil,nil,20,20,0,{[17]={{45.1,57.7}}},nil,17,{28460},nil,1,"H",nil,0}, -- Barrens, quest giver for Commission for Blusht
 [46330] = {"Blusht",nil,nil,20,20,0,{[17]={{46.4,73.7}}},nil,17,nil,{28460},1,"H",nil,0}, -- Barrens, turn-in for Commission for Blusht (ID changed from 46329 due to conflict)
+
+-- Issue #328: Missing NPC from GitHub submission  
+[3391] = {"Gazlowe",nil,nil,20,20,0,{[17]={{62.6,36.2}}},nil,17,nil,{27177},1,"H",nil,0}, -- Barrens, turn-in for Operation: Northwatch Hold
 }
 
 QuestieDB._epochNpcData = epochNpcData

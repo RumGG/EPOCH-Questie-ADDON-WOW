@@ -1034,7 +1034,14 @@ end
 local function _AddSourceItemObjective(quest)
     if quest.sourceItemId then
         -- Save the itemObjective table from the quests objectives table
-        local objectives = QuestieDB.QueryQuestSingle(quest.Id, "objectives")[3]
+        local questObjectives = QuestieDB.QueryQuestSingle(quest.Id, "objectives")
+        if not questObjectives then
+            -- Quest has no objectives data (common for commission/Epoch quests)
+            Questie:Debug(Questie.DEBUG_DEVELOP, "[QuestieQuest:_AddSourceItemObjective] Quest", quest.Id, "has no objectives data")
+            return
+        end
+        
+        local objectives = questObjectives[3]
 
         -- Look for an itemObjective Id that matches sourceItemId - if found exit
         if objectives then

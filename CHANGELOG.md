@@ -22,6 +22,10 @@
   - Added safety checks for nil or zero objective.Needed values (common with Epoch quests)
   - Completed objectives without progress data now properly show green
   - Unknown progress objectives show gray instead of crashing
+- **Lua error when turning in commission quests (Issue #428)**
+  - Fixed nil value error in QuestieQuest.lua line 1037
+  - Added safety check for quests without objectives data (common for commission/Epoch quests)
+  - Prevents crash when processing source items for quests lacking database entries
 
 ### Added
 - **Profession data capture in QuestieDataCollector**
