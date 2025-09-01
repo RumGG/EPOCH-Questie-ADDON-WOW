@@ -36,6 +36,15 @@ local _pendingXPReward = nil -- Track XP reward for quest turn-in
 -- Forward declaration of helper function for creating clickable quest data links
 local CreateQuestDataLink
 
+-- Helper function to extract NPC ID from GUID (WoW 3.3.5 format)
+local function ExtractNpcIdFromGuid(guid)
+    if not guid then return nil end
+    -- WoW 3.3.5 GUID format: 0xF13000085800126C
+    -- Bytes 6-12 contain the NPC ID in hex
+    local npcId = tonumber(guid:sub(6, 12), 16)
+    return npcId
+end
+
 -- Helper function for debug messages
 local function DebugMessage(msg, r, g, b)
     -- Check if this is a [DEBUG] or [DataCollector Debug] message
@@ -893,8 +902,8 @@ function QuestieDataCollector:CaptureNPCInfo()
         return
     end
     
-    -- Extract NPC ID from GUID (WoW 3.3.5 format)
-    local npcId = tonumber(guid:sub(6, 12), 16)
+    -- Extract NPC ID from GUID
+    local npcId = ExtractNpcIdFromGuid(guid)
     if not npcId or npcId == 0 then
         return
     end
@@ -1252,7 +1261,7 @@ function QuestieDataCollector:CaptureServiceNPC(serviceType)
     end
     
     -- Extract NPC ID from GUID (WoW 3.3.5 format)
-    local npcId = tonumber(guid:sub(6, 12), 16)
+    local npcId = ExtractNpcIdFromGuid(guid)
     if not npcId or npcId == 0 then
         return
     end
