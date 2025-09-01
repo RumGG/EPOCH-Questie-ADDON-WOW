@@ -11,6 +11,7 @@
   - Fixed quest ID retrieval using position 9 in GetQuestLogTitle (WoW 3.3.5)
   - Fixed objectives showing initial state (0/10) instead of current progress
   - Fixed GetQuestLogQuestText to capture both description and objectives text
+  - Implemented ground object/container tracking matching v1.0.68 functionality
 
 - **Database structure fixes**
   - NPC 46934 had double-wrapped questEnds field causing compilation error
@@ -18,11 +19,16 @@
   - Added missing spawn locations for Amethyst Crabs (NPC 46953)
 
 ### Added
+- **Ground object/container tracking** - Captures all interacted objects/containers while questing (herbs, ores, quest objects, etc.)
+  - Tracks multiple locations for same object
+  - Groups objects by name with all discovered coordinates
+  - Exports in GROUND OBJECTS/CONTAINERS section matching v1.0.68 format
 - `/qdc rescan` command to recapture missing quest objectives and current progress
 - `/qdc questgiver <questId>` command to manually capture quest giver NPC
 - `/qdc turnin <questId>` command to manually capture turn-in NPC and mark complete
 - Quest status display in exports (COMPLETED/IN PROGRESS/PARTIAL DATA)
 - Progress history tracking for objectives with timestamps and coordinates
+- Tooltip hook to capture object names on mouseover before interaction
 - Better fallback methods for determining quest ID during turn-in events
 - Database structure validators (npc_structure.py, quest_structure.py) to catch field type errors before runtime
 

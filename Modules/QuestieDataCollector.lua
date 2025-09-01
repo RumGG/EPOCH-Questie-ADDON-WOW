@@ -188,6 +188,24 @@ function QuestieDataCollector:Initialize()
     -- Hook into events
     QuestieDataCollector:RegisterEvents()
     
+    -- Hook tooltip to capture object names on mouseover
+    -- This helps identify containers/objects before we interact with them
+    if not _tooltipHooked then
+        GameTooltip:HookScript("OnShow", function()
+            if GameTooltip:IsVisible() then
+                local name = GameTooltipTextLeft1:GetText()
+                if name and name ~= "" then
+                    -- Store as potential object we might interact with
+                    _lastInteractedObject = {
+                        name = name,
+                        timestamp = time()
+                    }
+                end
+            end
+        end)
+        _tooltipHooked = true
+    end
+    
     -- Enable tooltip IDs
     QuestieDataCollector:EnableTooltipIDs()
     
@@ -1059,6 +1077,11 @@ function QuestieDataCollector:HandleCombatEvent(...)
 end
 
 function QuestieDataCollector:HandleLootOpened()
+    -- Get current location
+    local coords = QuestieDataCollector:GetPlayerCoordinates()
+    local zone = GetRealZoneText()
+    local subZone = GetSubZoneText()
+    
     -- Determine what we're looting from
     local lootSourceName = nil
     local lootSourceId = nil
@@ -1068,20 +1091,92 @@ function QuestieDataCollector:HandleLootOpened()
     local targetGuid = UnitGUID("target")
     if targetGuid and UnitIsDead("target") then
         lootSourceName = UnitName("target")
-        lootSourceId = tonumber(targetGuid:sub(6, 12), 16)
+        lootSourceId = ExtractNpcIdFromGuid(targetGuid)
         lootSourceType = "npc"
-    elseif _lastInteractedObject then
-        -- We're looting an object
-        lootSourceName = _lastInteractedObject.name
-        lootSourceType = "object"
+    else
+        -- Try to get container name from GameTooltip
+        local containerName = nil
+        if GameTooltip:IsVisible() then
+            local tooltipText = GameTooltipTextLeft1:GetText()
+            if tooltipText and tooltipText ~= "" then
+                containerName = tooltipText
+            end
+        end
+        
+        -- Check loot frame for container name
+        if not containerName and LootFrame:IsVisible() then
+            local lootName = GetLootSourceInfo and GetLootSourceInfo(1) or nil
+            if not lootName and LootFrameTitle and LootFrameTitle:GetText() then
+                lootName = LootFrameTitle:GetText()
+            end
+            if lootName then
+                containerName = lootName
+            end
+        end
+        
+        -- Use the container name we found, or fall back to last interacted object
+        if containerName and containerName ~= "" then
+            lootSourceName = containerName
+            lootSourceType = "object"
+            -- Update _lastInteractedObject with better name
+            if not _lastInteractedObject then
+                _lastInteractedObject = {}
+            end
+            _lastInteractedObject.name = containerName
+            _lastInteractedObject.timestamp = time()
+        elseif _lastInteractedObject and _lastInteractedObject.name then
+            lootSourceName = _lastInteractedObject.name
+            lootSourceType = "object"
+        else
+            lootSourceName = "Ground Object"
+            lootSourceType = "object"
+        end
     end
     
+    -- Store current loot source for item tracking
     _currentLootSource = {
         name = lootSourceName,
         id = lootSourceId,
         type = lootSourceType,
         timestamp = time()
     }
+    
+    -- CRITICAL: Track this object/container for ALL active quests
+    -- This is how v1.0.68 builds the extensive GROUND OBJECTS list
+    if lootSourceName and lootSourceType == "object" then
+        for questId in pairs(_activeTracking) do
+            local questData = QuestieDataCollection.quests[questId]
+            if questData then
+                questData.objects = questData.objects or {}
+                
+                -- Use object name as key for grouping locations
+                if not questData.objects[lootSourceName] then
+                    questData.objects[lootSourceName] = {
+                        name = lootSourceName,
+                        id = lootSourceId,
+                        locations = {}
+                    }
+                end
+                
+                -- Add this location if we have coordinates
+                if coords and coords.x and coords.y then
+                    -- Use rounded coordinates as key to prevent duplicates
+                    local locKey = string.format("%.1f,%.1f", coords.x, coords.y)
+                    if not questData.objects[lootSourceName].locations[locKey] then
+                        questData.objects[lootSourceName].locations[locKey] = {
+                            x = coords.x,
+                            y = coords.y,
+                            zone = zone,
+                            subZone = subZone,
+                            timestamp = time()
+                        }
+                        DebugMessage("|cFF00FFFF[DATA]|r Tracked object '" .. lootSourceName .. 
+                            "' at [" .. string.format("%.1f, %.1f", coords.x, coords.y) .. "] in " .. zone, 0, 1, 1)
+                    end
+                end
+            end
+        end
+    end
 end
 
 function QuestieDataCollector:HandleLootMessage(message)
@@ -1591,6 +1686,46 @@ function QuestieDataCollector:FormatQuestExport(questId, questData)
             if itemData.sources and #itemData.sources > 0 then
                 for _, source in ipairs(itemData.sources) do
                     export = export .. "    Source: " .. (source.name or "Unknown") .. " (" .. (source.type or "unknown") .. ")\n"
+                end
+            end
+        end
+        export = export .. "\n"
+    end
+    
+    -- Ground objects/containers (matching v1.0.68 format)
+    if questData.objects and next(questData.objects) then
+        export = export .. "GROUND OBJECTS/CONTAINERS:\n"
+        for objName, objData in pairs(questData.objects) do
+            local firstLocation = true
+            -- Sort locations for consistent output
+            local sortedLocs = {}
+            for locKey, locData in pairs(objData.locations or {}) do
+                table.insert(sortedLocs, locData)
+            end
+            table.sort(sortedLocs, function(a, b) 
+                return (a.timestamp or 0) < (b.timestamp or 0) 
+            end)
+            
+            -- Output each location
+            for i, locData in ipairs(sortedLocs) do
+                if firstLocation then
+                    export = export .. "  " .. objName
+                    if objData.id then
+                        export = export .. " (ID: " .. objData.id .. ")"
+                    end
+                    export = export .. " at [" .. string.format("%.1f, %.1f", locData.x, locData.y) .. "]"
+                    if locData.zone then
+                        export = export .. " in " .. locData.zone
+                    end
+                    export = export .. "\n"
+                    firstLocation = false
+                else
+                    -- Additional locations
+                    export = export .. "    Additional location: [" .. string.format("%.1f, %.1f", locData.x, locData.y) .. "]"
+                    if locData.zone then
+                        export = export .. " in " .. locData.zone
+                    end
+                    export = export .. "\n"
                 end
             end
         end
