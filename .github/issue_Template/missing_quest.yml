@@ -1,0 +1,44 @@
+name: Missing Quest
+description: Report a quest missing from Questie-Epoch in addon data format
+labels: ["missing quest"]
+
+body:
+  - type: input
+    id: quest_id
+    attributes:
+      label: Quest ID
+      placeholder: e.g. 26505
+  - type: input
+    id: quest_name
+    attributes:
+      label: Quest Name
+      placeholder: e.g. Letter to Ravenholdt
+  - type: input
+    id: questgiver_id
+    attributes:
+      label: Quest Giver NPC ID
+      placeholder: e.g. 8383
+  - type: textarea
+    id: quest_data
+    attributes:
+      label: Addon Data Snippet
+      description: Paste the quest entry in Questie-Epoch addon format.
+      placeholder: |
+        [QUEST_ID] = {
+          [questKeys.name] = "QUEST_NAME",
+          [questKeys.startedBy] = { {QUEST_GIVER_ID}, },
+          [questKeys.finishedBy] = { {QUEST_ENDER_ID}, },
+          [questKeys.requiredLevel] = LEVEL_REQ,
+          [questKeys.questLevel] = LEVEL,
+          [questKeys.objectivesText] = {"..."},
+          [questKeys.objectives] = {
+            [objectiveKeys.npc] = { {NPC_ID, ZONE_ID, {X, Y}}, },
+            [objectiveKeys.item] = { {ITEM_ID, ZONE_ID, {X, Y}}, },
+            [objectiveKeys.object] = { {OBJECT_ID, ZONE_ID, {X, Y}}, },
+          },
+        },
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes / Context
+      description: Any extra details (zone, screenshots, wowhead links, spawn coords).
