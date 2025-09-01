@@ -546,7 +546,10 @@ function QuestieDataCollector:TrackQuestAccepted(questIndex, questId)
     
     -- Try to get objectives text
     SelectQuestLogEntry(questIndex)
-    local objectivesText = GetQuestLogQuestText()
+    local questDescription, objectivesText = GetQuestLogQuestText()
+    if questDescription and questDescription ~= "" then
+        questData.questDescription = questDescription
+    end
     if objectivesText and objectivesText ~= "" then
         questData.objectivesText = objectivesText
     end
@@ -640,38 +643,47 @@ function QuestieDataCollector:TrackQuestAccepted(questIndex, questId)
 end
 
 function QuestieDataCollector:TrackQuestComplete()
-    local questId = GetQuestID and GetQuestID() or nil
+    -- CRITICAL: Capture the NPC immediately when QUEST_COMPLETE fires
+    -- This happens when you click "Complete Quest" at the turn-in NPC
+    QuestieDataCollector:CaptureNPCInfo()
+    DebugMessage("|cFF00FFFF[DATA]|r QUEST_COMPLETE event - capturing turn-in NPC", 0, 1, 1)
     
-    -- If GetQuestID doesn't work, try to get from the complete dialog
+    -- Try to identify which quest is being turned in
+    -- Scan the quest log for complete quests that we're tracking
+    local questId = nil
+    local questName = nil
+    
+    for i = 1, GetNumQuestLogEntries() do
+        local title, level, tag, isHeader, _, isComplete, _, _, qID = GetQuestLogTitle(i)
+        -- Check if this quest is complete and we're tracking it
+        if not isHeader and isComplete and _activeTracking[qID] then
+            questId = qID
+            questName = title
+            DebugMessage("|cFF00FF00[DATA]|r Found completed quest: " .. questName .. " (ID: " .. questId .. ")", 0, 1, 0)
+            break
+        end
+    end
+    
+    -- Fallback: Try GetQuestID if available
     if not questId or questId == 0 then
-        -- Try to get the quest being completed from the title
+        questId = GetQuestID and GetQuestID() or nil
+        if questId then
+            DebugMessage("|cFFFFFF00[DATA]|r Got quest ID from GetQuestID: " .. questId, 1, 1, 0)
+        end
+    end
+    
+    -- Fallback: Try to get from the complete dialog title
+    if not questId or questId == 0 then
         local questTitle = GetTitleText and GetTitleText() or nil
         if questTitle then
-            -- Search active tracking for this quest name
             for qId, qData in pairs(QuestieDataCollection.quests) do
                 if qData.name == questTitle and _activeTracking[qId] then
                     questId = qId
+                    questName = questTitle
                     DebugMessage("|cFFFFFF00[DATA]|r Found quest ID from title: " .. questId .. " (" .. questTitle .. ")", 1, 1, 0)
                     break
                 end
             end
-        end
-    end
-    
-    -- Method 3: If still no ID, check if there's only one active quest without completion timestamp
-    if not questId or questId == 0 then
-        local activeCount = 0
-        local lastActiveId = nil
-        for qId in pairs(_activeTracking) do
-            local qData = QuestieDataCollection.quests[qId]
-            if qData and not qData.completedTimestamp then
-                activeCount = activeCount + 1
-                lastActiveId = qId
-            end
-        end
-        if activeCount == 1 and lastActiveId then
-            questId = lastActiveId
-            DebugMessage("|cFFFFFF00[DATA]|r Using only active quest ID: " .. questId, 1, 1, 0)
         end
     end
     
@@ -1483,7 +1495,17 @@ function QuestieDataCollector:FormatQuestExport(questId, questData)
     local export = "────────────────────────────────────\n"
     export = export .. "Quest ID: " .. questId .. "\n"
     export = export .. "Quest Name: " .. (questData.name or "Unknown") .. "\n"
-    export = export .. "Level: " .. (questData.level or "Unknown") .. "\n\n"
+    export = export .. "Level: " .. (questData.level or "Unknown") .. "\n"
+    
+    -- Show quest status
+    if questData.turnedIn then
+        export = export .. "Status: ✅ COMPLETED\n"
+    elseif _activeTracking[questId] then
+        export = export .. "Status: 🔄 IN PROGRESS\n"
+    else
+        export = export .. "Status: ⚠️ PARTIAL DATA\n"
+    end
+    export = export .. "\n"
     
     if questData.wasAlreadyAccepted then
         export = export .. "⚠️ WARNING: INCOMPLETE DATA ⚠️\n"
@@ -1501,11 +1523,28 @@ function QuestieDataCollector:FormatQuestExport(questId, questData)
         export = export .. "\n"
     end
     
+    -- Quest description and objectives text
+    if questData.questDescription then
+        export = export .. "DESCRIPTION:\n"
+        export = export .. "  " .. questData.questDescription .. "\n\n"
+    end
+    
+    if questData.objectivesText then
+        export = export .. "OBJECTIVES TEXT:\n"
+        export = export .. "  " .. questData.objectivesText .. "\n\n"
+    end
+    
     -- Objectives
     if questData.objectives and #questData.objectives > 0 then
         export = export .. "OBJECTIVES:\n"
         for i, obj in ipairs(questData.objectives) do
-            export = export .. "  " .. i .. ". " .. (obj.text or "Unknown") .. "\n"
+            local status = obj.finished and "✓" or "✗"
+            export = export .. "  " .. status .. " " .. i .. ". " .. (obj.text or "Unknown") .. "\n"
+            -- Show last known progress if available
+            if obj.progress and #obj.progress > 0 then
+                local lastProgress = obj.progress[#obj.progress]
+                export = export .. "      Last update: " .. lastProgress.text .. "\n"
+            end
         end
         export = export .. "\n"
     end
@@ -1851,6 +1890,78 @@ function QuestieDataCollector:ShowTrackedQuests()
     end
 end
 
+function QuestieDataCollector:ManualTurnIn(questId)
+    local questData = QuestieDataCollection.quests[questId]
+    if not questData then
+        DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[Data Collector]|r No data for quest " .. questId, 1, 0, 0)
+        return
+    end
+    
+    -- Capture turn-in NPC from current target
+    local guid = UnitGUID("target")
+    if guid then
+        local npcId = ExtractNpcIdFromGuid(guid)
+        if npcId then
+            local npcName = UnitName("target")
+            local coords = QuestieDataCollector:GetPlayerCoordinates()
+            
+            questData.turnInNpc = {
+                id = npcId,
+                name = npcName,
+                coords = coords
+            }
+            DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Data Collector]|r Turn-in NPC captured: " .. npcName .. " (ID: " .. npcId .. ")", 0, 1, 0)
+        end
+    end
+    
+    -- Mark as turned in
+    questData.turnedIn = true
+    questData.turnInTimestamp = time()
+    questData.turnInDate = date("%Y-%m-%d %H:%M:%S")
+    
+    -- If we have pending XP, assign it
+    if _pendingXPReward and _pendingXPReward > 0 then
+        questData.xpReward = _pendingXPReward
+        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Data Collector]|r XP reward captured: " .. _pendingXPReward, 0, 1, 0)
+        _pendingXPReward = nil
+    end
+    
+    -- Remove from active tracking
+    _activeTracking[questId] = nil
+    
+    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Data Collector]|r Quest marked as turned in: " .. (questData.name or "Unknown"), 0, 1, 0)
+end
+
+function QuestieDataCollector:CaptureQuestGiver(questId)
+    local questData = QuestieDataCollection.quests[questId]
+    if not questData then
+        DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[Data Collector]|r No data for quest " .. questId, 1, 0, 0)
+        return
+    end
+    
+    -- Capture quest giver NPC from current target
+    local guid = UnitGUID("target")
+    if not guid then
+        DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[Data Collector]|r No target selected", 1, 0, 0)
+        return
+    end
+    
+    local npcId = ExtractNpcIdFromGuid(guid)
+    if npcId then
+        local npcName = UnitName("target")
+        local coords = QuestieDataCollector:GetPlayerCoordinates()
+        
+        questData.questGiver = {
+            id = npcId,
+            name = npcName,
+            coords = coords
+        }
+        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Data Collector]|r Quest giver captured: " .. npcName .. " (ID: " .. npcId .. ")", 0, 1, 0)
+    else
+        DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[Data Collector]|r Could not extract NPC ID from target", 1, 0, 0)
+    end
+end
+
 function QuestieDataCollector:RescanQuestLog()
     DEFAULT_CHAT_FRAME:AddMessage("|cFF00FFFF[Data Collector]|r Rescanning quest log for missing data...", 0, 1, 1)
     
@@ -1880,30 +1991,54 @@ function QuestieDataCollector:RescanQuestLog()
                     updated = true
                 end
                 
-                -- Recapture objectives if missing or empty
+                -- Always update objectives to get current progress
+                SelectQuestLogEntry(i)
+                local numObjectives = GetNumQuestLeaderBoards(i)
+                
+                -- If objectives don't exist, create them
                 if not questData.objectives or #questData.objectives == 0 then
                     questData.objectives = {}
-                    
-                    SelectQuestLogEntry(i)
-                    local numObjectives = GetNumQuestLeaderBoards(i)
-                    
                     for j = 1, numObjectives do
-                        local text, objectiveType, finished = GetQuestLogLeaderBoard(j, i)
-                        if text then
-                            table.insert(questData.objectives, {
-                                index = j,
+                        table.insert(questData.objectives, {
+                            index = j,
+                            text = "",
+                            type = "",
+                            finished = false,
+                            progress = {}
+                        })
+                    end
+                    updated = true
+                end
+                
+                -- Update current objective state
+                for j = 1, numObjectives do
+                    local text, objectiveType, finished = GetQuestLogLeaderBoard(j, i)
+                    if text and questData.objectives[j] then
+                        -- Update the current state
+                        questData.objectives[j].text = text
+                        questData.objectives[j].type = objectiveType
+                        questData.objectives[j].finished = finished
+                        
+                        -- Add to progress history if changed
+                        local lastProgress = nil
+                        if questData.objectives[j].progress and #questData.objectives[j].progress > 0 then
+                            lastProgress = questData.objectives[j].progress[#questData.objectives[j].progress]
+                        end
+                        
+                        if not lastProgress or lastProgress.text ~= text then
+                            table.insert(questData.objectives[j].progress, {
                                 text = text,
-                                type = objectiveType,
                                 finished = finished,
-                                progress = {}
+                                timestamp = time(),
+                                coords = QuestieDataCollector:GetPlayerCoordinates()
                             })
                             updated = true
                         end
                     end
-                    
-                    if updated and numObjectives > 0 then
-                        DebugMessage("|cFF00FF00[DATA]|r Recaptured " .. numObjectives .. " objectives for quest " .. questId, 0, 1, 0)
-                    end
+                end
+                
+                if updated and numObjectives > 0 then
+                    DebugMessage("|cFF00FF00[DATA]|r Updated " .. numObjectives .. " objectives for quest " .. questId, 0, 1, 0)
                 end
                 
                 -- Get quest text if missing
@@ -1970,6 +2105,20 @@ SlashCmdList["QUESTIEDATACOLLECTOR"] = function(msg)
         QuestieDataCollector:ClearData()
     elseif cmd == "rescan" then
         QuestieDataCollector:RescanQuestLog()
+    elseif cmd == "questgiver" then
+        local questId = tonumber(args[2])
+        if questId then
+            QuestieDataCollector:CaptureQuestGiver(questId)
+        else
+            DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[Data Collector]|r Usage: /qdc questgiver <questId> (target NPC first)", 1, 0, 0)
+        end
+    elseif cmd == "turnin" then
+        local questId = tonumber(args[2])
+        if questId then
+            QuestieDataCollector:ManualTurnIn(questId)
+        else
+            DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[Data Collector]|r Usage: /qdc turnin <questId> (target NPC first)", 1, 0, 0)
+        end
     elseif cmd == "debug" then
         Questie.db.profile.debugDataCollector = not Questie.db.profile.debugDataCollector
         if Questie.db.profile.debugDataCollector then
@@ -1984,6 +2133,8 @@ SlashCmdList["QUESTIEDATACOLLECTOR"] = function(msg)
         DEFAULT_CHAT_FRAME:AddMessage("/qdc disable - Disable data collection", 1, 1, 1)
         DEFAULT_CHAT_FRAME:AddMessage("/qdc show - Show all tracked quests", 1, 1, 1)
         DEFAULT_CHAT_FRAME:AddMessage("/qdc export <questId> - Export quest data", 1, 1, 1)
+        DEFAULT_CHAT_FRAME:AddMessage("/qdc questgiver <questId> - Manually capture quest giver (target NPC first)", 1, 1, 1)
+        DEFAULT_CHAT_FRAME:AddMessage("/qdc turnin <questId> - Manually capture turn-in NPC (target NPC first)", 1, 1, 1)
         DEFAULT_CHAT_FRAME:AddMessage("/qdc clear - Clear all collected data", 1, 1, 1)
         DEFAULT_CHAT_FRAME:AddMessage("/qdc rescan - Re-scan quest log for missing data", 1, 1, 1)
         DEFAULT_CHAT_FRAME:AddMessage("/qdc debug - Toggle debug messages", 1, 1, 1)

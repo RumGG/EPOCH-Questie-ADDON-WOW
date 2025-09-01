@@ -1,5 +1,31 @@
 # Changelog
 
+## [Unreleased]
+
+### Fixed
+- **Data collection improvements**
+  - Fixed turn-in NPC capture by immediately capturing during QUEST_COMPLETE event (matching v1.0.68 working logic)
+  - Improved quest ID detection in QUEST_TURNED_IN event for better XP reward capture
+  - Fixed missing objectives and XP rewards in quest data export
+  - Enhanced quest turn-in tracking for rapid quest completions
+  - Fixed quest ID retrieval using position 9 in GetQuestLogTitle (WoW 3.3.5)
+  - Fixed objectives showing initial state (0/10) instead of current progress
+  - Fixed GetQuestLogQuestText to capture both description and objectives text
+
+- **Database structure fixes**
+  - NPC 46934 had double-wrapped questEnds field causing compilation error
+  - Invalid zone 85 references in troll starting area NPCs (changed to zone 14 - Durotar)
+  - Added missing spawn locations for Amethyst Crabs (NPC 46953)
+
+### Added
+- `/qdc rescan` command to recapture missing quest objectives and current progress
+- `/qdc questgiver <questId>` command to manually capture quest giver NPC
+- `/qdc turnin <questId>` command to manually capture turn-in NPC and mark complete
+- Quest status display in exports (COMPLETED/IN PROGRESS/PARTIAL DATA)
+- Progress history tracking for objectives with timestamps and coordinates
+- Better fallback methods for determining quest ID during turn-in events
+- Database structure validators (npc_structure.py, quest_structure.py) to catch field type errors before runtime
+
 ## [1.1.0] - 2025-09-01
 
 ### Major Features
