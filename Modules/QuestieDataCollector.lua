@@ -3162,6 +3162,59 @@ SlashCmdList["QUESTIEDATACOLLECTOR"] = function(msg)
             DebugMessage("|cFFFF0000[DATA] Usage: /qdc turnin <questId> (while targeting the turn-in NPC)|r", 1, 0, 0)
         end
         
+    elseif string.sub(cmd, 1, 9) == "questgiver" then
+        -- Manual quest giver capture: /qdc questgiver <questId>
+        local questId = tonumber(string.sub(cmd, 11))
+        if questId then
+            -- First check if quest exists in collection, if not create it
+            if not QuestieDataCollection.quests[questId] then
+                QuestieDataCollection.quests[questId] = {
+                    questId = questId,
+                    name = "Unknown Quest " .. questId,
+                    wasAlreadyAccepted = true,
+                    timestamp = time()
+                }
+                DebugMessage("|cFFFFFF00[DATA] Created new quest entry for " .. questId .. "|r", 1, 1, 0)
+            end
+            
+            -- Capture current target as quest giver NPC
+            if UnitExists("target") and not UnitIsPlayer("target") then
+                local name = UnitName("target")
+                local guid = UnitGUID("target")
+                local npcId = nil
+                
+                if guid then
+                    npcId = tonumber(guid:sub(6, 12), 16)
+                end
+                
+                if npcId then
+                    local coords = QuestieDataCollector:GetPlayerCoords()
+                    QuestieDataCollection.quests[questId].questGiver = {
+                        npcId = npcId,
+                        name = name,
+                        coords = coords,
+                        zone = GetRealZoneText(),
+                        subzone = GetSubZoneText(),
+                        timestamp = time()
+                    }
+                    
+                    -- Clear the wasAlreadyAccepted flag since we now have quest giver data
+                    if QuestieDataCollection.quests[questId].wasAlreadyAccepted then
+                        QuestieDataCollection.quests[questId].wasAlreadyAccepted = nil
+                    end
+                    
+                    DebugMessage("|cFF00FF00[DATA] Quest giver manually captured: " .. name .. " (ID: " .. npcId .. ")|r", 0, 1, 0)
+                    DebugMessage("|cFF00FF00Quest " .. questId .. " quest giver data updated!|r", 0, 1, 0)
+                else
+                    DebugMessage("|cFFFF0000[DATA] Error: Could not get NPC ID from target|r", 1, 0, 0)
+                end
+            else
+                DebugMessage("|cFFFF0000[DATA] Error: Target an NPC first|r", 1, 0, 0)
+            end
+        else
+            DebugMessage("|cFFFF0000[DATA] Usage: /qdc questgiver <questId> (while targeting the quest giver NPC)|r", 1, 0, 0)
+        end
+        
     elseif cmd == "messages" then
         -- Toggle message visibility
         Questie.db.profile.showDataCollectionMessages = not Questie.db.profile.showDataCollectionMessages
@@ -3323,6 +3376,7 @@ SlashCmdList["QUESTIEDATACOLLECTOR"] = function(msg)
         DEFAULT_CHAT_FRAME:AddMessage("/qdc status - Check current status", 1, 1, 1)
         DEFAULT_CHAT_FRAME:AddMessage("/qdc export - Open export window for first Epoch quest", 1, 1, 1)
         DEFAULT_CHAT_FRAME:AddMessage("/qdc export <id> - Export specific quest data", 1, 1, 1)
+        DEFAULT_CHAT_FRAME:AddMessage("/qdc questgiver <id> - Manually capture quest giver NPC (target NPC first)", 1, 1, 1)
         DEFAULT_CHAT_FRAME:AddMessage("/qdc turnin <id> - Manually capture turn-in NPC (target NPC first)", 1, 1, 1)
         DEFAULT_CHAT_FRAME:AddMessage("/qdc clear - Clear all data", 1, 1, 1)
         DEFAULT_CHAT_FRAME:AddMessage("/qdc rescan - Re-scan quest log for missing quests", 1, 1, 1)

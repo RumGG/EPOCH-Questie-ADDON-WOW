@@ -28,6 +28,13 @@
   - Prevents crash when processing source items for quests lacking database entries
 
 ### Added
+- **New `/qdc questgiver` command (Issue #485)**
+  - Manually capture quest giver NPC information for any quest
+  - Works similarly to `/qdc turnin` command
+  - Target the quest giver NPC and run `/qdc questgiver <questId>`
+  - Helps recover missing or incorrect quest giver data
+  - Automatically creates quest entry if it doesn't exist
+  - Clears "incomplete data" warning when quest giver is captured
 - **Profession data capture in QuestieDataCollector**
   - Captures player's profession levels when accepting quests
   - Records current skill rank, max rank, and tier (Apprentice/Journeyman/Expert/Artisan)
