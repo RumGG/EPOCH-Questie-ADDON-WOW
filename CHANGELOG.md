@@ -1,17 +1,59 @@
 # Changelog
 
-## [Unreleased]
+## [1.1.0] - 2025-09-01
 
-### Fixed
+### Major Features
+- **Complete Data Collection System Overhaul**
+  - Version control: Only accepts data from v1.1.0 or later
+  - Smart detection: Only tracks quests missing from database (skips known quests)
+  - Mismatch detection: Identifies database inconsistencies for NPCs, objects, items, coordinates
+  - Zone validation: Enhanced accuracy with comprehensive zone tracking
+  - Service NPC tracking: Captures vendors, trainers, bankers, mailboxes while questing
+  - Developer mode: Toggle to collect ALL quests for testing purposes
+  - Coordinate validation: Only flags significant mismatches (>10 units) to reduce false positives
+  - Export improvements: Includes database mismatches and coordinate discrepancies in reports
+  - XP reward tracking: Captures experience points awarded for quest completion
+  - Robust nil handling: All quest events now handle nil questIds properly (WoW 3.3.5 compatibility)
+
+### Critical Fixes
+- **Major database structure overhaul**
+  - Fixed 619+ missing commas across quest and NPC databases
+  - Corrected quest objective structure (nil objectives must be in spellObjective position)
+  - Fixed quests 27040, 27041, 27462 compilation errors from incorrect objective structure
+  - Removed incorrect database prefixes causing syntax errors
+  - Complete syntax validation ensuring database loads without errors
+
+- **Invisible map pins crisis resolved**
+  - Fixed "custom" icon theme causing all quest pins to be invisible
+  - Disabled custom theme option to prevent user confusion
+  - Pins now show correctly with questie/classic themes
+
+- **Tooltip scaling inconsistency fixed**
+  - Fixed tooltip size changing with map zoom level
+  - Now always uses GameTooltip instead of WorldMapTooltip for consistent sizing
+  - Resolves ElvUI integration issues with scaled tooltips
+
+### Bug Fixes
+- **Quest 28723 "Thievin' Crabs" missing objectives**
+  - Quest had no kill objectives defined in database
+  - Added proper objectives: Kill 10 Amethyst Crabs (NPC 46835)
+  - Quest now shows map pins and tracks progress correctly
+
 - **Quest progress not updating in tracker (Issue #467)**
   - Fixed tracker showing 0/10 when quest log shows actual progress (e.g., 3/10)
   - The compatibility layer was only reading 3 parameters from GetQuestLogLeaderBoard instead of 5
   - In WoW 3.3.5, the API returns: description, type, finished, numFulfilled, numRequired
   - Now properly reads numFulfilled and numRequired directly from the API instead of parsing text
+- **Quest 1014 "Arugal Must Die" showing in wrong location**
+  - Fixed NPC 1938 (Dalar Dawnweaver) incorrectly placed in Tirisfal Glades
+  - Corrected to proper location in Silverpine Forest (The Sepulcher)
+  - Quest now properly shows at coordinates 44.2, 39.8 in zone 130
+
 - **NPC ID printing twice in tooltips (Issue #469)**
   - Added duplicate detection for NPC ID, Item ID, and Object ID in tooltips
   - Prevents IDs from being added multiple times when tooltip is refreshed
   - Checks existing tooltip lines before adding ID information
+
 - **Service NPC tracking/untracking issues in map dropdown**
   - Fixed untracking not working when unchecking service types (Innkeeper, Banker, etc.)
   - Fixed duplicate NPCs appearing when toggling service tracking on/off
@@ -26,6 +68,13 @@
   - Fixed nil value error in QuestieQuest.lua line 1037
   - Added safety check for quests without objectives data (common for commission/Epoch quests)
   - Prevents crash when processing source items for quests lacking database entries
+
+- **Data Collection critical errors fixed**
+  - Fixed "QuestieDB was passed as questId" errors from incorrect API syntax
+  - Changed QuestieDB:GetQuest() to QuestieDB.GetQuest() (dot notation)
+  - Resolves critical errors that were spamming console on initialization
+  - Fixed QUEST_ACCEPTED event providing nil questId in WoW 3.3.5
+  - Now properly retrieves questId from quest log when event doesn't provide it
 
 ### Added
 - **New `/qdc questgiver` command (Issue #485)**
@@ -50,6 +99,8 @@
   - When disabled, your manually tracked quest selection persists between sessions
   - When enabled (default), all quests are automatically tracked on login/reload
   - Allows players to maintain their preferred quest tracking without it resetting
+
+## [Unreleased]
 
 ## [1.0.70] - 2024-08-31
 

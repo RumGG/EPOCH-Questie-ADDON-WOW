@@ -162,6 +162,12 @@ QuestieInit.Stages[1] = function() -- run as a coroutine
 
     HBDHooks:Init()
 
+    -- Migration: Fix users who have 'custom' theme selected (causes invisible pins)
+    if Questie.db.profile.iconTheme == 'custom' then
+        Questie:Debug(Questie.DEBUG_INFO, "[Init] Migrating from 'custom' icon theme to 'questie' to fix invisible pins")
+        Questie.db.profile.iconTheme = 'questie'
+    end
+
     Questie:SetIcons()
 
     if QUESTIE_LOCALES_OVERRIDE ~= nil then

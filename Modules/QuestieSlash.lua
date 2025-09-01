@@ -181,6 +181,7 @@ function QuestieSlash.HandleCommands(input)
                 end
                 
                 -- Get objectives
+                local originalSelection = GetQuestLogSelection()
                 SelectQuestLogEntry(i)
                 local numObjectives = GetNumQuestLeaderBoards(i)
                 if numObjectives > 0 then
@@ -193,6 +194,10 @@ function QuestieSlash.HandleCommands(input)
                         end
                     end
                     table.insert(questData, "  },")
+                end
+                -- Restore original selection
+                if originalSelection and originalSelection > 0 then
+                    SelectQuestLogEntry(originalSelection)
                 end
                 
                 table.insert(questData, "},")

@@ -54,8 +54,11 @@ function MapIconTooltip:Show()
     end
     lastTooltipShowTimestamp = GetTime()
 
-    local Tooltip = QuestieCompat.Is335 and QuestieCompat.SetupTooltip(self) or GameTooltip;
+    -- Always use GameTooltip for consistent sizing regardless of map state
+    -- WorldMapTooltip scales with the map, GameTooltip doesn't
+    local Tooltip = GameTooltip;
     Tooltip._owner = self;
+    
     Tooltip:SetOwner(self, "ANCHOR_CURSOR"); --"ANCHOR_CURSOR" or (self, self)
 
     local maxDistCluster = 1

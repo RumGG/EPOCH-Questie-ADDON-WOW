@@ -726,11 +726,11 @@ local epochNpcData = {
 [45024] = {"Watcher Owey",nil,nil,45,45,0,{[47]={{78.3,79.2}}},nil,47,{26179},nil,1,"H",nil,0}, -- Hinterlands Hermit quest giver
 [46129] = {"Mek'nell",nil,nil,48,48,0,{[357]={{51.6,47.7}}},nil,357,{27335},nil,nil,nil,nil,0},
 [46135] = {"Jrall",nil,nil,49,49,0,{[357]={{51.8,46.3}}},nil,357,{27326,27328},{27322,27323,27324,27325,27326,27327,27328},nil,nil,nil,0},
-[46718] = {"Daz'tiro",nil,nil,3,3,0,{[14]={{70.9,45.9}}},nil,14,{28728,28757},{28723},nil,"H",nil,0}, -- Fixed zone from 85 to 14 (Durotar)
-[47100] = {"Azisary",nil,nil,4,4,0,{[14]={{72.9,49.0}}},nil,14,nil,{28757,28758},nil,"H",nil,0}, -- Fixed zone from 85 to 14 (Durotar)
-[47101] = {"Hunter Bon'juru",nil,nil,4,4,0,{[14]={{72.7,47.3}}},nil,14,{28759,28765},{28759,28765},nil,"H",nil,0}, -- Fixed zone from 85 to 14 (Durotar)
-[47103] = {"Witch Doctor Leerya",nil,nil,4,4,0,{[14]={{72.2,48.9}}},nil,14,{28760},{28760},nil,"H",nil,0}, -- Fixed zone from 85 to 14 (Durotar)
-[47106] = {"Makasgar",nil,nil,5,5,0,{[14]={{73.7,48.4}}},nil,14,{28764},{28764},nil,"H",nil,0}, -- Fixed zone from 85 to 14 (Durotar)
+[46718] = {"Daz'tiro",nil,nil,3,3,0,{[85]={{70.9,45.9}}},nil,85,{28728,28757},{28723},nil,nil,nil,0},
+[47100] = {"Azisary",nil,nil,4,4,0,{[85]={{72.9,49.0}}},nil,85,nil,{28757,28758},nil,nil,nil,0},
+[47101] = {"Hunter Bon'juru",nil,nil,4,4,0,{[85]={{72.7,47.3}}},nil,85,{28759,28765},{28759,28765},nil,nil,nil,0},
+[47103] = {"Witch Doctor Leerya",nil,nil,4,4,0,{[85]={{72.2,48.9}}},nil,85,{28760},{28760},nil,nil,nil,0},
+[47106] = {"Makasgar",nil,nil,5,5,0,{[85]={{73.7,48.4}}},nil,85,{28764},{28764},nil,nil,nil,0},
 -- Issue #228: Winterspring, Azshara, and Felwood NPCs
 [46025] = {"Trader Mallu",2160,2430,52,52,0,{[16]={{53.6,8.8}}},nil,16,nil,{27132},35,"H",nil,0},
 [10924] = {"Ivy Leafrunner",2080,2340,51,51,0,{[361]={{50.9,81.6}}},nil,361,{27303},nil,35,"H",nil,0},
@@ -887,7 +887,7 @@ local epochNpcData = {
 [48169] = {"Scout Morgria",2200,2475,55,55,0,{[4]={{73.4,34.2}}},nil,4,{26626},{26626},85,"H",nil,0}, -- Reassigned from 45606
 [45607] = {"Torthrak",2200,2475,55,55,0,{[4]={{73.6,34.6}}},nil,4,{26627},{26627},85,"H",nil,0},
 [45631] = {"Liam the Dockmaster",2000,2250,50,50,0,{[4]={{73,48.2}}},nil,4,{26603},{26603,26622},85,"H",nil,0},
-[46834] = {"Joz'jarz",nil,nil,2,2,0,{[14]={{70.1,42.0}}},nil,14,{28722,28723},{28722},nil,"H",nil,0}, -- Fixed zone from 85 to 14 (Durotar)
+[46834] = {"Joz'jarz",nil,nil,2,2,0,{[85]={{70.1,42.0}}},nil,85,{28722,28723},{28722},nil,nil,nil,0}, -- Correct: Tirisfal Glades (low level)
 [3610] = {"Kolkar Waylayer",nil,nil,60,60,0,{[17]={{55.9,59.2}}},nil,17,{27484},{27484},35,"AH",nil,0},
 [11864] = {"Tammra Windfield",nil,nil,60,60,0,{[406]={{47.4,58.4}}},nil,406,nil,{27400,26308},11,"A",nil,0}, -- Issue #354: Updated location to Stonetalon Mountains and added quest 26308
 [45143] = {"Lord Aithalis",nil,nil,51,51,0,{[16]={{44.3,10.4}}},nil,16,{26277},{26277},35,"AH",nil,0},
@@ -962,8 +962,8 @@ local epochNpcData = {
 [48208] = {"Daz'tiro",nil,nil,5,5,0,{[14]={{70.8,45.9}}},nil,14,{28757},nil,0,"H","Quest Giver",0}, -- Durotar, quest giver for Banana Bonanza
 [48210] = {"Azisary",nil,nil,5,5,0,{[14]={{72.92,49.14}}},nil,14,nil,{28757},0,"H","Quest Turn-in",0}, -- Durotar, turn-in NPC for Banana Bonanza
 [48209] = {"Joz'jarz",nil,nil,5,5,0,{[14]={{70.1,42}}},nil,14,nil,nil,0,"H","Quest Giver",0}, -- Durotar, quest giver for Thievin' Crabs
-[46835] = {"Amethyst Crab",nil,nil,2,2,0,{[14]={{70.2,42},{69.6,42.6},{69.5,42.2},{70.4,41.7},{69.8,41.5},{70.6,42.3},{69.3,42.8},{70.0,43.1},{69.7,41.2},{70.8,41.9},{69.2,41.8},{70.3,43.4},{69.9,42.1},{70.5,41.3},{69.4,42.5},{70.1,42.8},{69.6,41.6},{70.7,42.6},{69.1,42.1},{70.4,43.0}}},nil,14,nil,nil,0,nil,nil,0}, -- Durotar, spawn locations expanded for better coverage
-[46934] = {"Uwa",nil,nil,5,5,0,{[14]={{71.5,48.5}}},nil,14,{28739},{28740},0,"H","Quest Giver",0}, -- Durotar, fixed questEnds format
+[46835] = {"Amethyst Crab",nil,nil,2,2,0,{[14]={{70.2,42},{69.6,42.6},{69.5,42.2}}},nil,14,nil,nil,0,nil,nil,0}, -- Durotar, spawn locations from data collection
+[46934] = {"Uwa",nil,nil,5,5,0,nil,nil,14,nil,nil,0,"H","Quest Giver",0}, -- Durotar, needs coordinates
 
 -- Issue #97: Blasted Lands NPCs from user data submission
 [8178] = {"Nina Lightbrew",nil,nil,52,52,0,{[19]={{65.1,19.4}}},nil,19,{26598},nil,nil,"A",nil,0}, -- Blasted Lands
@@ -1430,7 +1430,7 @@ local epochNpcData = {
 
 -- Issue #357: Missing NPCs from GitHub submission
 [3433] = {"Tatternack Steelforge",nil,nil,20,20,0,{[17]={{45.1,57.7}}},nil,17,{28460},nil,1,"H",nil,0}, -- Barrens, quest giver for Commission for Blusht
--- [46330] = {"Blusht",nil,nil,20,20,0,{[17]={{46.4,73.7}}},nil,17,nil,{28460},1,"H",nil,0}, -- Barrens, turn-in for Commission for Blusht (ID changed from 46329 due to conflict) DUPLICATE
+[46330] = {"Blusht",nil,nil,20,20,0,{[17]={{46.4,73.7}}},nil,17,nil,{28460},1,"H",nil,0}, -- Barrens, turn-in for Commission for Blusht (ID changed from 46329 due to conflict)
 
 -- Issue #328: Missing NPC from GitHub submission  
 [3391] = {"Gazlowe",nil,nil,20,20,0,{[17]={{62.6,36.2}}},nil,17,nil,{27177},1,"H",nil,0}, -- Barrens, turn-in for Operation: Northwatch Hold
@@ -1440,7 +1440,7 @@ local epochNpcData = {
 [1376] = {"Beldin Steelgrill",nil,nil,9,9,0,{[1]={{50.4,49.0}}},nil,1,nil,{26676},2,"A",nil,0}, -- Dun Morogh, turn-in for A Lost Brother
 
 -- Issue #360: Missing NPCs from GitHub submission
--- [45981] = {"Taskmaster Baran",nil,nil,25,25,0,{[331]={{70.0,71.0}}},nil,331,{27039},nil,1,"H",nil,0}, -- Ashenvale, quest giver for Practical Science DUPLICATE
+[45981] = {"Taskmaster Baran",nil,nil,25,25,0,{[331]={{70.0,71.0}}},nil,331,{27039},nil,1,"H",nil,0}, -- Ashenvale, quest giver for Practical Science
 -- Note: NPC 12696 (Senani Thunderheart) already exists on line 474, removed duplicate
 
 -- Issue #368: Missing NPCs from GitHub submission

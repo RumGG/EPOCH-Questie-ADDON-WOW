@@ -270,7 +270,7 @@ local epochNpcData = {
 [6089] = {"[Epoch] NPC 6089",2000,2250,50,50,0,{[1519]={{77.1,53.3}}},nil,1519,nil,nil,11,"A",nil,0},
 [6090] = {"[Epoch] NPC 6090",400,450,10,10,0,{[1519]={{77.0,53.1}}},nil,1519,nil,nil,11,"A",nil,0},
 [6121] = {"Remen Marcot",400,450,10,10,0,{[12]={{38.3,68.3}}},nil,12,nil,nil,11,"A",nil,0},
-[6122] = {"[Epoch] NPC 6122",2000,2250,50,50,0,{[1519]={{39.2,85.2}}},nil,1519,nil,nil,11,"A",nil,0},
+[6122] = {"Gakin the Darkbinder",nil,nil,20,20,0,{[1519]={{39.4,85.2}}},nil,1519,{26281},{26281},2,"A",nil,0}, -- Issue #503: Stormwind City warlock trainer
 [6171] = {"Duthorian Rall",2400,2700,60,60,0,{[1519]={{50.5,47.3}}},nil,1519,nil,{26700},11,"A",nil,0}, -- Issue #388: Turn-in NPC for Hand of Azora
 [6173] = {"[Epoch] NPC 6173",360,405,9,9,0,{[1519]={{49.5,44.9}}},nil,1519,nil,nil,11,"A",nil,0},
 [6174] = {"[Epoch] NPC 6174",200,225,5,5,0,{[1519]={{61.6,73.2}}},nil,1519,nil,nil,11,"A",nil,0},
@@ -718,19 +718,19 @@ local epochNpcData = {
 [46012] = {"Atrasies the Ancient",1360,1530,34,34,0,{[45]={{82.82,57.34}}},nil,45,{26548,26549,26550,26557,26571},{26546,26547,26548,26549,26556,26557,26576},35,"AH",nil,0},
 -- Batch quest submission NPCs
 [1092] = {"Captain Rugelfuss",nil,nil,9,9,0,{[38]={{23.1,73.7}}},nil,38,nil,nil,2,"A",nil,0}, -- Loch Modan
-[1104] = {"Grundel Harkin",nil,nil,60,60,0,{[14]={{28.7,67.9}}},nil,14,{28743},{28743},nil,nil,nil,0}, -- Fixed: Durotar (14), not Tirisfal (85) - quest giver for troll quest
-[5884] = {"Mai'ah",nil,nil,60,60,0,{[14]={{72.8,48.1}}},nil,14,nil,{28728},nil,nil,nil,0}, -- Fixed: Durotar (14), not Tirisfal (85) - turn-in for troll quest
+[1104] = {"Grundel Harkin",nil,nil,60,60,0,{[85]={{28.7,67.9}}},nil,85,{28743},{28743},nil,nil,nil,0},
+[5884] = {"Mai'ah",nil,nil,60,60,0,{[85]={{72.8,48.1}}},nil,85,nil,{28728},nil,nil,nil,0},
 [14731] = {"Lard",nil,nil,50,50,0,{[47]={{78.1,81.3}}},nil,47,{26185},{26185},nil,nil,nil,0},
 [14736] = {"Primal Torntusk",nil,nil,45,45,0,{[47]={{78.1,81.1}}},nil,47,{26169},{26169},1,"H",nil,0},
 [14740] = {"Katoom the Angler",nil,nil,49,49,0,{[47]={{80.3,81.4}}},nil,47,{26170},nil,1,"H",nil,0}, -- Clear The Shore quest giver
 [45024] = {"Watcher Owey",nil,nil,45,45,0,{[47]={{78.3,79.2}}},nil,47,{26179},nil,1,"H",nil,0}, -- Hinterlands Hermit quest giver
 [46129] = {"Mek'nell",nil,nil,48,48,0,{[357]={{51.6,47.7}}},nil,357,{27335},nil,nil,nil,nil,0},
 [46135] = {"Jrall",nil,nil,49,49,0,{[357]={{51.8,46.3}}},nil,357,{27326,27328},{27322,27323,27324,27325,27326,27327,27328},nil,nil,nil,0},
-[46718] = {"Daz'tiro",nil,nil,3,3,0,{[14]={{70.9,45.9}}},nil,14,{28728,28757},{28723},nil,"H",nil,0}, -- Fixed zone from 85 to 14 (Durotar)
-[47100] = {"Azisary",nil,nil,4,4,0,{[14]={{72.9,49.0}}},nil,14,nil,{28757,28758},nil,"H",nil,0}, -- Fixed zone from 85 to 14 (Durotar)
-[47101] = {"Hunter Bon'juru",nil,nil,4,4,0,{[14]={{72.7,47.3}}},nil,14,{28759,28765},{28759,28765},nil,"H",nil,0}, -- Fixed zone from 85 to 14 (Durotar)
-[47103] = {"Witch Doctor Leerya",nil,nil,4,4,0,{[14]={{72.2,48.9}}},nil,14,{28760},{28760},nil,"H",nil,0}, -- Fixed zone from 85 to 14 (Durotar)
-[47106] = {"Makasgar",nil,nil,5,5,0,{[14]={{73.7,48.4}}},nil,14,{28764},{28764},nil,"H",nil,0}, -- Fixed zone from 85 to 14 (Durotar)
+[46718] = {"Daz'tiro",nil,nil,3,3,0,{[85]={{70.9,45.9}}},nil,85,{28728,28757},{28723},nil,nil,nil,0},
+[47100] = {"Azisary",nil,nil,4,4,0,{[85]={{72.9,49.0}}},nil,85,nil,{28757,28758},nil,nil,nil,0},
+[47101] = {"Hunter Bon'juru",nil,nil,4,4,0,{[85]={{72.7,47.3}}},nil,85,{28759,28765},{28759,28765},nil,nil,nil,0},
+[47103] = {"Witch Doctor Leerya",nil,nil,4,4,0,{[85]={{72.2,48.9}}},nil,85,{28760},{28760},nil,nil,nil,0},
+[47106] = {"Makasgar",nil,nil,5,5,0,{[85]={{73.7,48.4}}},nil,85,{28764},{28764},nil,nil,nil,0},
 -- Issue #228: Winterspring, Azshara, and Felwood NPCs
 [46025] = {"Trader Mallu",2160,2430,52,52,0,{[16]={{53.6,8.8}}},nil,16,nil,{27132},35,"H",nil,0},
 [10924] = {"Ivy Leafrunner",2080,2340,51,51,0,{[361]={{50.9,81.6}}},nil,361,{27303},nil,35,"H",nil,0},
@@ -866,7 +866,8 @@ local epochNpcData = {
 [46903] = {"Jason Tinling",2400,2700,60,60,0,{[46]={{68.6,49.9}}},nil,46,{26654,26655,26656},{26654,26655,26656},35,"AH",nil,0},
 [46904] = {"Everstill Lurker",2120,2385,53,53,0,{[44]={{57.4,56.5}}},nil,44,nil,nil,nil,nil,nil,0},
 [1521] = {"Gretchen Dedmar",nil,nil,9,9,0,{[85]={{61.8,52.6}}},nil,85,nil,{26936},nil,nil,nil,0}, -- Correct: Tirisfal Glades (Undead area)
-[45799] = {"Tog'thar",nil,nil,24,24,0,{[267]={{81.4,36.8}}},nil,267,{26795},nil,nil,nil,nil,0},
+[45799] = {"Tog'thar",nil,nil,24,24,0,{[267]={{81.4,36.8}}},nil,267,{26795,26797},nil,1,"H",nil,0}, -- Issue #304: Added quest 26797
+[2229] = {"Krusk",nil,nil,24,24,0,{[267]={{63.1,20.7}}},nil,267,nil,{26797},1,"H",nil,0}, -- Issue #304: Hillsbrad Foothills, turn-in for A Lost Warrior
 [45383] = {"Baster Grays",nil,nil,12,12,0,{[85]={{61.5,52.0}}},nil,85,{26455},nil,nil,nil,nil,0}, -- Correct: Tirisfal Glades
 [5665] = {"Alyssa Blaye",nil,nil,12,13,0,{[1497]={{46.8,27.4}}},nil,1497,{26457,26458},{26456,26457},85,"H",nil,0},
 [45501] = {"Rance Hartstolen",nil,nil,13,13,0,{[85]={{80.3,54.1}}},nil,85,{26461},nil,85,"H",nil,0}, -- Gives quest 26461 after being saved
@@ -887,7 +888,7 @@ local epochNpcData = {
 [48169] = {"Scout Morgria",2200,2475,55,55,0,{[4]={{73.4,34.2}}},nil,4,{26626},{26626},85,"H",nil,0}, -- Reassigned from 45606
 [45607] = {"Torthrak",2200,2475,55,55,0,{[4]={{73.6,34.6}}},nil,4,{26627},{26627},85,"H",nil,0},
 [45631] = {"Liam the Dockmaster",2000,2250,50,50,0,{[4]={{73,48.2}}},nil,4,{26603},{26603,26622},85,"H",nil,0},
-[46834] = {"Joz'jarz",nil,nil,2,2,0,{[14]={{70.1,42.0}}},nil,14,{28722,28723},{28722},nil,"H",nil,0}, -- Fixed zone from 85 to 14 (Durotar)
+[46834] = {"Joz'jarz",nil,nil,2,2,0,{[85]={{70.1,42.0}}},nil,85,{28722,28723},{28722},nil,nil,nil,0}, -- Correct: Tirisfal Glades (low level)
 [3610] = {"Kolkar Waylayer",nil,nil,60,60,0,{[17]={{55.9,59.2}}},nil,17,{27484},{27484},35,"AH",nil,0},
 [11864] = {"Tammra Windfield",nil,nil,60,60,0,{[406]={{47.4,58.4}}},nil,406,nil,{27400,26308},11,"A",nil,0}, -- Issue #354: Updated location to Stonetalon Mountains and added quest 26308
 [45143] = {"Lord Aithalis",nil,nil,51,51,0,{[16]={{44.3,10.4}}},nil,16,{26277},{26277},35,"AH",nil,0},
@@ -933,7 +934,7 @@ local epochNpcData = {
 -- Issue #78: Batch quest data submission NPCs
 [45044] = {"Ainslie Yance",nil,nil,16,16,0,{[85]={{43.1,41.3}}},nil,85,{26217},nil,85,"H",nil,0}, -- Correct: Tirisfal Glades
 [2140] = {"Edwin Harly",nil,nil,13,13,0,{[85]={{44.0,39.8}}},nil,85,{26218},nil,85,"H",nil,0}, -- Correct: Tirisfal Glades
-[1938] = {"Dalar Dawnweaver",nil,nil,16,16,0,{[130]={{44.2,39.8}}},nil,130,nil,{26217},130,"H",nil,0}, -- Fixed: Silverpine Forest (130), not Tirisfal (85) - The Sepulcher
+[1938] = {"Dalar Dawnweaver",nil,nil,16,16,0,{[85]={{44.2,39.8}}},nil,85,nil,{26217},85,"H",nil,0}, -- Correct: Tirisfal Glades
 [45890] = {"Kor",nil,nil,11,11,0,{[85]={{44.4,40.5}}},nil,85,nil,{26930},85,"H",nil,0}, -- Correct: Tirisfal Glades
 
 -- Issue #75: Missing NPCs
@@ -962,8 +963,8 @@ local epochNpcData = {
 [48208] = {"Daz'tiro",nil,nil,5,5,0,{[14]={{70.8,45.9}}},nil,14,{28757},nil,0,"H","Quest Giver",0}, -- Durotar, quest giver for Banana Bonanza
 [48210] = {"Azisary",nil,nil,5,5,0,{[14]={{72.92,49.14}}},nil,14,nil,{28757},0,"H","Quest Turn-in",0}, -- Durotar, turn-in NPC for Banana Bonanza
 [48209] = {"Joz'jarz",nil,nil,5,5,0,{[14]={{70.1,42}}},nil,14,nil,nil,0,"H","Quest Giver",0}, -- Durotar, quest giver for Thievin' Crabs
-[46835] = {"Amethyst Crab",nil,nil,2,2,0,{[14]={{70.2,42},{69.6,42.6},{69.5,42.2},{70.4,41.7},{69.8,41.5},{70.6,42.3},{69.3,42.8},{70.0,43.1},{69.7,41.2},{70.8,41.9},{69.2,41.8},{70.3,43.4},{69.9,42.1},{70.5,41.3},{69.4,42.5},{70.1,42.8},{69.6,41.6},{70.7,42.6},{69.1,42.1},{70.4,43.0}}},nil,14,nil,nil,0,nil,nil,0}, -- Durotar, spawn locations expanded for better coverage
-[46934] = {"Uwa",nil,nil,5,5,0,{[14]={{71.5,48.5}}},nil,14,{28739},{28740},0,"H","Quest Giver",0}, -- Durotar, fixed questEnds format
+[46835] = {"Amethyst Crab",nil,nil,2,2,0,{[14]={{70.2,42},{69.6,42.6},{69.5,42.2}}},nil,14,nil,nil,0,nil,nil,0}, -- Durotar, spawn locations from data collection
+[46934] = {"Uwa",nil,nil,5,5,0,nil,nil,14,nil,nil,0,"H","Quest Giver",0}, -- Durotar, needs coordinates
 
 -- Issue #97: Blasted Lands NPCs from user data submission
 [8178] = {"Nina Lightbrew",nil,nil,52,52,0,{[19]={{65.1,19.4}}},nil,19,{26598},nil,nil,"A",nil,0}, -- Blasted Lands
@@ -980,7 +981,7 @@ local epochNpcData = {
 [48167] = {"Captain Hecklebury Smotts",nil,nil,30,30,0,{[33]={{26.9,77.1}}},nil,33,{28073},nil,3,nil,nil,0}, -- Booty Bay
 
 -- The Barrens NPCs
-[3432] = {"Mankrik",nil,nil,15,15,0,{[17]={{51.9,31.5}}},nil,17,{27168,27174},nil,1,"H",nil,0}, -- Issue #434: Updated coordinates
+[3432] = {"Mankrik",nil,nil,15,15,0,{[17]={{51.9,31.5}}},nil,17,{27166,27168,27174},{27166},1,"H",nil,0}, -- Issue #434: Updated coordinates, Issue #504: Added quest 27166
 [48110] = {"Shin'Zil",nil,nil,17,17,0,{[17]={{55.2,31.4}}},nil,17,{27170,27171,27172,27173},{27169},1,"H",nil,0}, -- Stagnant Oasis entrance
 [48111] = {"Nadia",nil,nil,20,20,0,{[17]={{51.9,29.8}}},nil,17,{27176},{27175},1,"H",nil,0}, -- Crossroads
 [48112] = {"Corrupted Scorpid",nil,nil,16,16,0,{[17]={{55.0,32.0},{54.8,31.6},{55.3,31.2}}},nil,17,nil,nil,1,nil,nil,0}, -- Stagnant Oasis
@@ -1130,7 +1131,7 @@ local epochNpcData = {
 
 -- Issue #156: Various NPCs
 [12043] = {"Kulwia",nil,nil,27,27,0,{[406]={{45.4,59.3}}},nil,406,nil,{27397},1,"H",nil,0}, -- Stonetalon Mountains
-[10428] = {"Motega Firemane",nil,nil,27,27,0,{[400]={{21.6,32.2}}},nil,400,{27489},{27248,27489},1,"H",nil,0}, -- Issue #383: Thousand Needles, added quest 27248 turn-in
+[10428] = {"Motega Firemane",nil,nil,27,27,0,{[400]={{21.6,32.2}}},nil,400,{27489},{27248,27489,27495},1,"H",nil,0}, -- Issue #383 & #496: Thousand Needles, added quests 27248 and 27495 turn-ins
 [45939] = {"Donald Eastworth",nil,nil,13,13,0,{[40]={{65.8,63.1}}},nil,40,{26987,26988},{26987},1,"A","Quest Giver",0}, -- Westfall
 [45940] = {"Nancy Eastworth",nil,nil,13,13,0,{[40]={{56.7,50.4}}},nil,40,{26989},{26988,26989},1,"A","Quest Giver",0}, -- Westfall
 
@@ -1290,7 +1291,7 @@ local epochNpcData = {
 [3650] = {"Asterion",nil,nil,14,14,0,{[148]={{44.2,36.3}}},nil,148,nil,{26201},2,"A",nil,0}, -- Balancing the Forest turn-in
 
 -- Issue #429: Desolace quest NPCs
-[674] = {"Venture Co. Strip Miner",nil,nil,37,38,0,{[33]={{40.9,43.5}},[405]={{35.0,42.0}}},nil,405,{26283,26289},nil,3,nil,nil,0}, -- Issue #406: Updated with quest 26283 in STV
+[674] = {"Venture Co. Strip Miner",nil,nil,37,38,0,{[33]={{40.9,43.5}},{[405]={{35.0,42.0}}}},nil,405,{26283,26289},nil,3,nil,nil,0}, -- Issue #406: Updated with quest 26283 in STV
 [4711] = {"Tidewater Oracle",nil,nil,37,38,0,{[405]={{33.0,10.0}}},nil,405,nil,nil,0,nil,nil,0}, -- Quest 26289 objective
 [4712] = {"Tidewater Warrior",nil,nil,37,38,0,{[405]={{33.0,10.0}}},nil,405,nil,nil,0,nil,nil,0}, -- Quest 26289 objective
 [4713] = {"Gnash",nil,nil,39,39,0,{[405]={{33.0,10.0}}},nil,405,nil,nil,0,nil,nil,0}, -- Quest 26289 objective
@@ -1377,28 +1378,29 @@ local epochNpcData = {
 
 -- Issue #379: Missing NPCs from GitHub submission
 [12837] = {"Yama Snowhoof", nil, nil, 23, 23, 0, {[331] = {{74.0, 60.8}}}, nil, 331, nil, {27049, 28086}, nil, nil, nil, 0}, -- Issue #358: Updated location to Ashenvale and added quest 28086
-[3272] = {"Kolkar Wrangler", nil, nil, 15, 15, 0, {[17] = {{45.4, 40.0}}}, nil, 17, {27196}, nil, nil, nil, nil, 0}, -- Fixed: The Barrens (17), not Tirisfal (85) - Kolkar are centaurs
-[3429] = {"Thork", nil, nil, 15, 15, 0, {[1637] = {{51.5, 30.8}}}, nil, 1637, nil, {27196}, nil, nil, nil, 0}, -- Fixed: Orgrimmar (1637), not Tirisfal (85)
-[10578] = {"Bom'bay", nil, nil, 9, 9, 0, {[14] = {{55.7, 75.3}}}, nil, 14, {27273}, nil, nil, nil, nil, 0}, -- Fixed: Durotar (14), not Tirisfal (85) - troll NPC
+[3272] = {"Kolkar Wrangler", nil, nil, 15, 15, 0, {[85] = {{45.4, 40.0}}}, nil, 85, {27196}, nil, nil, nil, nil, 0}, -- Tirisfal Glades
+[3429] = {"Thork", nil, nil, 15, 15, 0, {[85] = {{51.5, 30.8}}}, nil, 85, nil, {27196}, nil, nil, nil, 0}, -- Tirisfal Glades
+[10578] = {"Bom'bay", nil, nil, 9, 9, 0, {[85] = {{55.7, 75.3}}}, nil, 85, {27273}, nil, nil, nil, nil, 0}, -- Tirisfal Glades
 [11378] = {"Foreman Thazz'ril", nil, nil, 6, 6, 0, {[85] = {{44.5, 68.5}}}, nil, 85, nil, {27275}, nil, nil, nil, 0}, -- Tirisfal Glades
 [3304] = {"Master Vornal", nil, nil, 5, 5, 0, {[85] = {{55.9, 74.4}}}, nil, 85, nil, {27268}, nil, nil, nil, 0}, -- Tirisfal Glades
 
 -- Issue #334: Missing NPCs from GitHub submission
-[14387] = {"Lothos Riftwaker", nil, nil, 60, 60, 0, {[25] = {{47.1, 68.8}}}, nil, 25, {26303}, nil, nil, nil, nil, 0}, -- Fixed: Blackrock Mountain (25), not Tirisfal (85)
-[10540] = {"Vol'jin", nil, nil, 60, 60, 0, {[1637] = {{34.3, 36.6}}}, nil, 1637, {26341}, nil, nil, nil, nil, 0}, -- Fixed: Orgrimmar (1637), not Tirisfal (85)
-[11076] = {"Cauldron Lord Razarch", nil, nil, 47, 47, 0, {[361] = {{53.0, 65.8}}}, nil, 361, nil, {26953}, nil, nil, nil, 0}, -- Fixed: Felwood (361), not Tirisfal (85)
-[4721] = {"Zangen Stonehoof", nil, nil, 60, 60, 0, {[1638] = {{54.7, 51.1}}}, nil, 1638, {27899}, nil, nil, nil, nil, 0}, -- Fixed: Thunder Bluff (1638), not Tirisfal (85)
+[14387] = {"Lothos Riftwaker", nil, nil, 60, 60, 0, {[85] = {{47.1, 68.8}}}, nil, 85, {26303}, nil, nil, nil, nil, 0},
+[10540] = {"Vol'jin", nil, nil, 60, 60, 0, {[85] = {{34.3, 36.6}}}, nil, 85, {26341}, nil, nil, nil, nil, 0},
+[11076] = {"Cauldron Lord Razarch", nil, nil, 47, 47, 0, {[85] = {{53.0, 65.8}}}, nil, 85, nil, {26953}, nil, nil, nil, 0},
+[4721] = {"Zangen Stonehoof", nil, nil, 60, 60, 0, {[85] = {{54.7, 51.1}}}, nil, 85, {27899}, nil, nil, nil, nil, 0},
 
 -- Issue #218: Missing NPCs from comprehensive GitHub submission
 [45645] = {"Meeran",nil,nil,52,52,0,{[51]={{65.0,24.0}}},nil,51,{26645},nil,2,"A",nil,0}, -- Burning Steppes, quest giver for Meeran's Escape
 
 -- Issue #294: Missing NPCs from GitHub submission
-[3322] = {"Kaja", nil, nil, 43, 43, 0, {[33] = {{54.4, 64.8}}}, nil, 33, {26290}, nil, nil, nil, nil, 0}, -- Fixed: Stranglethorn Vale (33), not Tirisfal (85)
-[7853] = {"Scooty", nil, nil, 42, 42, 0, {[33] = {{27.5, 77.4}}}, nil, 33, {26905}, {26892}, nil, nil, nil, 0}, -- Fixed: Stranglethorn Vale (33), not Tirisfal (85). Issue #466
-[715] = {"Hemet Nesingwary", nil, nil, 48, 48, 0, {[33] = {{35.6, 10.7}}}, nil, 33, nil, {27104}, nil, nil, nil, 0}, -- Fixed: Stranglethorn Vale (33), not Tirisfal (85)
-[4500] = {"Overlord Mok'Morokk", nil, nil, 41, 41, 0, {[15] = {{37.0, 31.7}}}, nil, 15, {27291}, nil, nil, nil, nil, 0}, -- Fixed: Dustwallow Marsh (15), not Tirisfal (85)
-[46248] = {"Kyx Rustwrench", nil, nil, 44, 44, 0, {[440] = {{66.7, 22.9}}}, nil, 440, {27470}, nil, nil, nil, nil, 0}, -- Fixed: Tanaris (440), not Tirisfal (85)
-[11756] = {"Quinn", nil, nil, 40, 40, 0, {[440] = {{51.1, 27.9}}}, nil, 440, {28619}, nil, nil, nil, nil, 0}, -- Fixed: Tanaris (440), not Tirisfal (85)
+[3322] = {"Kaja", nil, nil, 43, 43, 0, {[85] = {{54.4, 64.8}}}, nil, 85, {26290}, nil, nil, nil, nil, 0},
+[7853] = {"Scooty", nil, nil, 42, 42, 0, {[85] = {{27.5, 77.4}}}, nil, 85, {26905}, {26892}, nil, nil, nil, 0}, -- Issue #466: Added turn-in for Beastial Allies
+[715] = {"Hemet Nesingwary", nil, nil, 48, 48, 0, {[85] = {{35.6, 10.7}}}, nil, 85, nil, {27104}, nil, nil, nil, 0},
+[4500] = {"Overlord Mok'Morokk", nil, nil, 41, 41, 0, {[85] = {{37.0, 31.7}}}, nil, 85, {27291}, nil, nil, nil, nil, 0},
+[10537] = {"Cliffwatcher Longhorn", nil, nil, 29, 29, 0, {[400] = {{45.6, 50.7}}}, nil, 400, {27498}, {27498}, 1, "H", nil, 0}, -- Issue #500: Thousand Needles quest giver
+[46248] = {"Kyx Rustwrench", nil, nil, 44, 44, 0, {[85] = {{66.7, 22.9}}}, nil, 85, {27470}, nil, nil, nil, nil, 0},
+[11756] = {"Quinn", nil, nil, 40, 40, 0, {[85] = {{51.1, 27.9}}}, nil, 85, {28619}, nil, nil, nil, nil, 0},
 
 -- Issue #317: Missing NPCs from GitHub submission
 [2277] = {"Loremaster Dibbs",nil,nil,42,42,0,{[267]={{50.5,57.2}}},nil,267,{26502,26503},{26502,26503},2,"A",nil,0}, -- Hillsbrad Foothills, quest giver for Rare Books quests
@@ -1430,7 +1432,13 @@ local epochNpcData = {
 
 -- Issue #357: Missing NPCs from GitHub submission
 [3433] = {"Tatternack Steelforge",nil,nil,20,20,0,{[17]={{45.1,57.7}}},nil,17,{28460},nil,1,"H",nil,0}, -- Barrens, quest giver for Commission for Blusht
--- [46330] = {"Blusht",nil,nil,20,20,0,{[17]={{46.4,73.7}}},nil,17,nil,{28460},1,"H",nil,0}, -- Barrens, turn-in for Commission for Blusht (ID changed from 46329 due to conflict) DUPLICATE
+[46330] = {"Blusht",nil,nil,20,20,0,{[17]={{46.4,73.7}}},nil,17,nil,{28460},1,"H",nil,0}, -- Barrens, turn-in for Commission for Blusht (ID changed from 46329 due to conflict)
+
+-- Issue #305: Missing NPC from GitHub submission
+[2789] = {"Skuerto",nil,nil,30,30,0,{[36]={{46.5,46.9}}},nil,36,{28614},{28614},2,"A",nil,0}, -- Arathi Highlands, quest giver and turn-in for Commission for Skuerto
+
+-- Issue #495: Missing NPC from GitHub submission
+[1430] = {"Tomas",nil,nil,5,5,0,{[12]={{40.6,69.4}}},nil,12,nil,{28063},2,"A",nil,0}, -- Elwynn Forest, turn-in for Commission for Tomas
 
 -- Issue #328: Missing NPC from GitHub submission  
 [3391] = {"Gazlowe",nil,nil,20,20,0,{[17]={{62.6,36.2}}},nil,17,nil,{27177},1,"H",nil,0}, -- Barrens, turn-in for Operation: Northwatch Hold
@@ -1440,12 +1448,15 @@ local epochNpcData = {
 [1376] = {"Beldin Steelgrill",nil,nil,9,9,0,{[1]={{50.4,49.0}}},nil,1,nil,{26676},2,"A",nil,0}, -- Dun Morogh, turn-in for A Lost Brother
 
 -- Issue #360: Missing NPCs from GitHub submission
--- [45981] = {"Taskmaster Baran",nil,nil,25,25,0,{[331]={{70.0,71.0}}},nil,331,{27039},nil,1,"H",nil,0}, -- Ashenvale, quest giver for Practical Science DUPLICATE
--- Note: NPC 12696 (Senani Thunderheart) already exists on line 474, removed duplicate
+[45981] = {"Taskmaster Baran",nil,nil,25,25,0,{[331]={{70.0,71.0}}},nil,331,{27039},nil,1,"H",nil,0}, -- Ashenvale, quest giver for Practical Science
+[12696] = {"Senani Thunderheart",nil,nil,25,25,0,{[331]={{73.7,61.4}}},nil,331,nil,{27039},1,"H",nil,0}, -- Ashenvale, turn-in for Practical Science
 
 -- Issue #368: Missing NPCs from GitHub submission
 [46011] = {"Captain Ashyla",nil,nil,48,48,0,{[16]={{12.0,78.2}}},nil,16,{27097},nil,2,"A",nil,0}, -- Azshara, quest giver for Message for Wobble Hollow
 [7406] = {"Oglethorpe Obnoticus",nil,nil,48,48,0,{[33]={{28.3,76.3}}},nil,33,nil,{27097},2,"A",nil,0}, -- Stranglethorn Vale, turn-in for Message for Wobble Hollow
+
+-- Issue #505: Missing NPC from GitHub submission
+[2910] = {"Prospector Ryedol",nil,nil,40,40,0,{[3]={{53.5,43.3}}},nil,3,nil,{26587},2,"A",nil,0}, -- Badlands, Alliance turn-in for Primitive Relic
 }
 
 QuestieDB._epochNpcData = epochNpcData
