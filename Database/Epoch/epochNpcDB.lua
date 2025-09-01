@@ -149,6 +149,7 @@ local epochNpcData = {
 [2079] = {"[Epoch] NPC 2079",160,180,4,4,0,{[141]={{58.6,44.7}}},nil,141,nil,nil,11,"A",nil,0},
 [2091] = {"General Gujek",1080,1215,27,27,0,{[11]={{53.45,54.66}}},nil,11,nil,nil,nil,nil,nil,0},
 [2198] = {"[Epoch] NPC 2198",120,135,3,3,0,{[1519]={{56.5,74.3}}},nil,1519,nil,nil,11,"A",nil,0},
+[2216] = {"Apothecary Lydon",nil,nil,30,30,0,{[267]={{61.4,19.0}}},nil,267,nil,{28413},1,"H",nil,0}, -- Issue #366: Hillsbrad Foothills turn-in for Commission for Hagar Lightninghoof
 [2228] = {"Lieutenant Farren Orinelle",nil,nil,33,33,0,{[267]={{51.4,58.4}}},nil,267,nil,{26504},2,"A",nil,0}, -- Issue #347: Hillsbrad Foothills, turn-in for Syndicate Documents
 [2244] = {"[Epoch] NPC 2244",40,45,1,1,0,{[267]={{67.9,47.2},{65.3,48.7},{64.8,47.0},{66.7,46.0}}},nil,267,nil,nil,nil,nil,nil,0},
 [2255] = {"Crushridge Mage",nil,nil,37,37,0,{[36]={{46.5,47.0}}},nil,36,{26570},nil,2,"A",nil,0}, -- Issue #351: Alterac Mountains, quest giver for Waterlogged Journal
@@ -190,7 +191,7 @@ local epochNpcData = {
 [3513] = {"[Epoch] NPC 3513",1000,1125,25,25,0,{[1519]={{72.4,47.4}}},nil,1519,nil,nil,11,"A",nil,0},
 [3518] = {"[Epoch] NPC 3518",600,675,15,15,0,{[1519]={{63.5,71.8}}},nil,1519,nil,nil,11,"A",nil,0},
 [3520] = {"[Epoch] NPC 3520",80,90,2,2,0,{[1519]={{60.5,57.1}}},nil,1519,nil,nil,11,"A",nil,0},
-[3544] = {"Jason Lemieux",nil,nil,35,35,0,{[267]={{62.3,20.8}}},nil,267,{26544},nil,nil,nil,nil,0}, -- Hillsbrad Foothills (from quest 26544: Who Likes Apples)
+[3544] = {"Jason Lemieux",nil,nil,35,35,0,{[267]={{62.3,20.8}}},nil,267,{26544},{26544},1,"H",nil,0}, -- Issue #308: Added turn-in quest and faction for Who Likes Apples
 [3555] = {"Johan Focht",nil,nil,5,5,0,{[130]={{43.4,40.5}}},nil,130,{28660},nil,1,"H",nil,0}, -- Issue #470: Silverpine Forest quest giver for Commission for Sebastian Meloche
 [3581] = {"[Epoch] NPC 3581",2000,2250,50,50,4,{[1519]={{71.3,68.4}}},nil,1519,nil,nil,nil,nil,nil,0},
 [3626] = {"[Epoch] NPC 3626",200,225,5,5,0,{[1519]={{75.6,63.0}}},nil,1519,nil,nil,11,"A",nil,0},
@@ -693,7 +694,7 @@ local epochNpcData = {
 [45886] = {"Historian Eva Trelayne",nil,nil,9,9,0,{[1458]={{75.8,37.8}}},nil,1458,nil,{26927},nil,"H",nil,0}, -- In Undercity Magic Quarter
 [1496] = {"Deathguard Dillinger",nil,nil,8,8,0,{[85]={{58.1,51.5}}},nil,85,nil,{26925},1,"H",nil,0}, -- Issue #474: Another turn-in option for Message for the Historian
 [1515] = {"Executor Zygand",nil,nil,8,8,0,{[85]={{60.5,51.8}}},nil,85,nil,{26925},1,"H",nil,0}, -- Issue #385: Alternative turn-in for Message for the Historian
-[45887] = {"Historian Todd Page",nil,nil,8,8,0,{[85]={{60.6,51.0}}},nil,85,{26926},{26925},0,"H",nil,0}, -- Issue #256: Tirisfal Glades
+[45887] = {"Historian Todd Page",nil,nil,8,8,0,{[85]={{60.6,51.0}}},nil,85,{26926,26927},{26925},0,"H",nil,0}, -- Issue #256: Tirisfal Glades, Issue #363: Added quest giver for 26927
 [45888] = {"Deathguard Kitsapell",nil,nil,11,11,0,{[130]={{49.6,31.2}}},nil,130,{26928,26929},{26928,26929,26455},1,"H",nil,0}, -- Issue #398, #447: Silverpine Forest quests
 [45894] = {"Apolos Deathshot",nil,nil,1,1,0,{[85]={{32.7,65.6}}},nil,85,nil,{26933},0,"H",nil,0}, -- Issue #256: Hunter trainer in Deathknell
 [45895] = {"Dark Ooze",nil,nil,9,10,0,{[85]={{24.5,49.5},{24.1,50},{24.1,50.4},{23.9,51.1},{23.8,51},{23.7,51.7},{24.2,49.7}}},nil,85,nil,nil,nil,nil,nil,0},
@@ -1274,7 +1275,7 @@ local epochNpcData = {
 [2391] = {"Serge Hinott",nil,nil,40,40,0,{[267]={{63.5,20.7}}},nil,267,{26522},{26522},72,"H",nil,0},
 [2934] = {"Keeper Bel'varil",nil,nil,40,40,0,{[36]={{62.8,40.8}}},nil,36,{26526},{26526},72,"H",nil,0},
 [45859] = {"Goobis McChow",nil,nil,40,40,0,{[267]={{54.9,16.9}}},nil,267,nil,nil,7,nil,nil,0},
-[12997] = {"Monty",nil,nil,9,9,0,{[2257]={{0,0}}},nil,2257,nil,{26676},2,"A",nil,0}, -- Issue #454: Deeprun Tram, A Lost Brother turn-in
+[12997] = {"Monty",nil,nil,9,9,0,{[2257]={{0,0}}},nil,2257,nil,nil,2,"A",nil,0}, -- Issue #322: Removed quest 26676 turn-in (moved to Beldin Steelgrill)
 [45857] = {"Fik Fizzfingers",nil,nil,43,43,0,{[33]={{42.1,27.4}}},nil,33,{26897,26899},nil,nil,nil,nil,0}, -- Issue #426: Ring of Strength quests
 [3478] = {"Traugh",nil,nil,19,19,0,{[17]={{51.3,28.9}}},nil,17,nil,{27167},1,"H",nil,0}, -- Issue #460: Foreign Technology turn-in
 [46061] = {"Zephrix",nil,nil,20,20,0,{[17]={{62.2,51.4}}},nil,17,{27177},nil,1,"H",nil,0}, -- Issue #460: Operation: Northwatch Hold
@@ -1433,6 +1434,18 @@ local epochNpcData = {
 
 -- Issue #328: Missing NPC from GitHub submission  
 [3391] = {"Gazlowe",nil,nil,20,20,0,{[17]={{62.6,36.2}}},nil,17,nil,{27177},1,"H",nil,0}, -- Barrens, turn-in for Operation: Northwatch Hold
+
+-- Issue #322: Missing NPCs from GitHub submission
+[1273] = {"Grawn Thromwyn",nil,nil,9,9,0,{[1]={{45.3,52.1}}},nil,1,{26676},nil,2,"A",nil,0}, -- Dun Morogh, quest giver for A Lost Brother
+[1376] = {"Beldin Steelgrill",nil,nil,9,9,0,{[1]={{50.4,49.0}}},nil,1,nil,{26676},2,"A",nil,0}, -- Dun Morogh, turn-in for A Lost Brother
+
+-- Issue #360: Missing NPCs from GitHub submission
+[45981] = {"Taskmaster Baran",nil,nil,25,25,0,{[331]={{70.0,71.0}}},nil,331,{27039},nil,1,"H",nil,0}, -- Ashenvale, quest giver for Practical Science
+[12696] = {"Senani Thunderheart",nil,nil,25,25,0,{[331]={{73.7,61.4}}},nil,331,nil,{27039},1,"H",nil,0}, -- Ashenvale, turn-in for Practical Science
+
+-- Issue #368: Missing NPCs from GitHub submission
+[46011] = {"Captain Ashyla",nil,nil,48,48,0,{[16]={{12.0,78.2}}},nil,16,{27097},nil,2,"A",nil,0}, -- Azshara, quest giver for Message for Wobble Hollow
+[7406] = {"Oglethorpe Obnoticus",nil,nil,48,48,0,{[33]={{28.3,76.3}}},nil,33,nil,{27097},2,"A",nil,0}, -- Stranglethorn Vale, turn-in for Message for Wobble Hollow
 }
 
 QuestieDB._epochNpcData = epochNpcData
