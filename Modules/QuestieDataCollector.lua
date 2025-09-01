@@ -848,6 +848,21 @@ function QuestieDataCollector:GetPlayerCoords()
     return {x = 0, y = 0}
 end
 
+-- Helper function to determine profession level tier
+function QuestieDataCollector:GetProfessionLevel(skillRank)
+    if skillRank <= 75 then
+        return "Apprentice"
+    elseif skillRank <= 150 then
+        return "Journeyman"
+    elseif skillRank <= 225 then
+        return "Expert"
+    elseif skillRank <= 300 then
+        return "Artisan"
+    else
+        return "Grand Master"  -- For BC/WotLK 375 cap
+    end
+end
+
 function QuestieDataCollector:OnQuestAccepted(questId)
     if not questId then return end
     
@@ -981,6 +996,23 @@ function QuestieDataCollector:OnQuestAccepted(questId)
         
         -- Initialize collection data for this quest
         if not QuestieDataCollection.quests[questId] then
+            -- Capture player's current professions and skill levels
+            local professions = {}
+            for i = 1, GetNumSkillLines() do
+                if i > 14 then break end -- Don't go through weapon skills
+                local skillName, isHeader, _, skillRank, _, _, maxRank = GetSkillLineInfo(i)
+                if not isHeader and skillName then
+                    -- Check if it's a profession (has max rank of 300 or 375)
+                    if maxRank and (maxRank == 300 or maxRank == 375) then
+                        professions[skillName] = {
+                            current = skillRank,
+                            max = maxRank,
+                            level = QuestieDataCollector:GetProfessionLevel(skillRank)
+                        }
+                    end
+                end
+            end
+            
             QuestieDataCollection.quests[questId] = {
                 id = questId,
                 name = questTitle,
@@ -990,6 +1022,7 @@ function QuestieDataCollector:OnQuestAccepted(questId)
                 faction = UnitFactionGroup("player"),  -- "Alliance" or "Horde"
                 race = select(2, UnitRace("player")),
                 class = select(2, UnitClass("player")),
+                professions = professions,  -- NEW: Player's professions when accepting
                 objectives = {},
                 items = {},
                 npcs = {}
@@ -1021,6 +1054,15 @@ function QuestieDataCollector:OnQuestAccepted(questId)
             SelectQuestLogEntry(questLogIndex)
             local _, level = QuestieCompat.GetQuestLogTitle(questLogIndex)
             QuestieDataCollection.quests[questId].level = level
+            
+            -- Capture full quest text and objective text
+            local questDescription, questObjectiveText = GetQuestLogQuestText()
+            if questDescription then
+                QuestieDataCollection.quests[questId].description = questDescription
+            end
+            if questObjectiveText then
+                QuestieDataCollection.quests[questId].objectiveText = questObjectiveText
+            end
             
             -- Get objectives (with retry for text that might not be loaded yet)
             local numObjectives = GetNumQuestLeaderBoards()  -- WoW 3.3.5: no parameter needed
@@ -2641,7 +2683,27 @@ function QuestieDataCollector:GenerateExportText(questId, data, skipInstructions
     text = text .. "Level: " .. (data.level or "Unknown") .. "\n"
     text = text .. "Zone: " .. (data.zone or "Unknown") .. "\n"
     -- Use current player's faction if not stored in data
-    text = text .. "Faction: " .. (data.faction or UnitFactionGroup("player") or "Unknown") .. "\n\n"
+    text = text .. "Faction: " .. (data.faction or UnitFactionGroup("player") or "Unknown") .. "\n"
+    
+    -- Add profession data if captured
+    if data.professions and next(data.professions) then
+        text = text .. "\nPROFESSIONS AT QUEST ACCEPTANCE:\n"
+        for profName, profData in pairs(data.professions) do
+            text = text .. "  " .. profName .. ": " .. profData.current .. "/" .. profData.max .. 
+                         " (" .. profData.level .. ")\n"
+        end
+    end
+    
+    -- Add quest text if captured
+    if data.description then
+        text = text .. "\nQUEST DESCRIPTION:\n" .. data.description .. "\n"
+    end
+    
+    if data.objectiveText then
+        text = text .. "\nQUEST OBJECTIVES TEXT:\n" .. data.objectiveText .. "\n"
+    end
+    
+    text = text .. "\n"
     
     if data.questGiver then
         text = text .. "QUEST GIVER:\n"

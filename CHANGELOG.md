@@ -1,5 +1,45 @@
 # Changelog
 
+## [Unreleased]
+
+### Fixed
+- **Quest progress not updating in tracker (Issue #467)**
+  - Fixed tracker showing 0/10 when quest log shows actual progress (e.g., 3/10)
+  - The compatibility layer was only reading 3 parameters from GetQuestLogLeaderBoard instead of 5
+  - In WoW 3.3.5, the API returns: description, type, finished, numFulfilled, numRequired
+  - Now properly reads numFulfilled and numRequired directly from the API instead of parsing text
+- **NPC ID printing twice in tooltips (Issue #469)**
+  - Added duplicate detection for NPC ID, Item ID, and Object ID in tooltips
+  - Prevents IDs from being added multiple times when tooltip is refreshed
+  - Checks existing tooltip lines before adding ID information
+- **Service NPC tracking/untracking issues in map dropdown**
+  - Fixed untracking not working when unchecking service types (Innkeeper, Banker, etc.)
+  - Fixed duplicate NPCs appearing when toggling service tracking on/off
+  - Now properly clears all existing frames before spawning new ones to prevent duplicates
+  - Ensures complete cleanup of manual frames when untracking service NPCs
+- **Objective Color "Red to Green" crashes with Epoch quests (Issue #332)**
+  - Fixed nil concatenation error when using colored objectives with Epoch runtime stub quests
+  - Added safety checks for nil or zero objective.Needed values (common with Epoch quests)
+  - Completed objectives without progress data now properly show green
+  - Unknown progress objectives show gray instead of crashing
+
+### Added
+- **Profession data capture in QuestieDataCollector**
+  - Captures player's profession levels when accepting quests
+  - Records current skill rank, max rank, and tier (Apprentice/Journeyman/Expert/Artisan)
+  - Helps identify profession requirements for commission quests
+  - Displays profession data in quest export for GitHub submissions
+- **Full quest text capture**
+  - Now captures complete quest description text
+  - Captures full objectives text (not just parsed bullet points)
+  - Preserves quest narrative for database improvement
+  - Included in quest export for better documentation
+- **New toggle: Auto Track All Quests on Login**
+  - Located in Tracker Settings under Auto Track Quests option
+  - When disabled, your manually tracked quest selection persists between sessions
+  - When enabled (default), all quests are automatically tracked on login/reload
+  - Allows players to maintain their preferred quest tracking without it resetting
+
 ## [1.0.70] - 2024-08-31
 
 ### Added

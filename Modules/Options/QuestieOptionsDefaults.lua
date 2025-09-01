@@ -65,6 +65,7 @@ function QuestieOptionsDefaults:Load()
 
             -- Tracker Settings Tab
             autoTrackQuests = true,
+            autoTrackOnLogin = true,  -- New: Controls whether to auto-track all quests on login/reload
             trackerShowCompleteQuests = true,
             trackerShowQuestLevel = true,
             collapseCompletedQuests = false,

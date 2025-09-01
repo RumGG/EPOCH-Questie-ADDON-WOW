@@ -108,6 +108,16 @@ function QuestieLib:GetRGBForObjective(objective)
     if not objective.Collected or type(objective.Collected) ~= "number" then
         return FloatRGBToHex(0.8, 0.8, 0.8)
     end
+    
+    -- Safety check for nil or zero Needed value (common with Epoch runtime stub quests)
+    if not objective.Needed or type(objective.Needed) ~= "number" or objective.Needed == 0 then
+        -- If objective is marked as complete, show green, otherwise gray
+        if objective.Completed then
+            return RGBToHex(76, 255, 76)  -- Green for completed
+        else
+            return FloatRGBToHex(0.8, 0.8, 0.8)  -- Gray for unknown progress
+        end
+    end
 
     local float = objective.Collected / objective.Needed
     local trackerColor = Questie.db.profile.trackerColorObjectives
