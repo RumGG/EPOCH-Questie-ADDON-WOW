@@ -198,9 +198,12 @@ function QuestieSlash.HandleCommands(input)
     if mainCommand == "fixduplicates" then
         DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Questie]|r Checking for duplicate quest issues...", 0, 1, 0)
         
-        -- Known duplicate quest sets
+        -- Known duplicate quest sets (quests with same name but different IDs)
         local duplicateSets = {
             {name = "The Killing Fields", ids = {9, 26993, 26994, 26995}},
+            {name = "Hand of Azora", ids = {26696, 26697, 26700}},
+            {name = "My Sister Isabetta", ids = {27207, 27208, 27209}},
+            {name = "The Barony Mordis", ids = {26538, 26539}},
         }
         
         local fixedCount = 0
@@ -239,6 +242,64 @@ function QuestieSlash.HandleCommands(input)
             DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Questie]|r Fixed " .. fixedCount .. " duplicate quest issues!", 0, 1, 0)
         else
             DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Questie]|r No duplicate quest issues found.", 0, 1, 0)
+        end
+        
+        return
+    end
+    
+    -- /questie findduplicates - Find all quests with duplicate names
+    if mainCommand == "findduplicates" then
+        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Questie]|r Scanning for quests with duplicate names...", 0, 1, 0)
+        
+        local questsByName = {}
+        local duplicatesFound = {}
+        
+        -- Scan all quests and group by name
+        for id = 1, 30000 do
+            local questData = QuestieDB:GetQuest(id)
+            if questData and questData.name then
+                local name = questData.name
+                if not questsByName[name] then
+                    questsByName[name] = {}
+                end
+                table.insert(questsByName[name], id)
+            end
+        end
+        
+        -- Find duplicates
+        for name, ids in pairs(questsByName) do
+            if #ids > 1 then
+                table.insert(duplicatesFound, {name = name, ids = ids})
+            end
+        end
+        
+        -- Sort by name for easier reading
+        table.sort(duplicatesFound, function(a, b) return a.name < b.name end)
+        
+        -- Display results
+        if #duplicatesFound > 0 then
+            DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00Found " .. #duplicatesFound .. " quests with duplicate names:|r", 1, 1, 0)
+            
+            for _, dup in pairs(duplicatesFound) do
+                local idList = table.concat(dup.ids, ", ")
+                DEFAULT_CHAT_FRAME:AddMessage("  " .. dup.name .. " - IDs: " .. idList, 1, 1, 1)
+                
+                -- Check completion status
+                local completeCount = 0
+                for _, id in pairs(dup.ids) do
+                    if Questie.db.char.complete[id] then
+                        completeCount = completeCount + 1
+                    end
+                end
+                
+                if completeCount > 0 and completeCount < #dup.ids then
+                    DEFAULT_CHAT_FRAME:AddMessage("    |cFFFF0000⚠ Partially complete (" .. completeCount .. "/" .. #dup.ids .. ")|r", 1, 0, 0)
+                end
+            end
+            
+            DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00Use /questie fixduplicates to mark all versions complete|r", 0, 1, 0)
+        else
+            DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00No duplicate quest names found.|r", 0, 1, 0)
         end
         
         return
