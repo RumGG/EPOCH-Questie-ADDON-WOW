@@ -3017,6 +3017,9 @@ function QuestieDataCollector:ExportQuest(questId)
         f.closeButton:SetPoint("TOPRIGHT", -5, -5)
     end
     
+    -- Generate database entries
+    export = export .. "\n" .. QuestieDataCollector:GenerateDatabaseEntries(questId, questData)
+    
     -- Add footer separator
     export = export .. "\n════════════════════════════════════════════════════════════════\n"
     export = export .. "                        END OF QUEST                           \n"
@@ -3027,6 +3030,125 @@ function QuestieDataCollector:ExportQuest(questId)
     QuestieDataCollectorExportFrame:Show()
     
     DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Data Collector]|r Quest data exported. Copy from the window and submit to GitHub.", 0, 1, 0)
+end
+
+function QuestieDataCollector:GenerateDatabaseEntries(questId, questData)
+    local output = "DATABASE ENTRIES:\n"
+    output = output .. "================\n\n"
+    
+    -- Generate quest entry
+    output = output .. "-- Add to epochQuestDB.lua:\n"
+    output = output .. "[" .. questId .. "] = {"
+    
+    -- 1. Quest name
+    output = output .. '"' .. (questData.name or "Unknown Quest") .. '"'
+    
+    -- 2. Started by {{NPCs},{Objects},{Items}}
+    output = output .. ","
+    if questData.questGiver and questData.questGiver.id then
+        output = output .. "{{" .. questData.questGiver.id .. "}}"
+    else
+        output = output .. "nil"
+    end
+    
+    -- 3. Finished by {{NPCs},{Objects}}
+    output = output .. ","
+    if questData.turnInNpc and questData.turnInNpc.id then
+        output = output .. "{{" .. questData.turnInNpc.id .. "}}"
+    else
+        output = output .. "nil"
+    end
+    
+    -- 4. Required level
+    output = output .. ",nil"
+    
+    -- 5. Quest level
+    output = output .. "," .. (questData.level or "nil")
+    
+    -- 6-7. Required races/classes (nil = all)
+    output = output .. ",nil,nil"
+    
+    -- 8. Objectives text (nil for now, could extract from objectivesText)
+    output = output .. ",nil"
+    
+    -- 9. Trigger end (exploration objectives)
+    output = output .. ",nil"
+    
+    -- 10. Objectives (simplified - would need proper parsing)
+    output = output .. ",nil"
+    
+    -- 11-30. Other fields (all nil for basic entry)
+    for i = 11, 30 do
+        output = output .. ",nil"
+    end
+    
+    output = output .. "},\n\n"
+    
+    -- Generate NPC entries
+    local npcEntries = {}
+    
+    -- Quest giver
+    if questData.questGiver and questData.questGiver.id then
+        local npc = questData.questGiver
+        local coords = ""
+        if npc.coords and npc.coords.x and npc.coords.y then
+            coords = string.format("{[%d]={{%.1f,%.1f}}}", 
+                npc.coords.areaId or 0, npc.coords.x, npc.coords.y)
+        else
+            coords = "nil"
+        end
+        
+        npcEntries[npc.id] = string.format(
+            '[%d] = {"%s",nil,nil,%s,%s,0,%s,nil,%d,{%d},nil,nil,nil,nil,2},',
+            npc.id,
+            npc.name or "Unknown",
+            questData.level or "nil",
+            questData.level or "nil",
+            coords,
+            npc.coords and npc.coords.areaId or 0,
+            questId
+        )
+    end
+    
+    -- Turn-in NPC
+    if questData.turnInNpc and questData.turnInNpc.id and 
+       (not questData.questGiver or questData.turnInNpc.id ~= questData.questGiver.id) then
+        local npc = questData.turnInNpc
+        local coords = ""
+        if npc.coords and npc.coords.x and npc.coords.y then
+            coords = string.format("{[%d]={{%.1f,%.1f}}}", 
+                npc.coords.areaId or 0, npc.coords.x, npc.coords.y)
+        else
+            coords = "nil"
+        end
+        
+        npcEntries[npc.id] = string.format(
+            '[%d] = {"%s",nil,nil,%s,%s,0,%s,nil,%d,nil,{%d},nil,nil,nil,2},',
+            npc.id,
+            npc.name or "Unknown",
+            questData.level or "nil",
+            questData.level or "nil",
+            coords,
+            npc.coords and npc.coords.areaId or 0,
+            questId
+        )
+    end
+    
+    -- Output NPC entries
+    if next(npcEntries) then
+        output = output .. "-- Add to epochNpcDB.lua:\n"
+        for _, entry in pairs(npcEntries) do
+            output = output .. entry .. "\n"
+        end
+    end
+    
+    output = output .. "\n-- Note: These are basic entries. Review and adjust:\n"
+    output = output .. "-- * Add proper objectives from the quest data\n"
+    output = output .. "-- * Verify NPC levels and coordinates\n"
+    output = output .. "-- * Add quest chains and prerequisites if known\n"
+    output = output .. "-- * Set proper faction flags (A/H/AH)\n"
+    
+    return output
 end
 
 function QuestieDataCollector:ShowStatus()
