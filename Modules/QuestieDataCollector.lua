@@ -9,13 +9,21 @@ local QuestieLib = QuestieLoader:ImportModule("QuestieLib")
 local QuestieQuest = QuestieLoader:ImportModule("QuestieQuest")
 ---@type ZoneDB
 local ZoneDB = QuestieLoader:ImportModule("ZoneDB")
+---@type QuestieCompat
+local QuestieCompat = QuestieLoader:ImportModule("QuestieCompat")
 
 -- Compatibility reassignments (following codebase pattern)
-local C_Timer = QuestieCompat.C_Timer
+local C_Timer -- Will be assigned after initialization
 
 -- Version control - only accept data from this version or later
 local MINIMUM_VERSION = "1.1.0"
 local CURRENT_VERSION = "1.1.0"
+
+-- WoW AreaID to Questie zone ID mapping for problematic zones
+local WOW_AREA_TO_QUESTIE_ZONE = {
+    [21] = 85,  -- Tirisfal Glades (WoW uses 21, Questie uses 85)
+    -- Add more mappings as we discover them
+}
 
 -- Zone name to Questie zone ID mapping (most common zones)
 local ZONE_NAME_TO_ID = {
@@ -188,6 +196,11 @@ function QuestieDataCollector:Initialize()
         return
     end
     
+    -- Initialize C_Timer from QuestieCompat
+    if QuestieCompat and QuestieCompat.C_Timer then
+        C_Timer = QuestieCompat.C_Timer
+    end
+    
     -- Only initialize if explicitly enabled
     if not Questie or not Questie.db or not Questie.db.profile.enableDataCollection then
         return
@@ -298,9 +311,22 @@ function QuestieDataCollector:Initialize()
     
     -- Wait for Questie to be fully initialized before checking quests
     if not Questie.started then
-        C_Timer.After(5, function()
-            QuestieDataCollector:CheckActiveQuests()
-        end)
+        if C_Timer and C_Timer.After then
+            C_Timer.After(5, function()
+                QuestieDataCollector:CheckActiveQuests()
+            end)
+        else
+            -- Fallback if C_Timer isn't available - use a frame with OnUpdate
+            local waitFrame = CreateFrame("Frame")
+            local elapsed = 0
+            waitFrame:SetScript("OnUpdate", function(self, delta)
+                elapsed = elapsed + delta
+                if elapsed >= 5 then
+                    self:SetScript("OnUpdate", nil)
+                    QuestieDataCollector:CheckActiveQuests()
+                end
+            end)
+        end
     else
         QuestieDataCollector:CheckActiveQuests()
     end
@@ -327,20 +353,61 @@ local function GetCurrentZoneData()
         areaId = GetCurrentMapAreaID()
     end
     
-    -- Try to get Questie's zone ID (only if we have a valid mapId)
+    -- Try to get Questie's zone ID
     local questieZoneId = nil
-    if mapId and ZoneDB and ZoneDB.GetAreaIdByUiMapId then
+    
+    -- Method 1: Try using QuestieCompat to get proper UiMapId
+    if not questieZoneId and QuestieCompat and QuestieCompat.GetCurrentUiMapID then
+        local uiMapId = QuestieCompat.GetCurrentUiMapID()
+        if uiMapId and ZoneDB and ZoneDB.GetAreaIdByUiMapId then
+            local success, result = pcall(function()
+                return ZoneDB:GetAreaIdByUiMapId(uiMapId)
+            end)
+            if success and result then
+                questieZoneId = result
+            end
+        end
+    end
+    
+    -- Method 2: Try using mapId if available
+    if not questieZoneId and mapId and ZoneDB and ZoneDB.GetAreaIdByUiMapId then
         -- Use pcall to safely handle any errors from ZoneDB
         local success, result = pcall(function()
             return ZoneDB:GetAreaIdByUiMapId(mapId)
         end)
-        if success then
+        if success and result then
             questieZoneId = result
         end
     end
     
+    -- Method 3: If that didn't work, try using zone name (PRIORITY METHOD)
+    if zoneData.zone and ZONE_NAME_TO_ID[zoneData.zone] then
+        questieZoneId = ZONE_NAME_TO_ID[zoneData.zone]
+    end
+    
+    -- Method 4: Try GetRealZoneText if zone didn't work
+    if not questieZoneId and zoneData.realZone and ZONE_NAME_TO_ID[zoneData.realZone] then
+        questieZoneId = ZONE_NAME_TO_ID[zoneData.realZone]
+    end
+    
+    -- Method 5: Direct WoW AreaID to Questie zone mapping
+    if not questieZoneId and areaId and WOW_AREA_TO_QUESTIE_ZONE[areaId] then
+        questieZoneId = WOW_AREA_TO_QUESTIE_ZONE[areaId]
+    end
+    
+    -- Debug zone detection for problematic zones or when debug is enabled
+    if _debugEnabled or areaId == 21 or questieZoneId == 85 or zoneData.zone == "Tirisfal Glades" then
+        DebugMessage(string.format("[ZONE DETECTION] zone='%s', realZone='%s', areaId=%s, questieZoneId=%s", 
+            tostring(zoneData.zone), 
+            tostring(zoneData.realZone), 
+            tostring(areaId), 
+            tostring(questieZoneId)), 1, 1, 0)
+    end
+    
     zoneData.mapId = mapId
-    zoneData.areaId = areaId or questieZoneId
+    -- CRITICAL: Use Questie's zone ID system, not WoW's GetCurrentMapAreaID
+    -- WoW returns zone 21 for Tirisfal but Questie uses zone 85
+    zoneData.areaId = questieZoneId or areaId  -- Prefer Questie's zone ID
     zoneData.questieZoneId = questieZoneId
     
     -- Get coordinates
@@ -1171,12 +1238,24 @@ function QuestieDataCollector:CaptureNPCInfo()
         end
         
         -- Check zone and coordinate mismatches if we have coordinates
-        if coords and coords.areaId and dbNpc.spawns then
+        if coords and (coords.areaId or coords.questieZoneId) and dbNpc.spawns then
             local foundZone = false
             local closestDistance = 9999
             
+            -- Use questieZoneId if available, otherwise areaId
+            local currentZone = coords.questieZoneId or coords.areaId
+            
+            -- Debug logging to understand zone detection
+            if npcId == 1568 or npcId == 1569 then
+                DebugMessage(string.format("[ZONE DEBUG] NPC %d: questieZoneId=%s, areaId=%s, using=%s", 
+                    npcId, 
+                    tostring(coords.questieZoneId), 
+                    tostring(coords.areaId), 
+                    tostring(currentZone)), 1, 1, 0)
+            end
+            
             for zoneId, spawns in pairs(dbNpc.spawns) do
-                if zoneId == coords.areaId then
+                if zoneId == currentZone then
                     foundZone = true
                     
                     -- Check coordinate accuracy within this zone
@@ -1199,7 +1278,7 @@ function QuestieDataCollector:CaptureNPCInfo()
             
             -- Report zone mismatch
             if not foundZone then
-                CheckDatabaseMismatch("npc", npcId, "zone", coords.areaId, next(dbNpc.spawns))
+                CheckDatabaseMismatch("npc", npcId, "zone", currentZone, next(dbNpc.spawns))
             end
             
             -- Report coordinate mismatch if NPC is too far from any known spawn
@@ -2473,11 +2552,124 @@ function QuestieDataCollector:ShowExportWindow(questId)
             end
         end
         
+        -- Count database mismatches
+        local mismatchCount = 0
+        for _ in pairs(_dataMismatches) do
+            mismatchCount = mismatchCount + 1
+        end
+        
         exportText = exportText .. "Total Quests: " .. questCount .. "\n"
         exportText = exportText .. "Service NPCs: " .. serviceNPCCount .. "\n"
         exportText = exportText .. "Mailboxes: " .. mailboxCount .. "\n"
         exportText = exportText .. "Flight Masters: " .. flightMasterCount .. "\n"
+        if mismatchCount > 0 then
+            exportText = exportText .. "DATABASE MISMATCHES: " .. mismatchCount .. " ⚠️\n"
+        end
         exportText = exportText .. "=====================================\n\n"
+        
+        -- DATABASE MISMATCHES SECTION (CRITICAL - ALWAYS SHOW FIRST IF ANY EXIST)
+        if mismatchCount > 0 then
+            exportText = exportText .. "========================================================================\n"
+            exportText = exportText .. "                    ⚠️ DATABASE MISMATCHES DETECTED ⚠️\n"
+            exportText = exportText .. "========================================================================\n\n"
+            exportText = exportText .. "CRITICAL: The following data conflicts with the current database.\n"
+            exportText = exportText .. "This likely means the database needs updating!\n\n"
+            
+            -- Group mismatches by type
+            local questMismatches = {}
+            local npcMismatches = {}
+            
+            for key, mismatch in pairs(_dataMismatches) do
+                if mismatch.entityType == "quest" then
+                    if not questMismatches[mismatch.entityId] then
+                        questMismatches[mismatch.entityId] = {}
+                    end
+                    table.insert(questMismatches[mismatch.entityId], mismatch)
+                elseif mismatch.entityType == "npc" then
+                    if not npcMismatches[mismatch.entityId] then
+                        npcMismatches[mismatch.entityId] = {}
+                    end
+                    table.insert(npcMismatches[mismatch.entityId], mismatch)
+                end
+            end
+            
+            -- Export quest mismatches
+            local hasQuestMismatches = false
+            for questId, mismatches in pairs(questMismatches) do
+                if not hasQuestMismatches then
+                    exportText = exportText .. "QUEST MISMATCHES:\n"
+                    exportText = exportText .. "----------------\n\n"
+                    hasQuestMismatches = true
+                end
+                
+                -- Get quest name if available
+                local questName = "Unknown"
+                if QuestieDataCollection.quests[questId] then
+                    questName = QuestieDataCollection.quests[questId].name or "Unknown"
+                end
+                
+                exportText = exportText .. "Quest " .. questId .. ": " .. questName .. "\n"
+                for _, mismatch in ipairs(mismatches) do
+                    exportText = exportText .. "  • " .. mismatch.fieldName .. ":\n"
+                    exportText = exportText .. "    Database: " .. tostring(mismatch.databaseValue) .. "\n"
+                    exportText = exportText .. "    Collected: " .. tostring(mismatch.collectedValue) .. "\n"
+                end
+                exportText = exportText .. "\n"
+            end
+            
+            -- Export NPC mismatches
+            local hasNpcMismatches = false
+            for npcId, mismatches in pairs(npcMismatches) do
+                if not hasNpcMismatches then
+                    if hasQuestMismatches then
+                        exportText = exportText .. "\n"
+                    end
+                    exportText = exportText .. "NPC MISMATCHES:\n"
+                    exportText = exportText .. "---------------\n\n"
+                    hasNpcMismatches = true
+                end
+                
+                -- Get NPC name from our data
+                local npcName = "Unknown"
+                for questId, questData in pairs(QuestieDataCollection.quests) do
+                    if questData.questGiver and questData.questGiver.id == npcId then
+                        npcName = questData.questGiver.name or "Unknown"
+                        break
+                    elseif questData.turnInNpc and questData.turnInNpc.id == npcId then
+                        npcName = questData.turnInNpc.name or "Unknown"
+                        break
+                    end
+                end
+                
+                exportText = exportText .. "NPC " .. npcId .. ": " .. npcName .. "\n"
+                for _, mismatch in ipairs(mismatches) do
+                    if mismatch.fieldName == "zone" then
+                        exportText = exportText .. "  • Zone mismatch:\n"
+                        exportText = exportText .. "    Database zone: " .. tostring(mismatch.databaseValue) .. "\n"
+                        exportText = exportText .. "    Found in zone: " .. tostring(mismatch.collectedValue) .. "\n"
+                    elseif mismatch.fieldName == "coords" then
+                        exportText = exportText .. "  • Location mismatch:\n"
+                        if mismatch.collectedValue and mismatch.collectedValue.x then
+                            exportText = exportText .. "    Found at: " .. string.format("%.1f, %.1f", mismatch.collectedValue.x, mismatch.collectedValue.y) .. "\n"
+                        end
+                        if mismatch.databaseValue and mismatch.databaseValue.distance then
+                            exportText = exportText .. "    Distance from DB: " .. string.format("%.1f units", mismatch.databaseValue.distance) .. "\n"
+                        end
+                    elseif mismatch.fieldName == "name" then
+                        exportText = exportText .. "  • Name mismatch:\n"
+                        exportText = exportText .. "    Database: " .. tostring(mismatch.databaseValue) .. "\n"
+                        exportText = exportText .. "    Collected: " .. tostring(mismatch.collectedValue) .. "\n"
+                    else
+                        exportText = exportText .. "  • " .. mismatch.fieldName .. ":\n"
+                        exportText = exportText .. "    Database: " .. tostring(mismatch.databaseValue) .. "\n"
+                        exportText = exportText .. "    Collected: " .. tostring(mismatch.collectedValue) .. "\n"
+                    end
+                end
+                exportText = exportText .. "\n"
+            end
+            
+            exportText = exportText .. "========================================================================\n\n"
+        end
         
         -- Export Quests FIRST (if any)
         if questCount > 0 then
@@ -3075,14 +3267,14 @@ function QuestieDataCollector:GenerateDatabaseEntries(questId, questData)
     local output = "DATABASE ENTRIES:\n"
     output = output .. "================\n\n"
     
-    -- Generate quest entry
+    -- Generate quest entry with EXACT field order and format
     output = output .. "-- Add to epochQuestDB.lua:\n"
     output = output .. "[" .. questId .. "] = {"
     
-    -- 1. Quest name
+    -- Field 1: Quest name (string)
     output = output .. '"' .. (questData.name or "Unknown Quest") .. '"'
     
-    -- 2. Started by {{NPCs},{Objects},{Items}}
+    -- Field 2: Started by {{NPCs},{Objects},{Items}}
     output = output .. ","
     if questData.questGiver and questData.questGiver.id then
         output = output .. "{{" .. questData.questGiver.id .. "}}"
@@ -3090,7 +3282,7 @@ function QuestieDataCollector:GenerateDatabaseEntries(questId, questData)
         output = output .. "nil"
     end
     
-    -- 3. Finished by {{NPCs},{Objects}}
+    -- Field 3: Finished by {{NPCs},{Objects}}
     output = output .. ","
     if questData.turnInNpc and questData.turnInNpc.id then
         output = output .. "{{" .. questData.turnInNpc.id .. "}}"
@@ -3098,54 +3290,107 @@ function QuestieDataCollector:GenerateDatabaseEntries(questId, questData)
         output = output .. "nil"
     end
     
-    -- 4. Required level
+    -- Field 4: Required level (int or nil)
     output = output .. ",nil"
     
-    -- 5. Quest level
+    -- Field 5: Quest level (int)
     output = output .. "," .. (questData.level or "nil")
     
-    -- 6-7. Required races/classes (nil = all)
-    output = output .. ",nil,nil"
-    
-    -- 8. Objectives text (nil for now, could extract from objectivesText)
+    -- Field 6: Required races (bitmask or nil)
     output = output .. ",nil"
     
-    -- 9. Trigger end (exploration objectives)
+    -- Field 7: Required classes (bitmask or nil) 
     output = output .. ",nil"
     
-    -- 10. Objectives (try to generate from quest data)
+    -- Field 8: Objectives text (table of strings or nil)
+    output = output .. ",nil"
+    
+    -- Field 9: Trigger end (exploration trigger or nil)
+    output = output .. ",nil"
+    
+    -- Field 10: Objectives structure
     output = output .. ","
     if questData.objectives and #questData.objectives > 0 then
-        local hasObjectives = false
-        
-        -- Look for creature objectives
         local creatures = {}
+        local objects = {}
+        local items = {}
+        local hasAnyObjective = false
+        
+        -- Parse each objective
         for _, obj in ipairs(questData.objectives) do
             if obj.text then
-                -- Try to extract creature kills
+                -- Check for creature kills
                 local mobName, current, total = string.match(obj.text, "(.+) slain: (%d+)/(%d+)")
                 if not mobName then
                     mobName, current, total = string.match(obj.text, "(.+) killed: (%d+)/(%d+)")
                 end
+                if not mobName then
+                    mobName, current, total = string.match(obj.text, "Kill (%d+) (.+)")
+                    if mobName and total then
+                        mobName, total = total, mobName  -- Swap them
+                    end
+                end
+                
                 if mobName and total then
                     -- Try to find the mob ID from our tracked mobs
-                    for mobId, mobData in pairs(questData.mobs or {}) do
-                        if mobData.name and string.find(mobData.name, mobName) then
-                            table.insert(creatures, string.format('{%d,%s}', mobId, total))
-                            hasObjectives = true
-                            break
+                    if questData.mobs then
+                        for mobId, mobData in pairs(questData.mobs) do
+                            if mobData.name and (mobData.name == mobName or string.find(mobData.name, mobName) or string.find(mobName, mobData.name)) then
+                                table.insert(creatures, string.format('{%s,%s}', mobId, total))
+                                hasAnyObjective = true
+                                break
+                            end
+                        end
+                    end
+                end
+                
+                -- Check for item collection
+                local itemName, itemCurrent, itemTotal = string.match(obj.text, "(.+): (%d+)/(%d+)")
+                if itemName and itemTotal and not string.find(itemName, "slain") and not string.find(itemName, "killed") then
+                    -- Try to find item ID from tracked items
+                    if questData.items then
+                        for itemId, itemInfo in pairs(questData.items) do
+                            if itemInfo.name and (itemInfo.name == itemName or string.find(itemInfo.name, itemName)) then
+                                table.insert(items, string.format('{%s,%s}', itemId, itemTotal))
+                                hasAnyObjective = true
+                                break
+                            end
                         end
                     end
                 end
             end
         end
         
-        -- Build objectives structure if we found any
-        if hasObjectives and #creatures > 0 then
+        -- Build objectives structure: {creatures, objects, items, reputation, killCredit, spells}
+        if hasAnyObjective then
             output = output .. "{"
-            output = output .. "{" .. table.concat(creatures, ",") .. "}"
-            -- Add placeholders for other objective types (objects, items, reputation, killcredit, spells)
-            output = output .. ",nil,nil,nil,nil,nil"
+            
+            -- Creatures sub-table
+            if #creatures > 0 then
+                output = output .. "{" .. table.concat(creatures, ",") .. "}"
+            else
+                output = output .. "nil"
+            end
+            
+            -- Objects sub-table
+            output = output .. ","
+            if #objects > 0 then
+                output = output .. "{" .. table.concat(objects, ",") .. "}"
+            else
+                output = output .. "nil"
+            end
+            
+            -- Items sub-table
+            output = output .. ","
+            if #items > 0 then
+                output = output .. "{" .. table.concat(items, ",") .. "}"
+            else
+                output = output .. "nil"
+            end
+            
+            -- Reputation, killCredit, spells (all nil for now)
+            output = output .. ",nil,nil,nil"
+            
             output = output .. "}"
         else
             output = output .. "nil"
@@ -3154,8 +3399,41 @@ function QuestieDataCollector:GenerateDatabaseEntries(questId, questData)
         output = output .. "nil"
     end
     
-    -- 11-30. Other fields (all nil for basic entry)
-    for i = 11, 30 do
+    -- Fields 11-16: nil for basic entry
+    for i = 11, 16 do
+        output = output .. ",nil"
+    end
+    
+    -- Field 17: zoneOrSort (zone ID where quest is)
+    output = output .. ","
+    local questZoneId = 0
+    if questData.questGiver and questData.questGiver.coords then
+        if questData.questGiver.coords.zone and ZONE_NAME_TO_ID[questData.questGiver.coords.zone] then
+            questZoneId = ZONE_NAME_TO_ID[questData.questGiver.coords.zone]
+        elseif questData.questGiver.coords.questieZoneId then
+            -- Use Questie's zone ID if available (this is the correct one)
+            questZoneId = questData.questGiver.coords.questieZoneId
+        elseif questData.questGiver.coords.areaId then
+            -- Fallback to areaId (may be wrong like zone 21 instead of 85)
+            questZoneId = questData.questGiver.coords.areaId
+        end
+    end
+    if questZoneId > 0 then
+        output = output .. questZoneId
+    else
+        output = output .. "nil"
+    end
+    
+    -- Fields 18-23: nil for basic entry
+    for i = 18, 23 do
+        output = output .. ",nil"
+    end
+    
+    -- Field 24: specialFlags (use 0 for standard quest)
+    output = output .. ",0"
+    
+    -- Fields 25-30: nil for basic entry
+    for i = 25, 30 do
         output = output .. ",nil"
     end
     
@@ -3194,7 +3472,7 @@ function QuestieDataCollector:GenerateDatabaseEntries(questId, questData)
         table.insert(npcData[npcId].questEnds, questId)
     end
     
-    -- Generate NPC entries
+    -- Generate NPC entries with EXACT 15-field structure
     local npcEntries = {}
     for npcId, npc in pairs(npcData) do
         -- Get proper zone ID
@@ -3202,48 +3480,61 @@ function QuestieDataCollector:GenerateDatabaseEntries(questId, questData)
         if npc.coords then
             if npc.coords.zone and ZONE_NAME_TO_ID[npc.coords.zone] then
                 zoneId = ZONE_NAME_TO_ID[npc.coords.zone]
+            elseif npc.coords.questieZoneId then
+                -- Use Questie's zone ID if available (this is the correct one)
+                zoneId = npc.coords.questieZoneId
             elseif npc.coords.areaId then
+                -- Fallback to areaId (may be wrong like zone 21 instead of 85)
                 zoneId = npc.coords.areaId
             end
         end
         
-        local coords = ""
-        if npc.coords and npc.coords.x and npc.coords.y then
+        -- Field 7: Spawn coordinates {[zoneId]={{x,y}}}
+        local coords = "nil"
+        if npc.coords and npc.coords.x and npc.coords.y and zoneId > 0 then
             coords = string.format("{[%d]={{%.1f,%.1f}}}", 
                 zoneId, npc.coords.x, npc.coords.y)
-        else
-            coords = "nil"
         end
         
-        -- Format quest arrays
+        -- Field 10: Quest starts array
         local questStarts = "nil"
         if #npc.questStarts > 0 then
             questStarts = "{" .. table.concat(npc.questStarts, ",") .. "}"
         end
         
+        -- Field 11: Quest ends array
         local questEnds = "nil"
         if #npc.questEnds > 0 then
             questEnds = "{" .. table.concat(npc.questEnds, ",") .. "}"
         end
         
+        -- Build NPC entry with exact 15 fields
+        -- [npcId] = {name, minHP, maxHP, minLvl, maxLvl, rank, spawns, waypoints, zoneID, questStarts, questEnds, factionID, friendlyTo, subName, npcFlags}
         npcEntries[npcId] = string.format(
             '[%d] = {"%s",nil,nil,%s,%s,0,%s,nil,%d,%s,%s,nil,nil,nil,2},',
-            npcId,
-            npc.name,
-            npc.level,
-            npc.level,
-            coords,
-            zoneId,
-            questStarts,
-            questEnds
+            npcId,            -- NPC ID
+            npc.name,         -- Field 1: name
+            npc.level,        -- Field 4: minLevel
+            npc.level,        -- Field 5: maxLevel
+            coords,           -- Field 7: spawns
+            zoneId,           -- Field 9: zoneID
+            questStarts,      -- Field 10: questStarts
+            questEnds         -- Field 11: questEnds
         )
     end
     
-    -- Output NPC entries
+    -- Output NPC entries (sorted for consistency)
     if next(npcEntries) then
         output = output .. "-- Add to epochNpcDB.lua:\n"
-        for _, entry in pairs(npcEntries) do
-            output = output .. entry .. "\n"
+        -- Sort NPC IDs for consistent output
+        local sortedNpcIds = {}
+        for npcId in pairs(npcEntries) do
+            table.insert(sortedNpcIds, npcId)
+        end
+        table.sort(sortedNpcIds, function(a, b) return tonumber(a) < tonumber(b) end)
+        
+        for _, npcId in ipairs(sortedNpcIds) do
+            output = output .. npcEntries[npcId] .. "\n"
         end
     end
     

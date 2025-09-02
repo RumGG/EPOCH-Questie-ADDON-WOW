@@ -76,7 +76,7 @@ def extract_quest_data(issue_body):
     
     # Look for DATABASE ENTRIES section
     db_entries_match = re.search(
-        r'DATABASE ENTRIES:.*?\n(.*?)(?:\n(?:═{3,}|END OF QUEST|$))',
+        r'DATABASE ENTRIES:.*?\n(.*?)(?:\n(?:═{3,}|END OF QUEST|Note:|$))',
         issue_body,
         re.DOTALL | re.IGNORECASE
     )
@@ -87,55 +87,42 @@ def extract_quest_data(issue_body):
     if db_entries_match:
         db_section = db_entries_match.group(1)
         
-        # Extract quest database entry
+        # Extract quest database entry - match the full line including trailing comma
         quest_match = re.search(
-            r'\[(\d+)\]\s*=\s*\{([^}]+)\}',
+            r'\[(\d+)\]\s*=\s*\{[^\n]+\},',
             db_section
         )
         if quest_match:
-            quest_entry = f"[{quest_match.group(1)}] = {{{quest_match.group(2)}}}"
+            quest_entry = quest_match.group(0).rstrip(',')
         
-        # Extract NPC entries
-        npc_pattern = r'\[(\d+)\]\s*=\s*\{[^}]+\}'
-        npc_matches = re.findall(npc_pattern, db_section)
-        for match in npc_matches:
-            if match != quest_id:  # Skip the quest entry itself
-                full_match = re.search(f'\\[{match}\\]\\s*=\\s*\\{{[^}}]+\\}}', db_section)
-                if full_match:
-                    npc_entries.append(full_match.group(0))
+        # Extract NPC entries - look for lines starting with [npcId]
+        npc_pattern = r'\[(\d+)\]\s*=\s*\{[^\n]+\},'
+        for match in re.finditer(npc_pattern, db_section):
+            npc_id = match.group(1)
+            if npc_id != quest_id:  # Skip the quest entry itself
+                npc_entries.append(match.group(0).rstrip(','))
     
-    # If no DATABASE ENTRIES section, try to construct from raw data
+    # If no DATABASE ENTRIES section, we won't generate one
+    # We want accurate data from the collector, not guessed data
     if not quest_entry:
-        # Extract what we can from the standard format
+        # Still extract basic info for reporting
         level_match = re.search(r'Level:\s*(\d+)', issue_body)
-        level = level_match.group(1) if level_match else "nil"
+        level = level_match.group(1) if level_match else None
         
         giver_match = re.search(r'QUEST GIVER:.*?NPC:\s*(.+?)\s*\(ID:\s*(\d+)\)', issue_body, re.DOTALL)
-        giver_id = giver_match.group(2) if giver_match else "nil"
+        giver_id = giver_match.group(2) if giver_match else None
         giver_name = giver_match.group(1) if giver_match else None
         
         turnin_match = re.search(r'TURN-IN NPC:.*?NPC:\s*(.+?)\s*\(ID:\s*(\d+)\)', issue_body, re.DOTALL)
         if not turnin_match:
             turnin_match = re.search(r'Turn.?in.*?to\s+(.+?)\s*\(ID:\s*(\d+)\)', issue_body, re.IGNORECASE)
         
-        turnin_id = turnin_match.group(2) if turnin_match else "nil"
+        turnin_id = turnin_match.group(2) if turnin_match else None
         turnin_name = turnin_match.group(1) if turnin_match else None
         
-        # Construct basic quest entry
-        quest_entry = f'[{quest_id}] = {{"{quest_name}",'
-        if giver_id != "nil":
-            quest_entry += f"{{{{{giver_id}}}}}"
-        else:
-            quest_entry += "nil"
-        quest_entry += ","
-        if turnin_id != "nil":
-            quest_entry += f"{{{{{turnin_id}}}}}"
-        else:
-            quest_entry += "nil"
-        quest_entry += f",nil,{level}"
-        quest_entry += ",nil,nil,nil,nil,nil"  # races, classes, objectives text, trigger, objectives
-        quest_entry += ",nil" * 20  # Fields 11-30
-        quest_entry += "}"
+        # Mark as needing DATABASE ENTRIES section
+        quest_entry = None  # Will need manual creation
+        print(f"  WARNING: Quest {quest_id} submission lacks DATABASE ENTRIES section")
     
     return {
         'quest_id': quest_id,
@@ -192,21 +179,32 @@ def write_consolidated_files(quest_data):
     
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     
+    # Separate quests with and without database entries
+    quests_with_db = {k: v for k, v in quest_data.items() if v['quest_entry']}
+    quests_without_db = {k: v for k, v in quest_data.items() if not v['quest_entry']}
+    
     # Write quest database additions
     quest_file = os.path.join(OUTPUT_DIR, f"epochQuestDB_additions_{timestamp}.lua")
     with open(quest_file, 'w', encoding='utf-8') as f:
         f.write("-- Automatically extracted quest entries from GitHub issues\n")
         f.write(f"-- Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
-        f.write(f"-- Total quests: {len(quest_data)}\n\n")
-        f.write("local questAdditions = {\n")
+        f.write(f"-- Total quests with DB entries: {len(quests_with_db)}\n")
+        f.write(f"-- Total quests needing DB entries: {len(quests_without_db)}\n\n")
         
-        for quest_id in sorted(quest_data.keys(), key=int):
-            data = quest_data[quest_id]
-            f.write(f"    -- {data['quest_name']} (Issue #{data['issue_number']})\n")
-            f.write(f"    -- {data['issue_url']}\n")
-            f.write(f"    {data['quest_entry']},\n\n")
+        if quests_with_db:
+            f.write("local questAdditions = {\n")
+            for quest_id in sorted(quests_with_db.keys(), key=int):
+                data = quests_with_db[quest_id]
+                f.write(f"    -- {data['quest_name']} (Issue #{data['issue_number']})\n")
+                f.write(f"    -- {data['issue_url']}\n")
+                f.write(f"    {data['quest_entry']},\n\n")
+            f.write("}\n\n")
         
-        f.write("}\n")
+        if quests_without_db:
+            f.write("-- Quests needing DATABASE ENTRIES section:\n")
+            for quest_id in sorted(quests_without_db.keys(), key=int):
+                data = quests_without_db[quest_id]
+                f.write(f"-- [{quest_id}] {data['quest_name']} (Issue #{data['issue_number']})\n")
     
     print(f"Wrote quest entries to: {quest_file}")
     
