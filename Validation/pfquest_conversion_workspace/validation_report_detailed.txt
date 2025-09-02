@@ -1,0 +1,18 @@
+
+VALIDATION REPORT FOR epochQuestDB_MERGED.lua
+============================================================
+
+Total Quests Analyzed: 960
+
+CONTAMINATION DETECTION:
+Found 2 potentially contaminated quests:
+  Quest 9609:
+    - Quest ID 9609 in TBC range
+  Quest 9610:
+    - Quest ID 9610 in TBC range
+
+INCOMPLETE ENTRIES:
+Found 928 incomplete entries
+Quest IDs: 11, 76, 109, 474, 487, 991, 1218, 1288, 2038, 9609 ... and 918 more
+
+All incomplete entries have been fixed in the output file.

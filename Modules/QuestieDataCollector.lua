@@ -1370,7 +1370,8 @@ function QuestieDataCollector:TrackTargetedMob()
                     DebugMessage("|cFFFF0000[DATA]|r Invalid coordinates for mob " .. npcName, 1, 0, 0)
                 end
                 
-                DebugMessage("|cFFAA8833[DATA]|r Tracked quest mob: " .. npcName .. " (ID: " .. npcId .. ") for quest " .. questId, 0.67, 0.53, 0.2)
+                -- Disabled: Too spammy even for debug mode
+                -- DebugMessage("|cFFAA8833[DATA]|r Tracked quest mob: " .. npcName .. " (ID: " .. npcId .. ") for quest " .. questId, 0.67, 0.53, 0.2)
             end
         end
     end

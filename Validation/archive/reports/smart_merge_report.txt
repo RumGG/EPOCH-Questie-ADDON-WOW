@@ -1,0 +1,17 @@
+SMART MERGE REPORT
+================================================================================
+
+Date: 2025-09-01 22:32:21.755711
+Strategy: Trust Questie data, add only genuinely new quests
+
+STATISTICS:
+  Original Questie quests: 158
+  pfQuest quests analyzed: 1
+  New quests added: 1
+  Placeholders updated: 0
+  Conflicts skipped: 0
+  Duplicates skipped: 0
+  Final total: 159
+
+NEW QUESTS ADDED:
+  26643: Is it Ogre?

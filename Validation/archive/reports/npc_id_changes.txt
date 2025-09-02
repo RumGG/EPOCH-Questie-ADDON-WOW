@@ -1,0 +1,1167 @@
+NPC ID Changes
+========================================
+Line 1399: NPC 40 'Kobold Miner' → 48168
+Line 1400: NPC 43 'Mine Spider' → 48169
+Line 1401: NPC 66 'Tharynn Bouden' → 48170
+Line 1402: NPC 68 '[Epoch] NPC 68' → 48171
+Line 1403: NPC 97 'Riverpaw Runt' → 48172
+Line 1404: NPC 103 'Garrick Padfoot' → 48173
+Line 1405: NPC 113 '[Epoch] NPC 113' → 48174
+Line 1406: NPC 240 'Marshal Dughan' → 48175
+Line 1407: NPC 241 'Remy \' → 48176
+Line 1408: NPC 253 'William Pestle' → 48177
+Line 1409: NPC 277 '[Epoch] NPC 277' → 48178
+Line 1410: NPC 279 '[Epoch] NPC 279' → 48179
+Line 1411: NPC 295 'Innkeeper Farley' → 48180
+Line 1412: NPC 297 '[Epoch] NPC 297' → 48181
+Line 2303: NPC 311 'Sven Yorgen' → 48182
+Line 1413: NPC 313 'Theocritus' → 48183
+Line 1414: NPC 314 '[Epoch] NPC 314' → 48184
+Line 1415: NPC 315 '[Epoch] NPC 315' → 48185
+Line 1416: NPC 328 'Zaldimar Wefhellt' → 48186
+Line 1417: NPC 331 '[Epoch] NPC 331' → 48187
+Line 1418: NPC 332 '[Epoch] NPC 332' → 48188
+Line 1419: NPC 338 '[Epoch] NPC 338' → 48189
+Line 1420: NPC 340 '[Epoch] NPC 340' → 48190
+Line 1421: NPC 352 'Dungar Longdrink' → 48191
+Line 1422: NPC 376 '[Epoch] NPC 376' → 48192
+Line 1423: NPC 377 '[Epoch] NPC 377' → 48193
+Line 1424: NPC 383 'Jason Mathers' → 48194
+Line 1425: NPC 461 '[Epoch] NPC 461' → 48195
+Line 1426: NPC 465 'Barkeep Dobbins' → 48196
+Line 1427: NPC 466 '[Epoch] NPC 466' → 48197
+Line 1428: NPC 476 'Kobold Geomancer' → 48198
+Line 1429: NPC 478 'Riverpaw Outrunner' → 48199
+Line 1430: NPC 482 '[Epoch] NPC 482' → 48200
+Line 1431: NPC 483 '[Epoch] NPC 483' → 48201
+Line 1432: NPC 490 'Protector Gariel' → 48202
+Line 2291: NPC 491 'Quartermaster Lewis' → 48203
+Line 1433: NPC 514 'Smith Argus' → 48204
+Line 1434: NPC 620 '[Epoch] NPC 620' → 48205
+Line 1435: NPC 656 '[Epoch] NPC 656' → 48206
+Line 1436: NPC 658 'Sten Stoutarm' → 48207
+Line 2503: NPC 674 'Venture Co. Strip Miner' → 48208
+Line 1437: NPC 684 '[Epoch] NPC 684' → 48209
+Line 2557: NPC 715 'Hemet Nesingwary' → 48210
+Line 2534: NPC 777 'Amy Davenport' → 48211
+Line 1438: NPC 823 'Deputy Willem' → 48212
+Line 1439: NPC 914 '[Epoch] NPC 914' → 48213
+Line 1440: NPC 918 '[Epoch] NPC 918' → 48214
+Line 1441: NPC 927 'Brother Wilhelm' → 48215
+Line 1442: NPC 928 '[Epoch] NPC 928' → 48216
+Line 2365: NPC 952 'Brother Neals' → 48217
+Line 1443: NPC 957 '[Epoch] NPC 957' → 48218
+Line 1444: NPC 963 'Deputy Rainer' → 48219
+Line 2095: NPC 1092 'Captain Rugelfuss' → 48220
+Line 2096: NPC 1104 'Grundel Harkin' → 48221
+Line 1445: NPC 1141 '[Epoch] NPC 1141' → 48222
+Line 2406: NPC 1182 'Brother Anton' → 48223
+Line 1446: NPC 1212 '[Epoch] NPC 1212' → 48224
+Line 1447: NPC 1225 '[Epoch] NPC 1225' → 48225
+Line 2084: NPC 1231 'Grif Wildheart' → 48226
+Line 2562: NPC 1247 'Innkeeper Belm' → 48227
+Line 1448: NPC 1257 '[Epoch] NPC 1257' → 48228
+Line 2396: NPC 1261 'Veron Amberstill' → 48229
+Line 1449: NPC 1275 '[Epoch] NPC 1275' → 48230
+Line 1450: NPC 1284 '[Epoch] NPC 1284' → 48231
+Line 1451: NPC 1285 '[Epoch] NPC 1285' → 48232
+Line 1452: NPC 1286 '[Epoch] NPC 1286' → 48233
+Line 1453: NPC 1287 '[Epoch] NPC 1287' → 48234
+Line 1454: NPC 1289 '[Epoch] NPC 1289' → 48235
+Line 1455: NPC 1291 '[Epoch] NPC 1291' → 48236
+Line 1456: NPC 1292 '[Epoch] NPC 1292' → 48237
+Line 1457: NPC 1294 '[Epoch] NPC 1294' → 48238
+Line 1458: NPC 1295 '[Epoch] NPC 1295' → 48239
+Line 1459: NPC 1297 '[Epoch] NPC 1297' → 48240
+Line 1460: NPC 1298 '[Epoch] NPC 1298' → 48241
+Line 1461: NPC 1299 '[Epoch] NPC 1299' → 48242
+Line 1462: NPC 1300 '[Epoch] NPC 1300' → 48243
+Line 1463: NPC 1301 '[Epoch] NPC 1301' → 48244
+Line 1464: NPC 1302 '[Epoch] NPC 1302' → 48245
+Line 1465: NPC 1303 '[Epoch] NPC 1303' → 48246
+Line 1466: NPC 1304 '[Epoch] NPC 1304' → 48247
+Line 1467: NPC 1305 '[Epoch] NPC 1305' → 48248
+Line 1468: NPC 1307 '[Epoch] NPC 1307' → 48249
+Line 1469: NPC 1308 '[Epoch] NPC 1308' → 48250
+Line 1470: NPC 1309 '[Epoch] NPC 1309' → 48251
+Line 1471: NPC 1310 '[Epoch] NPC 1310' → 48252
+Line 1472: NPC 1311 '[Epoch] NPC 1311' → 48253
+Line 1473: NPC 1312 '[Epoch] NPC 1312' → 48254
+Line 1474: NPC 1313 '[Epoch] NPC 1313' → 48255
+Line 1475: NPC 1314 '[Epoch] NPC 1314' → 48256
+Line 1476: NPC 1315 '[Epoch] NPC 1315' → 48257
+Line 1477: NPC 1316 '[Epoch] NPC 1316' → 48258
+Line 1478: NPC 1317 '[Epoch] NPC 1317' → 48259
+Line 1479: NPC 1318 '[Epoch] NPC 1318' → 48260
+Line 1480: NPC 1319 '[Epoch] NPC 1319' → 48261
+Line 1481: NPC 1320 '[Epoch] NPC 1320' → 48262
+Line 1482: NPC 1321 '[Epoch] NPC 1321' → 48263
+Line 1483: NPC 1323 'Osric Strang' → 48264
+Line 1484: NPC 1324 '[Epoch] NPC 1324' → 48265
+Line 1485: NPC 1325 '[Epoch] NPC 1325' → 48266
+Line 1486: NPC 1326 '[Epoch] NPC 1326' → 48267
+Line 1487: NPC 1327 '[Epoch] NPC 1327' → 48268
+Line 1488: NPC 1328 '[Epoch] NPC 1328' → 48269
+Line 1489: NPC 1333 '[Epoch] NPC 1333' → 48270
+Line 1490: NPC 1339 '[Epoch] NPC 1339' → 48271
+Line 1491: NPC 1341 '[Epoch] NPC 1341' → 48272
+Line 1492: NPC 1346 '[Epoch] NPC 1346' → 48273
+Line 1493: NPC 1347 '[Epoch] NPC 1347' → 48274
+Line 1494: NPC 1348 '[Epoch] NPC 1348' → 48275
+Line 1495: NPC 1349 '[Epoch] NPC 1349' → 48276
+Line 1496: NPC 1350 '[Epoch] NPC 1350' → 48277
+Line 1497: NPC 1351 '[Epoch] NPC 1351' → 48278
+Line 1498: NPC 1366 '[Epoch] NPC 1366' → 48279
+Line 1499: NPC 1367 '[Epoch] NPC 1367' → 48280
+Line 1500: NPC 1368 '[Epoch] NPC 1368' → 48281
+Line 1501: NPC 1370 '[Epoch] NPC 1370' → 48282
+Line 1502: NPC 1371 '[Epoch] NPC 1371' → 48283
+Line 1503: NPC 1395 '[Epoch] NPC 1395' → 48284
+Line 1504: NPC 1402 '[Epoch] NPC 1402' → 48285
+Line 1505: NPC 1405 '[Epoch] NPC 1405' → 48286
+Line 1506: NPC 1413 '[Epoch] NPC 1413' → 48287
+Line 1507: NPC 1414 '[Epoch] NPC 1414' → 48288
+Line 1508: NPC 1415 '[Epoch] NPC 1415' → 48289
+Line 1509: NPC 1416 '[Epoch] NPC 1416' → 48290
+Line 1510: NPC 1419 '[Epoch] NPC 1419' → 48291
+Line 1511: NPC 1427 '[Epoch] NPC 1427' → 48292
+Line 1512: NPC 1428 '[Epoch] NPC 1428' → 48293
+Line 1513: NPC 1429 '[Epoch] NPC 1429' → 48294
+Line 1514: NPC 1431 '[Epoch] NPC 1431' → 48295
+Line 1515: NPC 1432 '[Epoch] NPC 1432' → 48296
+Line 1516: NPC 1435 '[Epoch] NPC 1435' → 48297
+Line 1517: NPC 1439 '[Epoch] NPC 1439' → 48298
+Line 1518: NPC 1440 '[Epoch] NPC 1440' → 48299
+Line 1519: NPC 1444 '[Epoch] NPC 1444' → 48300
+Line 2083: NPC 1466 'Gretta Finespindle' → 48301
+Line 1520: NPC 1472 '[Epoch] NPC 1472' → 48302
+Line 1521: NPC 1477 '[Epoch] NPC 1477' → 48303
+Line 1522: NPC 1478 '[Epoch] NPC 1478' → 48304
+Line 2536: NPC 1495 'Deathguard Linnea' → 48305
+Line 2240: NPC 1521 'Gretchen Dedmar' → 48306
+Line 2267: NPC 1557 'Elder Mistvale Gorilla' → 48307
+Line 2269: NPC 1573 'Gryth Thurden' → 48308
+Line 1523: NPC 1646 'Baros Alexston' → 48309
+Line 2520: NPC 1703 'Uthrar Threx' → 48310
+Line 1524: NPC 1719 '[Epoch] NPC 1719' → 48311
+Line 1525: NPC 1721 '[Epoch] NPC 1721' → 48312
+Line 1526: NPC 1733 '[Epoch] NPC 1733' → 48313
+Line 2486: NPC 1738 'Deathguard Terrence' → 48314
+Line 1527: NPC 1747 '[Epoch] NPC 1747' → 48315
+Line 1528: NPC 1748 '[Epoch] NPC 1748' → 48316
+Line 1529: NPC 1749 '[Epoch] NPC 1749' → 48317
+Line 1530: NPC 1750 '[Epoch] NPC 1750' → 48318
+Line 1531: NPC 1751 '[Epoch] NPC 1751' → 48319
+Line 1532: NPC 1752 '[Epoch] NPC 1752' → 48320
+Line 1533: NPC 1754 '[Epoch] NPC 1754' → 48321
+Line 1534: NPC 1756 '[Epoch] NPC 1756' → 48322
+Line 2487: NPC 1765 'Worg' → 48323
+Line 1535: NPC 1775 'Zun'dartha' → 48324
+Line 1536: NPC 1776 'Magtoor' → 48325
+Line 1537: NPC 1809 '[Epoch] NPC 1809' → 48326
+Line 1538: NPC 1855 '[Epoch] NPC 1855' → 48327
+Line 2294: NPC 1938 'Dalar Dawnweaver' → 48328
+Line 1539: NPC 2079 '[Epoch] NPC 2079' → 48329
+Line 2428: NPC 2086 'Valstag Ironjaw' → 48330
+Line 1540: NPC 2091 'General Gujek' → 48331
+Line 2374: NPC 2104 'Captain Stoutfist' → 48332
+Line 2293: NPC 2140 'Edwin Harly' → 48333
+Line 1541: NPC 2198 '[Epoch] NPC 2198' → 48334
+Line 1542: NPC 2244 '[Epoch] NPC 2244' → 48335
+Line 1543: NPC 2260 '[Epoch] NPC 2260' → 48336
+Line 1544: NPC 2261 '[Epoch] NPC 2261' → 48337
+Line 2508: NPC 2263 'Marshal Redpath' → 48338
+Line 2403: NPC 2276 'Magistrate Henry Maleb' → 48339
+Line 2561: NPC 2277 'Loremaster Dibbs' → 48340
+Line 2405: NPC 2278 'Melisara' → 48341
+Line 1545: NPC 2285 '[Epoch] NPC 2285' → 48342
+Line 2407: NPC 2317 'Elysa' → 48343
+Line 1546: NPC 2327 '[Epoch] NPC 2327' → 48344
+Line 1547: NPC 2330 '[Epoch] NPC 2330' → 48345
+Line 1548: NPC 2331 '[Epoch] NPC 2331' → 48346
+Line 2372: NPC 2363 'Apprentice Honeywell' → 48347
+Line 2371: NPC 2364 'Neema' → 48348
+Line 2404: NPC 2378 'Kundric Zanden' → 48349
+Line 2489: NPC 2388 'Derak Nightfall' → 48350
+Line 2490: NPC 2391 'Serge Hinott' → 48351
+Line 2361: NPC 2409 'Felicia Maline' → 48352
+Line 1549: NPC 2427 'Jailor Eston' → 48353
+Line 1550: NPC 2428 '[Epoch] NPC 2428' → 48354
+Line 1551: NPC 2439 'Major Samuelson' → 48355
+Line 1552: NPC 2455 'Olivia Burnside' → 48356
+Line 1553: NPC 2456 'Newton Burnside' → 48357
+Line 1554: NPC 2457 'John Burnside' → 48358
+Line 1555: NPC 2485 '[Epoch] NPC 2485' → 48359
+Line 1556: NPC 2488 'Deeg' → 48360
+Line 2376: NPC 2497 'Nimboya' → 48361
+Line 2300: NPC 2498 'Crank Fizzlebub' → 48362
+Line 2511: NPC 2500 'Captain Hecklebury Smotts' → 48363
+Line 1557: NPC 2504 '[Epoch] NPC 2504' → 48364
+Line 1558: NPC 2532 '[Epoch] NPC 2532' → 48365
+Line 1559: NPC 2533 '[Epoch] NPC 2533' → 48366
+Line 2514: NPC 2657 'Trained Razorbeak' → 48367
+Line 2351: NPC 2697 'Clyde Ranthal' → 48368
+Line 1560: NPC 2708 '[Epoch] NPC 2708' → 48369
+Line 1561: NPC 2795 '[Epoch] NPC 2795' → 48370
+Line 1562: NPC 2860 'Sigrun Ironhew' → 48371
+Line 1563: NPC 2879 '[Epoch] NPC 2879' → 48372
+Line 2301: NPC 2916 'Historian Karnik' → 48373
+Line 2302: NPC 2930 'Sentinel Glynda Nal'Shea' → 48374
+Line 2491: NPC 2934 'Keeper Bel'varil' → 48375
+Line 2352: NPC 2980 'Grull Hawkwind' → 48376
+Line 1564: NPC 3139 'Gar'Thok' → 48377
+Line 1565: NPC 3142 '[Epoch] NPC 3142' → 48378
+Line 1566: NPC 3169 '[Epoch] NPC 3169' → 48379
+Line 1567: NPC 3182 'Junder Brokk' → 48380
+Line 1568: NPC 3188 'Master Gadrin' → 48381
+Line 1569: NPC 3191 '[Epoch] NPC 3191' → 48382
+Line 2445: NPC 3230 'Nazgrel' → 48383
+Line 2447: NPC 3244 'Greater Plainstrider' → 48384
+Line 2448: NPC 3245 'Ornery Plainstrider' → 48385
+Line 2449: NPC 3246 'Elder Plainstrider' → 48386
+Line 2545: NPC 3272 'Kolkar Wrangler' → 48387
+Line 2549: NPC 3304 'Master Vornal' → 48388
+Line 2555: NPC 3322 'Kaja' → 48389
+Line 2541: NPC 3338 'Sergra Darkthorn' → 48390
+Line 2546: NPC 3429 'Thork' → 48391
+Line 2321: NPC 3432 'Mankrik' → 48392
+Line 2495: NPC 3478 'Traugh' → 48393
+Line 1570: NPC 3504 '[Epoch] NPC 3504' → 48394
+Line 1571: NPC 3505 '[Epoch] NPC 3505' → 48395
+Line 1572: NPC 3507 '[Epoch] NPC 3507' → 48396
+Line 1573: NPC 3508 '[Epoch] NPC 3508' → 48397
+Line 1574: NPC 3510 '[Epoch] NPC 3510' → 48398
+Line 1575: NPC 3511 '[Epoch] NPC 3511' → 48399
+Line 1576: NPC 3512 '[Epoch] NPC 3512' → 48400
+Line 1577: NPC 3513 '[Epoch] NPC 3513' → 48401
+Line 1578: NPC 3518 '[Epoch] NPC 3518' → 48402
+Line 1579: NPC 3520 '[Epoch] NPC 3520' → 48403
+Line 1580: NPC 3544 'Jason Lemieux' → 48404
+Line 1581: NPC 3581 '[Epoch] NPC 3581' → 48405
+Line 2263: NPC 3610 'Kolkar Waylayer' → 48406
+Line 2446: NPC 3615 'Kodo Wrangler Grish' → 48407
+Line 2368: NPC 3616 'Onu' → 48408
+Line 1582: NPC 3626 '[Epoch] NPC 3626' → 48409
+Line 1583: NPC 3627 '[Epoch] NPC 3627' → 48410
+Line 1584: NPC 3628 '[Epoch] NPC 3628' → 48411
+Line 1585: NPC 3629 '[Epoch] NPC 3629' → 48412
+Line 2502: NPC 3650 'Asterion' → 48413
+Line 2429: NPC 3663 'Delgren the Purifier' → 48414
+Line 1586: NPC 3691 'Raene Wolfrunner' → 48415
+Line 2424: NPC 3702 'Alanndarian Nightsong' → 48416
+Line 1587: NPC 3880 'Sentinel Melyria Frostshadow' → 48417
+Line 1588: NPC 3901 'Illiyana' → 48418
+Line 2499: NPC 3945 'Caravaneer Ruzzgot' → 48419
+Line 2252: NPC 3979 'Librarian Mae Paledust' → 48420
+Line 2367: NPC 4048 'Falfindel Waywarder' → 48421
+Line 1589: NPC 4078 '[Epoch] NPC 4078' → 48422
+Line 2085: NPC 4082 'Grawnal' → 48423
+Line 2086: NPC 4191 'Allyndia' → 48424
+Line 2535: NPC 4201 'Ziz Fizziks' → 48425
+Line 1590: NPC 4456 '[Epoch] NPC 4456' → 48426
+Line 2558: NPC 4500 'Overlord Mok'Morokk' → 48427
+Line 1591: NPC 4630 'Pozzik' → 48428
+Line 2504: NPC 4711 'Tidewater Oracle' → 48429
+Line 2505: NPC 4712 'Tidewater Warrior' → 48430
+Line 2506: NPC 4713 'Gnash' → 48431
+Line 2553: NPC 4721 'Zangen Stonehoof' → 48432
+Line 2397: NPC 4772 'Ultham Ironhorn' → 48433
+Line 2283: NPC 4782 'Truk Wildbeard' → 48434
+Line 1592: NPC 4944 'Captain Garran Vimes' → 48435
+Line 2537: NPC 4949 'Thrall' → 48436
+Line 1593: NPC 4959 '[Epoch] NPC 4959' → 48437
+Line 1594: NPC 4960 '[Epoch] NPC 4960' → 48438
+Line 1595: NPC 4961 '[Epoch] NPC 4961' → 48439
+Line 1596: NPC 4974 '[Epoch] NPC 4974' → 48440
+Line 1597: NPC 4981 '[Epoch] NPC 4981' → 48441
+Line 1598: NPC 4982 '[Epoch] NPC 4982' → 48442
+Line 1599: NPC 4984 '[Epoch] NPC 4984' → 48443
+Line 1600: NPC 4995 '[Epoch] NPC 4995' → 48444
+Line 1601: NPC 4996 '[Epoch] NPC 4996' → 48445
+Line 1602: NPC 5042 '[Epoch] NPC 5042' → 48446
+Line 1603: NPC 5043 '[Epoch] NPC 5043' → 48447
+Line 1604: NPC 5081 '[Epoch] NPC 5081' → 48448
+Line 1605: NPC 5082 'Vincent Hyal' → 48449
+Line 1665: NPC 5112 'Gwenna Firebrew' → 48450
+Line 2523: NPC 5159 'Falstad Wildhammer' → 48451
+Line 1606: NPC 5193 '[Epoch] NPC 5193' → 48452
+Line 2437: NPC 5333 'Razormane Defender' → 48453
+Line 2438: NPC 5334 'Razormane Hunter' → 48454
+Line 2439: NPC 5335 'Razormane Thornweaver' → 48455
+Line 1607: NPC 5384 '[Epoch] NPC 5384' → 48456
+Line 2314: NPC 5385 'Watcher Mahar Ba' → 48457
+Line 1608: NPC 5386 '[Epoch] NPC 5386' → 48458
+Line 2313: NPC 5393 'Quartermaster Lungertz' → 48459
+Line 2436: NPC 5410 'Ko'gar the Thunderer' → 48460
+Line 2395: NPC 5411 'Krinkle Goodsteel' → 48461
+Line 1609: NPC 5413 '[Epoch] NPC 5413' → 48462
+Line 1610: NPC 5431 '[Epoch] NPC 5431' → 48463
+Line 1611: NPC 5479 '[Epoch] NPC 5479' → 48464
+Line 1612: NPC 5480 '[Epoch] NPC 5480' → 48465
+Line 1613: NPC 5482 '[Epoch] NPC 5482' → 48466
+Line 1614: NPC 5483 '[Epoch] NPC 5483' → 48467
+Line 1615: NPC 5484 'Brother Benjamin' → 48468
+Line 1616: NPC 5489 '[Epoch] NPC 5489' → 48469
+Line 1617: NPC 5491 '[Epoch] NPC 5491' → 48470
+Line 1618: NPC 5492 '[Epoch] NPC 5492' → 48471
+Line 1619: NPC 5493 '[Epoch] NPC 5493' → 48472
+Line 1620: NPC 5494 '[Epoch] NPC 5494' → 48473
+Line 1621: NPC 5495 '[Epoch] NPC 5495' → 48474
+Line 1622: NPC 5496 '[Epoch] NPC 5496' → 48475
+Line 1623: NPC 5497 '[Epoch] NPC 5497' → 48476
+Line 1624: NPC 5498 '[Epoch] NPC 5498' → 48477
+Line 1625: NPC 5499 '[Epoch] NPC 5499' → 48478
+Line 1626: NPC 5500 '[Epoch] NPC 5500' → 48479
+Line 1627: NPC 5502 '[Epoch] NPC 5502' → 48480
+Line 1628: NPC 5503 '[Epoch] NPC 5503' → 48481
+Line 1629: NPC 5504 '[Epoch] NPC 5504' → 48482
+Line 1630: NPC 5505 '[Epoch] NPC 5505' → 48483
+Line 1631: NPC 5506 '[Epoch] NPC 5506' → 48484
+Line 1632: NPC 5509 '[Epoch] NPC 5509' → 48485
+Line 1633: NPC 5510 '[Epoch] NPC 5510' → 48486
+Line 1634: NPC 5511 '[Epoch] NPC 5511' → 48487
+Line 1635: NPC 5512 '[Epoch] NPC 5512' → 48488
+Line 1636: NPC 5513 '[Epoch] NPC 5513' → 48489
+Line 1637: NPC 5514 '[Epoch] NPC 5514' → 48490
+Line 1638: NPC 5515 '[Epoch] NPC 5515' → 48491
+Line 1639: NPC 5516 '[Epoch] NPC 5516' → 48492
+Line 1640: NPC 5517 '[Epoch] NPC 5517' → 48493
+Line 1641: NPC 5518 '[Epoch] NPC 5518' → 48494
+Line 1642: NPC 5519 '[Epoch] NPC 5519' → 48495
+Line 1643: NPC 5520 '[Epoch] NPC 5520' → 48496
+Line 1644: NPC 5564 '[Epoch] NPC 5564' → 48497
+Line 1645: NPC 5565 '[Epoch] NPC 5565' → 48498
+Line 1646: NPC 5566 '[Epoch] NPC 5566' → 48499
+Line 1647: NPC 5567 '[Epoch] NPC 5567' → 48500
+Line 2417: NPC 5594 'Alchemist Pestlezugg' → 48501
+Line 2288: NPC 5636 'Gryphon Master Talonaxe' → 48502
+Line 2419: NPC 5641 'Takata Steelblade' → 48503
+Line 2243: NPC 5665 'Alyssa Blaye' → 48504
+Line 1648: NPC 5694 '[Epoch] NPC 5694' → 48505
+Line 2532: NPC 5748 'Killian Sanatha' → 48506
+Line 2533: NPC 5767 'Nalpak' → 48507
+Line 2563: NPC 5770 'Nara Wildmane' → 48508
+Line 2097: NPC 5884 'Mai'ah' → 48509
+Line 2538: NPC 5910 'Zankaja' → 48510
+Line 1649: NPC 5991 '[Epoch] NPC 5991' → 48511
+Line 1650: NPC 5992 '[Epoch] NPC 5992' → 48512
+Line 1651: NPC 6004 '[Epoch] NPC 6004' → 48513
+Line 1652: NPC 6005 '[Epoch] NPC 6005' → 48514
+Line 1653: NPC 6006 '[Epoch] NPC 6006' → 48515
+Line 1654: NPC 6089 '[Epoch] NPC 6089' → 48516
+Line 1655: NPC 6090 '[Epoch] NPC 6090' → 48517
+Line 1656: NPC 6121 'Remen Marcot' → 48518
+Line 1657: NPC 6122 '[Epoch] NPC 6122' → 48519
+Line 1658: NPC 6171 '[Epoch] NPC 6171' → 48520
+Line 1659: NPC 6173 '[Epoch] NPC 6173' → 48521
+Line 1660: NPC 6174 '[Epoch] NPC 6174' → 48522
+Line 1661: NPC 6237 '[Epoch] NPC 6237' → 48523
+Line 2250: NPC 6250 'Crawler' → 48524
+Line 1662: NPC 6267 '[Epoch] NPC 6267' → 48525
+Line 2539: NPC 6446 'Therzok' → 48526
+Line 1663: NPC 6577 'Bingles Blastenheimer' → 48527
+Line 1664: NPC 6579 'Shoni the Shilent' → 48528
+Line 1666: NPC 6740 'Innkeeper Allison' → 48529
+Line 2408: NPC 6768 'Lord Jorach Ravenholdt' → 48530
+Line 1667: NPC 6778 'Melika Isenstrider' → 48531
+Line 2427: NPC 6887 'Yalda' → 48532
+Line 1668: NPC 6928 '[Epoch] NPC 6928' → 48533
+Line 1669: NPC 6946 '[Epoch] NPC 6946' → 48534
+Line 2442: NPC 7053 'Klaven Mortwake' → 48535
+Line 2383: NPC 7161 'Wrenix the Wretched' → 48536
+Line 2251: NPC 7172 'Lore Keeper of Norgannon' → 48537
+Line 1670: NPC 7207 '[Epoch] NPC 7207' → 48538
+Line 1671: NPC 7208 '[Epoch] NPC 7208' → 48539
+Line 1672: NPC 7232 '[Epoch] NPC 7232' → 48540
+Line 1673: NPC 7295 '[Epoch] NPC 7295' → 48541
+Line 1674: NPC 7386 '[Epoch] NPC 7386' → 48542
+Line 1675: NPC 7410 '[Epoch] NPC 7410' → 48543
+Line 1676: NPC 7584 '[Epoch] NPC 7584' → 48544
+Line 2441: NPC 7740 'Old Man Thistle' → 48545
+Line 1677: NPC 7766 '[Epoch] NPC 7766' → 48546
+Line 2414: NPC 7771 'Marvon Rivetseeker' → 48547
+Line 1678: NPC 7779 '[Epoch] NPC 7779' → 48548
+Line 1679: NPC 7798 '[Epoch] NPC 7798' → 48549
+Line 2159: NPC 7823 'Bera Stonehammer' → 48550
+Line 2556: NPC 7853 'Scooty' → 48551
+Line 2402: NPC 7867 'Thorkaf Dragoneye' → 48552
+Line 2282: NPC 7877 'Latronicus Moonspear' → 48553
+Line 2421: NPC 7882 'Security Chief Bilgewhizzle' → 48554
+Line 1680: NPC 7917 '[Epoch] NPC 7917' → 48555
+Line 2316: NPC 8022 'Spirit of the Exorcist' → 48556
+Line 1681: NPC 8118 '[Epoch] NPC 8118' → 48557
+Line 2422: NPC 8137 'Gikkix' → 48558
+Line 2312: NPC 8178 'Nina Lightbrew' → 48559
+Line 1682: NPC 8378 'Alexandra Blazen' → 48560
+Line 1683: NPC 8379 'Archmage Xylem' → 48561
+Line 1684: NPC 8382 'Patrick Mills' → 48562
+Line 1685: NPC 8383 '[Epoch] NPC 8383' → 48563
+Line 2401: NPC 8395 'Sanath Lim-yo' → 48564
+Line 1686: NPC 8478 'Second Mate Shandril' → 48565
+Line 1687: NPC 8576 '[Epoch] NPC 8576' → 48566
+Line 1688: NPC 8587 '[Epoch] NPC 8587' → 48567
+Line 1689: NPC 8666 '[Epoch] NPC 8666' → 48568
+Line 1690: NPC 8670 'Auctioneer Chilton' → 48569
+Line 1691: NPC 8719 'Auctioneer Fitch' → 48570
+Line 1692: NPC 8856 '[Epoch] NPC 8856' → 48571
+Line 2387: NPC 9019 'Nyagga' → 48572
+Line 2249: NPC 9078 'Shadowmage Vivian Lagrave' → 48573
+Line 2364: NPC 9296 'Milly Osworth' → 48574
+Line 2319: NPC 9317 'Scooty' → 48575
+Line 1693: NPC 9584 '[Epoch] NPC 9584' → 48576
+Line 1694: NPC 9691 '[Epoch] NPC 9691' → 48577
+Line 1695: NPC 9695 '[Epoch] NPC 9695' → 48578
+Line 1696: NPC 9977 '[Epoch] NPC 9977' → 48579
+Line 2379: NPC 9996 'Winna Hazzard' → 48580
+Line 1697: NPC 10216 'Gubber Blump' → 48581
+Line 1698: NPC 10304 '[Epoch] NPC 10304' → 48582
+Line 2391: NPC 10428 'Motega Firemane' → 48583
+Line 2551: NPC 10540 'Vol'jin' → 48584
+Line 2547: NPC 10578 'Bom'bay' → 48585
+Line 2543: NPC 10638 'Kanati Greycloud' → 48586
+Line 1699: NPC 10667 'Chromie' → 48587
+Line 1700: NPC 10782 '[Epoch] NPC 10782' → 48588
+Line 2298: NPC 10879 'Harbinger Balthazad' → 48589
+Line 1701: NPC 10905 '[Epoch] NPC 10905' → 48590
+Line 2111: NPC 10920 'Kelek Skykeeper' → 48591
+Line 2110: NPC 10924 'Ivy Leafrunner' → 48592
+Line 1702: NPC 10976 'Jeziba' → 48593
+Line 1703: NPC 11026 '[Epoch] NPC 11026' → 48594
+Line 1704: NPC 11033 '[Epoch] NPC 11033' → 48595
+Line 1705: NPC 11034 '[Epoch] NPC 11034' → 48596
+Line 1706: NPC 11035 '[Epoch] NPC 11035' → 48597
+Line 1707: NPC 11036 '[Epoch] NPC 11036' → 48598
+Line 1708: NPC 11038 '[Epoch] NPC 11038' → 48599
+Line 1709: NPC 11039 '[Epoch] NPC 11039' → 48600
+Line 1710: NPC 11063 '[Epoch] NPC 11063' → 48601
+Line 1711: NPC 11068 '[Epoch] NPC 11068' → 48602
+Line 1712: NPC 11069 '[Epoch] NPC 11069' → 48603
+Line 2552: NPC 11076 'Cauldron Lord Razarch' → 48604
+Line 1713: NPC 11096 '[Epoch] NPC 11096' → 48605
+Line 1714: NPC 11140 '[Epoch] NPC 11140' → 48606
+Line 2334: NPC 11145 'Myolor Sunderfury' → 48607
+Line 1715: NPC 11198 'Draenei Exile' → 48608
+Line 2548: NPC 11378 'Foreman Thazz'ril' → 48609
+Line 1716: NPC 11397 '[Epoch] NPC 11397' → 48610
+Line 2418: NPC 11438 'Bibbly F'utzbuckle' → 48611
+Line 1717: NPC 11536 '[Epoch] NPC 11536' → 48612
+Line 1718: NPC 11625 'Cork Gizelton' → 48613
+Line 1719: NPC 11626 'Rigger Gizelton' → 48614
+Line 1720: NPC 11701 '[Epoch] NPC 11701' → 48615
+Line 1721: NPC 11704 '[Epoch] NPC 11704' → 48616
+Line 1722: NPC 11706 '[Epoch] NPC 11706' → 48617
+Line 2333: NPC 11748 'Samantha Swifthoof' → 48618
+Line 2560: NPC 11756 'Quinn' → 48619
+Line 2284: NPC 11813 'Kerr Ironsight' → 48620
+Line 2409: NPC 11826 'Kristy Grant' → 48621
+Line 1723: NPC 11827 '[Epoch] NPC 11827' → 48622
+Line 1724: NPC 11828 '[Epoch] NPC 11828' → 48623
+Line 2264: NPC 11864 'Tammra Windfield' → 48624
+Line 1725: NPC 11867 'Woo Ping' → 48625
+Line 1726: NPC 11874 'Masat T'andr' → 48626
+Line 1727: NPC 11878 '[Epoch] NPC 11878' → 48627
+Line 1728: NPC 11916 '[Epoch] NPC 11916' → 48628
+Line 2498: NPC 11936 'Artist Renfray' → 48629
+Line 1729: NPC 11940 'Merissa Stilwell' → 48630
+Line 2390: NPC 12043 'Kulwia' → 48631
+Line 1730: NPC 12047 'Stormpike Mountaineer' → 48632
+Line 1731: NPC 12336 '[Epoch] NPC 12336' → 48633
+Line 1732: NPC 12384 '[Epoch] NPC 12384' → 48634
+Line 1733: NPC 12480 '[Epoch] NPC 12480' → 48635
+Line 1734: NPC 12481 '[Epoch] NPC 12481' → 48636
+Line 1735: NPC 12580 '[Epoch] NPC 12580' → 48637
+Line 1736: NPC 12617 '[Epoch] NPC 12617' → 48638
+Line 1737: NPC 12636 '[Epoch] NPC 12636' → 48639
+Line 1852: NPC 12696 'Senani Thunderheart' → 48640
+Line 1738: NPC 12805 '[Epoch] NPC 12805' → 48641
+Line 2544: NPC 12837 'Yama Snowhoof' → 48642
+Line 2386: NPC 12920 'Doctor Gregory Victor' → 48643
+Line 1739: NPC 12941 '[Epoch] NPC 12941' → 48644
+Line 2493: NPC 12997 'Monty' → 48645
+Line 2521: NPC 13018 'Nipsy' → 48646
+Line 1740: NPC 13076 '[Epoch] NPC 13076' → 48647
+Line 2497: NPC 13278 'Duke Hydraxis' → 48648
+Line 1741: NPC 13283 '[Epoch] NPC 13283' → 48649
+Line 1742: NPC 13435 '[Epoch] NPC 13435' → 48650
+Line 1743: NPC 13436 '[Epoch] NPC 13436' → 48651
+Line 2440: NPC 14033 'Marshal Haggard' → 48652
+Line 2550: NPC 14387 'Lothos Riftwaker' → 48653
+Line 1744: NPC 14394 '[Epoch] NPC 14394' → 48654
+Line 1745: NPC 14423 '[Epoch] NPC 14423' → 48655
+Line 1746: NPC 14438 '[Epoch] NPC 14438' → 48656
+Line 1747: NPC 14439 '[Epoch] NPC 14439' → 48657
+Line 1748: NPC 14481 '[Epoch] NPC 14481' → 48658
+Line 1749: NPC 14496 '[Epoch] NPC 14496' → 48659
+Line 1750: NPC 14497 '[Epoch] NPC 14497' → 48660
+Line 1751: NPC 14624 'Master Smith Burninate' → 48661
+Line 2063: NPC 14634 'Lookout Captain Lolo Longstriker' → 48662
+Line 1752: NPC 14721 '[Epoch] NPC 14721' → 48663
+Line 1753: NPC 14722 '[Epoch] NPC 14722' → 48664
+Line 2098: NPC 14731 'Lard' → 48665
+Line 2099: NPC 14736 'Primal Torntusk' → 48666
+Line 2100: NPC 14740 'Katoom the Angler' → 48667
+Line 1754: NPC 14981 '[Epoch] NPC 14981' → 48668
+Line 1755: NPC 14991 '[Epoch] NPC 14991' → 48669
+Line 1756: NPC 15008 '[Epoch] NPC 15008' → 48670
+Line 1757: NPC 15310 '[Epoch] NPC 15310' → 48671
+Line 1758: NPC 15351 '[Epoch] NPC 15351' → 48672
+Line 1759: NPC 15562 '[Epoch] NPC 15562' → 48673
+Line 1760: NPC 15659 'Auctioneer Jaxon' → 48674
+Line 1761: NPC 15694 '[Epoch] NPC 15694' → 48675
+Line 1762: NPC 15708 '[Epoch] NPC 15708' → 48676
+Line 1763: NPC 15766 '[Epoch] NPC 15766' → 48677
+Line 1764: NPC 15892 '[Epoch] NPC 15892' → 48678
+Line 1765: NPC 15898 '[Epoch] NPC 15898' → 48679
+Line 1766: NPC 16002 '[Epoch] NPC 16002' → 48680
+Line 1767: NPC 16005 '[Epoch] NPC 16005' → 48681
+Line 1768: NPC 16075 '[Epoch] NPC 16075' → 48682
+Line 1769: NPC 16105 '[Epoch] NPC 16105' → 48683
+Line 1770: NPC 16106 '[Epoch] NPC 16106' → 48684
+Line 1771: NPC 16226 '[Epoch] NPC 16226' → 48685
+Line 1772: NPC 16241 '[Epoch] NPC 16241' → 48686
+Line 1773: NPC 16285 '[Epoch] NPC 16285' → 48687
+Line 1774: NPC 16395 '[Epoch] NPC 16395' → 48688
+Line 1775: NPC 16433 '[Epoch] NPC 16433' → 48689
+Line 1776: NPC 16434 '[Epoch] NPC 16434' → 48690
+Line 1777: NPC 16478 '[Epoch] NPC 16478' → 48691
+Line 1778: NPC 16592 '[Epoch] NPC 16592' → 48692
+Line 1779: NPC 16781 '[Epoch] NPC 16781' → 48693
+Line 1780: NPC 16786 '[Epoch] NPC 16786' → 48694
+Line 1781: NPC 17804 '[Epoch] NPC 17804' → 48695
+Line 1782: NPC 23579 'Brogg' → 48696
+Line 1783: NPC 24729 'Alicia' → 48697
+Line 1784: NPC 25580 'Old Man Barlo' → 48698
+Line 2444: NPC 25584 'Scarlet Preacher' → 48699
+Line 2329: NPC 26760 'Fight Promoter' → 48700
+Line 2330: NPC 26765 '[DND] TAR Pedestal - Fight Promoter' → 48701
+Line 2443: NPC 28945 'Knight-Commander Entari' → 48702
+Line 1785: NPC 44806 'Warsong Gulch Battlemaster' → 48703
+Line 1786: NPC 45004 'Kaya Sunmane' → 48704
+Line 1787: NPC 45005 'Helaku' → 48705
+Line 1788: NPC 45018 'Altadena' → 48706
+Line 2433: NPC 45019 'Golith Slatestrike' → 48707
+Line 1789: NPC 45020 'Sarah Templeworth' → 48708
+Line 1790: NPC 45021 'Matron Darcy' → 48709
+Line 1791: NPC 45022 'Sickly Miner' → 48710
+Line 1792: NPC 45023 'Webbed Miner' → 48711
+Line 2101: NPC 45024 'Watcher Owey' → 48712
+Line 1793: NPC 45025 'Dromul Oddrink' → 48713
+Line 1794: NPC 45026 'Falls Elemental' → 48714
+Line 1795: NPC 45027 'Linus Royston' → 48715
+Line 1796: NPC 45028 'Murun Goldroar' → 48716
+Line 1797: NPC 45030 'Big Blue' → 48717
+Line 1798: NPC 45031 'Ginger McGrubbins' → 48718
+Line 1799: NPC 45032 'Lorkiz Quietbit' → 48719
+Line 2425: NPC 45035 'Lucina Nightbow' → 48720
+Line 2426: NPC 45036 'Quartermaster Nyana' → 48721
+Line 1800: NPC 45038 'Bill Wheeland' → 48722
+Line 2292: NPC 45044 'Ainslie Yance' → 48723
+Line 1801: NPC 45046 'Robert Darby' → 48724
+Line 1802: NPC 45051 'Wendel Sparkbright' → 48725
+Line 1803: NPC 45076 'Darnell the Defender' → 48726
+Line 1804: NPC 45077 'The Fallen Knight' → 48727
+Line 1805: NPC 45082 'Grimnar Thromwyn' → 48728
+Line 1806: NPC 45083 'Amberstill Ram' → 48729
+Line 1807: NPC 45085 'Robert Miston' → 48730
+Line 1808: NPC 45086 'Nargle' → 48731
+Line 1809: NPC 45087 'Alanea Miststriker' → 48732
+Line 1810: NPC 45088 'Frenzied Moonkin' → 48733
+Line 1811: NPC 45089 'Natook' → 48734
+Line 2246: NPC 45093 'Izalnir' → 48735
+Line 1812: NPC 45099 'Luna Strinbrow' → 48736
+Line 1813: NPC 45100 'Gernal Burch' → 48737
+Line 1814: NPC 45102 'Fergus Kitsapell' → 48738
+Line 1815: NPC 45103 'Scarlet Foreman' → 48739
+Line 1816: NPC 45104 'Scarlet Miner' → 48740
+Line 1817: NPC 45106 'Jo'gon' → 48741
+Line 1818: NPC 45107 'Garoki' → 48742
+Line 1819: NPC 45109 'Spirit of Sha'gri' → 48743
+Line 1820: NPC 45110 'Kul Tiras Admiral' → 48744
+Line 1821: NPC 45111 'Kul Tiras Deckhand' → 48745
+Line 1822: NPC 45112 'Grimtotem Hector' → 48746
+Line 1823: NPC 45113 'Grimtotem Skirmisher' → 48747
+Line 1824: NPC 45115 'Agatha Longcast' → 48748
+Line 1825: NPC 45117 'Jasone' → 48749
+Line 1826: NPC 45118 'Lucina Nightbow' → 48750
+Line 1827: NPC 45119 'Quartermaster Nyana' → 48751
+Line 1828: NPC 45132 'Mardigan' → 48752
+Line 1829: NPC 45133 'Fritz' → 48753
+Line 1830: NPC 45134 'Mysterious Stranger' → 48754
+Line 1831: NPC 45135 'Mardigan' → 48755
+Line 1832: NPC 45139 'Deathguard Kitsapell' → 48756
+Line 1833: NPC 45140 'Deathguard Kitsapell' → 48757
+Line 1834: NPC 45141 'Kor' → 48758
+Line 2265: NPC 45143 'Lord Aithalis' → 48759
+Line 1835: NPC 45144 'Donald Eastworth' → 48760
+Line 1836: NPC 45145 'Nancy Eastworth' → 48761
+Line 1837: NPC 45146 'Fleet Commander Stoneflint' → 48762
+Line 1838: NPC 45148 'Girda Thunderbrew' → 48763
+Line 1839: NPC 45154 'Wizzle Nimbledigit' → 48764
+Line 1840: NPC 45156 'Nonere Duskdigger' → 48765
+Line 1841: NPC 45159 'Topsy Pelletmoulder' → 48766
+Line 1842: NPC 45163 'Karlain' → 48767
+Line 1843: NPC 45164 'Revil Kost' → 48768
+Line 1844: NPC 45165 'Tannos' → 48769
+Line 2512: NPC 45187 'Murklurk' → 48770
+Line 2525: NPC 45189 'Supervisor Grimgash' → 48771
+Line 1845: NPC 45190 'Ashalen' → 48772
+Line 1846: NPC 45191 'Ashalen' → 48773
+Line 1847: NPC 45192 'Liallas' → 48774
+Line 1848: NPC 45193 'Tyraeth Morningshade' → 48775
+Line 1849: NPC 45197 'Romgul' → 48776
+Line 1850: NPC 45198 'Taskmaster Baran' → 48777
+Line 1851: NPC 45199 'Apothecary Viktor' → 48778
+Line 1853: NPC 45200 'Apprentice Donelly' → 48779
+Line 1854: NPC 45201 'Apprentice Lidya' → 48780
+Line 1855: NPC 45202 'Silverwing Ambusher' → 48781
+Line 1856: NPC 45204 'Gortak' → 48782
+Line 1857: NPC 45205 'Nadia' → 48783
+Line 1858: NPC 45206 'Joakim Sparkroot' → 48784
+Line 1859: NPC 45207 'Lorespeaker On'ju' → 48785
+Line 1860: NPC 45208 'Captured Refugee' → 48786
+Line 1861: NPC 45209 'Captured Refugee' → 48787
+Line 1862: NPC 45210 'Buffalo Will' → 48788
+Line 1863: NPC 45211 'Archmage Korgar' → 48789
+Line 1864: NPC 45212 'Elder Ice Claw Bear' → 48790
+Line 1865: NPC 45213 'Engineer Cobalt' → 48791
+Line 1866: NPC 45214 'Frostmane Oracle' → 48792
+Line 1867: NPC 45215 'Frostmane Hunter' → 48793
+Line 1868: NPC 45216 'High Priest Rikkari' → 48794
+Line 1869: NPC 45217 'Kelsey Steelspark' → 48795
+Line 1870: NPC 45218 'Morogh Eagle' → 48796
+Line 1871: NPC 45234 'Commander Strongborn' → 48797
+Line 1872: NPC 45235 'Frantic Refugee' → 48798
+Line 1873: NPC 45236 'Mayor Oakmaster' → 48799
+Line 1874: NPC 45238 'Corporal Mountainview' → 48800
+Line 1875: NPC 45239 'Angus Thickbottom' → 48801
+Line 1876: NPC 45240 'Broken Golem' → 48802
+Line 1877: NPC 45241 'Rana Thickbottom' → 48803
+Line 1878: NPC 45242 'The Fallen Knight' → 48804
+Line 1879: NPC 45243 'Sadira Ironbit' → 48805
+Line 1880: NPC 45245 'Wounded Burndural Messenger' → 48806
+Line 1881: NPC 45246 'Dragonmaw Adept' → 48807
+Line 1882: NPC 45247 'Dragonmaw Warder' → 48808
+Line 1883: NPC 45250 'Glori Cramber' → 48809
+Line 1884: NPC 45251 'Kur Cramber' → 48810
+Line 1885: NPC 45252 'Zephrix' → 48811
+Line 1886: NPC 45253 'Kaliyah Stormshew' → 48812
+Line 1887: NPC 45257 'Beastmistress Mor' → 48813
+Line 1888: NPC 45262 'Chieftain Nek'rosh' → 48814
+Line 1889: NPC 45264 'Dragonmaw Blademaster' → 48815
+Line 1890: NPC 45265 'Dragonmaw Butcher' → 48816
+Line 1891: NPC 45268 'Dragonmaw Darkhand' → 48817
+Line 1892: NPC 45271 'Garrin Louthy' → 48818
+Line 1893: NPC 45278 'Sarah Louthy' → 48819
+Line 1894: NPC 45279 'Subjugator Sharog' → 48820
+Line 1895: NPC 45281 'Watcher Xoruk' → 48821
+Line 1896: NPC 45283 'Deepskin' → 48822
+Line 1897: NPC 45299 'Nightbane Tainted One' → 48823
+Line 1898: NPC 45300 'Gervase' → 48824
+Line 1899: NPC 45301 'Karlain' → 48825
+Line 1900: NPC 45302 'Revil Kost' → 48826
+Line 1901: NPC 45303 'Brother Darrows' → 48827
+Line 1902: NPC 45317 'Mardigan' → 48828
+Line 1903: NPC 45320 'Sarae Dewlight' → 48829
+Line 1904: NPC 45325 'Plagued Shambler' → 48830
+Line 1905: NPC 45326 'Swiftpaw' → 48831
+Line 1906: NPC 45328 'Mother Tessa' → 48832
+Line 1907: NPC 45330 'Scout Barleybrew' → 48833
+Line 1908: NPC 45333 'Grizzle Screwsnip' → 48834
+Line 1909: NPC 45334 'Supervisor Hink' → 48835
+Line 1910: NPC 45335 'Hunter Kyana' → 48836
+Line 1911: NPC 45336 'Mirkfallon Spirit' → 48837
+Line 1912: NPC 45337 'Centrica Nightsong' → 48838
+Line 1913: NPC 45338 'Bapper Tookwinkle' → 48839
+Line 1914: NPC 45339 'Vallourek Nightsong' → 48840
+Line 1915: NPC 45340 'Captain Mynera' → 48841
+Line 1916: NPC 45377 'Andrew Porter' → 48842
+Line 2242: NPC 45383 'Baster Grays' → 48843
+Line 1917: NPC 45387 'Ezee Fastrocket' → 48844
+Line 1918: NPC 45413 'Akagi' → 48845
+Line 1919: NPC 45415 'Captain Thallen' → 48846
+Line 1920: NPC 45423 'Guard Tristan' → 48847
+Line 1921: NPC 45424 'Horde Scout' → 48848
+Line 1922: NPC 45428 'Archmage Zygor' → 48849
+Line 1923: NPC 45429 'Syndicate Mage' → 48850
+Line 1924: NPC 45432 'Beve Perenolde' → 48851
+Line 1925: NPC 45434 'Captured Prisoner' → 48852
+Line 1926: NPC 45435 'Captured Prisoner' → 48853
+Line 1927: NPC 45436 'Captured Prisoner' → 48854
+Line 1928: NPC 45438 'Captured Prisoner' → 48855
+Line 1929: NPC 45439 'Captured Prisoner' → 48856
+Line 1930: NPC 45440 'Captured Prisoner' → 48857
+Line 1931: NPC 45441 'Captured Prisoner' → 48858
+Line 1932: NPC 45442 'Syndicate Overseer' → 48859
+Line 1933: NPC 45443 'Syndicate Priest' → 48860
+Line 1934: NPC 45444 'Syndicate Taskmaster' → 48861
+Line 1935: NPC 45446 'Guard Emily' → 48862
+Line 1936: NPC 45447 'Guard Paxton' → 48863
+Line 1937: NPC 45449 'Scout Vernado' → 48864
+Line 1938: NPC 45450 'Southshore Crier' → 48865
+Line 1939: NPC 45454 'Tog'thar' → 48866
+Line 1940: NPC 45457 'Deserter Honorguard' → 48867
+Line 1941: NPC 45464 'Jenna Thunderbrew' → 48868
+Line 1942: NPC 45465 'Brokenhorn' → 48869
+Line 1943: NPC 45466 'Dekked' → 48870
+Line 1944: NPC 45468 'Fik Fizzfingers' → 48871
+Line 1945: NPC 45469 'Einna' → 48872
+Line 1946: NPC 45470 'Eillah' → 48873
+Line 1947: NPC 45471 'Stonegaze' → 48874
+Line 1948: NPC 45472 'Unja the Troll-Servant' → 48875
+Line 1949: NPC 45473 'Warlord Rhurg' → 48876
+Line 1950: NPC 45474 'Winston' → 48877
+Line 1951: NPC 45475 'James Corbett' → 48878
+Line 1952: NPC 45476 'Foreman Springsocket' → 48879
+Line 1953: NPC 45477 'Furious Earth' → 48880
+Line 1954: NPC 45478 'Outraged Earth' → 48881
+Line 1955: NPC 45479 'Splintertree Peon' → 48882
+Line 1956: NPC 45480 'Ditsy Springsocket' → 48883
+Line 1957: NPC 45481 'Cece Herbert' → 48884
+Line 2244: NPC 45501 'Rance Hartstolen' → 48885
+Line 2245: NPC 45502 'Jake Hartstolen' → 48886
+Line 1958: NPC 45503 'Kaya Sunmane' → 48887
+Line 1959: NPC 45506 'Chel Moonwood' → 48888
+Line 1960: NPC 45508 'Captain Teuta' → 48889
+Line 1961: NPC 45512 'Magrum Mistrunner' → 48890
+Line 1962: NPC 45513 'King Krool' → 48891
+Line 1964: NPC 45519 'Orgorn Strongbrow' → 48892
+Line 1965: NPC 45520 'Juldugs Firetale' → 48893
+Line 1966: NPC 45521 'Deserter Arcanist' → 48894
+Line 1967: NPC 45522 'Deserter Medic' → 48895
+Line 1968: NPC 45523 'Kaya Ragetotem' → 48896
+Line 1969: NPC 45525 'Goddard' → 48897
+Line 1970: NPC 45526 'Inabit Wedgefeet' → 48898
+Line 1971: NPC 45527 'Felicity Perenolde' → 48899
+Line 1972: NPC 45528 'Felicity Perenolde' → 48900
+Line 1973: NPC 45529 'Zala'thria' → 48901
+Line 1974: NPC 45530 'Zala'thria' → 48902
+Line 1975: NPC 45531 'Kratok' → 48903
+Line 1976: NPC 45532 'Miki Smallsprocket' → 48904
+Line 1977: NPC 45533 'Poole' → 48905
+Line 1978: NPC 45535 'Steamwheedle Bruiser' → 48906
+Line 1979: NPC 45536 'Stelx' → 48907
+Line 2500: NPC 45544 'Murloc Lake Hunter' → 48908
+Line 2501: NPC 45545 'Murloc Lake Oracle' → 48909
+Line 1963: NPC 45546 'Private Noit' → 48910
+Line 2517: NPC 45547 'Aquamentus' → 48911
+Line 2518: NPC 45548 'Atrasies the Ancient' → 48912
+Line 1980: NPC 45549 'Zeemo' → 48913
+Line 1981: NPC 45550 'Indon Cliffreach' → 48914
+Line 2519: NPC 45552 'Raging Cinders' → 48915
+Line 2247: NPC 45564 'Randal Alestone' → 48916
+Line 2515: NPC 45565 'Frantic Earth' → 48917
+Line 2516: NPC 45566 'Rambling Earth' → 48918
+Line 1982: NPC 45571 'Raging Ember' → 48919
+Line 1983: NPC 45572 'Drizzle' → 48920
+Line 1984: NPC 45573 'Ando Darkshadow' → 48921
+Line 1985: NPC 45574 'Noogle' → 48922
+Line 1986: NPC 45575 'Joakim Sparkroot' → 48923
+Line 1987: NPC 45577 'Argyle Wilkes' → 48924
+Line 1988: NPC 45579 'Darkmist Egg Sack' → 48925
+Line 1989: NPC 45581 'Binkle Screwsnip' → 48926
+Line 1990: NPC 45584 'Gapple' → 48927
+Line 2248: NPC 45598 'Gapple' → 48928
+Line 2253: NPC 45599 'Earthen Spirit' → 48929
+Line 2254: NPC 45600 'Historian Rebecca Keller' → 48930
+Line 2255: NPC 45601 'Garekk' → 48931
+Line 2256: NPC 45602 'Quake' → 48932
+Line 2296: NPC 45604 'Dirk Windrattle' → 48933
+Line 2257: NPC 45605 'Grox Muckswagger' → 48934
+Line 2258: NPC 45606 'Quake' → 48935
+Line 2260: NPC 45607 'Torthrak' → 48936
+Line 1991: NPC 45609 'Beezil Linkspanner' → 48937
+Line 1992: NPC 45610 'Cys Craftcharge' → 48938
+Line 1993: NPC 45611 'Scout Ghak' → 48939
+Line 1994: NPC 45612 'Watcher Wallace' → 48940
+Line 1995: NPC 45613 'Dibi Squigglecord' → 48941
+Line 1997: NPC 45614 'Nibi Muckswagger' → 48942
+Line 1998: NPC 45615 'Imu Copperspell' → 48943
+Line 1999: NPC 45620 'Innkeeper Teenyfuse' → 48944
+Line 2000: NPC 45622 'Selrai Dewlight' → 48945
+Line 2001: NPC 45626 'Nelae Skymoon' → 48946
+Line 2002: NPC 45630 'Mone Sunmane' → 48947
+Line 2261: NPC 45631 'Liam the Dockmaster' → 48948
+Line 2003: NPC 45641 'Akiha' → 48949
+Line 2004: NPC 45644 'Melchor Bloodrunner' → 48950
+Line 2554: NPC 45645 'Meeran' → 48951
+Line 2005: NPC 45646 'Dumont Hollowcry' → 48952
+Line 2006: NPC 45647 'Urulg' → 48953
+Line 2007: NPC 45651 'Topanga Plainchaser' → 48954
+Line 2008: NPC 45655 'Remi Coldeye' → 48955
+Line 2270: NPC 45670 'Girda Thunderbrew' → 48956
+Line 2271: NPC 45673 'Nonere Duskdigger' → 48957
+Line 2009: NPC 45683 'Golith Slatestrike' → 48958
+Line 2010: NPC 45686 'Beezil's Crew' → 48959
+Line 2011: NPC 45694 'Tizzie Sparkcraft' → 48960
+Line 2012: NPC 45695 'Chunky Grouper' → 48961
+Line 2013: NPC 45697 'Gryphon Master Stonemace' → 48962
+Line 2289: NPC 45700 'Karlain' → 48963
+Line 2014: NPC 45701 'Murdug Drunkbelly' → 48964
+Line 2015: NPC 45702 'The Direglob' → 48965
+Line 2016: NPC 45704 'Watcher Owey' → 48966
+Line 2017: NPC 45706 'Foulcrest' → 48967
+Line 2018: NPC 45710 'Hagesh' → 48968
+Line 2019: NPC 45711 'Kranz' → 48969
+Line 2020: NPC 45714 'Oil Rig Worker' → 48970
+Line 2021: NPC 45715 'Oil Soaked Critter' → 48971
+Line 2022: NPC 45716 'Overseer Looney' → 48972
+Line 2023: NPC 45725 'Doszurd' → 48973
+Line 2024: NPC 45726 'Raging Tempest' → 48974
+Line 2025: NPC 45727 'Ravenous Looter' → 48975
+Line 2026: NPC 45731 'Sarae Dewlight' → 48976
+Line 2027: NPC 45732 'Dis Nuts' → 48977
+Line 2412: NPC 45734 'Jack Archer' → 48978
+Line 2034: NPC 45736 'Wuti Sunjumper' → 48979
+Line 2035: NPC 45737 'Roknar' → 48980
+Line 2036: NPC 45738 'Thistleshrub Thornseeker' → 48981
+Line 2037: NPC 45739 'Sylph' → 48982
+Line 2038: NPC 45740 'Grimgaz' → 48983
+Line 2039: NPC 45743 'Scout Shadowdancer' → 48984
+Line 2040: NPC 45744 'Centipaar Nightstalker' → 48985
+Line 2041: NPC 45745 'Hazzali Nightstalker' → 48986
+Line 2450: NPC 45746 'Dol'grom Kragstorm' → 48987
+Line 2451: NPC 45748 'Old Man Gromgosh' → 48988
+Line 2042: NPC 45749 'Unconscious Scout' → 48989
+Line 2043: NPC 45750 'Scout Lightfoot' → 48990
+Line 2044: NPC 45757 'Hazzali Brainlord' → 48991
+Line 2045: NPC 45759 'Dennis' → 48992
+Line 2297: NPC 45769 'Engineer Flikswitch' → 48993
+Line 2346: NPC 45773 'Sarah Templeworth' → 48994
+Line 2347: NPC 45774 'Robert Miston' → 48995
+Line 2348: NPC 45775 'Matron Darcy' → 48996
+Line 2478: NPC 45776 'Darcy Cobb' → 48997
+Line 2349: NPC 45777 'Webbed Miner' → 48998
+Line 2342: NPC 45779 'Linus Stone' → 48999
+Line 2339: NPC 45780 'Dromul Oddrink' → 49000
+Line 2340: NPC 45782 'Friend of Dromul' → 49001
+Line 2341: NPC 45783 'Brother Zaldimar' → 49002
+Line 2453: NPC 45784 'Nezzil Whipsaw' → 49003
+Line 2454: NPC 45785 'Deke Grindel' → 49004
+Line 2482: NPC 45791 'Sister Elsington' → 49005
+Line 2350: NPC 45797 'Wanted Poster' → 49006
+Line 2366: NPC 45798 'Lorkiz Quietbit' → 49007
+Line 2241: NPC 45799 'Tog'thar' → 49008
+Line 2507: NPC 45800 'Captain Thallen' → 49009
+Line 2510: NPC 45809 'Guard Tristan' → 49010
+Line 2332: NPC 45825 'Buffalo Will' → 49011
+Line 2046: NPC 45826 'Chief Dusthoof' → 49012
+Line 2047: NPC 45827 'Merida Stoutforge' → 49013
+Line 2064: NPC 45833 'Bhurind Stoutforge' → 49014
+Line 2065: NPC 45834 'Grampy Stoutforge' → 49015
+Line 2048: NPC 45838 'Cody' → 49016
+Line 2049: NPC 45839 'Aquamentus' → 49017
+Line 2384: NPC 45840 'Kevin Winter' → 49018
+Line 2385: NPC 45841 'Sage Greenhorn' → 49019
+Line 2050: NPC 45844 'Ubo the Hermit' → 49020
+Line 2377: NPC 45845 'Thu'tek' → 49021
+Line 2051: NPC 45846 'Jabberjaw' → 49022
+Line 2052: NPC 45847 'Salty Shore Swimmer' → 49023
+Line 2528: NPC 45850 'Dia Foss' → 49024
+Line 2378: NPC 45851 'Mistvale Poacher' → 49025
+Line 2494: NPC 45857 'Fik Fizzfingers' → 49026
+Line 2492: NPC 45859 'Goobis McChow' → 49027
+Line 2053: NPC 45861 'Traitor Gluk' → 49028
+Line 2054: NPC 45862 'Gluk's Enforcers' → 49029
+Line 2055: NPC 45863 'Dee' → 49030
+Line 2056: NPC 45864 'Dum' → 49031
+Line 2057: NPC 45865 'Viggo' → 49032
+Line 2058: NPC 45866 'Gark' → 49033
+Line 2059: NPC 45867 'Jrall' → 49034
+Line 2060: NPC 45868 'Mek'nell' → 49035
+Line 2061: NPC 45869 'Trog' → 49036
+Line 2338: NPC 45873 'Zul'jin' → 49037
+Line 2066: NPC 45874 'Ocniir' → 49038
+Line 2067: NPC 45875 'Harborage Guard' → 49039
+Line 2068: NPC 45876 'Akmid' → 49040
+Line 2069: NPC 45877 'Innkeeper Finmir' → 49041
+Line 2070: NPC 45878 'Manaar the Watcher' → 49042
+Line 2071: NPC 45885 'Jasper Greene' → 49043
+Line 2072: NPC 45886 'Historian Eva Trelayne' → 49044
+Line 2073: NPC 45887 'Historian Todd Page' → 49045
+Line 2074: NPC 45888 'Deathguard Kitsapell' → 49046
+Line 2295: NPC 45890 'Kor' → 49047
+Line 2488: NPC 45893 'Starving Worg' → 49048
+Line 2075: NPC 45894 'Apolos Deathshot' → 49049
+Line 2076: NPC 45895 'Dark Ooze' → 49050
+Line 2077: NPC 45898 'Luna Strinbrow' → 49051
+Line 2078: NPC 45899 'Fergus Kitsapell' → 49052
+Line 2079: NPC 45902 'Gernal Burch' → 49053
+Line 2080: NPC 45919 'Starving Worg' → 49054
+Line 2392: NPC 45939 'Donald Eastworth' → 49055
+Line 2393: NPC 45940 'Nancy Eastworth' → 49056
+Line 2304: NPC 45942 'Mayor Oakmaster' → 49057
+Line 2305: NPC 45943 'Scout Barleybrew' → 49058
+Line 2081: NPC 45945 'Shadowforge Miner' → 49059
+Line 2299: NPC 45946 'Commander Strongborn' → 49060
+Line 2082: NPC 45947 'Shadowforge Overseer' → 49061
+Line 2306: NPC 45953 'Corporal Mountainview' → 49062
+Line 2459: NPC 45964 'Commander Samaul' → 49063
+Line 2087: NPC 45974 'Spinnaret' → 49064
+Line 2088: NPC 45975 'Tamura' → 49065
+Line 2089: NPC 45976 'Tyraeth Morningshade' → 49066
+Line 2090: NPC 45977 'Race Invigilator' → 49067
+Line 2430: NPC 45981 'Taskmaster Baran' → 49068
+Line 2091: NPC 45982 'Xirith' → 49069
+Line 2483: NPC 45983 'Sentinel Maithryn' → 49070
+Line 2432: NPC 45984 'Apothecary Viktor' → 49071
+Line 2431: NPC 45985 'Apprentice Donelly' → 49072
+Line 2092: NPC 45990 'Foreman Springsocket' → 49073
+Line 2542: NPC 45991 'Furious Earth' → 49074
+Line 2093: NPC 45995 'Ditsy Springsocket' → 49075
+Line 2281: NPC 45999 'Elise Brightletter' → 49076
+Line 2370: NPC 46000 'Pipjot' → 49077
+Line 2389: NPC 46006 'Relko' → 49078
+Line 2344: NPC 46008 'Master Leander' → 49079
+Line 2094: NPC 46012 'Atrasies the Ancient' → 49080
+Line 2112: NPC 46015 'Rambling Earth' → 49081
+Line 2113: NPC 46016 'Boiling Wanderer' → 49082
+Line 2114: NPC 46018 'Paula Alestone' → 49083
+Line 2115: NPC 46019 'Randal Alestone' → 49084
+Line 2116: NPC 46022 'Terrified Ram' → 49085
+Line 2117: NPC 46023 'Terrified Chicken' → 49086
+Line 2118: NPC 46024 'Terrified Cattle' → 49087
+Line 2109: NPC 46025 'Trader Mallu' → 49088
+Line 2119: NPC 46027 'Aqual Sprayer' → 49089
+Line 2120: NPC 46028 'Blazing Creeper' → 49090
+Line 2121: NPC 46029 'Blazing Strider' → 49091
+Line 2122: NPC 46030 'Witherbark Flame Bender' → 49092
+Line 2123: NPC 46032 'Witherbark Berserker' → 49093
+Line 2124: NPC 46033 'Witherbark Flayer' → 49094
+Line 2125: NPC 46034 'Raging Cinders' → 49095
+Line 2126: NPC 46035 'Dark Shaman Drezco' → 49096
+Line 2127: NPC 46036 'Dark Shaman Enwi' → 49097
+Line 2128: NPC 46037 'Aeromir' → 49098
+Line 2129: NPC 46038 'Frantic Earth' → 49099
+Line 2130: NPC 46041 'Deathclaw' → 49100
+Line 2145: NPC 46056 'Nadia' → 49101
+Line 2146: NPC 46057 'Shin'Zil' → 49102
+Line 2496: NPC 46061 'Zephrix' → 49103
+Line 2382: NPC 46065 'Kaliyah Stormshew' → 49104
+Line 2131: NPC 46066 'Sage Elkhoof' → 49105
+Line 2132: NPC 46068 'Protector Evangeline' → 49106
+Line 2133: NPC 46069 'Omar Dorn' → 49107
+Line 2540: NPC 46076 'Archaeologist Everit' → 49108
+Line 1996: NPC 46077 'Burning Blade Courier' → 49109
+Line 2134: NPC 46078 'Captain Thunderbrew' → 49110
+Line 2135: NPC 46079 'Dustpaw' → 49111
+Line 2356: NPC 46083 'Apprentice Fess' → 49112
+Line 2472: NPC 46085 'Kristoff' → 49113
+Line 2357: NPC 46086 'Holaaru' → 49114
+Line 2415: NPC 46090 'Annie Grim' → 49115
+Line 2136: NPC 46092 'Burning Blade Courier' → 49116
+Line 2137: NPC 46093 'Winkle Screwbucket' → 49117
+Line 2138: NPC 46096 'Shadow Wraith' → 49118
+Line 2139: NPC 46099 'Jo'gon' → 49119
+Line 2140: NPC 46100 'Streak' → 49120
+Line 2141: NPC 46101 'Marwin Shrillwill' → 49121
+Line 2142: NPC 46102 'Annie Grim' → 49122
+Line 2143: NPC 46103 'Kul Tiras Admiral' → 49123
+Line 2144: NPC 46104 'Kul Tiras Deckhand' → 49124
+Line 2149: NPC 46105 'Ten'siz the Exiled' → 49125
+Line 2150: NPC 46109 'Wilfiz Silverbit' → 49126
+Line 2398: NPC 46120 'Beezil Linkspanner' → 49127
+Line 2268: NPC 46121 'Cys Craftcharge' → 49128
+Line 2399: NPC 46123 'Watcher Wallace' → 49129
+Line 2151: NPC 46124 'Bloodtalon Ravasaur' → 49130
+Line 2380: NPC 46127 'Watcher Steelsong' → 49131
+Line 2102: NPC 46129 'Mek'nell' → 49132
+Line 2103: NPC 46135 'Jrall' → 49133
+Line 2435: NPC 46146 'Lost Ancient' → 49134
+Line 2353: NPC 46151 'Grimtotem Hector' → 49135
+Line 2354: NPC 46152 'Grimtotem Skirmisher' → 49136
+Line 2152: NPC 46153 'Mone Sunmane' → 49137
+Line 2153: NPC 46163 'Bhurind Stoutforge' → 49138
+Line 2154: NPC 46164 'Grampy Stoutforge' → 49139
+Line 2155: NPC 46172 'Lorraine Halford' → 49140
+Line 2156: NPC 46173 'Captain Ashyla' → 49141
+Line 2157: NPC 46174 'Spiritseer Nishelle' → 49142
+Line 2158: NPC 46182 'Angry Highborne Spirit' → 49143
+Line 2160: NPC 46190 'Spitelash Raider' → 49144
+Line 2161: NPC 46191 'Spitelash Witch' → 49145
+Line 2162: NPC 46195 'Ashylza' → 49146
+Line 2163: NPC 46196 'Doctor Teltin' → 49147
+Line 2164: NPC 46200 'Engineer Thompson' → 49148
+Line 2165: NPC 46201 'First Mate Jen' → 49149
+Line 2166: NPC 46202 'Galley Chief Benny' → 49150
+Line 2167: NPC 46209 'Wraithroar' → 49151
+Line 2168: NPC 46210 'Delevan Frostgaze' → 49152
+Line 2169: NPC 46218 'Wifla' → 49153
+Line 2170: NPC 46226 'Goddard' → 49154
+Line 2400: NPC 46228 'Kranz' → 49155
+Line 2362: NPC 46235 'Garrison Grader' → 49156
+Line 2363: NPC 46236 'Private Waldric' → 49157
+Line 2423: NPC 46237 'Marai Ravenwater' → 49158
+Line 2171: NPC 46240 'Mooncrazed Owlbeast' → 49159
+Line 2172: NPC 46241 'Roxxie Fizzwhistle' → 49160
+Line 2173: NPC 46242 'Tanum' → 49161
+Line 2559: NPC 46248 'Kyx Rustwrench' → 49162
+Line 2028: NPC 46260 'Chief Dusthoof' → 49163
+Line 2029: NPC 46261 'Spiritwalker Muata' → 49164
+Line 2030: NPC 46265 'Peach' → 49165
+Line 2031: NPC 46268 'Korgram Earthshaper' → 49166
+Line 2032: NPC 46270 'Kragg Flamecaller' → 49167
+Line 2033: NPC 46273 'Haili' → 49168
+Line 2174: NPC 46298 'Alan Hawthorn' → 49169
+Line 2175: NPC 46320 'Professor Starling' → 49170
+Line 2176: NPC 46322 'Dean Blackwood' → 49171
+Line 2177: NPC 46323 'Doctor Atwood' → 49172
+Line 2178: NPC 46324 'Alexei Barov' → 49173
+Line 2179: NPC 46326 'Isabelle Pickman' → 49174
+Line 2180: NPC 46327 'Proctor Phillips' → 49175
+Line 2181: NPC 46329 'Professor Hanlon' → 49176
+Line 2182: NPC 46330 'Putrid Lake Thresher' → 49177
+Line 2183: NPC 46331 'Senior Student Selina' → 49178
+Line 2184: NPC 46332 'Sharlot' → 49179
+Line 2457: NPC 46344 'Sier Reishan' → 49180
+Line 2458: NPC 46345 'Scout Morgria' → 49181
+Line 2185: NPC 46351 'S.J. Erlgadin Jr.' → 49182
+Line 2186: NPC 46352 'Spinescale' → 49183
+Line 2187: NPC 46353 'Terrorwing' → 49184
+Line 2188: NPC 46440 '[Epoch] NPC 46440' → 49185
+Line 2189: NPC 46486 'Jaylssa Stonesong' → 49186
+Line 2190: NPC 46487 'Leakey Cartspark' → 49187
+Line 2191: NPC 46488 'Living Wind' → 49188
+Line 2192: NPC 46497 'Cult Courier' → 49189
+Line 2193: NPC 46498 'Grand Apothecary Putress' → 49190
+Line 2194: NPC 46500 'Honors Student' → 49191
+Line 2195: NPC 46501 'Professor Emeritus Chillbone' → 49192
+Line 2196: NPC 46502 'Professor Rasmussen' → 49193
+Line 2197: NPC 46507 'Celeste Corealis' → 49194
+Line 2198: NPC 46508 'Tangled Horror' → 49195
+Line 2199: NPC 46509 'Ghost Tarantula' → 49196
+Line 2200: NPC 46510 'Ranger Larya' → 49197
+Line 2201: NPC 46511 'Living Tide' → 49198
+Line 2202: NPC 46512 'Splashing Elemental' → 49199
+Line 2203: NPC 46522 'Yaluni Flamewatcher' → 49200
+Line 2204: NPC 46555 'Lady Lyrene' → 49201
+Line 2205: NPC 46556 'Marius Hedrin' → 49202
+Line 2206: NPC 46557 'Tzakaja' → 49203
+Line 2460: NPC 46559 'Tinkmaster Fizzlegrim' → 49204
+Line 2207: NPC 46560 'Ismir Dawnfall' → 49205
+Line 2208: NPC 46561 'Teles'aran Citizen' → 49206
+Line 2463: NPC 46562 'Jorun Ironbore' → 49207
+Line 2464: NPC 46563 'Dargan Ashleaf' → 49208
+Line 2465: NPC 46564 'Gina Toothsplinter' → 49209
+Line 2466: NPC 46565 'Torin Stoneshield' → 49210
+Line 2467: NPC 46567 'Matty Marlston' → 49211
+Line 2468: NPC 46570 'Master Smith Lekon' → 49212
+Line 2469: NPC 46571 'Shola Starbringer' → 49213
+Line 2209: NPC 46574 'Foul Tender' → 49214
+Line 2420: NPC 46575 'Innkeeper Tooma' → 49215
+Line 2210: NPC 46576 'Rootspeaker Aharu' → 49216
+Line 2211: NPC 46578 'Vilehorn Satyr' → 49217
+Line 2475: NPC 46581 'Kark Gravelturner' → 49218
+Line 2212: NPC 46583 'Azruthir' → 49219
+Line 2213: NPC 46595 'Tessco Jinglepocket' → 49220
+Line 2214: NPC 46596 'Morrison Copperpinch' → 49221
+Line 2215: NPC 46598 'Leedil Jinglepocket' → 49222
+Line 2481: NPC 46613 'Captain Tharran' → 49223
+Line 2216: NPC 46631 'Grox Muckswagger' → 49224
+Line 2217: NPC 46632 'Izalnir' → 49225
+Line 2471: NPC 46634 'Captain Ironhill' → 49226
+Line 2218: NPC 46640 'Lydia Cartwright' → 49227
+Line 2219: NPC 46641 'Nibi Muckswagger' → 49228
+Line 2480: NPC 46644 'Acolyte Grynwald' → 49229
+Line 2220: NPC 46645 'Scout Morgria' → 49230
+Line 2221: NPC 46649 'Torthrak' → 49231
+Line 2509: NPC 46692 'Guard Emily' → 49232
+Line 2513: NPC 46700 'Gryphon Master Stonemace' → 49233
+Line 2524: NPC 46701 'Joakim Sparkroot' → 49234
+Line 2526: NPC 46702 'Aliss Tideseeker' → 49235
+Line 2527: NPC 46703 'Chel Moonwood' → 49236
+Line 2529: NPC 46704 'Viggo' → 49237
+Line 2530: NPC 46705 'Mek'nell' → 49238
+Line 2104: NPC 46718 'Daz'tiro' → 49239
+Line 2531: NPC 46738 'Bloodscalp Spirit' → 49240
+Line 2262: NPC 46834 'Joz'jarz' → 49241
+Line 2310: NPC 46835 'Amethyst Crab' → 49242
+Line 2272: NPC 46836 'Tinker Captain Whistlescrew' → 49243
+Line 2222: NPC 46875 'Mogern Blackeye' → 49244
+Line 2223: NPC 46876 'Karum Mallister' → 49245
+Line 2224: NPC 46877 'Captain Grumma' → 49246
+Line 2225: NPC 46878 'Watcher Steelsong' → 49247
+Line 2226: NPC 46879 'Sorcerer Maltarg' → 49248
+Line 2227: NPC 46880 'Forgemaster Tralak' → 49249
+Line 2228: NPC 46881 'Nargosh Rageblade' → 49250
+Line 2229: NPC 46882 'Windle Fusespring' → 49251
+Line 2230: NPC 46883 'Gruhl Stonecreek' → 49252
+Line 2231: NPC 46887 'Raha'glor the Inferno' → 49253
+Line 2232: NPC 46888 'Myldis' → 49254
+Line 2233: NPC 46889 'Meeran' → 49255
+Line 2234: NPC 46890 'Peryn Mallister' → 49256
+Line 2235: NPC 46892 'Dayna Stonekeg' → 49257
+Line 2236: NPC 46895 'Helga Ashgate' → 49258
+Line 2237: NPC 46896 'Golemancer Lugar' → 49259
+Line 2238: NPC 46903 'Jason Tinling' → 49260
+Line 2239: NPC 46904 'Everstill Lurker' → 49261
+Line 2311: NPC 46934 'Uwa' → 49262
+Line 2273: NPC 47084 'Felix Whindlebolt' → 49263
+Line 2274: NPC 47085 'Caris Sunlancer' → 49264
+Line 2275: NPC 47086 'Sergeant Ralston' → 49265
+Line 2276: NPC 47087 'Guard Captain Cragtar' → 49266
+Line 2277: NPC 47090 'Corporal Ruffleton' → 49267
+Line 2278: NPC 47091 'Captain Danuvin' → 49268
+Line 2279: NPC 47092 'Layla Sprocketspark' → 49269
+Line 2280: NPC 47093 'Hands Springsprocket' → 49270
+Line 2105: NPC 47100 'Azisary' → 49271
+Line 2106: NPC 47101 'Hunter Bon'juru' → 49272
+Line 2107: NPC 47103 'Witch Doctor Leerya' → 49273
+Line 2108: NPC 47106 'Makasgar' → 49274
+Line 2522: NPC 47175 'Tizzie Sparkcraft' → 49275
+Line 2470: NPC 47191 'Captain Stronk' → 49276
+Line 2318: NPC 48086 'Venture Co. Tinkerer' → 49277
+Line 2322: NPC 48110 'Shin'Zil' → 49278
+Line 2323: NPC 48111 'Nadia' → 49279
+Line 2324: NPC 48112 'Corrupted Scorpid' → 49280
+Line 2325: NPC 48113 'Shadowy Assassin' → 49281
+Line 2326: NPC 48114 'Baron Geddon's Essence' → 49282
+Line 2327: NPC 48115 'Felguard Commander' → 49283
+Line 2328: NPC 48116 'Summoned Demon' → 49284
+Line 2320: NPC 48167 'Captain Hecklebury Smotts' → 49285
+Line 2355: NPC 48168 'Shadowhide Brute' → 49286
+Line 2259: NPC 48169 'Scout Morgria' → 49287
+Line 2317: NPC 48170 'Deeg' → 49288
+Line 2360: NPC 48172 'Edwin Harly' → 49289
+Line 2381: NPC 48173 'Mankrik' → 49290
+Line 2369: NPC 48174 'Jason Lemieux' → 49291
+Line 2388: NPC 48175 'Pozzik' → 49292
+Line 2335: NPC 48177 'Ainslie Yance' → 49293
+Line 2062: NPC 48178 'Viggo' → 49294
+Line 2434: NPC 48179 'Viggo' → 49295
+Line 2358: NPC 48180 'Sentinel Arynia Cloudsbreak' → 49296
+Line 2484: NPC 48181 'Haggrum Bloodfist' → 49297
+Line 2485: NPC 48182 'Grox Muckswagger' → 49298
+Line 2410: NPC 48183 'Felicity' → 49299
+Line 2345: NPC 48184 'Private Noit' → 49300
+Line 2315: NPC 48185 'Eunna' → 49301
+Line 2290: NPC 48186 'Revil Kost' → 49302
+Line 2479: NPC 48187 'Meatloaf' → 49303
+Line 2411: NPC 48188 'Sarae Dewlight' → 49304
+Line 2473: NPC 48189 'Terri Smallfoot' → 49305
+Line 2474: NPC 48190 'Mad King Morgrim' → 49306
+Line 2476: NPC 48191 'Lieutenant Valorcall' → 49307
+Line 2477: NPC 48192 'Brother Joseph' → 49308
+Line 2452: NPC 48193 'Gilder Stompbone' → 49309
+Line 2413: NPC 48194 'Shep Daltry' → 49310
+Line 2336: NPC 48195 'Lorespeaker Itzli' → 49311
+Line 2375: NPC 48196 'Lorespeaker Itzli' → 49312
+Line 2337: NPC 48197 'Chel Moonwood' → 49313
+Line 2359: NPC 48198 'Priestess A'moora' → 49314
+Line 2373: NPC 48199 'Mayor Oakmaster' → 49315
+Line 2343: NPC 48200 'Commander Strongborn' → 49316
+Line 2331: NPC 48201 'Nolg' → 49317
+Line 2394: NPC 48202 'Lemaira' → 49318
+Line 2416: NPC 48203 'Pipjot' → 49319
+Line 2455: NPC 48204 'Historian Rebecca Keller' → 49320
+Line 2456: NPC 48205 'Garret Underhill' → 49321
+Line 2461: NPC 48206 'Kris Blighthammer' → 49322
+Line 2462: NPC 48207 'Brother Ignatious' → 49323
+Line 2307: NPC 48208 'Daz'tiro' → 49324
+Line 2309: NPC 48209 'Joz'jarz' → 49325
+Line 2308: NPC 48210 'Azisary' → 49326
+Line 2147: NPC 48211 'Shadowprey Orca' → 49327
+Line 2148: NPC 48212 'Keiko' → 49328
+Line 2285: NPC 48250 'Tizzie Sparkcraft' → 49329
+Line 2286: NPC 48251 'Chief Engineer Urul' → 49330
+Line 2287: NPC 48252 'Gryphon Master Stonemace' → 49331
+Line 2266: NPC 62026 'Undead Champion' → 49332

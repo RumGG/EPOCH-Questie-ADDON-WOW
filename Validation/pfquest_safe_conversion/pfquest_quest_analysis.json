@@ -1,0 +1,147 @@
+{
+  "total_quests": 342,
+  "total_npcs": 0,
+  "missing_npcs": 0,
+  "sample_quests": {
+    "11": {
+      "id": 11,
+      "name": "Riverpaw Gnoll Bounty",
+      "start_npcs": [],
+      "end_npcs": [],
+      "text": "",
+      "objective_hints": {
+        "kill": [],
+        "collect": [],
+        "explore": []
+      },
+      "level": "nil",
+      "min_level": "nil"
+    },
+    "76": {
+      "id": 76,
+      "name": "The Jasperlode Mine",
+      "start_npcs": [],
+      "end_npcs": [],
+      "text": "",
+      "objective_hints": {
+        "kill": [],
+        "collect": [],
+        "explore": []
+      },
+      "level": "nil",
+      "min_level": "nil"
+    },
+    "109": {
+      "id": 109,
+      "name": "Report to Gryan Stoutmantle",
+      "start_npcs": [],
+      "end_npcs": [],
+      "text": "",
+      "objective_hints": {
+        "kill": [],
+        "collect": [],
+        "explore": []
+      },
+      "level": "nil",
+      "min_level": "nil"
+    },
+    "474": {
+      "id": 474,
+      "name": "Defeat Gujek",
+      "start_npcs": [],
+      "end_npcs": [],
+      "text": "{\"Kill General Gujek  Bring Gujek's Head to Captain Stoutfist.",
+      "objective_hints": {
+        "kill": [],
+        "collect": [],
+        "explore": []
+      },
+      "level": "32",
+      "min_level": "nil"
+    },
+    "487": {
+      "id": 487,
+      "name": "The Road to Darnassus",
+      "start_npcs": [],
+      "end_npcs": [],
+      "text": "",
+      "objective_hints": {
+        "kill": [],
+        "collect": [],
+        "explore": []
+      },
+      "level": "nil",
+      "min_level": "nil"
+    },
+    "991": {
+      "id": 991,
+      "name": "Raene's Cleansing",
+      "start_npcs": [],
+      "end_npcs": [],
+      "text": "",
+      "objective_hints": {
+        "kill": [],
+        "collect": [],
+        "explore": []
+      },
+      "level": "nil",
+      "min_level": "nil"
+    },
+    "1218": {
+      "id": 1218,
+      "name": "Soothing Spices",
+      "start_npcs": [],
+      "end_npcs": [],
+      "text": "",
+      "objective_hints": {
+        "kill": [],
+        "collect": [],
+        "explore": []
+      },
+      "level": "nil",
+      "min_level": "nil"
+    },
+    "2038": {
+      "id": 2038,
+      "name": "Bingles' Missing Supplies",
+      "start_npcs": [],
+      "end_npcs": [],
+      "text": "",
+      "objective_hints": {
+        "kill": [],
+        "collect": [],
+        "explore": []
+      },
+      "level": "nil",
+      "min_level": "nil"
+    },
+    "26107": {
+      "id": 26107,
+      "name": "Eau de Parfish",
+      "start_npcs": [],
+      "end_npcs": [],
+      "text": "",
+      "objective_hints": {
+        "kill": [],
+        "collect": [],
+        "explore": []
+      },
+      "level": "nil",
+      "min_level": "nil"
+    },
+    "26168": {
+      "id": 26168,
+      "name": "Can't Make An Omelette Without...",
+      "start_npcs": [],
+      "end_npcs": [],
+      "text": "",
+      "objective_hints": {
+        "kill": [],
+        "collect": [],
+        "explore": []
+      },
+      "level": "nil",
+      "min_level": "nil"
+    }
+  }
+}
