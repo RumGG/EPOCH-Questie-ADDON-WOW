@@ -22,6 +22,7 @@ local CURRENT_VERSION = "1.1.0"
 
 local _activeTracking = {} -- Currently tracking these quest IDs
 local _lastQuestGiver = nil -- Store last NPC interacted with
+local _lastInteractedNPC = nil -- Track last NPC interaction for service NPC capture
 local _questAcceptCoords = {} -- Store coordinates when accepting quests
 local _originalTooltipSettings = nil -- Store original tooltip settings for restoration
 local _recentKills = {} -- Store recent combat kills for objective correlation
@@ -29,9 +30,25 @@ local _initialized = false -- Track if we've initialized
 local _currentLootSource = nil -- Track what we're currently looting from
 local _lastInteractedObject = nil -- Track last object we moused over
 local _dataMismatches = {} -- Track database mismatches for reporting
+local _availableQuestsBeforeTurnIn = {} -- Track quests available at NPC before turn-in
+local _lastNPCWithQuests = nil -- Track last NPC we checked for available quests
+local _completedQuests = {} -- Track all completed quests for prereq detection
 local _serviceNPCs = {} -- Track service NPCs (vendors, trainers, etc)
 local _mailboxes = {} -- Track mailbox locations
+local _gatheringNodes = {} -- Track gathering nodes (herbs, ore)
+local _treasureChests = {} -- Track treasure chests and containers
+local _flightMasters = {} -- Track flight masters
 local _pendingXPReward = nil -- Track XP reward for quest turn-in
+
+-- Coordinate caching to improve performance
+local _coordinateCache = {
+    coords = nil,
+    zoneData = nil,
+    lastUpdate = 0,
+    lastZoneUpdate = 0,
+    cacheTime = 0.1, -- Cache for 100ms
+    zoneCacheTime = 5.0 -- Zone data cache for 5 seconds
+}
 
 -- Forward declaration of helper function for creating clickable quest data links
 local CreateQuestDataLink
@@ -156,11 +173,13 @@ function QuestieDataCollector:Initialize()
         return
     end
     
-    -- Create or ensure the global SavedVariable exists
-    -- This happens AFTER SavedVariables are loaded
+    -- Create or ensure the character-specific SavedVariable exists
+    -- This is now PER CHARACTER, so no contamination possible!
     if type(QuestieDataCollection) ~= "table" then
         _G.QuestieDataCollection = {}
     end
+    
+    -- Initialize structure for this character
     if not QuestieDataCollection.quests then
         QuestieDataCollection.quests = {}
     end
@@ -173,6 +192,15 @@ function QuestieDataCollector:Initialize()
     if not QuestieDataCollection.mailboxes then
         QuestieDataCollection.mailboxes = {}
     end
+    if not QuestieDataCollection.gatheringNodes then
+        QuestieDataCollection.gatheringNodes = {}
+    end
+    if not QuestieDataCollection.treasureChests then
+        QuestieDataCollection.treasureChests = {}
+    end
+    if not QuestieDataCollection.flightMasters then
+        QuestieDataCollection.flightMasters = {}
+    end
     if not QuestieDataCollection.version then
         QuestieDataCollection.version = CURRENT_VERSION
     end
@@ -180,8 +208,15 @@ function QuestieDataCollector:Initialize()
         QuestieDataCollection.sessionStart = date("%Y-%m-%d %H:%M:%S")
     end
     
+    -- Store character info for reference (not for validation)
+    QuestieDataCollection.characterName = UnitName("player") .. "-" .. GetRealmName()
+    QuestieDataCollection.characterLevel = UnitLevel("player")
+    QuestieDataCollection.characterClass = UnitClass("player")
+    QuestieDataCollection.characterRace = UnitRace("player")
+    
     -- Update version for existing data
     QuestieDataCollection.version = CURRENT_VERSION
+    
     
     -- Count tracked quests (only missing ones)
     local questCount = 0
@@ -300,6 +335,26 @@ end
 
 -- Enhanced coordinate capture with zone validation
 function QuestieDataCollector:GetPlayerCoordinates()
+    local currentTime = GetTime()
+    
+    -- Check if we have cached coordinates that are still fresh
+    if _coordinateCache.coords and (currentTime - _coordinateCache.lastUpdate) < _coordinateCache.cacheTime then
+        -- Return cached coordinates with cached zone data
+        if _coordinateCache.zoneData then
+            return {
+                x = _coordinateCache.coords.x,
+                y = _coordinateCache.coords.y,
+                zone = _coordinateCache.zoneData.zone,
+                subZone = _coordinateCache.zoneData.subZone,
+                areaId = _coordinateCache.zoneData.areaId,
+                mapId = _coordinateCache.zoneData.mapId
+            }
+        else
+            return _coordinateCache.coords
+        end
+    end
+    
+    -- Get fresh coordinates
     local x, y = nil, nil
     
     -- Try QuestieCoords first
@@ -313,27 +368,47 @@ function QuestieDataCollector:GetPlayerCoordinates()
     end
     
     if x and y and x > 0 and y > 0 then
-        -- Safely get zone data
-        local success, zoneData = pcall(GetCurrentZoneData)
-        if not success or not zoneData then
-            -- Return coordinates without zone data if there's an error
-            return {
-                x = math.floor(x * 1000) / 10, -- Convert to percentage with 1 decimal
-                y = math.floor(y * 1000) / 10,
-                zone = "Unknown",
-                subZone = "",
-                areaId = nil,
-                mapId = nil
-            }
+        -- Convert coordinates once and cache them
+        local coords = {
+            x = math.floor(x * 1000) / 10, -- Convert to percentage with 1 decimal
+            y = math.floor(y * 1000) / 10
+        }
+        
+        -- Check if we need to update zone data (less frequently)
+        if not _coordinateCache.zoneData or (currentTime - _coordinateCache.lastZoneUpdate) > _coordinateCache.zoneCacheTime then
+            -- Safely get zone data
+            local success, zoneData = pcall(GetCurrentZoneData)
+            if success and zoneData then
+                _coordinateCache.zoneData = {
+                    zone = zoneData.zone or "Unknown",
+                    subZone = zoneData.subZone or "",
+                    areaId = zoneData.areaId,
+                    mapId = zoneData.mapId
+                }
+                _coordinateCache.lastZoneUpdate = currentTime
+            elseif not _coordinateCache.zoneData then
+                -- If we've never had zone data, set defaults
+                _coordinateCache.zoneData = {
+                    zone = "Unknown",
+                    subZone = "",
+                    areaId = nil,
+                    mapId = nil
+                }
+            end
         end
         
+        -- Cache the coordinates
+        _coordinateCache.coords = coords
+        _coordinateCache.lastUpdate = currentTime
+        
+        -- Return combined data
         return {
-            x = math.floor(x * 1000) / 10, -- Convert to percentage with 1 decimal
-            y = math.floor(y * 1000) / 10,
-            zone = zoneData.zone or "Unknown",
-            subZone = zoneData.subZone or "",
-            areaId = zoneData.areaId,
-            mapId = zoneData.mapId
+            x = coords.x,
+            y = coords.y,
+            zone = _coordinateCache.zoneData.zone,
+            subZone = _coordinateCache.zoneData.subZone,
+            areaId = _coordinateCache.zoneData.areaId,
+            mapId = _coordinateCache.zoneData.mapId
         }
     end
     
@@ -355,6 +430,11 @@ function QuestieDataCollector:RegisterEvents()
     frame:RegisterEvent("QUEST_GREETING")
     frame:RegisterEvent("QUEST_PROGRESS")
     frame:RegisterEvent("QUEST_FINISHED")
+    
+    -- Zone change events (to invalidate coordinate cache)
+    frame:RegisterEvent("ZONE_CHANGED")
+    frame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+    frame:RegisterEvent("ZONE_CHANGED_INDOORS")
     
     -- Combat and loot events for tracking mob kills and item sources
     frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
@@ -510,6 +590,24 @@ function QuestieDataCollector:OnEvent(event, ...)
         QuestieDataCollector:CaptureServiceNPC("guild_banker")
         
     elseif event == "TAXIMAP_OPENED" then
+        -- Flight masters are special - we need to capture them differently
+        -- First try to capture NPC info if we haven't already
+        local guid = UnitGUID("target") or UnitGUID("npc") or UnitGUID("questnpc") or UnitGUID("mouseover")
+        if guid then
+            -- Store the NPC info first
+            local npcId = ExtractNpcIdFromGuid(guid)
+            local npcName = UnitName("target") or UnitName("npc") or UnitName("questnpc") or UnitName("mouseover")
+            if npcId and npcName then
+                _lastInteractedNPC = {
+                    guid = guid,
+                    id = npcId,
+                    name = npcName,
+                    timestamp = time(),
+                    coords = QuestieDataCollector:GetPlayerCoordinates()
+                }
+                DebugMessage("|cFF00FFFF[DATA]|r Captured flight master from TAXIMAP_OPENED: " .. npcName, 0, 1, 1)
+            end
+        end
         QuestieDataCollector:CaptureServiceNPC("flight_master")
         
     elseif event == "CHAT_MSG_COMBAT_XP_GAIN" then
@@ -530,6 +628,12 @@ function QuestieDataCollector:OnEvent(event, ...)
             _pendingXPReward = tonumber(xp)
             DebugMessage("|cFF00FFFF[DATA]|r Captured XP reward: " .. xp, 0, 1, 1)
         end
+        
+    elseif event == "ZONE_CHANGED" or event == "ZONE_CHANGED_NEW_AREA" or event == "ZONE_CHANGED_INDOORS" then
+        -- Invalidate zone cache when zone changes
+        _coordinateCache.zoneData = nil
+        _coordinateCache.lastZoneUpdate = 0
+        DebugMessage("|cFF00FFFF[DATA]|r Zone changed, invalidating coordinate cache", 0, 1, 1)
     end
 end
 
@@ -569,6 +673,29 @@ function QuestieDataCollector:TrackQuestAccepted(questIndex, questId)
     questData.name = questName
     questData.acceptedTimestamp = time()
     questData.acceptedDate = date("%Y-%m-%d %H:%M:%S")
+    
+    -- Track prerequisites - store what quests are already completed
+    local completedQuests = GetQuestsCompleted()
+    if completedQuests then
+        local prereqs = {}
+        for qId, _ in pairs(completedQuests) do
+            if qId < questId then  -- Only consider lower quest IDs as potential prerequisites
+                table.insert(prereqs, qId)
+            end
+        end
+        if #prereqs > 0 then
+            questData.potentialPrerequisites = prereqs
+            DebugMessage("|cFF00FFFF[DATA]|r Quest has " .. #prereqs .. " potential prerequisites", 0, 1, 1)
+        end
+    end
+    
+    -- Check if this is a commission (profession) quest
+    if string.find(questName:upper(), "COMMISSION") then
+        questData.isCommission = true
+        -- Capture player's professions
+        questData.playerProfessions = QuestieDataCollector:GetPlayerProfessions()
+        DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00[DATA]|r Commission quest detected! Tracking professions.", 1, 1, 0)
+    end
     
     -- Get quest level and objectives text
     local level, questTag, _, _, _, _, _, _ = select(2, GetQuestLogTitle(questIndex))
@@ -821,8 +948,14 @@ function QuestieDataCollector:TrackQuestTurnIn(questId)
         _pendingXPReward = nil -- Clear it after using
     end
     
+    -- Detect prerequisites - check what new quests became available after this turn-in
+    QuestieDataCollector:DetectPrerequisites(questId)
+    
     -- Remove from active tracking
     _activeTracking[questId] = nil
+    
+    -- Mark quest as completed for prerequisite tracking
+    _completedQuests[questId] = true
     
     DebugMessage("|cFF00FF00[DATA]|r Quest turned in: " .. (questData.name or "Unknown") .. " (ID: " .. questId .. ")", 0, 1, 0)
 end
@@ -924,6 +1057,15 @@ function QuestieDataCollector:CaptureNPCInfo()
         coords = coords
     }
     
+    -- Also store as last interacted NPC for service NPC capture
+    _lastInteractedNPC = {
+        guid = guid,
+        id = npcId,
+        name = npcName,
+        timestamp = time(),
+        coords = coords
+    }
+    
     DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DATA]|r Captured NPC: " .. npcName .. " (ID: " .. npcId .. ")", 0, 1, 0)
     
     -- Check for database mismatch
@@ -978,6 +1120,120 @@ function QuestieDataCollector:CaptureNPCInfo()
     end
     
     DebugMessage("|cFF00FF00[DATA]|r Captured NPC: " .. npcName .. " (ID: " .. npcId .. ")", 0, 1, 0)
+    
+    -- Capture available quests at this NPC for prerequisite tracking
+    QuestieDataCollector:CaptureAvailableQuests(npcId, npcName)
+end
+
+-- Capture what quests are available at an NPC (for prerequisite detection)
+function QuestieDataCollector:CaptureAvailableQuests(npcId, npcName)
+    if not npcId then return end
+    
+    -- Get available quests from gossip
+    local availableQuests = {}
+    local numAvailable = GetNumGossipAvailableQuests()
+    
+    if numAvailable and numAvailable > 0 then
+        for i = 1, numAvailable do
+            local title, level, isTrivial, isComplete, isLegendary, isIgnored = select((i-1)*7+1, GetGossipAvailableQuests())
+            if title then
+                table.insert(availableQuests, {
+                    title = title,
+                    level = level,
+                    isTrivial = isTrivial
+                })
+                DebugMessage("|cFF00FFFF[DATA]|r Available quest at NPC: " .. title .. " (Level " .. (level or "?") .. ")", 0, 1, 1)
+            end
+        end
+    end
+    
+    -- Store the available quests for this NPC
+    _lastNPCWithQuests = {
+        npcId = npcId,
+        npcName = npcName,
+        availableQuests = availableQuests,
+        timestamp = time()
+    }
+    
+    -- Store for comparison after quest turn-in
+    _availableQuestsBeforeTurnIn[npcId] = availableQuests
+    
+    return availableQuests
+end
+
+-- Get player's professions and skill levels
+function QuestieDataCollector:GetPlayerProfessions()
+    local professions = {}
+    
+    -- Get primary professions
+    local prof1, prof2, archaeology, fishing, cooking, firstAid = GetProfessions()
+    
+    local function AddProfession(index, profType)
+        if index then
+            local name, icon, skillLevel, maxSkillLevel, numAbilities, spelloffset, skillLine, skillModifier = GetProfessionInfo(index)
+            if name then
+                table.insert(professions, {
+                    name = name,
+                    type = profType,
+                    skillLevel = skillLevel,
+                    maxSkillLevel = maxSkillLevel,
+                    skillLine = skillLine
+                })
+                DebugMessage("|cFF00FFFF[DATA]|r Profession: " .. name .. " (" .. skillLevel .. "/" .. maxSkillLevel .. ")", 0, 1, 1)
+            end
+        end
+    end
+    
+    -- Add all professions
+    AddProfession(prof1, "primary")
+    AddProfession(prof2, "primary")
+    AddProfession(archaeology, "archaeology")
+    AddProfession(fishing, "fishing")
+    AddProfession(cooking, "cooking")
+    AddProfession(firstAid, "firstAid")
+    
+    return professions
+end
+
+-- Detect new quests that became available after turn-in (prerequisites)
+function QuestieDataCollector:DetectPrerequisites(questId)
+    if not _lastNPCWithQuests or not _lastNPCWithQuests.npcId then return end
+    
+    local npcId = _lastNPCWithQuests.npcId
+    local questsBeforeTurnIn = _availableQuestsBeforeTurnIn[npcId] or {}
+    
+    -- Capture quests available NOW (after turn-in)
+    local questsAfterTurnIn = QuestieDataCollector:CaptureAvailableQuests(npcId, _lastNPCWithQuests.npcName)
+    
+    -- Find NEW quests that weren't available before
+    local newQuests = {}
+    for _, afterQuest in ipairs(questsAfterTurnIn) do
+        local wasAvailableBefore = false
+        for _, beforeQuest in ipairs(questsBeforeTurnIn) do
+            if beforeQuest.title == afterQuest.title then
+                wasAvailableBefore = true
+                break
+            end
+        end
+        
+        if not wasAvailableBefore then
+            table.insert(newQuests, afterQuest)
+            DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00[DATA]|r NEW quest available after turn-in: " .. afterQuest.title .. " (requires quest " .. questId .. ")", 1, 1, 0)
+            
+            -- Store this prerequisite relationship in the quest data
+            if questId and QuestieDataCollection.quests[questId] then
+                if not QuestieDataCollection.quests[questId].unlocksQuests then
+                    QuestieDataCollection.quests[questId].unlocksQuests = {}
+                end
+                table.insert(QuestieDataCollection.quests[questId].unlocksQuests, afterQuest.title)
+            end
+        end
+    end
+    
+    -- Clear the before turn-in cache for this NPC
+    _availableQuestsBeforeTurnIn[npcId] = nil
+    
+    return newQuests
 end
 
 function QuestieDataCollector:TrackTargetedMob()
@@ -1018,9 +1274,25 @@ function QuestieDataCollector:TrackTargetedMob()
                     }
                 end
                 
-                -- Add location if we have coords
-                if coords then
-                    table.insert(questData.mobs[npcId].locations, coords)
+                -- Add location if we have valid coords
+                if coords and coords.x and coords.y and coords.x > 0 and coords.y > 0 then
+                    -- Check if this location is not a duplicate (within 1 unit distance)
+                    local isDuplicate = false
+                    for _, existingLoc in ipairs(questData.mobs[npcId].locations) do
+                        if existingLoc and existingLoc.x and existingLoc.y then
+                            local distance = math.abs(coords.x - existingLoc.x) + math.abs(coords.y - existingLoc.y)
+                            if distance < 1 then
+                                isDuplicate = true
+                                break
+                            end
+                        end
+                    end
+                    
+                    if not isDuplicate then
+                        table.insert(questData.mobs[npcId].locations, coords)
+                    end
+                else
+                    DebugMessage("|cFFFF0000[DATA]|r Invalid coordinates for mob " .. npcName, 1, 0, 0)
                 end
                 
                 DebugMessage("|cFFAA8833[DATA]|r Tracked quest mob: " .. npcName .. " (ID: " .. npcId .. ") for quest " .. questId, 0.67, 0.53, 0.2)
@@ -1190,6 +1462,42 @@ function QuestieDataCollector:HandleLootOpened()
             end
         end
     end
+    
+    -- Detect and capture gathering nodes and treasure chests
+    if lootSourceName and lootSourceType == "object" then
+        local lowerName = string.lower(lootSourceName)
+        
+        -- Check for common gathering node patterns
+        if string.find(lowerName, "herb") or 
+           string.find(lowerName, "flower") or
+           string.find(lowerName, "plant") or
+           string.find(lowerName, "bloom") or
+           string.find(lowerName, "root") or
+           string.find(lowerName, "moss") or
+           string.find(lowerName, "petal") then
+            QuestieDataCollector:CaptureGatheringNode("herb", lootSourceName)
+        elseif string.find(lowerName, "ore") or
+               string.find(lowerName, "vein") or
+               string.find(lowerName, "deposit") or
+               string.find(lowerName, "copper") or
+               string.find(lowerName, "tin") or
+               string.find(lowerName, "iron") or
+               string.find(lowerName, "silver") or
+               string.find(lowerName, "gold") or
+               string.find(lowerName, "mithril") or
+               string.find(lowerName, "thorium") then
+            QuestieDataCollector:CaptureGatheringNode("ore", lootSourceName)
+        elseif string.find(lowerName, "chest") or
+               string.find(lowerName, "crate") or
+               string.find(lowerName, "barrel") or
+               string.find(lowerName, "cache") or
+               string.find(lowerName, "stash") or
+               string.find(lowerName, "treasure") or
+               string.find(lowerName, "coffer") or
+               string.find(lowerName, "strongbox") then
+            QuestieDataCollector:CaptureTreasureChest(lootSourceName)
+        end
+    end
 end
 
 function QuestieDataCollector:HandleLootMessage(message)
@@ -1204,45 +1512,62 @@ function QuestieDataCollector:HandleLootMessage(message)
         return
     end
     
-    -- Check if this is a quest item
-    local isQuestItem = false
+    -- Check if this is a quest item by checking if we looted it while on a quest
+    -- We'll track ALL items looted while questing, not just ones mentioned in objectives
     for questId in pairs(_activeTracking) do
         if not IsQuestInDatabase(questId) then
             local questData = QuestieDataCollection.quests[questId]
             if questData then
-                -- Check objectives for this item
-                for _, objective in ipairs(questData.objectives or {}) do
-                    if string.find(objective.text or "", itemLink) then
-                        isQuestItem = true
-                        
-                        -- Store item info
-                        if not questData.items[itemId] then
-                            questData.items[itemId] = {
-                                id = itemId,
-                                name = itemLink,
-                                sources = {}
-                            }
-                        end
-                        
-                        -- Link to source if we have one
-                        if _currentLootSource and _currentLootSource.timestamp and (time() - _currentLootSource.timestamp) < 5 then
+                -- Store item info for any item looted while on this quest
+                if not questData.items[itemId] then
+                    questData.items[itemId] = {
+                        id = itemId,
+                        name = itemLink,
+                        sources = {}
+                    }
+                end
+                
+                -- Link to source if we have one (from recent kill or loot opened)
+                local sourceLinked = false
+                
+                -- First check _currentLootSource (from LOOT_OPENED)
+                if _currentLootSource and _currentLootSource.timestamp and (time() - _currentLootSource.timestamp) < 5 then
+                    local source = {
+                        type = _currentLootSource.type,
+                        name = _currentLootSource.name,
+                        id = _currentLootSource.id,
+                        timestamp = time()
+                    }
+                    table.insert(questData.items[itemId].sources, source)
+                    sourceLinked = true
+                    
+                    if _currentLootSource.type == "npc" then
+                        DebugMessage("|cFF00FF00[DATA]|r Quest item " .. itemLink .. " dropped from " .. (_currentLootSource.name or "Unknown"), 0, 1, 0)
+                    else
+                        DebugMessage("|cFF00FFFF[DATA]|r Quest item " .. itemLink .. " obtained from " .. (_currentLootSource.name or "object"), 0, 1, 1)
+                    end
+                    
+                -- If no current loot source, check recent kills
+                elseif not sourceLinked then
+                    for npcId, killData in pairs(_recentKills) do
+                        if (time() - killData.timestamp) < 5 then
                             local source = {
-                                type = _currentLootSource.type,
-                                name = _currentLootSource.name,
-                                id = _currentLootSource.id,
+                                type = "npc",
+                                name = killData.name,
+                                id = npcId,
                                 timestamp = time()
                             }
                             table.insert(questData.items[itemId].sources, source)
-                            
-                            if _currentLootSource.type == "npc" then
-                                DebugMessage("|cFF00FF00[DATA]|r Quest item " .. itemLink .. " dropped from " .. (_currentLootSource.name or "Unknown"), 0, 1, 0)
-                            else
-                                DebugMessage("|cFF00FFFF[DATA]|r Quest item " .. itemLink .. " obtained from " .. (_currentLootSource.name or "object"), 0, 1, 1)
-                            end
+                            sourceLinked = true
+                            DebugMessage("|cFF00FF00[DATA]|r Quest item " .. itemLink .. " dropped from recent kill: " .. (killData.name or "Unknown"), 0, 1, 0)
+                            break
                         end
-                        
-                        break
                     end
+                end
+                
+                -- If still no source, just track that we got the item
+                if not sourceLinked then
+                    DebugMessage("|cFFFFFF00[DATA]|r Quest item " .. itemLink .. " looted (source unknown)", 1, 1, 0)
                 end
             end
         end
@@ -1255,9 +1580,21 @@ function QuestieDataCollector:HandleItemPush(bagSlot, iconPath)
 end
 
 function QuestieDataCollector:CaptureServiceNPC(serviceType)
-    local guid = UnitGUID("target") or UnitGUID("npc")
+    -- Service NPCs are ALWAYS captured regardless of mode
+    -- They provide valuable reference data for the database
+    DebugMessage("|cFF00FFFF[DATA]|r Attempting to capture " .. serviceType, 0, 1, 1)
+    
+    -- Try multiple unit types - many service NPCs are interacted with via right-click without targeting
+    local guid = UnitGUID("target") or UnitGUID("npc") or UnitGUID("mouseover") or UnitGUID("questnpc")
     if not guid then
-        return
+        -- Try to get from interaction frame as fallback
+        if _lastInteractedNPC and _lastInteractedNPC.guid then
+            guid = _lastInteractedNPC.guid
+            DebugMessage("|cFF00FFFF[DATA]|r Using last interacted NPC GUID", 0, 1, 1)
+        else
+            DebugMessage("|cFFFF0000[DATA]|r No GUID found for " .. serviceType, 1, 0, 0)
+            return
+        end
     end
     
     -- Extract NPC ID from GUID (WoW 3.3.5 format)
@@ -1266,7 +1603,10 @@ function QuestieDataCollector:CaptureServiceNPC(serviceType)
         return
     end
     
-    local npcName = UnitName("target") or UnitName("npc")
+    local npcName = UnitName("target") or UnitName("npc") or UnitName("mouseover") or UnitName("questnpc")
+    if not npcName and _lastInteractedNPC and _lastInteractedNPC.name then
+        npcName = _lastInteractedNPC.name
+    end
     if not npcName then
         return
     end
@@ -1391,6 +1731,87 @@ function QuestieDataCollector:CaptureMailbox()
     end
 end
 
+function QuestieDataCollector:CaptureGatheringNode(nodeType, nodeName)
+    if not nodeName then
+        -- Try to get from last interacted object
+        if _lastInteractedObject and _lastInteractedObject.name then
+            nodeName = _lastInteractedObject.name
+        else
+            return
+        end
+    end
+    
+    local coords = QuestieDataCollector:GetPlayerCoordinates()
+    if not coords then
+        return
+    end
+    
+    -- Create a unique key for this gathering node location
+    local locKey = string.format("%s_%s_%.0f_%.0f", coords.zone or "Unknown", nodeName, coords.x or 0, coords.y or 0)
+    
+    -- Check if we already have this node
+    if not QuestieDataCollection.gatheringNodes[locKey] then
+        QuestieDataCollection.gatheringNodes[locKey] = {
+            name = nodeName,
+            type = nodeType, -- "herb", "ore", "treasure", etc.
+            x = coords.x,
+            y = coords.y,
+            zone = coords.zone,
+            subZone = coords.subZone,
+            areaId = coords.areaId,
+            firstSeen = time(),
+            lastSeen = time(),
+            timesGathered = 1
+        }
+        
+        DebugMessage("|cFF00FF00[DATA]|r New " .. nodeType .. " discovered: " .. nodeName .. " at " .. string.format("%.1f, %.1f", coords.x, coords.y) .. " in " .. (coords.zone or "Unknown"), 0, 1, 0)
+    else
+        -- Update last seen and increment usage count
+        QuestieDataCollection.gatheringNodes[locKey].lastSeen = time()
+        QuestieDataCollection.gatheringNodes[locKey].timesGathered = (QuestieDataCollection.gatheringNodes[locKey].timesGathered or 1) + 1
+    end
+end
+
+function QuestieDataCollector:CaptureTreasureChest(chestName)
+    if not chestName then
+        -- Try to get from last interacted object
+        if _lastInteractedObject and _lastInteractedObject.name then
+            chestName = _lastInteractedObject.name
+        else
+            return
+        end
+    end
+    
+    local coords = QuestieDataCollector:GetPlayerCoordinates()
+    if not coords then
+        return
+    end
+    
+    -- Create a unique key for this treasure chest location
+    local locKey = string.format("%s_%s_%.0f_%.0f", coords.zone or "Unknown", chestName, coords.x or 0, coords.y or 0)
+    
+    -- Check if we already have this chest
+    if not QuestieDataCollection.treasureChests[locKey] then
+        QuestieDataCollection.treasureChests[locKey] = {
+            name = chestName,
+            x = coords.x,
+            y = coords.y,
+            zone = coords.zone,
+            subZone = coords.subZone,
+            areaId = coords.areaId,
+            firstSeen = time(),
+            lastSeen = time(),
+            timesLooted = 1
+        }
+        
+        DebugMessage("|cFF00FF00[DATA]|r New treasure chest discovered: " .. chestName .. " at " .. string.format("%.1f, %.1f", coords.x, coords.y) .. " in " .. (coords.zone or "Unknown"), 0, 1, 0)
+    else
+        -- Update last seen and increment usage count
+        QuestieDataCollection.treasureChests[locKey].lastSeen = time()
+        QuestieDataCollection.treasureChests[locKey].timesLooted = (QuestieDataCollection.treasureChests[locKey].timesLooted or 1) + 1
+    end
+end
+
 function QuestieDataCollector:CheckActiveQuests()
     -- Check all quests in the log
     local numEntries = GetNumQuestLogEntries()
@@ -1483,121 +1904,494 @@ function QuestieDataCollector:RestoreTooltipSettings()
 end
 
 -- Export window for batch exporting all tracked quests
-function QuestieDataCollector:ShowExportWindow()
+function QuestieDataCollector:ValidateQuest(questId)
+    if not QuestieDataValidator then
+        DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[Data Collector]|r Validator not loaded!", 1, 0, 0)
+        return
+    end
+    
     if not QuestieDataCollection or not QuestieDataCollection.quests then
         DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[Data Collector]|r No data collected yet!", 1, 0, 0)
         return
     end
     
-    -- Count quests
-    local questCount = 0
-    for _ in pairs(QuestieDataCollection.quests) do
-        questCount = questCount + 1
-    end
-    
-    if questCount == 0 then
-        DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[Data Collector]|r No quests tracked yet!", 1, 0, 0)
+    local questData = QuestieDataCollection.quests[questId]
+    if not questData then
+        DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[Data Collector]|r Quest " .. questId .. " not found in collected data", 1, 0, 0)
         return
     end
     
-    -- Create frame if it doesn't exist
-    if not self.exportFrame then
-        local frame = CreateFrame("Frame", "QuestieDataExportFrame", UIParent)
-        frame:SetSize(600, 400)
-        frame:SetPoint("CENTER")
-        frame:SetFrameStrata("DIALOG")
-        frame:SetMovable(true)
-        frame:EnableMouse(true)
-        frame:RegisterForDrag("LeftButton")
-        frame:SetScript("OnDragStart", frame.StartMoving)
-        frame:SetScript("OnDragStop", frame.StopMovingOrSizing)
+    -- Run validation
+    local results = QuestieDataValidator:ValidateQuestSubmission(questData)
+    
+    -- Display results
+    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FFFF=== Validation Results for Quest " .. questId .. " ===|r", 0, 1, 1)
+    DEFAULT_CHAT_FRAME:AddMessage("Status: " .. (results.valid and "|cFF00FF00VALID|r" or "|cFFFF0000INVALID|r"), 1, 1, 1)
+    DEFAULT_CHAT_FRAME:AddMessage("Completeness: " .. (results.complete and "|cFF00FF00COMPLETE|r" or "|cFFFFFF00INCOMPLETE|r"), 1, 1, 1)
+    
+    if results.recommendation then
+        local action, reason = results.recommendation
+        DEFAULT_CHAT_FRAME:AddMessage("Recommendation: |cFFFFFF00" .. action .. "|r", 1, 1, 1)
+        DEFAULT_CHAT_FRAME:AddMessage("Reason: " .. reason, 1, 1, 1)
+    end
+    
+    if #results.errors > 0 then
+        DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000Errors:|r", 1, 0.5, 0.5)
+        for i, error in ipairs(results.errors) do
+            if i <= 5 then  -- Show first 5 errors
+                DEFAULT_CHAT_FRAME:AddMessage("  • " .. error, 1, 0.8, 0.8)
+            end
+        end
+        if #results.errors > 5 then
+            DEFAULT_CHAT_FRAME:AddMessage("  ... and " .. (#results.errors - 5) .. " more errors", 1, 0.8, 0.8)
+        end
+    end
+    
+    if #results.warnings > 0 then
+        DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00Warnings:|r", 1, 1, 0.5)
+        for i, warning in ipairs(results.warnings) do
+            if i <= 5 then  -- Show first 5 warnings
+                DEFAULT_CHAT_FRAME:AddMessage("  • " .. warning, 1, 1, 0.8)
+            end
+        end
+        if #results.warnings > 5 then
+            DEFAULT_CHAT_FRAME:AddMessage("  ... and " .. (#results.warnings - 5) .. " more warnings", 1, 1, 0.8)
+        end
+    end
+end
+
+function QuestieDataCollector:ValidateAllQuests()
+    if not QuestieDataValidator then
+        DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[Data Collector]|r Validator not loaded!", 1, 0, 0)
+        return
+    end
+    
+    if not QuestieDataCollection or not QuestieDataCollection.quests then
+        DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[Data Collector]|r No data collected yet!", 1, 0, 0)
+        return
+    end
+    
+    local totalQuests = 0
+    local validQuests = 0
+    local completeQuests = 0
+    local invalidQuests = {}
+    local incompleteQuests = {}
+    
+    for questId, questData in pairs(QuestieDataCollection.quests) do
+        totalQuests = totalQuests + 1
+        local results = QuestieDataValidator:ValidateQuestSubmission(questData)
         
-        -- Background
-        frame:SetBackdrop({
+        if results.valid then
+            validQuests = validQuests + 1
+            -- Check if quest was turned in (completed)
+            -- Check: turnedIn flag, turnInNpc (actual field name), or results.complete
+            if questData.turnedIn or questData.turnInNpc or (questData.turnIn and #results.warnings <= 1) then
+                completeQuests = completeQuests + 1
+            elseif results.complete then
+                completeQuests = completeQuests + 1
+            else
+                table.insert(incompleteQuests, {id = questId, name = questData.name, warnings = #results.warnings})
+            end
+        else
+            table.insert(invalidQuests, {
+                id = questId, 
+                name = questData.name, 
+                errors = #results.errors,
+                firstError = results.errors[1] -- Capture first error for display
+            })
+        end
+    end
+    
+    -- Display summary
+    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FFFF=== Validation Summary ===|r", 0, 1, 1)
+    DEFAULT_CHAT_FRAME:AddMessage("Total Quests: " .. totalQuests, 1, 1, 1)
+    DEFAULT_CHAT_FRAME:AddMessage("Valid: |cFF00FF00" .. validQuests .. "|r (" .. string.format("%.1f%%", (validQuests/totalQuests)*100) .. ")", 1, 1, 1)
+    DEFAULT_CHAT_FRAME:AddMessage("Complete: |cFF00FF00" .. completeQuests .. "|r (" .. string.format("%.1f%%", (completeQuests/totalQuests)*100) .. ")", 1, 1, 1)
+    DEFAULT_CHAT_FRAME:AddMessage("Incomplete: |cFFFFFF00" .. #incompleteQuests .. "|r", 1, 1, 1)
+    DEFAULT_CHAT_FRAME:AddMessage("Invalid: |cFFFF0000" .. #invalidQuests .. "|r", 1, 1, 1)
+    
+    -- Show invalid quests with error details
+    if #invalidQuests > 0 then
+        DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000Invalid Quests:|r", 1, 0.5, 0.5)
+        for i, quest in ipairs(invalidQuests) do
+            if i <= 5 then
+                DEFAULT_CHAT_FRAME:AddMessage(string.format("  • %s (ID: %d) - %d errors", quest.name or "Unknown", quest.id, quest.errors), 1, 0.8, 0.8)
+                -- Show first error for each invalid quest
+                if quest.firstError then
+                    DEFAULT_CHAT_FRAME:AddMessage("    → " .. quest.firstError, 1, 0.7, 0.7)
+                end
+            end
+        end
+        if #invalidQuests > 5 then
+            DEFAULT_CHAT_FRAME:AddMessage("  ... and " .. (#invalidQuests - 5) .. " more", 1, 0.8, 0.8)
+        end
+    end
+    
+    -- Show incomplete quests
+    if #incompleteQuests > 0 then
+        DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00Incomplete Quests:|r", 1, 1, 0.5)
+        for i, quest in ipairs(incompleteQuests) do
+            if i <= 5 then
+                DEFAULT_CHAT_FRAME:AddMessage(string.format("  • %s (ID: %d) - %d warnings", quest.name or "Unknown", quest.id, quest.warnings), 1, 1, 0.8)
+            end
+        end
+        if #incompleteQuests > 5 then
+            DEFAULT_CHAT_FRAME:AddMessage("  ... and " .. (#incompleteQuests - 5) .. " more", 1, 1, 0.8)
+        end
+    end
+    
+    DEFAULT_CHAT_FRAME:AddMessage("Use |cFFFFFFFF/qdc validate <questId>|r to see details for a specific quest", 1, 1, 1)
+end
+
+function QuestieDataCollector:ShowExportWindow(questId)
+    -- If no questId specified, show ALL data we have
+    if not questId then
+        -- Check if we have ANY data at all (quests, service NPCs, etc.)
+        local hasData = false
+        
+        if QuestieDataCollection then
+            if (QuestieDataCollection.quests and next(QuestieDataCollection.quests)) or
+               (QuestieDataCollection.serviceNPCs and next(QuestieDataCollection.serviceNPCs)) or
+               (QuestieDataCollection.mailboxes and next(QuestieDataCollection.mailboxes)) or
+               (QuestieDataCollection.flightMasters and next(QuestieDataCollection.flightMasters)) then
+                hasData = true
+            end
+        end
+        
+        if not hasData then
+            DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[QUESTIE]|r No data to export yet. Complete quests or interact with NPCs first!", 1, 0, 0)
+            return
+        end
+    else
+        -- Specific quest requested
+        if not QuestieDataCollection or not QuestieDataCollection.quests then
+            DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[QUESTIE]|r No quest data available!", 1, 0, 0)
+            return
+        end
+        
+        local data = QuestieDataCollection.quests[questId]
+        if not data then 
+            DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[QUESTIE]|r No data for quest " .. questId .. "!", 1, 0, 0)
+            return 
+        end
+    end
+    
+    -- Create frame if it doesn't exist
+    if not QuestieDataCollectorExportFrame then
+        local f = CreateFrame("Frame", "QuestieDataCollectorExportFrame", UIParent)
+        f:SetFrameStrata("DIALOG")
+        f:SetWidth(600)
+        f:SetHeight(400)
+        f:SetPoint("CENTER")
+        
+        -- Use Questie's frame style
+        f:SetBackdrop({
             bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background",
             edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Border",
             tile = true, tileSize = 32, edgeSize = 32,
-            insets = { left = 8, right = 8, top = 8, bottom = 8 }
+            insets = { left = 11, right = 12, top = 12, bottom = 11 }
         })
         
         -- Title
-        local title = frame:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
-        title:SetPoint("TOP", 0, -15)
-        title:SetText("Quest Data Export")
+        local title = f:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+        title:SetPoint("TOP", 0, -20)
+        title:SetText("|cFF00FF00Quest Data Ready for Export|r")
+        f.title = title
         
-        -- Info text
-        local info = frame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-        info:SetPoint("TOP", title, "BOTTOM", 0, -5)
-        frame.info = info
+        -- Scroll frame for data
+        local scrollFrame = CreateFrame("ScrollFrame", "QuestieDataCollectorScrollFrame", f, "UIPanelScrollFrameTemplate")
+        scrollFrame:SetPoint("TOPLEFT", 20, -45)
+        scrollFrame:SetPoint("BOTTOMRIGHT", -40, 55)
         
-        -- Scroll frame
-        local scrollFrame = CreateFrame("ScrollFrame", "QuestieDataExportScrollFrame", frame, "UIPanelScrollFrameTemplate")
-        scrollFrame:SetPoint("TOPLEFT", 10, -50)
-        scrollFrame:SetPoint("BOTTOMRIGHT", -30, 40)
-        
-        -- Edit box
-        local editBox = CreateFrame("EditBox", "QuestieDataExportEditBox", scrollFrame)
+        local editBox = CreateFrame("EditBox", "QuestieDataCollectorEditBox", scrollFrame)
         editBox:SetMultiLine(true)
-        editBox:SetMaxLetters(99999)
-        editBox:SetFontObject(GameFontNormalSmall)
-        editBox:SetWidth(550)
+        editBox:SetFontObject(ChatFontNormal)
+        editBox:SetWidth(540)
         editBox:SetAutoFocus(false)
-        editBox:SetScript("OnEscapePressed", function() frame:Hide() end)
-        scrollFrame:SetScrollChild(editBox)
-        frame.editBox = editBox
+        editBox:EnableMouse(true)
+        editBox:SetScript("OnEditFocusGained", function(self) 
+            self:HighlightText()
+        end)
+        editBox:SetScript("OnEscapePressed", function() f:Hide() end)
+        editBox:SetScript("OnTextChanged", function(self, userInput)
+            if userInput then
+                self:SetText(self.originalText or "")
+                self:HighlightText()
+            end
+        end)
         
-        -- Select All button
-        local selectButton = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
-        selectButton:SetSize(100, 25)
-        selectButton:SetPoint("BOTTOMLEFT", 10, 10)
-        selectButton:SetText("Select All")
-        selectButton:SetScript("OnClick", function()
+        editBox:SetHeight(2000)
+        
+        scrollFrame:EnableMouseWheel(true)
+        scrollFrame:SetScript("OnMouseWheel", function(self, delta)
+            local current = self:GetVerticalScroll()
+            local maxScroll = self:GetVerticalScrollRange()
+            local scrollStep = 30
+            
+            if delta > 0 then
+                self:SetVerticalScroll(math.max(0, current - scrollStep))
+            else
+                self:SetVerticalScroll(math.min(maxScroll, current + scrollStep))
+            end
+        end)
+        
+        scrollFrame:SetScrollChild(editBox)
+        f.editBox = editBox
+        f.scrollFrame = scrollFrame
+        
+        -- Step 1: Go to GitHub button
+        local githubButton = CreateFrame("Button", nil, f, "UIPanelButtonTemplate")
+        githubButton:SetPoint("BOTTOMLEFT", 20, 20)
+        githubButton:SetWidth(140)
+        githubButton:SetHeight(25)
+        githubButton:SetText("|cFF00FF00Step 1:|r Go to GitHub")
+        githubButton:SetScript("OnClick", function()
+            -- Create a simple popup with the GitHub URL
+            if not GitHubURLFrame then
+                local popup = CreateFrame("Frame", "GitHubURLFrame", UIParent)
+                popup:SetFrameStrata("TOOLTIP")
+                popup:SetWidth(450)
+                popup:SetHeight(120)
+                popup:SetPoint("CENTER")
+                popup:SetBackdrop({
+                    bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background",
+                    edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Border",
+                    tile = true, tileSize = 32, edgeSize = 16,
+                    insets = { left = 5, right = 5, top = 5, bottom = 5 }
+                })
+                
+                -- Title text
+                local titleText = popup:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+                titleText:SetPoint("TOP", 0, -15)
+                titleText:SetText("|cFFFFFFFFCopy this URL to your browser:|r")
+                
+                -- Create an EditBox for the URL so it can be selected
+                local urlBox = CreateFrame("EditBox", nil, popup)
+                urlBox:SetPoint("CENTER", 0, 5)
+                urlBox:SetWidth(400)
+                urlBox:SetHeight(20)
+                urlBox:SetFontObject(GameFontHighlight)
+                urlBox:SetText("https://github.com/trav346/Questie-Epoch/issues")
+                urlBox:SetAutoFocus(false)
+                urlBox:SetScript("OnEditFocusGained", function(self)
+                    self:HighlightText()
+                end)
+                urlBox:SetScript("OnEscapePressed", function(self)
+                    self:ClearFocus()
+                    popup:Hide()
+                end)
+                -- Prevent editing but allow selection
+                urlBox:SetScript("OnTextChanged", function(self, userInput)
+                    if userInput then
+                        self:SetText("https://github.com/trav346/Questie-Epoch/issues")
+                        self:HighlightText()
+                    end
+                end)
+                
+                -- Visual frame around the EditBox
+                local urlBorder = CreateFrame("Frame", nil, popup)
+                urlBorder:SetPoint("CENTER", urlBox, "CENTER", 0, 0)
+                urlBorder:SetWidth(410)
+                urlBorder:SetHeight(30)
+                urlBorder:SetBackdrop({
+                    bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
+                    edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+                    tile = true, tileSize = 16, edgeSize = 16,
+                    insets = { left = 4, right = 4, top = 4, bottom = 4 }
+                })
+                urlBorder:SetBackdropColor(0, 0, 0, 0.5)
+                
+                -- Close button (centered)
+                local closeBtn = CreateFrame("Button", nil, popup, "UIPanelButtonTemplate")
+                closeBtn:SetPoint("BOTTOM", 0, 10)
+                closeBtn:SetWidth(80)
+                closeBtn:SetHeight(22)
+                closeBtn:SetText("Close")
+                closeBtn:SetScript("OnClick", function() popup:Hide() end)
+                
+                popup.urlBox = urlBox
+            end
+            GitHubURLFrame:Show()
+            -- Auto-select the URL when showing
+            GitHubURLFrame.urlBox:SetFocus()
+            GitHubURLFrame.urlBox:HighlightText()
+        end)
+        
+        -- Step 2: Copy Data button
+        local copyButton = CreateFrame("Button", nil, f, "UIPanelButtonTemplate")
+        copyButton:SetPoint("BOTTOM", 0, 20)
+        copyButton:SetWidth(180)
+        copyButton:SetHeight(25)
+        copyButton:SetText("|cFF00FF00Step 2:|r Copy Collected Data")
+        copyButton:SetScript("OnClick", function()
             editBox:SetFocus()
             editBox:HighlightText()
+            DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00Data selected! Press Ctrl+C to copy, then paste in GitHub issue.|r", 0, 1, 0)
+        end)
+        
+        -- Step 3: Close & Purge button
+        local purgeButton = CreateFrame("Button", nil, f, "UIPanelButtonTemplate")
+        purgeButton:SetPoint("BOTTOMRIGHT", -20, 20)
+        purgeButton:SetWidth(160)
+        purgeButton:SetHeight(25)
+        purgeButton:SetText("|cFF00FF00Step 3:|r Close & Purge Data")
+        purgeButton:SetScript("OnClick", function()
+            -- Clear quest data
+            QuestieDataCollection.quests = {}
+            _activeTracking = {}
+            
+            DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[QUESTIE]|r Thank you for contributing! All collected quest data has been purged.", 0, 1, 0)
+            DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00Your local quest data storage has been cleared to free up memory.|r", 1, 1, 0)
+            f:Hide()
         end)
         
         -- Close button
-        local closeButton = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
-        closeButton:SetSize(100, 25)
-        closeButton:SetPoint("BOTTOMRIGHT", -10, 10)
-        closeButton:SetText("Close")
-        closeButton:SetScript("OnClick", function() frame:Hide() end)
+        local closeButton = CreateFrame("Button", nil, f, "UIPanelCloseButton")
+        closeButton:SetPoint("TOPRIGHT", -5, -5)
+        closeButton:SetScript("OnClick", function() f:Hide() end)
         
-        -- Submit button
-        local submitButton = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
-        submitButton:SetSize(150, 25)
-        submitButton:SetPoint("BOTTOM", 0, 10)
-        submitButton:SetText("Copy & Open GitHub")
-        submitButton:SetScript("OnClick", function()
-            editBox:SetFocus()
-            editBox:HighlightText()
-            DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Data Collector]|r Data selected! Press Ctrl+C to copy, then submit at:", 0, 1, 0)
-            DEFAULT_CHAT_FRAME:AddMessage("|cFF00FFFF→ https://github.com/trav346/Questie/issues/new|r", 0, 1, 1)
-        end)
-        
-        self.exportFrame = frame
+        f:Hide()
     end
     
-    -- Generate export text for all quests
-    local exportText = "=== QUESTIE DATA COLLECTION EXPORT ===\n"
-    exportText = exportText .. "Version: 1.1.0\n"
-    exportText = exportText .. "Date: " .. date("%Y-%m-%d %H:%M:%S") .. "\n"
-    exportText = exportText .. "Total Quests: " .. questCount .. "\n"
-    exportText = exportText .. "=====================================\n\n"
+    -- Generate export data
+    local exportText = ""
     
-    -- Export each quest
-    for questId, questData in pairs(QuestieDataCollection.quests) do
-        exportText = exportText .. self:FormatQuestExport(questId, questData) .. "\n"
+    if questId then
+        -- Single quest export
+        local data = QuestieDataCollection.quests[questId]
+        exportText = self:FormatQuestExport(questId, data)
+    else
+        -- Export ALL collected data
+        exportText = "=== QUESTIE DATA COLLECTION EXPORT ===\n"
+        exportText = exportText .. "Version: " .. (QuestieDataCollection.version or "1.1.0") .. "\n"
+        exportText = exportText .. "Date: " .. date("%Y-%m-%d %H:%M:%S") .. "\n"
+        
+        -- Clearly explain the capture mode
+        if _captureAllData then
+            exportText = exportText .. "Collection Mode: DEV MODE - Capturing ALL data\n"
+            exportText = exportText .. "  • ALL quests tracked (even if in database)\n"
+            exportText = exportText .. "  • ALL service NPCs captured\n"
+            exportText = exportText .. "  • ALL interactions logged\n"
+        else
+            exportText = exportText .. "Collection Mode: NORMAL - Missing quests only\n"
+            exportText = exportText .. "  • Only missing quests tracked\n"
+            exportText = exportText .. "  • Service NPCs always captured\n"
+            exportText = exportText .. "  • Mailboxes & flight masters always logged\n"
+        end
+        
+        -- Count all data types
+        local questCount = 0
+        local serviceNPCCount = 0
+        local mailboxCount = 0
+        local flightMasterCount = 0
+        
+        if QuestieDataCollection.quests then
+            for _ in pairs(QuestieDataCollection.quests) do
+                questCount = questCount + 1
+            end
+        end
+        
+        if QuestieDataCollection.serviceNPCs then
+            for _ in pairs(QuestieDataCollection.serviceNPCs) do
+                serviceNPCCount = serviceNPCCount + 1
+            end
+        end
+        
+        if QuestieDataCollection.mailboxes then
+            for _ in pairs(QuestieDataCollection.mailboxes) do
+                mailboxCount = mailboxCount + 1
+            end
+        end
+        
+        if QuestieDataCollection.flightMasters then
+            for _ in pairs(QuestieDataCollection.flightMasters) do
+                flightMasterCount = flightMasterCount + 1
+            end
+        end
+        
+        exportText = exportText .. "Total Quests: " .. questCount .. "\n"
+        exportText = exportText .. "Service NPCs: " .. serviceNPCCount .. "\n"
+        exportText = exportText .. "Mailboxes: " .. mailboxCount .. "\n"
+        exportText = exportText .. "Flight Masters: " .. flightMasterCount .. "\n"
+        exportText = exportText .. "=====================================\n\n"
+        
+        -- Export Service NPCs first (if any)
+        if serviceNPCCount > 0 then
+            exportText = exportText .. "────────────────────────────────────\n"
+            exportText = exportText .. "SERVICE NPCs ENCOUNTERED:\n"
+            exportText = exportText .. "────────────────────────────────────\n\n"
+            
+            for npcId, npcData in pairs(QuestieDataCollection.serviceNPCs) do
+                exportText = exportText .. "NPC: " .. (npcData.name or "Unknown") .. " (ID: " .. npcId .. ")\n"
+                exportText = exportText .. "Services: " .. table.concat(npcData.services, ", ") .. "\n"
+                
+                if npcData.locations and #npcData.locations > 0 then
+                    exportText = exportText .. "Locations:\n"
+                    for _, loc in ipairs(npcData.locations) do
+                        if loc.x and loc.y then
+                            exportText = exportText .. "  • " .. (loc.zone or "Unknown Zone") .. " at " .. string.format("%.1f, %.1f", loc.x, loc.y) .. "\n"
+                        end
+                    end
+                end
+                exportText = exportText .. "\n"
+            end
+        end
+        
+        -- Export Mailboxes (if any)
+        if mailboxCount > 0 then
+            exportText = exportText .. "────────────────────────────────────\n"
+            exportText = exportText .. "MAILBOX LOCATIONS:\n"
+            exportText = exportText .. "────────────────────────────────────\n\n"
+            
+            for locKey, locData in pairs(QuestieDataCollection.mailboxes) do
+                exportText = exportText .. "Location: " .. (locData.zone or "Unknown Zone") .. "\n"
+                exportText = exportText .. "Coords: " .. string.format("%.1f, %.1f", locData.x or 0, locData.y or 0) .. "\n\n"
+            end
+        end
+        
+        -- Export Flight Masters (if any)
+        if flightMasterCount > 0 then
+            exportText = exportText .. "────────────────────────────────────\n"
+            exportText = exportText .. "FLIGHT MASTERS:\n"
+            exportText = exportText .. "────────────────────────────────────\n\n"
+            
+            for npcId, fmData in pairs(QuestieDataCollection.flightMasters) do
+                exportText = exportText .. "Flight Master: " .. (fmData.name or "Unknown") .. " (ID: " .. npcId .. ")\n"
+                exportText = exportText .. "Location: " .. (fmData.zone or "Unknown Zone") .. "\n"
+                exportText = exportText .. "Coords: " .. string.format("%.1f, %.1f", fmData.x or 0, fmData.y or 0) .. "\n\n"
+            end
+        end
+        
+        -- Export Quests (if any)
+        if questCount > 0 then
+            exportText = exportText .. "────────────────────────────────────\n"
+            exportText = exportText .. "QUEST DATA:\n"
+            exportText = exportText .. "────────────────────────────────────\n\n"
+            
+            for qId, qData in pairs(QuestieDataCollection.quests) do
+                exportText = exportText .. self:FormatQuestExport(qId, qData) .. "\n"
+            end
+        end
+        
+        -- If no data at all
+        if questCount == 0 and serviceNPCCount == 0 and mailboxCount == 0 and flightMasterCount == 0 then
+            exportText = exportText .. "No data collected yet.\n\n"
+            exportText = exportText .. "In DEV MODE, ALL interactions are tracked:\n"
+            exportText = exportText .. "• Accept any quest\n"
+            exportText = exportText .. "• Talk to any NPC with services (flight master, vendor, etc.)\n"
+            exportText = exportText .. "• Click on mailboxes\n"
+            exportText = exportText .. "• Complete quest objectives\n"
+        end
     end
     
     -- Show the frame
-    self.exportFrame.info:SetText(questCount .. " quest(s) ready for export")
-    self.exportFrame.editBox:SetText(exportText)
-    self.exportFrame:Show()
+    local f = QuestieDataCollectorExportFrame
+    f.editBox.originalText = exportText
+    f.editBox:SetText(exportText)
+    f:Show()
     
-    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Data Collector]|r Export window opened with " .. questCount .. " quest(s)", 0, 1, 0)
+    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[QUESTIE]|r Export window opened. Follow the 3 steps to submit your data!", 0, 1, 0)
 end
-
 -- Format a single quest for export
 function QuestieDataCollector:FormatQuestExport(questId, questData)
     local export = "────────────────────────────────────\n"
@@ -1659,7 +2453,7 @@ function QuestieDataCollector:FormatQuestExport(questId, questData)
     
     -- Turn-in NPC
     if questData.turnInNpc then
-        export = export .. "TURN-IN NPC:\n"
+        export = export .. "▶ TURN-IN NPC:\n"
         export = export .. "  NPC: " .. (questData.turnInNpc.name or "Unknown") .. " (ID: " .. (questData.turnInNpc.id or 0) .. ")\n"
         if questData.turnInNpc.coords then
             export = export .. "  Location: " .. (questData.turnInNpc.coords.zone or "Unknown") .. "\n"
@@ -1670,22 +2464,37 @@ function QuestieDataCollector:FormatQuestExport(questId, questData)
     
     -- XP reward
     if questData.xpReward then
-        export = export .. "REWARDS:\n"
+        export = export .. "▶ REWARDS:\n"
         export = export .. "  Experience: " .. questData.xpReward .. " XP\n\n"
     end
     
     -- Related mobs
     if questData.mobs and next(questData.mobs) then
-        export = export .. "RELATED MOBS:\n"
+        export = export .. "▶ RELATED MOBS:\n"
         for mobId, mobData in pairs(questData.mobs) do
             export = export .. "  " .. (mobData.name or "Unknown") .. " (ID: " .. mobId .. ", Level: " .. (mobData.level or "?") .. ")\n"
             if mobData.locations and #mobData.locations > 0 then
-                export = export .. "    Sample coords: "
-                for i = 1, math.min(3, #mobData.locations) do
+                local validCoords = {}
+                for i = 1, #mobData.locations do
                     local loc = mobData.locations[i]
-                    export = export .. string.format("(%.1f, %.1f) ", loc.x, loc.y)
+                    if loc and loc.x and loc.y then
+                        table.insert(validCoords, loc)
+                    end
                 end
-                export = export .. "\n"
+                
+                if #validCoords > 0 then
+                    export = export .. "    Spawn locations (" .. #validCoords .. " total): "
+                    for i = 1, math.min(3, #validCoords) do
+                        local loc = validCoords[i]
+                        export = export .. string.format("(%.1f, %.1f) ", loc.x, loc.y)
+                    end
+                    if #validCoords > 3 then
+                        export = export .. "... and " .. (#validCoords - 3) .. " more"
+                    end
+                    export = export .. "\n"
+                else
+                    export = export .. "    ⚠️ Invalid coordinate data detected\n"
+                end
             end
         end
         export = export .. "\n"
@@ -1693,7 +2502,7 @@ function QuestieDataCollector:FormatQuestExport(questId, questData)
     
     -- Quest items
     if questData.items and next(questData.items) then
-        export = export .. "QUEST ITEMS:\n"
+        export = export .. "▶ QUEST ITEMS:\n"
         for itemId, itemData in pairs(questData.items) do
             export = export .. "  " .. (itemData.name or "Unknown") .. " (ID: " .. itemId .. ")\n"
             if itemData.sources and #itemData.sources > 0 then
@@ -1745,6 +2554,35 @@ function QuestieDataCollector:FormatQuestExport(questId, questData)
         export = export .. "\n"
     end
     
+    -- Prerequisites tracking
+    if questData.potentialPrerequisites and #questData.potentialPrerequisites > 0 then
+        export = export .. "POTENTIAL PREREQUISITES:\n"
+        export = export .. "  " .. #questData.potentialPrerequisites .. " quests were completed before accepting this quest\n"
+        export = export .. "  (Full list available in raw data)\n\n"
+    end
+    
+    if questData.unlocksQuests and #questData.unlocksQuests > 0 then
+        export = export .. "UNLOCKS QUESTS:\n"
+        export = export .. "  Completing this quest unlocked:\n"
+        for _, questName in ipairs(questData.unlocksQuests) do
+            export = export .. "    • " .. questName .. "\n"
+        end
+        export = export .. "\n"
+    end
+    
+    -- Commission quest data
+    if questData.isCommission then
+        export = export .. "COMMISSION QUEST DATA:\n"
+        export = export .. "  This is a profession commission quest\n"
+        if questData.playerProfessions and #questData.playerProfessions > 0 then
+            export = export .. "  Player professions at time of acceptance:\n"
+            for _, prof in ipairs(questData.playerProfessions) do
+                export = export .. "    • " .. prof.name .. " (" .. prof.skillLevel .. "/" .. prof.maxSkillLevel .. ")\n"
+            end
+        end
+        export = export .. "\n"
+    end
+    
     return export
 end
 
@@ -1762,12 +2600,17 @@ function QuestieDataCollector:ExportQuest(questId)
         return
     end
     
-    -- Generate export text
-    local export = "=== QUEST DATA EXPORT ===\n"
-    export = export .. "Version: " .. (QuestieDataCollection.version or "Unknown") .. "\n"
+    -- Generate export text with clear visual separators
+    local export = "\n"
+    export = export .. "════════════════════════════════════════════════════════════════\n"
+    export = export .. "                     QUEST DATA EXPORT                          \n"
+    export = export .. "════════════════════════════════════════════════════════════════\n\n"
     export = export .. "Quest ID: " .. questId .. "\n"
     export = export .. "Quest Name: " .. (questData.name or "Unknown") .. "\n"
-    export = export .. "Level: " .. (questData.level or "Unknown") .. "\n\n"
+    export = export .. "Level: " .. (questData.level or "Unknown") .. "\n"
+    export = export .. "Player Level: " .. (questData.playerLevel or "Unknown") .. "\n"
+    export = export .. "Version: " .. (QuestieDataCollection.version or "Unknown") .. "\n"
+    export = export .. "────────────────────────────────────────────────────────────────\n\n"
     
     if questData.wasAlreadyAccepted then
         export = export .. "⚠️ WARNING: INCOMPLETE DATA ⚠️\n"
@@ -1777,7 +2620,7 @@ function QuestieDataCollector:ExportQuest(questId)
     
     -- Add quest giver info
     if questData.questGiver then
-        export = export .. "QUEST GIVER:\n"
+        export = export .. "▶ QUEST GIVER:\n"
         export = export .. "  NPC: " .. (questData.questGiver.name or "Unknown") .. " (ID: " .. (questData.questGiver.id or 0) .. ")\n"
         if questData.questGiver.coords then
             export = export .. "  Location: " .. (questData.questGiver.coords.zone or "Unknown") .. "\n"
@@ -1788,7 +2631,7 @@ function QuestieDataCollector:ExportQuest(questId)
     
     -- Add objectives
     if questData.objectives and #questData.objectives > 0 then
-        export = export .. "OBJECTIVES:\n"
+        export = export .. "▶ OBJECTIVES:\n"
         for i, obj in ipairs(questData.objectives) do
             export = export .. "  " .. i .. ". " .. (obj.text or "Unknown") .. "\n"
         end
@@ -1797,7 +2640,7 @@ function QuestieDataCollector:ExportQuest(questId)
     
     -- Add turn-in info
     if questData.turnInNpc then
-        export = export .. "TURN-IN NPC:\n"
+        export = export .. "▶ TURN-IN NPC:\n"
         export = export .. "  NPC: " .. (questData.turnInNpc.name or "Unknown") .. " (ID: " .. (questData.turnInNpc.id or 0) .. ")\n"
         if questData.turnInNpc.coords then
             export = export .. "  Location: " .. (questData.turnInNpc.coords.zone or "Unknown") .. "\n"
@@ -1808,13 +2651,13 @@ function QuestieDataCollector:ExportQuest(questId)
     
     -- Add XP reward info
     if questData.xpReward then
-        export = export .. "REWARDS:\n"
+        export = export .. "▶ REWARDS:\n"
         export = export .. "  Experience: " .. questData.xpReward .. " XP\n\n"
     end
     
     -- Add mobs
     if questData.mobs and next(questData.mobs) then
-        export = export .. "RELATED MOBS:\n"
+        export = export .. "▶ RELATED MOBS:\n"
         for mobId, mobData in pairs(questData.mobs) do
             export = export .. "  " .. (mobData.name or "Unknown") .. " (ID: " .. mobId .. ", Level: " .. (mobData.level or "?") .. ")\n"
         end
@@ -1823,7 +2666,7 @@ function QuestieDataCollector:ExportQuest(questId)
     
     -- Add items
     if questData.items and next(questData.items) then
-        export = export .. "QUEST ITEMS:\n"
+        export = export .. "▶ QUEST ITEMS:\n"
         for itemId, itemData in pairs(questData.items) do
             export = export .. "  " .. (itemData.name or "Unknown") .. " (ID: " .. itemId .. ")\n"
             if itemData.sources and #itemData.sources > 0 then
@@ -1835,12 +2678,85 @@ function QuestieDataCollector:ExportQuest(questId)
         export = export .. "\n"
     end
     
+    -- Add service NPCs encountered in the same zone
+    local zoneServiceNPCs = {}
+    local totalServiceNPCs = 0
+    for _ in pairs(QuestieDataCollection.serviceNPCs) do
+        totalServiceNPCs = totalServiceNPCs + 1
+    end
+    
+    -- Debug: Show total service NPCs
+    if totalServiceNPCs > 0 then
+        export = export .. "-- Debug: Total service NPCs in collection: " .. totalServiceNPCs .. " --\n"
+        -- List all service NPC IDs for debugging
+        local npcList = {}
+        for npcId, npcData in pairs(QuestieDataCollection.serviceNPCs) do
+            table.insert(npcList, npcId .. ":" .. (npcData.name or "Unknown"))
+        end
+        export = export .. "-- Service NPCs: " .. table.concat(npcList, ", ") .. " --\n\n"
+    else
+        export = export .. "-- Debug: No service NPCs in collection --\n\n"
+    end
+    
+    if questData.questGiver and questData.questGiver.coords and questData.questGiver.coords.zone then
+        local questZone = questData.questGiver.coords.zone
+        for npcId, npcData in pairs(QuestieDataCollection.serviceNPCs) do
+            for _, location in ipairs(npcData.locations) do
+                if location.zone == questZone then
+                    zoneServiceNPCs[npcId] = npcData
+                    break
+                end
+            end
+        end
+    end
+    
+    if next(zoneServiceNPCs) then
+        export = export .. "▶ SERVICE NPCs IN QUEST AREA:\n"
+        for npcId, npcData in pairs(zoneServiceNPCs) do
+            export = export .. "  " .. (npcData.name or "Unknown") .. " (ID: " .. npcId .. ")\n"
+            export = export .. "    Services: " .. table.concat(npcData.services, ", ") .. "\n"
+            if #npcData.locations > 0 then
+                for _, loc in ipairs(npcData.locations) do
+                    if loc.x and loc.y then
+                        export = export .. "    Location: " .. string.format("%.1f, %.1f", loc.x, loc.y) .. " (" .. (loc.zone or "Unknown") .. ")\n"
+                    end
+                end
+            end
+        end
+        export = export .. "\n"
+    end
+    
+    -- Add ALL service NPCs encountered (not just zone-specific)
+    local allServiceNPCs = {}
+    for npcId, npcData in pairs(QuestieDataCollection.serviceNPCs) do
+        -- Skip if already shown in zone-specific section
+        if not zoneServiceNPCs[npcId] then
+            allServiceNPCs[npcId] = npcData
+        end
+    end
+    
+    if next(allServiceNPCs) then
+        export = export .. "▶ OTHER SERVICE NPCs ENCOUNTERED:\n"
+        for npcId, npcData in pairs(allServiceNPCs) do
+            export = export .. "  " .. (npcData.name or "Unknown") .. " (ID: " .. npcId .. ")\n"
+            export = export .. "    Services: " .. table.concat(npcData.services, ", ") .. "\n"
+            if #npcData.locations > 0 then
+                for _, loc in ipairs(npcData.locations) do
+                    if loc.x and loc.y then
+                        export = export .. "    At: " .. string.format("%.1f, %.1f", loc.x, loc.y) .. " in " .. (loc.zone or "Unknown") .. "\n"
+                    end
+                end
+            end
+        end
+        export = export .. "\n"
+    end
+    
     -- Add detected mismatches
     local hasMismatches = false
     for key, mismatch in pairs(_dataMismatches) do
         if mismatch.entityType == "quest" and mismatch.entityId == questId then
             if not hasMismatches then
-                export = export .. "DATABASE MISMATCHES DETECTED:\n"
+                export = export .. "▶ DATABASE MISMATCHES DETECTED:\n"
                 hasMismatches = true
             end
             export = export .. "  Field: " .. mismatch.fieldName .. "\n"
@@ -1854,7 +2770,7 @@ function QuestieDataCollector:ExportQuest(questId)
         local npcKey = "npc_" .. questData.questGiver.id .. "_coords"
         if _dataMismatches[npcKey] then
             if not hasMismatches then
-                export = export .. "DATABASE MISMATCHES DETECTED:\n"
+                export = export .. "▶ DATABASE MISMATCHES DETECTED:\n"
                 hasMismatches = true
             end
             export = export .. "  Quest Giver NPC " .. questData.questGiver.id .. " coordinates:\n"
@@ -1872,7 +2788,7 @@ function QuestieDataCollector:ExportQuest(questId)
         local npcKey = "npc_" .. questData.turnInNpc.id .. "_coords"
         if _dataMismatches[npcKey] then
             if not hasMismatches then
-                export = export .. "DATABASE MISMATCHES DETECTED:\n"
+                export = export .. "▶ DATABASE MISMATCHES DETECTED:\n"
                 hasMismatches = true
             end
             export = export .. "  Turn-in NPC " .. questData.turnInNpc.id .. " coordinates:\n"
@@ -1936,6 +2852,11 @@ function QuestieDataCollector:ExportQuest(questId)
         f.closeButton = CreateFrame("Button", nil, f, "UIPanelCloseButton")
         f.closeButton:SetPoint("TOPRIGHT", -5, -5)
     end
+    
+    -- Add footer separator
+    export = export .. "\n════════════════════════════════════════════════════════════════\n"
+    export = export .. "                        END OF QUEST                           \n"
+    export = export .. "════════════════════════════════════════════════════════════════\n\n"
     
     QuestieDataCollectorExportFrame.editBox:SetText(export)
     QuestieDataCollectorExportFrame.editBox:HighlightText()
@@ -2210,16 +3131,291 @@ function QuestieDataCollector:RescanQuestLog()
     DEFAULT_CHAT_FRAME:AddMessage("|cFF00FFFF[Data Collector]|r Rescan complete. Scanned " .. scannedCount .. " quests, updated " .. updatedCount, 0, 1, 1)
 end
 
+function QuestieDataCollector:ExportAreaData(zoneName)
+    if not zoneName then
+        zoneName = GetRealZoneText() or "Current Area"
+    end
+    
+    local export = "=== AREA DATA EXPORT ===\n"
+    export = export .. "Version: " .. (QuestieDataCollection.version or "Unknown") .. "\n"
+    export = export .. "Zone: " .. zoneName .. "\n"
+    export = export .. "Export Date: " .. date("%Y-%m-%d %H:%M:%S") .. "\n\n"
+    
+    local hasData = false
+    
+    -- Service NPCs in the zone
+    local zoneServiceNPCs = {}
+    for npcId, npcData in pairs(QuestieDataCollection.serviceNPCs) do
+        for _, location in ipairs(npcData.locations) do
+            if location.zone == zoneName then
+                zoneServiceNPCs[npcId] = npcData
+                break
+            end
+        end
+    end
+    
+    if next(zoneServiceNPCs) then
+        hasData = true
+        export = export .. "SERVICE NPCs:\n"
+        for npcId, npcData in pairs(zoneServiceNPCs) do
+            export = export .. "  " .. (npcData.name or "Unknown") .. " (ID: " .. npcId .. ")\n"
+            export = export .. "    Services: " .. table.concat(npcData.services, ", ") .. "\n"
+            for _, loc in ipairs(npcData.locations) do
+                if loc.zone == zoneName and loc.x and loc.y then
+                    export = export .. "    Location: " .. string.format("%.1f, %.1f", loc.x, loc.y) .. "\n"
+                end
+            end
+            export = export .. "\n"
+        end
+    end
+    
+    -- Gathering nodes in the zone
+    local zoneGatheringNodes = {}
+    for locKey, nodeData in pairs(QuestieDataCollection.gatheringNodes) do
+        if nodeData.zone == zoneName then
+            zoneGatheringNodes[locKey] = nodeData
+        end
+    end
+    
+    if next(zoneGatheringNodes) then
+        hasData = true
+        export = export .. "GATHERING NODES:\n"
+        local herbNodes = {}
+        local oreNodes = {}
+        for locKey, nodeData in pairs(zoneGatheringNodes) do
+            if nodeData.type == "herb" then
+                table.insert(herbNodes, nodeData)
+            elseif nodeData.type == "ore" then
+                table.insert(oreNodes, nodeData)
+            end
+        end
+        
+        if #herbNodes > 0 then
+            export = export .. "  Herbs:\n"
+            for _, node in ipairs(herbNodes) do
+                export = export .. "    " .. node.name .. " at " .. string.format("%.1f, %.1f", node.x, node.y) .. 
+                         " (gathered " .. node.timesGathered .. " times)\n"
+            end
+            export = export .. "\n"
+        end
+        
+        if #oreNodes > 0 then
+            export = export .. "  Ore Veins:\n"
+            for _, node in ipairs(oreNodes) do
+                export = export .. "    " .. node.name .. " at " .. string.format("%.1f, %.1f", node.x, node.y) .. 
+                         " (mined " .. node.timesGathered .. " times)\n"
+            end
+            export = export .. "\n"
+        end
+    end
+    
+    -- Treasure chests in the zone
+    local zoneTreasures = {}
+    for locKey, treasureData in pairs(QuestieDataCollection.treasureChests) do
+        if treasureData.zone == zoneName then
+            zoneTreasures[locKey] = treasureData
+        end
+    end
+    
+    if next(zoneTreasures) then
+        hasData = true
+        export = export .. "TREASURE CHESTS:\n"
+        for locKey, treasure in pairs(zoneTreasures) do
+            export = export .. "  " .. treasure.name .. " at " .. string.format("%.1f, %.1f", treasure.x, treasure.y) .. 
+                     " (looted " .. treasure.timesLooted .. " times)\n"
+        end
+        export = export .. "\n"
+    end
+    
+    -- Mailboxes in the zone
+    local zoneMailboxes = {}
+    for locKey, mailboxData in pairs(QuestieDataCollection.mailboxes) do
+        if mailboxData.zone == zoneName then
+            zoneMailboxes[locKey] = mailboxData
+        end
+    end
+    
+    if next(zoneMailboxes) then
+        hasData = true
+        export = export .. "MAILBOXES:\n"
+        for locKey, mailbox in pairs(zoneMailboxes) do
+            export = export .. "  Mailbox at " .. string.format("%.1f, %.1f", mailbox.x, mailbox.y) .. 
+                     " (used " .. mailbox.timesUsed .. " times)\n"
+        end
+        export = export .. "\n"
+    end
+    
+    if not hasData then
+        export = export .. "No area data collected for " .. zoneName .. " yet.\n"
+        export = export .. "Enable data collection with /qdc enable and explore the area to gather data.\n"
+    end
+    
+    -- Save to export frame for copying (reuse quest export frame)
+    if not QuestieDataCollectorExportFrame then
+        -- Frame will be created by quest export system if not exists
+        QuestieDataCollector:ExportQuest(0) -- This will create the frame but fail safely
+    end
+    
+    if QuestieDataCollectorExportFrame then
+        QuestieDataCollectorExportFrame.title:SetText("Area Data Export - " .. zoneName)
+        QuestieDataCollectorExportFrame.editBox:SetText(export)
+        QuestieDataCollectorExportFrame.editBox:HighlightText()
+        QuestieDataCollectorExportFrame:Show()
+        
+        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Data Collector]|r Area data export ready. Copy from the window that opened.", 0, 1, 0)
+    else
+        -- Fallback: print to chat
+        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Data Collector]|r Area data for " .. zoneName .. ":", 0, 1, 0)
+        for line in export:gmatch("[^\n]+") do
+            DEFAULT_CHAT_FRAME:AddMessage(line, 1, 1, 1)
+        end
+    end
+end
+
+function QuestieDataCollector:ExportServiceNPCs()
+    -- Check if we have any service NPCs
+    if not QuestieDataCollection or not QuestieDataCollection.serviceNPCs or not next(QuestieDataCollection.serviceNPCs) then
+        DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[Data Collector]|r No service NPCs captured yet!", 1, 0, 0)
+        DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00[Data Collector]|r Interact with vendors, trainers, flight masters, etc. to capture them.", 1, 1, 0)
+        return
+    end
+    
+    -- Build export text
+    local export = "\n"
+    export = export .. "════════════════════════════════════════════════════════════════\n"
+    export = export .. "                   SERVICE NPC EXPORT                          \n"
+    export = export .. "════════════════════════════════════════════════════════════════\n\n"
+    
+    -- Count by service type
+    local serviceTypes = {}
+    local totalNPCs = 0
+    
+    for npcId, npcData in pairs(QuestieDataCollection.serviceNPCs) do
+        totalNPCs = totalNPCs + 1
+        for _, service in ipairs(npcData.services) do
+            serviceTypes[service] = (serviceTypes[service] or 0) + 1
+        end
+    end
+    
+    export = export .. "Total Service NPCs: " .. totalNPCs .. "\n"
+    export = export .. "────────────────────────────────────────────────────────────────\n\n"
+    
+    -- Show counts by type
+    export = export .. "▶ SERVICE TYPES:\n"
+    for service, count in pairs(serviceTypes) do
+        export = export .. "  " .. service .. ": " .. count .. "\n"
+    end
+    export = export .. "\n"
+    
+    -- Export each NPC grouped by service type
+    local serviceGroups = {
+        ["flight_master"] = {},
+        ["vendor"] = {},
+        ["trainer"] = {},
+        ["banker"] = {},
+        ["guild_banker"] = {},
+        ["innkeeper"] = {},
+        ["stable_master"] = {},
+        ["battlemaster"] = {},
+        ["auctioneer"] = {}
+    }
+    
+    -- Group NPCs by their primary service
+    for npcId, npcData in pairs(QuestieDataCollection.serviceNPCs) do
+        local primaryService = npcData.services[1] or "unknown"
+        if not serviceGroups[primaryService] then
+            serviceGroups[primaryService] = {}
+        end
+        table.insert(serviceGroups[primaryService], {id = npcId, data = npcData})
+    end
+    
+    -- Export each group
+    for service, npcs in pairs(serviceGroups) do
+        if #npcs > 0 then
+            export = export .. "▶ " .. string.upper(string.gsub(service, "_", " ")) .. "S:\n"
+            
+            -- Sort by NPC ID
+            table.sort(npcs, function(a, b) return a.id < b.id end)
+            
+            for _, npc in ipairs(npcs) do
+                export = export .. "  " .. (npc.data.name or "Unknown") .. " (ID: " .. npc.id .. ")\n"
+                
+                -- Show all services if NPC provides multiple
+                if #npc.data.services > 1 then
+                    export = export .. "    Also provides: " .. table.concat(npc.data.services, ", ") .. "\n"
+                end
+                
+                -- Show locations
+                if npc.data.locations and #npc.data.locations > 0 then
+                    for _, loc in ipairs(npc.data.locations) do
+                        if loc.x and loc.y then
+                            export = export .. "    Location: " .. string.format("%.1f, %.1f", loc.x, loc.y) .. " in " .. (loc.zone or "Unknown") .. "\n"
+                        end
+                    end
+                end
+            end
+            export = export .. "\n"
+        end
+    end
+    
+    -- Add footer
+    export = export .. "════════════════════════════════════════════════════════════════\n"
+    export = export .. "                    END OF SERVICE NPCS                        \n"
+    export = export .. "════════════════════════════════════════════════════════════════\n\n"
+    
+    -- Create export window
+    if not QuestieDataCollectorExportFrame then
+        QuestieDataCollector:ShowExportWindow(0) -- Create the frame
+    end
+    
+    if QuestieDataCollectorExportFrame then
+        QuestieDataCollectorExportFrame.title:SetText("Service NPC Export")
+        QuestieDataCollectorExportFrame.editBox:SetText(export)
+        QuestieDataCollectorExportFrame.editBox:HighlightText()
+        QuestieDataCollectorExportFrame:Show()
+        
+        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Data Collector]|r Service NPC data ready for export!", 0, 1, 0)
+    else
+        -- Fallback to chat
+        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Data Collector]|r Service NPCs:", 0, 1, 0)
+        for line in export:gmatch("[^\n]+") do
+            DEFAULT_CHAT_FRAME:AddMessage(line, 1, 1, 1)
+        end
+    end
+end
+
 function QuestieDataCollector:ClearData()
+    -- Initialize if nil
+    if not QuestieDataCollection then
+        QuestieDataCollection = {}
+    end
+    
+    -- Clear all data
     QuestieDataCollection.quests = {}
     QuestieDataCollection.mismatches = {}
     QuestieDataCollection.serviceNPCs = {}
     QuestieDataCollection.mailboxes = {}
+    QuestieDataCollection.gatheringNodes = {}
+    QuestieDataCollection.treasureChests = {}
+    QuestieDataCollection.flightMasters = {}
+    
+    -- Clear local tracking
     _activeTracking = {}
     _dataMismatches = {}
     _serviceNPCs = {}
     _mailboxes = {}
-    DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[Data Collector]|r All collected data cleared. Use /reload to save.", 1, 0, 0)
+    _gatheringNodes = {}
+    _treasureChests = {}
+    _flightMasters = {}
+    
+    DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[Data Collector]|r All collected data cleared.", 1, 0, 0)
+    
+    -- Check if collection is enabled
+    if Questie.db.profile.enableDataCollection then
+        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Data Collector]|r Data collection is ENABLED - ready to collect new data.", 0, 1, 0)
+    else
+        DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00[Data Collector]|r Data collection is DISABLED - use /qdc enable to start collecting.", 1, 1, 0)
+    end
 end
 
 -- Slash command handler
@@ -2246,8 +3442,20 @@ SlashCmdList["QUESTIEDATACOLLECTOR"] = function(msg)
             -- Export specific quest if ID provided
             QuestieDataCollector:ExportQuest(questId)
         else
-            -- Export all tracked quests
+            -- Show quest selection window for export
             QuestieDataCollector:ShowExportWindow()
+        end
+    elseif cmd == "services" or cmd == "service" then
+        -- Export all service NPCs
+        QuestieDataCollector:ExportServiceNPCs()
+    elseif cmd == "area" then
+        local zoneName = args[2]
+        if zoneName then
+            -- Export specific zone if provided
+            QuestieDataCollector:ExportAreaData(zoneName)
+        else
+            -- Export current zone
+            QuestieDataCollector:ExportAreaData()
         end
     elseif cmd == "clear" then
         QuestieDataCollector:ClearData()
@@ -2274,6 +3482,23 @@ SlashCmdList["QUESTIEDATACOLLECTOR"] = function(msg)
         else
             DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[Data Collector]|r Debug messages disabled", 1, 0, 0)
         end
+    elseif cmd == "validate" then
+        local questId = tonumber(args[2])
+        if questId then
+            QuestieDataCollector:ValidateQuest(questId)
+        else
+            QuestieDataCollector:ValidateAllQuests()
+        end
+    elseif cmd == "recompile" then
+        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Data Collector]|r Forcing database recompile and reloading UI...", 0, 1, 0)
+        -- Set the compile flag to false
+        if Questie.IsSoD then
+            Questie.db.global.sod.dbIsCompiled = false
+        else
+            Questie.db.global.dbIsCompiled = false
+        end
+        -- Immediately reload the UI
+        ReloadUI()
     else
         DEFAULT_CHAT_FRAME:AddMessage("|cFF00FFFF=== Questie Data Collector Commands ===|r", 0, 1, 1)
         DEFAULT_CHAT_FRAME:AddMessage("/qdc status - Show collection status", 1, 1, 1)
@@ -2281,10 +3506,14 @@ SlashCmdList["QUESTIEDATACOLLECTOR"] = function(msg)
         DEFAULT_CHAT_FRAME:AddMessage("/qdc disable - Disable data collection", 1, 1, 1)
         DEFAULT_CHAT_FRAME:AddMessage("/qdc show - Show all tracked quests", 1, 1, 1)
         DEFAULT_CHAT_FRAME:AddMessage("/qdc export <questId> - Export quest data", 1, 1, 1)
+        DEFAULT_CHAT_FRAME:AddMessage("/qdc service - Export all service NPCs", 1, 1, 1)
+        DEFAULT_CHAT_FRAME:AddMessage("/qdc area [zoneName] - Export area data (service NPCs, gathering nodes, treasures)", 1, 1, 1)
         DEFAULT_CHAT_FRAME:AddMessage("/qdc questgiver <questId> - Manually capture quest giver (target NPC first)", 1, 1, 1)
         DEFAULT_CHAT_FRAME:AddMessage("/qdc turnin <questId> - Manually capture turn-in NPC (target NPC first)", 1, 1, 1)
         DEFAULT_CHAT_FRAME:AddMessage("/qdc clear - Clear all collected data", 1, 1, 1)
         DEFAULT_CHAT_FRAME:AddMessage("/qdc rescan - Re-scan quest log for missing data", 1, 1, 1)
+        DEFAULT_CHAT_FRAME:AddMessage("/qdc recompile - Force database recompile (reloads UI)", 1, 1, 1)
+        DEFAULT_CHAT_FRAME:AddMessage("/qdc validate [questId] - Validate collected quest data", 1, 1, 1)
         DEFAULT_CHAT_FRAME:AddMessage("/qdc debug - Toggle debug messages", 1, 1, 1)
     end
 end

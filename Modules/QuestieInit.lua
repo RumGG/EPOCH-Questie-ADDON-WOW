@@ -345,11 +345,9 @@ QuestieInit.Stages[3] = function() -- run as a coroutine
         Questie:Debug(Questie.DEBUG_CRITICAL, "[QuestieInit] enableDataCollection = " .. tostring(Questie.db.profile.enableDataCollection))
         
         -- Check if this is first run for community contribution
-        if Questie.db.profile.dataCollectionPrompted == nil then
-            C_Timer.After(5, function()
-                QuestieDataCollector:ShowContributionPopup()
-            end)
-        elseif Questie.db.profile.enableDataCollection then
+        -- TODO: Add contribution popup later if needed
+        -- For now, just check if data collection is enabled
+        if Questie.db.profile.enableDataCollection then
             Questie:Debug(Questie.DEBUG_CRITICAL, "[QuestieInit] Calling QuestieDataCollector:Initialize()")
             QuestieDataCollector:Initialize()
         else

@@ -17,6 +17,9 @@ local TrackerQuestTimers = QuestieLoader:ImportModule("TrackerQuestTimers")
 ---@type TrackerUtils
 local TrackerUtils = QuestieLoader:ImportModule("TrackerUtils")
 
+---@type TomTomAuto
+local TomTomAuto = QuestieLoader:ImportModule("TomTomAuto")
+
 ---@type l10n
 local l10n = QuestieLoader:ImportModule("l10n")
 
@@ -607,9 +610,10 @@ function QuestieOptions.tabs.tracker:Initialize()
                             get = function() return Questie.db.profile.tomtomAutoTargetMode end,
                             set = function(_, value)
                                 Questie.db.profile.tomtomAutoTargetMode = value
-                                TrackerUtils:StartTomTomAutoTracking()
-                                if not value then
-                                    TrackerUtils:StopTomTomAutoTracking()
+                                if value then
+                                    TomTomAuto:StartTomTomAutoTracking()
+                                else
+                                    TomTomAuto:StopTomTomAutoTracking()
                                 end
                             end
                     },

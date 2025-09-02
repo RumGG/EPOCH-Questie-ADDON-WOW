@@ -103,6 +103,20 @@ function QuestieSlash.HandleCommands(input)
         QuestieOptions:HideFrame();
         return;
     end
+    
+    -- /questie refreshcomplete - Force refresh completed quests and clean up stuck map icons
+    if mainCommand == "refreshcomplete" then
+        -- Force refresh completed quests from server
+        Questie.db.char.complete = GetQuestsCompleted()
+        -- Remove any Epoch quest map icons that are marked complete
+        for questId = 26000, 30000 do
+            if Questie.db.char.complete[questId] then
+                QuestieMap:UnloadQuestFrames(questId)
+            end
+        end
+        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Questie]|r Refreshed completed quests and cleaned up map icons", 0, 1, 0)
+        return;
+    end
 
     if mainCommand == "dumplog" then
         -- Capture complete quest log for troubleshooting
