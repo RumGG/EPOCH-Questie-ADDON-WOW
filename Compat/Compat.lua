@@ -620,6 +620,12 @@ function QuestieCompat:QUEST_QUERY_COMPLETE(event)
             Questie.db.char.complete[questId] = nil
         end
     end
+    
+    -- If this was triggered by a migration, show completion message
+    if Questie.db.char.completedQuestRefreshRequested then
+        Questie.db.char.completedQuestRefreshRequested = nil
+        Questie:Print("[Migration] Completed quest database synced successfully!")
+    end
 
     if Questie.db.profile.resetDailyQuests then
         QuestieCompat.CalculateNextResetTime()

@@ -3,6 +3,10 @@
 ## [Unreleased]
 
 ### Added
+- **Automatic completed quest sync on version updates**
+  - Questie now automatically refreshes completed quests from server when updated
+  - Fixes stuck quest markers that may appear after updates
+  - Runs once per version update via migration system
 - **Enhanced completed quest refresh command**
   - `/questie refreshcomplete` now properly queries server for completed quests
   - Clears all map icons and redraws after refresh to fix stuck quest markers
