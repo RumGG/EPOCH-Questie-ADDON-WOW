@@ -3,6 +3,11 @@
 ## [Unreleased]
 
 ### Fixed
+- **QuestieMap error with invalid zone IDs**
+  - Fixed "No UiMapID for SelfieCamera_SoloModeWorlds" error on addon load
+  - Added validation to reject non-numeric zone IDs (frame names from modern WoW)
+  - Prevents crashes when other addons pass invalid data to map functions
+  - Gracefully handles invalid area IDs without throwing errors
 - **Map pin tooltips not showing without ElvUI**
   - Fixed missing QuestieCompat.SetupTooltip call for 3.3.5 clients
   - Restored proper tooltip selection logic from reference version
