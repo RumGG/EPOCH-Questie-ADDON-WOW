@@ -3099,7 +3099,6 @@ function QuestieDataCollector:GenerateDatabaseEntries(questId, questData)
     -- 10. Objectives (try to generate from quest data)
     output = output .. ","
     if questData.objectives and #questData.objectives > 0 then
-        output = output .. "{"
         local hasObjectives = false
         
         -- Look for creature objectives
@@ -3124,15 +3123,16 @@ function QuestieDataCollector:GenerateDatabaseEntries(questId, questData)
             end
         end
         
-        if #creatures > 0 then
+        -- Build objectives structure if we found any
+        if hasObjectives and #creatures > 0 then
+            output = output .. "{"
             output = output .. "{" .. table.concat(creatures, ",") .. "}"
+            -- Add placeholders for other objective types (objects, items, reputation, killcredit, spells)
+            output = output .. ",nil,nil,nil,nil,nil"
+            output = output .. "}"
         else
             output = output .. "nil"
         end
-        
-        -- Add placeholders for other objective types (objects, items, reputation, killcredit, spells)
-        output = output .. ",nil,nil,nil,nil,nil"
-        output = output .. "}"
     else
         output = output .. "nil"
     end
@@ -3144,51 +3144,45 @@ function QuestieDataCollector:GenerateDatabaseEntries(questId, questData)
     
     output = output .. "},\n\n"
     
-    -- Generate NPC entries
-    local npcEntries = {}
+    -- Generate NPC entries (aggregate all quest info for each NPC)
+    local npcData = {}
     
-    -- Quest giver
+    -- Process quest giver
     if questData.questGiver and questData.questGiver.id then
-        local npc = questData.questGiver
-        -- Get proper zone ID
-        local zoneId = 0
-        if npc.coords then
-            -- Try to get zone ID from zone name
-            if npc.coords.zone and ZONE_NAME_TO_ID[npc.coords.zone] then
-                zoneId = ZONE_NAME_TO_ID[npc.coords.zone]
-            elseif npc.coords.areaId then
-                zoneId = npc.coords.areaId
-            end
+        local npcId = questData.questGiver.id
+        if not npcData[npcId] then
+            npcData[npcId] = {
+                name = questData.questGiver.name or "Unknown",
+                coords = questData.questGiver.coords,
+                level = questData.level or "nil",
+                questStarts = {},
+                questEnds = {}
+            }
         end
-        
-        local coords = ""
-        if npc.coords and npc.coords.x and npc.coords.y then
-            coords = string.format("{[%d]={{%.1f,%.1f}}}", 
-                zoneId, npc.coords.x, npc.coords.y)
-        else
-            coords = "nil"
-        end
-        
-        npcEntries[npc.id] = string.format(
-            '[%d] = {"%s",nil,nil,%s,%s,0,%s,nil,%d,{%d},nil,nil,nil,nil,2},',
-            npc.id,
-            npc.name or "Unknown",
-            questData.level or "nil",
-            questData.level or "nil",
-            coords,
-            zoneId,
-            questId
-        )
+        table.insert(npcData[npcId].questStarts, questId)
     end
     
-    -- Turn-in NPC
-    if questData.turnInNpc and questData.turnInNpc.id and 
-       (not questData.questGiver or questData.turnInNpc.id ~= questData.questGiver.id) then
-        local npc = questData.turnInNpc
+    -- Process turn-in NPC
+    if questData.turnInNpc and questData.turnInNpc.id then
+        local npcId = questData.turnInNpc.id
+        if not npcData[npcId] then
+            npcData[npcId] = {
+                name = questData.turnInNpc.name or "Unknown",
+                coords = questData.turnInNpc.coords,
+                level = questData.level or "nil",
+                questStarts = {},
+                questEnds = {}
+            }
+        end
+        table.insert(npcData[npcId].questEnds, questId)
+    end
+    
+    -- Generate NPC entries
+    local npcEntries = {}
+    for npcId, npc in pairs(npcData) do
         -- Get proper zone ID
         local zoneId = 0
         if npc.coords then
-            -- Try to get zone ID from zone name
             if npc.coords.zone and ZONE_NAME_TO_ID[npc.coords.zone] then
                 zoneId = ZONE_NAME_TO_ID[npc.coords.zone]
             elseif npc.coords.areaId then
@@ -3204,15 +3198,27 @@ function QuestieDataCollector:GenerateDatabaseEntries(questId, questData)
             coords = "nil"
         end
         
-        npcEntries[npc.id] = string.format(
-            '[%d] = {"%s",nil,nil,%s,%s,0,%s,nil,%d,nil,{%d},nil,nil,nil,2},',
-            npc.id,
-            npc.name or "Unknown",
-            questData.level or "nil",
-            questData.level or "nil",
+        -- Format quest arrays
+        local questStarts = "nil"
+        if #npc.questStarts > 0 then
+            questStarts = "{" .. table.concat(npc.questStarts, ",") .. "}"
+        end
+        
+        local questEnds = "nil"
+        if #npc.questEnds > 0 then
+            questEnds = "{" .. table.concat(npc.questEnds, ",") .. "}"
+        end
+        
+        npcEntries[npcId] = string.format(
+            '[%d] = {"%s",nil,nil,%s,%s,0,%s,nil,%d,%s,%s,nil,nil,nil,2},',
+            npcId,
+            npc.name,
+            npc.level,
+            npc.level,
             coords,
             zoneId,
-            questId
+            questStarts,
+            questEnds
         )
     end
     
