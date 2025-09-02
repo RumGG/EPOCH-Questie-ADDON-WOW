@@ -2769,6 +2769,23 @@ function QuestieDataCollector:FormatQuestExport(questId, questData)
     -- Add database entries
     export = export .. "\n" .. QuestieDataCollector:GenerateDatabaseEntries(questId, questData)
     
+    -- Add database mismatches if any
+    if questData.mismatches and next(questData.mismatches) then
+        export = export .. "\nDATABASE MISMATCHES DETECTED:\n"
+        export = export .. "==============================\n"
+        for entityType, entities in pairs(questData.mismatches) do
+            for entityId, fields in pairs(entities) do
+                for fieldName, mismatch in pairs(fields) do
+                    export = export .. string.format("[MISMATCH] %s %s field '%s': DB has '%s' but found '%s'\n",
+                        entityType, entityId, fieldName, 
+                        tostring(mismatch.databaseValue), 
+                        tostring(mismatch.collectedValue))
+                end
+            end
+        end
+        export = export .. "\n"
+    end
+    
     return export
 end
 
