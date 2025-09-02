@@ -2,6 +2,16 @@
 
 ## [Unreleased]
 
+### Added
+- **Enhanced completed quest refresh command**
+  - `/questie refreshcomplete` now properly queries server for completed quests
+  - Clears all map icons and redraws after refresh to fix stuck quest markers
+  - Shows progress messages during refresh process
+- **New quest completion check command**
+  - `/questie checkcomplete <questId>` checks if a quest is marked complete
+  - Shows both local database and server status
+  - Warns if there's a mismatch between local and server data
+
 ### Fixed
 - **QuestieMap error with invalid zone IDs**
   - Fixed "No UiMapID for SelfieCamera_SoloModeWorlds" error on addon load

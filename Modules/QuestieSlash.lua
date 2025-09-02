@@ -106,18 +106,64 @@ function QuestieSlash.HandleCommands(input)
     
     -- /questie refreshcomplete - Force refresh completed quests and clean up stuck map icons
     if mainCommand == "refreshcomplete" then
-        -- Force refresh completed quests from server
-        Questie.db.char.complete = GetQuestsCompleted()
-        -- Remove any Epoch quest map icons that are marked complete
-        for questId = 26000, 30000 do
-            if Questie.db.char.complete[questId] then
-                QuestieMap:UnloadQuestFrames(questId)
-            end
-        end
-        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Questie]|r Refreshed completed quests and cleaned up map icons", 0, 1, 0)
+        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Questie]|r Querying server for completed quests...", 0, 1, 0)
+        
+        -- Query the server for completed quests (this triggers QUEST_QUERY_COMPLETE event)
+        QueryQuestsCompleted()
+        
+        -- Set up a one-time listener for when the query completes
+        local frame = CreateFrame("Frame")
+        frame:RegisterEvent("QUEST_QUERY_COMPLETE")
+        frame:SetScript("OnEvent", function(self, event)
+            -- Update our completed quest database
+            GetQuestsCompleted(Questie.db.char.complete)
+            
+            -- Remove all quest map icons first
+            QuestieMap:ClearAllNotes()
+            
+            -- Force a full quest refresh
+            QuestieQuest:Initialize()
+            QuestieQuest:UpdateQuests()
+            
+            -- Redraw the map
+            QuestieMap.InitializeQueue()
+            
+            DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Questie]|r Completed quests refreshed! Map has been redrawn.", 0, 1, 0)
+            DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Questie]|r If issues persist, try /reload", 0, 1, 0)
+            
+            -- Clean up the frame
+            self:UnregisterEvent("QUEST_QUERY_COMPLETE")
+        end)
+        
         return;
     end
 
+    -- /questie checkcomplete <questId> - Check if a specific quest is marked as complete
+    if mainCommand == "checkcomplete" then
+        local questId = tonumber(subCommand)
+        if not questId then
+            DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[Questie]|r Usage: /questie checkcomplete <questId>", 1, 0, 0)
+            return
+        end
+        
+        local isComplete = Questie.db.char.complete[questId]
+        local isServerComplete = IsQuestFlaggedCompleted(questId)
+        local questData = QuestieDB:GetQuest(questId)
+        local questName = questData and questData.name or "Unknown Quest"
+        
+        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Questie]|r Quest " .. questId .. " (" .. questName .. "):", 0, 1, 0)
+        DEFAULT_CHAT_FRAME:AddMessage("  Local DB: " .. (isComplete and "|cFF00FF00Complete|r" or "|cFFFF0000Not Complete|r"), 1, 1, 1)
+        DEFAULT_CHAT_FRAME:AddMessage("  Server Check: " .. (isServerComplete and "|cFF00FF00Complete|r" or "|cFFFF0000Not Complete|r"), 1, 1, 1)
+        
+        if isComplete and not isServerComplete then
+            DEFAULT_CHAT_FRAME:AddMessage("  |cFFFFFF00Warning: Local DB says complete but server says not complete!|r", 1, 1, 0)
+        elseif not isComplete and isServerComplete then
+            DEFAULT_CHAT_FRAME:AddMessage("  |cFFFFFF00Warning: Server says complete but local DB says not complete!|r", 1, 1, 0)
+        end
+        
+        return
+    end
+    
     if mainCommand == "dumplog" then
         -- Capture complete quest log for troubleshooting
         local dumpData = {}
