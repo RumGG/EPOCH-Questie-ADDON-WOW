@@ -140,25 +140,105 @@ function QuestieSlash.HandleCommands(input)
 
     -- /questie checkcomplete <questId> - Check if a specific quest is marked as complete
     if mainCommand == "checkcomplete" then
-        local questId = tonumber(subCommand)
-        if not questId then
-            DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[Questie]|r Usage: /questie checkcomplete <questId>", 1, 0, 0)
+        local questIdOrName = subCommand
+        if not questIdOrName then
+            DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[Questie]|r Usage: /questie checkcomplete <questId or partial name>", 1, 0, 0)
             return
         end
         
-        local isComplete = Questie.db.char.complete[questId]
-        local isServerComplete = IsQuestFlaggedCompleted(questId)
-        local questData = QuestieDB:GetQuest(questId)
-        local questName = questData and questData.name or "Unknown Quest"
+        local questId = tonumber(questIdOrName)
         
-        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Questie]|r Quest " .. questId .. " (" .. questName .. "):", 0, 1, 0)
-        DEFAULT_CHAT_FRAME:AddMessage("  Local DB: " .. (isComplete and "|cFF00FF00Complete|r" or "|cFFFF0000Not Complete|r"), 1, 1, 1)
-        DEFAULT_CHAT_FRAME:AddMessage("  Server Check: " .. (isServerComplete and "|cFF00FF00Complete|r" or "|cFFFF0000Not Complete|r"), 1, 1, 1)
+        if questId then
+            -- Single quest ID check
+            local isComplete = Questie.db.char.complete[questId]
+            local isServerComplete = IsQuestFlaggedCompleted(questId)
+            local questData = QuestieDB:GetQuest(questId)
+            local questName = questData and questData.name or "Unknown Quest"
+            
+            DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Questie]|r Quest " .. questId .. " (" .. questName .. "):", 0, 1, 0)
+            DEFAULT_CHAT_FRAME:AddMessage("  Local DB: " .. (isComplete and "|cFF00FF00Complete|r" or "|cFFFF0000Not Complete|r"), 1, 1, 1)
+            DEFAULT_CHAT_FRAME:AddMessage("  Server Check: " .. (isServerComplete and "|cFF00FF00Complete|r" or "|cFFFF0000Not Complete|r"), 1, 1, 1)
+            
+            if isComplete and not isServerComplete then
+                DEFAULT_CHAT_FRAME:AddMessage("  |cFFFFFF00Warning: Local DB says complete but server says not complete!|r", 1, 1, 0)
+            elseif not isComplete and isServerComplete then
+                DEFAULT_CHAT_FRAME:AddMessage("  |cFFFFFF00Warning: Server says complete but local DB says not complete!|r", 1, 1, 0)
+            end
+        else
+            -- Search by partial name
+            DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Questie]|r Searching for quests matching: " .. questIdOrName, 0, 1, 0)
+            local found = false
+            
+            -- Search all quest IDs we know about
+            for id = 1, 30000 do
+                local questData = QuestieDB:GetQuest(id)
+                if questData and questData.name and string.find(string.lower(questData.name), string.lower(questIdOrName)) then
+                    found = true
+                    local isComplete = Questie.db.char.complete[id]
+                    local isServerComplete = IsQuestFlaggedCompleted(id)
+                    
+                    DEFAULT_CHAT_FRAME:AddMessage(string.format("  [%d] %s - Local: %s, Server: %s", 
+                        id, 
+                        questData.name,
+                        isComplete and "|cFF00FF00Complete|r" or "|cFFFF0000Not Complete|r",
+                        isServerComplete and "|cFF00FF00Complete|r" or "|cFFFF0000Not Complete|r"
+                    ), 1, 1, 1)
+                end
+            end
+            
+            if not found then
+                DEFAULT_CHAT_FRAME:AddMessage("  No quests found matching: " .. questIdOrName, 1, 0, 0)
+            end
+        end
         
-        if isComplete and not isServerComplete then
-            DEFAULT_CHAT_FRAME:AddMessage("  |cFFFFFF00Warning: Local DB says complete but server says not complete!|r", 1, 1, 0)
-        elseif not isComplete and isServerComplete then
-            DEFAULT_CHAT_FRAME:AddMessage("  |cFFFFFF00Warning: Server says complete but local DB says not complete!|r", 1, 1, 0)
+        return
+    end
+    
+    -- /questie fixduplicates - Fix duplicate quest issues like "The Killing Fields"
+    if mainCommand == "fixduplicates" then
+        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Questie]|r Checking for duplicate quest issues...", 0, 1, 0)
+        
+        -- Known duplicate quest sets
+        local duplicateSets = {
+            {name = "The Killing Fields", ids = {9, 26993, 26994, 26995}},
+        }
+        
+        local fixedCount = 0
+        
+        for _, set in pairs(duplicateSets) do
+            local anyComplete = false
+            local completeIds = {}
+            local incompleteIds = {}
+            
+            -- Check if any version is complete
+            for _, id in pairs(set.ids) do
+                if Questie.db.char.complete[id] or IsQuestFlaggedCompleted(id) then
+                    anyComplete = true
+                    table.insert(completeIds, id)
+                else
+                    table.insert(incompleteIds, id)
+                end
+            end
+            
+            -- If any version is complete, mark all as complete and remove from map
+            if anyComplete and #incompleteIds > 0 then
+                DEFAULT_CHAT_FRAME:AddMessage("  Found completed '" .. set.name .. "', fixing duplicates...", 1, 1, 0)
+                
+                for _, id in pairs(incompleteIds) do
+                    Questie.db.char.complete[id] = true
+                    QuestieMap:UnloadQuestFrames(id)
+                    fixedCount = fixedCount + 1
+                    DEFAULT_CHAT_FRAME:AddMessage("    Marked quest " .. id .. " as complete", 0, 1, 0)
+                end
+            end
+        end
+        
+        if fixedCount > 0 then
+            -- Refresh the map
+            QuestieQuest:UpdateQuests()
+            DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Questie]|r Fixed " .. fixedCount .. " duplicate quest issues!", 0, 1, 0)
+        else
+            DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Questie]|r No duplicate quest issues found.", 0, 1, 0)
         end
         
         return
