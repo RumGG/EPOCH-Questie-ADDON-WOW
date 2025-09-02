@@ -17,6 +17,26 @@ local C_Timer = QuestieCompat.C_Timer
 local MINIMUM_VERSION = "1.1.0"
 local CURRENT_VERSION = "1.1.0"
 
+-- Zone name to Questie zone ID mapping (most common zones)
+local ZONE_NAME_TO_ID = {
+    ["Durotar"] = 14,
+    ["Elwynn Forest"] = 12,
+    ["Teldrassil"] = 141,
+    ["Dun Morogh"] = 1,
+    ["Tirisfal Glades"] = 85,
+    ["The Barrens"] = 17,
+    ["Westfall"] = 40,
+    ["Darkshore"] = 148,
+    ["Loch Modan"] = 38,
+    ["Silverpine Forest"] = 130,
+    ["Stormwind City"] = 1519,
+    ["Orgrimmar"] = 1637,
+    ["Thunder Bluff"] = 1638,
+    ["Ironforge"] = 1537,
+    ["Undercity"] = 1497,
+    ["Darnassus"] = 1657,
+}
+
 -- SavedVariables table for collected data
 -- This will be initialized after ADDON_LOADED event
 
@@ -3077,8 +3097,46 @@ function QuestieDataCollector:GenerateDatabaseEntries(questId, questData)
     -- 9. Trigger end (exploration objectives)
     output = output .. ",nil"
     
-    -- 10. Objectives (simplified - would need proper parsing)
-    output = output .. ",nil"
+    -- 10. Objectives (try to generate from quest data)
+    output = output .. ","
+    if questData.objectives and #questData.objectives > 0 then
+        output = output .. "{"
+        local hasObjectives = false
+        
+        -- Look for creature objectives
+        local creatures = {}
+        for _, obj in ipairs(questData.objectives) do
+            if obj.text then
+                -- Try to extract creature kills
+                local mobName, current, total = string.match(obj.text, "(.+) slain: (%d+)/(%d+)")
+                if not mobName then
+                    mobName, current, total = string.match(obj.text, "(.+) killed: (%d+)/(%d+)")
+                end
+                if mobName and total then
+                    -- Try to find the mob ID from our tracked mobs
+                    for mobId, mobData in pairs(questData.mobs or {}) do
+                        if mobData.name and string.find(mobData.name, mobName) then
+                            table.insert(creatures, string.format('{%d,%s}', mobId, total))
+                            hasObjectives = true
+                            break
+                        end
+                    end
+                end
+            end
+        end
+        
+        if #creatures > 0 then
+            output = output .. "{" .. table.concat(creatures, ",") .. "}"
+        else
+            output = output .. "nil"
+        end
+        
+        -- Add placeholders for other objective types (objects, items, reputation, killcredit, spells)
+        output = output .. ",nil,nil,nil,nil,nil"
+        output = output .. "}"
+    else
+        output = output .. "nil"
+    end
     
     -- 11-30. Other fields (all nil for basic entry)
     for i = 11, 30 do
@@ -3093,10 +3151,21 @@ function QuestieDataCollector:GenerateDatabaseEntries(questId, questData)
     -- Quest giver
     if questData.questGiver and questData.questGiver.id then
         local npc = questData.questGiver
+        -- Get proper zone ID
+        local zoneId = 0
+        if npc.coords then
+            -- Try to get zone ID from zone name
+            if npc.coords.zone and ZONE_NAME_TO_ID[npc.coords.zone] then
+                zoneId = ZONE_NAME_TO_ID[npc.coords.zone]
+            elseif npc.coords.areaId then
+                zoneId = npc.coords.areaId
+            end
+        end
+        
         local coords = ""
         if npc.coords and npc.coords.x and npc.coords.y then
             coords = string.format("{[%d]={{%.1f,%.1f}}}", 
-                npc.coords.areaId or 0, npc.coords.x, npc.coords.y)
+                zoneId, npc.coords.x, npc.coords.y)
         else
             coords = "nil"
         end
@@ -3108,7 +3177,7 @@ function QuestieDataCollector:GenerateDatabaseEntries(questId, questData)
             questData.level or "nil",
             questData.level or "nil",
             coords,
-            npc.coords and npc.coords.areaId or 0,
+            zoneId,
             questId
         )
     end
@@ -3117,10 +3186,21 @@ function QuestieDataCollector:GenerateDatabaseEntries(questId, questData)
     if questData.turnInNpc and questData.turnInNpc.id and 
        (not questData.questGiver or questData.turnInNpc.id ~= questData.questGiver.id) then
         local npc = questData.turnInNpc
+        -- Get proper zone ID
+        local zoneId = 0
+        if npc.coords then
+            -- Try to get zone ID from zone name
+            if npc.coords.zone and ZONE_NAME_TO_ID[npc.coords.zone] then
+                zoneId = ZONE_NAME_TO_ID[npc.coords.zone]
+            elseif npc.coords.areaId then
+                zoneId = npc.coords.areaId
+            end
+        end
+        
         local coords = ""
         if npc.coords and npc.coords.x and npc.coords.y then
             coords = string.format("{[%d]={{%.1f,%.1f}}}", 
-                npc.coords.areaId or 0, npc.coords.x, npc.coords.y)
+                zoneId, npc.coords.x, npc.coords.y)
         else
             coords = "nil"
         end
@@ -3132,7 +3212,7 @@ function QuestieDataCollector:GenerateDatabaseEntries(questId, questData)
             questData.level or "nil",
             questData.level or "nil",
             coords,
-            npc.coords and npc.coords.areaId or 0,
+            zoneId,
             questId
         )
     end
