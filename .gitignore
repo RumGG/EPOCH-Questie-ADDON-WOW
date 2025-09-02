@@ -57,3 +57,57 @@ SavedVariables/
 *.zip
 *.tar
 *.tar.gz
+
+# Development Tools - NEVER upload to GitHub
+Development Tools/
+Development_Tools/
+DevTools/
+
+# Submission Handling - Internal use only
+Submission Handling/
+Submission_Handling/
+Submissions/
+
+# Validation Tools - Internal use only
+Validation/
+validators/
+Validation_Scripts/
+
+# Database Backups - Keep local only
+Database/Epoch/Backups/
+Database/Epoch/*.backup*
+Database/Epoch/*.bak
+Database/Epoch/*_original.*
+Database/Epoch/*_FIXED.*
+Database/Epoch/*_backup*
+Database/Epoch/ITERATIVE_BACKUPS/
+Database/Epoch/*_BEFORE_*
+Database/Epoch/*_COMPREHENSIVE_*
+Database/Epoch/*_SURGICAL_*
+Database/Epoch/*_CAREFUL_*
+Database/Epoch/*_FINAL_*
+Database/Epoch/*_FULLY_*
+Database/Epoch/FIX_SUMMARY.md
+
+# Python scripts - Development only
+*.py
+*.pyc
+__pycache__/
+
+# Test and analysis files
+*_test.*
+*_analysis.*
+*_report.*
+*_summary.*
+
+# Conversion workspace
+pfquest_conversion*/
+conversion_workspace/
+
+# Any fixes or patches in progress
+Modules/*_FIXES.*
+Modules/*_FIX.*
+Modules/*_PATCH.*
+
+# Git maintenance
+.git-rewrite/
