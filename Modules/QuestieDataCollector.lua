@@ -551,7 +551,20 @@ function QuestieDataCollector:OnEvent(event, ...)
     elseif event == "QUEST_LOG_UPDATE" then
         QuestieDataCollector:CheckQuestProgress()
         
-    elseif event == "GOSSIP_SHOW" or event == "QUEST_DETAIL" or event == "QUEST_GREETING" then
+    elseif event == "GOSSIP_SHOW" then
+        QuestieDataCollector:CaptureNPCInfo()
+        -- Check for innkeeper service
+        local numOptions = GetNumGossipOptions()
+        for i = 1, numOptions do
+            local text, gossipType = GetGossipOptions()
+            -- In WoW 3.3.5, gossipType "binder" indicates innkeeper
+            if gossipType == "binder" then
+                QuestieDataCollector:CaptureServiceNPC("innkeeper")
+                break
+            end
+        end
+        
+    elseif event == "QUEST_DETAIL" or event == "QUEST_GREETING" then
         QuestieDataCollector:CaptureNPCInfo()
         
     elseif event == "PLAYER_TARGET_CHANGED" then
@@ -633,7 +646,6 @@ function QuestieDataCollector:OnEvent(event, ...)
         -- Invalidate zone cache when zone changes
         _coordinateCache.zoneData = nil
         _coordinateCache.lastZoneUpdate = 0
-        DebugMessage("|cFF00FFFF[DATA]|r Zone changed, invalidating coordinate cache", 0, 1, 1)
     end
 end
 
@@ -653,7 +665,8 @@ function QuestieDataCollector:TrackQuestAccepted(questIndex, questId)
         return
     end
     
-    DebugMessage("|cFF00FF00[DATA]|r Tracking quest accepted: " .. questName .. " (ID: " .. questId .. ")", 0, 1, 0)
+    -- Always show this message for missing quests (bypass toggle)
+    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DATA]|r Epoch quest not in database accepted: " .. questName .. " (ID: " .. questId .. ")", 0, 1, 0)
     
     -- Initialize quest data if needed
     if not QuestieDataCollection.quests[questId] then
@@ -694,7 +707,7 @@ function QuestieDataCollector:TrackQuestAccepted(questIndex, questId)
         questData.isCommission = true
         -- Capture player's professions
         questData.playerProfessions = QuestieDataCollector:GetPlayerProfessions()
-        DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00[DATA]|r Commission quest detected! Tracking professions.", 1, 1, 0)
+        DebugMessage("|cFFFFFF00[DATA]|r Commission quest detected! Tracking professions.", 1, 1, 0)
     end
     
     -- Get quest level and objectives text
@@ -739,7 +752,7 @@ function QuestieDataCollector:TrackQuestAccepted(questIndex, questId)
             name = _lastQuestGiver.name,
             coords = _lastQuestGiver.coords
         }
-        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DATA]|r Quest Giver: " .. _lastQuestGiver.name .. " (ID: " .. _lastQuestGiver.id .. ")", 0, 1, 0)
+        DebugMessage("|cFF00FF00[DATA]|r Quest Giver: " .. _lastQuestGiver.name .. " (ID: " .. _lastQuestGiver.id .. ")", 0, 1, 0)
         
         -- Check for database mismatch
         local dbQuest = QuestieDB.GetQuest(questId)
@@ -773,15 +786,66 @@ function QuestieDataCollector:TrackQuestAccepted(questIndex, questId)
     
     for i = 1, numObjectives do
         local text, objectiveType, finished = GetQuestLogLeaderBoard(i, questIndex)
-        if text then
-            table.insert(questData.objectives, {
-                index = i,
-                text = text,
-                type = objectiveType,
-                finished = finished,
-                progress = {}
-            })
+        
+        -- Try to enhance incomplete objective text
+        if text and objectiveType == "monster" then
+            -- Check if the text is missing the mob name (e.g., just "slain: 0/10")
+            if string.find(text, "^%s*slain:") or string.find(text, "^%s*killed:") then
+                -- Try to extract mob name from objectives text
+                if questData.objectivesText then
+                    -- Common patterns in objectives text:
+                    -- "Kill 10 Panthers"
+                    -- "Slay 10 Stranglethorn Tigers"
+                    -- "Defeat 10 Lashtail Raptors"
+                    local patterns = {
+                        "[Kk]ill%s+%d+%s+(.+)",
+                        "[Ss]lay%s+%d+%s+(.+)",
+                        "[Dd]efeat%s+%d+%s+(.+)",
+                        "[Dd]estroy%s+%d+%s+(.+)",
+                        "(%S+)%s+slain:",
+                        "(%S+%s+%S+)%s+slain:",
+                        "(%S+%s+%S+%s+%S+)%s+slain:"
+                    }
+                    
+                    for _, pattern in ipairs(patterns) do
+                        local mobName = string.match(questData.objectivesText, pattern)
+                        if mobName then
+                            -- Clean up the mob name
+                            mobName = string.gsub(mobName, "%.$", "")  -- Remove trailing period
+                            mobName = string.gsub(mobName, "^%s+", "")  -- Remove leading spaces
+                            mobName = string.gsub(mobName, "%s+$", "")  -- Remove trailing spaces
+                            
+                            -- Check if it's a reasonable mob name
+                            if mobName and mobName ~= "" and not string.find(mobName, "^%d") then
+                                -- Reconstruct the objective text with the mob name
+                                local count = string.match(text, "(%d+/%d+)")
+                                if count then
+                                    text = mobName .. " slain: " .. count
+                                else
+                                    text = mobName .. " " .. text
+                                end
+                                DebugMessage("|cFF00FF00[DATA]|r Enhanced objective text: " .. text, 0, 1, 0)
+                                break
+                            end
+                        end
+                    end
+                end
+            end
+        end
+        
+        -- Always store the objective
+        table.insert(questData.objectives, {
+            index = i,
+            text = text or "",  -- Store empty string if nil
+            type = objectiveType,
+            finished = finished,
+            progress = {}
+        })
+        
+        if text and text ~= "" then
             DebugMessage("|cFF00FFFF[DATA]|r Objective " .. i .. ": " .. text, 0, 1, 1)
+        else
+            DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[DEBUG]|r Objective " .. i .. " has empty or nil text!", 1, 0, 0)
         end
     end
     
@@ -796,7 +860,7 @@ function QuestieDataCollector:TrackQuestAccepted(questIndex, questId)
     
     DebugMessage("|cFF00FF00[DATA]|r Now tracking quest: " .. questName .. " (ID: " .. questId .. ")", 0, 1, 0)
     
-    -- Always show this message to confirm tracking
+    -- Always show this message for missing quests (bypass toggle)
     DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DATA]|r Quest tracked: " .. questName .. " (ID: " .. questId .. ")", 0, 1, 0)
 end
 
@@ -1030,8 +1094,19 @@ function QuestieDataCollector:CaptureNPCInfo()
         -- As a fallback, if we're in a quest dialog, try to get the NPC another way
         local npcName = GetUnitName("questnpc") or GetUnitName("npc")
         if npcName then
-            DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00[DATA]|r Captured NPC by name: " .. npcName, 1, 1, 0)
+            DebugMessage("|cFFFFFF00[DATA]|r Captured NPC by name: " .. npcName, 1, 1, 0)
         end
+        return
+    end
+    
+    -- Check if this is actually an NPC GUID (not an object)
+    -- In WoW 3.3.5, GUID format is 0xF1TNNNNNNSSSSSS where T is the type (positions 5-6)
+    -- 0x30 = Creature (NPC), 0x10 = Pet, 0x40 = Vehicle
+    -- 0x50 = GameObject, 0x60 = Item, 0x70 = DynamicObject
+    local guidType = tonumber(guid:sub(5, 6), 16)
+    if not guidType or (guidType ~= 0x30 and guidType ~= 0x10 and guidType ~= 0x40) then
+        -- This is likely an object, not an NPC
+        DebugMessage("|cFFFFFF00[DATA]|r Skipping non-NPC entity (GUID type: 0x" .. string.format("%02X", guidType or 0) .. ")", 1, 1, 0)
         return
     end
     
@@ -1066,7 +1141,7 @@ function QuestieDataCollector:CaptureNPCInfo()
         coords = coords
     }
     
-    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DATA]|r Captured NPC: " .. npcName .. " (ID: " .. npcId .. ")", 0, 1, 0)
+    DebugMessage("|cFF00FF00[DATA]|r Captured NPC: " .. npcName .. " (ID: " .. npcId .. ")", 0, 1, 0)
     
     -- Check for database mismatch
     local dbNpc = QuestieDB:GetNPC(npcId)
@@ -1218,7 +1293,7 @@ function QuestieDataCollector:DetectPrerequisites(questId)
         
         if not wasAvailableBefore then
             table.insert(newQuests, afterQuest)
-            DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00[DATA]|r NEW quest available after turn-in: " .. afterQuest.title .. " (requires quest " .. questId .. ")", 1, 1, 0)
+            DebugMessage("|cFFFFFF00[DATA]|r NEW quest available after turn-in: " .. afterQuest.title .. " (requires quest " .. questId .. ")", 1, 1, 0)
             
             -- Store this prerequisite relationship in the quest data
             if questId and QuestieDataCollection.quests[questId] then
@@ -1614,7 +1689,50 @@ function QuestieDataCollector:CaptureServiceNPC(serviceType)
     -- Get coordinates
     local coords = QuestieDataCollector:GetPlayerCoordinates()
     
-    -- Initialize service NPC data if needed
+    -- Handle flight masters separately
+    if serviceType == "flight_master" then
+        -- Initialize flight master data if needed
+        if not QuestieDataCollection.flightMasters[npcId] then
+            QuestieDataCollection.flightMasters[npcId] = {
+                id = npcId,
+                name = npcName,
+                locations = {}
+            }
+        end
+        
+        local npcData = QuestieDataCollection.flightMasters[npcId]
+        
+        -- Update name if different
+        if npcData.name ~= npcName then
+            npcData.name = npcName
+        end
+        
+        -- Add location if we have coords and it's new
+        if coords then
+            local isNewLocation = true
+            for _, loc in ipairs(npcData.locations) do
+                if loc.zone == coords.zone and loc.areaId == coords.areaId then
+                    -- Check if coords are significantly different (more than 10 units)
+                    if loc.x and loc.y then
+                        local distance = math.sqrt((coords.x - loc.x)^2 + (coords.y - loc.y)^2)
+                        if distance < 10 then
+                            isNewLocation = false
+                            break
+                        end
+                    end
+                end
+            end
+            
+            if isNewLocation then
+                table.insert(npcData.locations, coords)
+            end
+        end
+        
+        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DATA]|r Captured flight master: " .. npcName .. " (ID: " .. npcId .. ")", 0, 1, 0)
+        return
+    end
+    
+    -- Initialize service NPC data if needed (for non-flight masters)
     if not QuestieDataCollection.serviceNPCs[npcId] then
         QuestieDataCollection.serviceNPCs[npcId] = {
             id = npcId,
@@ -1631,16 +1749,42 @@ function QuestieDataCollector:CaptureServiceNPC(serviceType)
         npcData.name = npcName
     end
     
+    -- Service priority: innkeeper > banker > flight_master > trainer > repair > vendor
+    local servicePriority = {
+        innkeeper = 1,
+        banker = 2,
+        guild_banker = 2,
+        flight_master = 3,
+        trainer = 4,
+        repair = 5,
+        vendor = 6
+    }
+    
     -- Add service type if not already tracked
     local hasService = false
+    local hasHigherPriority = false
     for _, service in ipairs(npcData.services) do
         if service == serviceType then
             hasService = true
             break
         end
+        -- Check if we already have a higher priority service
+        -- Don't add vendor if we already know it's an innkeeper
+        if service == "innkeeper" and serviceType == "vendor" then
+            hasHigherPriority = true
+            break
+        end
     end
-    if not hasService then
+    
+    if not hasService and not hasHigherPriority then
         table.insert(npcData.services, serviceType)
+        
+        -- Sort services by priority
+        table.sort(npcData.services, function(a, b)
+            local priorityA = servicePriority[a] or 99
+            local priorityB = servicePriority[b] or 99
+            return priorityA < priorityB
+        end)
     end
     
     -- Check for additional services based on type
@@ -1939,7 +2083,7 @@ function QuestieDataCollector:ValidateQuest(questId)
         DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000Errors:|r", 1, 0.5, 0.5)
         for i, error in ipairs(results.errors) do
             if i <= 5 then  -- Show first 5 errors
-                DEFAULT_CHAT_FRAME:AddMessage("  • " .. error, 1, 0.8, 0.8)
+                DEFAULT_CHAT_FRAME:AddMessage("  * " .. error, 1, 0.8, 0.8)
             end
         end
         if #results.errors > 5 then
@@ -1951,7 +2095,7 @@ function QuestieDataCollector:ValidateQuest(questId)
         DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00Warnings:|r", 1, 1, 0.5)
         for i, warning in ipairs(results.warnings) do
             if i <= 5 then  -- Show first 5 warnings
-                DEFAULT_CHAT_FRAME:AddMessage("  • " .. warning, 1, 1, 0.8)
+                DEFAULT_CHAT_FRAME:AddMessage("  * " .. warning, 1, 1, 0.8)
             end
         end
         if #results.warnings > 5 then
@@ -2015,7 +2159,7 @@ function QuestieDataCollector:ValidateAllQuests()
         DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000Invalid Quests:|r", 1, 0.5, 0.5)
         for i, quest in ipairs(invalidQuests) do
             if i <= 5 then
-                DEFAULT_CHAT_FRAME:AddMessage(string.format("  • %s (ID: %d) - %d errors", quest.name or "Unknown", quest.id, quest.errors), 1, 0.8, 0.8)
+                DEFAULT_CHAT_FRAME:AddMessage(string.format("  * %s (ID: %d) - %d errors", quest.name or "Unknown", quest.id, quest.errors), 1, 0.8, 0.8)
                 -- Show first error for each invalid quest
                 if quest.firstError then
                     DEFAULT_CHAT_FRAME:AddMessage("    → " .. quest.firstError, 1, 0.7, 0.7)
@@ -2032,7 +2176,7 @@ function QuestieDataCollector:ValidateAllQuests()
         DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00Incomplete Quests:|r", 1, 1, 0.5)
         for i, quest in ipairs(incompleteQuests) do
             if i <= 5 then
-                DEFAULT_CHAT_FRAME:AddMessage(string.format("  • %s (ID: %d) - %d warnings", quest.name or "Unknown", quest.id, quest.warnings), 1, 1, 0.8)
+                DEFAULT_CHAT_FRAME:AddMessage(string.format("  * %s (ID: %d) - %d warnings", quest.name or "Unknown", quest.id, quest.warnings), 1, 1, 0.8)
             end
         end
         if #incompleteQuests > 5 then
@@ -2236,12 +2380,11 @@ function QuestieDataCollector:ShowExportWindow(questId)
         purgeButton:SetHeight(25)
         purgeButton:SetText("|cFF00FF00Step 3:|r Close & Purge Data")
         purgeButton:SetScript("OnClick", function()
-            -- Clear quest data
-            QuestieDataCollection.quests = {}
-            _activeTracking = {}
+            -- Use the same ClearData function as /qdc clear
+            QuestieDataCollector:ClearData()
             
-            DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[QUESTIE]|r Thank you for contributing! All collected quest data has been purged.", 0, 1, 0)
-            DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00Your local quest data storage has been cleared to free up memory.|r", 1, 1, 0)
+            DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[QUESTIE]|r Thank you for contributing! All collected data has been purged.", 0, 1, 0)
+            DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00Use /reload to ensure all memory is freed.|r", 1, 1, 0)
             f:Hide()
         end)
         
@@ -2269,14 +2412,14 @@ function QuestieDataCollector:ShowExportWindow(questId)
         -- Clearly explain the capture mode
         if _captureAllData then
             exportText = exportText .. "Collection Mode: DEV MODE - Capturing ALL data\n"
-            exportText = exportText .. "  • ALL quests tracked (even if in database)\n"
-            exportText = exportText .. "  • ALL service NPCs captured\n"
-            exportText = exportText .. "  • ALL interactions logged\n"
+            exportText = exportText .. "  * ALL quests tracked (even if in database)\n"
+            exportText = exportText .. "  * ALL service NPCs captured\n"
+            exportText = exportText .. "  * ALL interactions logged\n"
         else
             exportText = exportText .. "Collection Mode: NORMAL - Missing quests only\n"
-            exportText = exportText .. "  • Only missing quests tracked\n"
-            exportText = exportText .. "  • Service NPCs always captured\n"
-            exportText = exportText .. "  • Mailboxes & flight masters always logged\n"
+            exportText = exportText .. "  * Only missing quests tracked\n"
+            exportText = exportText .. "  * Service NPCs always captured\n"
+            exportText = exportText .. "  * Mailboxes & flight masters always logged\n"
         end
         
         -- Count all data types
@@ -2315,33 +2458,30 @@ function QuestieDataCollector:ShowExportWindow(questId)
         exportText = exportText .. "Flight Masters: " .. flightMasterCount .. "\n"
         exportText = exportText .. "=====================================\n\n"
         
-        -- Export Service NPCs first (if any)
-        if serviceNPCCount > 0 then
-            exportText = exportText .. "────────────────────────────────────\n"
-            exportText = exportText .. "SERVICE NPCs ENCOUNTERED:\n"
-            exportText = exportText .. "────────────────────────────────────\n\n"
+        -- Export Quests FIRST (if any)
+        if questCount > 0 then
+            exportText = exportText .. "========================================================================\n"
+            exportText = exportText .. "                              QUEST DATA\n"
+            exportText = exportText .. "========================================================================\n\n"
             
-            for npcId, npcData in pairs(QuestieDataCollection.serviceNPCs) do
-                exportText = exportText .. "NPC: " .. (npcData.name or "Unknown") .. " (ID: " .. npcId .. ")\n"
-                exportText = exportText .. "Services: " .. table.concat(npcData.services, ", ") .. "\n"
-                
-                if npcData.locations and #npcData.locations > 0 then
-                    exportText = exportText .. "Locations:\n"
-                    for _, loc in ipairs(npcData.locations) do
-                        if loc.x and loc.y then
-                            exportText = exportText .. "  • " .. (loc.zone or "Unknown Zone") .. " at " .. string.format("%.1f, %.1f", loc.x, loc.y) .. "\n"
-                        end
-                    end
+            local questIndex = 0
+            for qId, qData in pairs(QuestieDataCollection.quests) do
+                questIndex = questIndex + 1
+                exportText = exportText .. self:FormatQuestExport(qId, qData)
+                -- Add separator between quests (but not after the last one)
+                if questIndex < questCount then
+                    exportText = exportText .. "\n========================================================================\n\n"
+                else
+                    exportText = exportText .. "\n"
                 end
-                exportText = exportText .. "\n"
             end
         end
         
         -- Export Mailboxes (if any)
         if mailboxCount > 0 then
-            exportText = exportText .. "────────────────────────────────────\n"
-            exportText = exportText .. "MAILBOX LOCATIONS:\n"
-            exportText = exportText .. "────────────────────────────────────\n\n"
+            exportText = exportText .. "\n========================================================================\n"
+            exportText = exportText .. "                          MAILBOX LOCATIONS\n"
+            exportText = exportText .. "========================================================================\n\n"
             
             for locKey, locData in pairs(QuestieDataCollection.mailboxes) do
                 exportText = exportText .. "Location: " .. (locData.zone or "Unknown Zone") .. "\n"
@@ -2351,25 +2491,42 @@ function QuestieDataCollector:ShowExportWindow(questId)
         
         -- Export Flight Masters (if any)
         if flightMasterCount > 0 then
-            exportText = exportText .. "────────────────────────────────────\n"
-            exportText = exportText .. "FLIGHT MASTERS:\n"
-            exportText = exportText .. "────────────────────────────────────\n\n"
+            exportText = exportText .. "\n========================================================================\n"
+            exportText = exportText .. "                           FLIGHT MASTERS\n"
+            exportText = exportText .. "========================================================================\n\n"
             
             for npcId, fmData in pairs(QuestieDataCollection.flightMasters) do
                 exportText = exportText .. "Flight Master: " .. (fmData.name or "Unknown") .. " (ID: " .. npcId .. ")\n"
-                exportText = exportText .. "Location: " .. (fmData.zone or "Unknown Zone") .. "\n"
-                exportText = exportText .. "Coords: " .. string.format("%.1f, %.1f", fmData.x or 0, fmData.y or 0) .. "\n\n"
+                if fmData.locations and #fmData.locations > 0 then
+                    for _, loc in ipairs(fmData.locations) do
+                        if loc.x and loc.y then
+                            exportText = exportText .. "Location: " .. (loc.zone or "Unknown Zone") .. " at " .. string.format("%.1f, %.1f", loc.x, loc.y) .. "\n"
+                        end
+                    end
+                end
+                exportText = exportText .. "\n"
             end
         end
         
-        -- Export Quests (if any)
-        if questCount > 0 then
-            exportText = exportText .. "────────────────────────────────────\n"
-            exportText = exportText .. "QUEST DATA:\n"
-            exportText = exportText .. "────────────────────────────────────\n\n"
+        -- Export Service NPCs LAST (if any)
+        if serviceNPCCount > 0 then
+            exportText = exportText .. "\n========================================================================\n"
+            exportText = exportText .. "                       SERVICE NPCs ENCOUNTERED\n"
+            exportText = exportText .. "========================================================================\n\n"
             
-            for qId, qData in pairs(QuestieDataCollection.quests) do
-                exportText = exportText .. self:FormatQuestExport(qId, qData) .. "\n"
+            for npcId, npcData in pairs(QuestieDataCollection.serviceNPCs) do
+                exportText = exportText .. "NPC: " .. (npcData.name or "Unknown") .. " (ID: " .. npcId .. ")\n"
+                exportText = exportText .. "Services: " .. table.concat(npcData.services, ", ") .. "\n"
+                
+                if npcData.locations and #npcData.locations > 0 then
+                    exportText = exportText .. "Locations:\n"
+                    for _, loc in ipairs(npcData.locations) do
+                        if loc.x and loc.y then
+                            exportText = exportText .. "  * " .. (loc.zone or "Unknown Zone") .. " at " .. string.format("%.1f, %.1f", loc.x, loc.y) .. "\n"
+                        end
+                    end
+                end
+                exportText = exportText .. "\n"
             end
         end
         
@@ -2377,10 +2534,10 @@ function QuestieDataCollector:ShowExportWindow(questId)
         if questCount == 0 and serviceNPCCount == 0 and mailboxCount == 0 and flightMasterCount == 0 then
             exportText = exportText .. "No data collected yet.\n\n"
             exportText = exportText .. "In DEV MODE, ALL interactions are tracked:\n"
-            exportText = exportText .. "• Accept any quest\n"
-            exportText = exportText .. "• Talk to any NPC with services (flight master, vendor, etc.)\n"
-            exportText = exportText .. "• Click on mailboxes\n"
-            exportText = exportText .. "• Complete quest objectives\n"
+            exportText = exportText .. "* Accept any quest\n"
+            exportText = exportText .. "* Talk to any NPC with services (flight master, vendor, etc.)\n"
+            exportText = exportText .. "* Click on mailboxes\n"
+            exportText = exportText .. "* Complete quest objectives\n"
         end
     end
     
@@ -2394,23 +2551,22 @@ function QuestieDataCollector:ShowExportWindow(questId)
 end
 -- Format a single quest for export
 function QuestieDataCollector:FormatQuestExport(questId, questData)
-    local export = "────────────────────────────────────\n"
-    export = export .. "Quest ID: " .. questId .. "\n"
+    local export = "Quest ID: " .. questId .. "\n"
     export = export .. "Quest Name: " .. (questData.name or "Unknown") .. "\n"
     export = export .. "Level: " .. (questData.level or "Unknown") .. "\n"
     
     -- Show quest status
     if questData.turnedIn then
-        export = export .. "Status: ✅ COMPLETED\n"
+        export = export .. "Status: COMPLETED\n"
     elseif _activeTracking[questId] then
-        export = export .. "Status: 🔄 IN PROGRESS\n"
+        export = export .. "Status: IN PROGRESS\n"
     else
-        export = export .. "Status: ⚠️ PARTIAL DATA\n"
+        export = export .. "Status: PARTIAL DATA\n"
     end
     export = export .. "\n"
     
     if questData.wasAlreadyAccepted then
-        export = export .. "⚠️ WARNING: INCOMPLETE DATA ⚠️\n"
+        export = export .. ">>> WARNING: INCOMPLETE DATA <<<\n"
         export = export .. "Quest was already in log when collection started.\n\n"
     end
     
@@ -2440,8 +2596,13 @@ function QuestieDataCollector:FormatQuestExport(questId, questData)
     if questData.objectives and #questData.objectives > 0 then
         export = export .. "OBJECTIVES:\n"
         for i, obj in ipairs(questData.objectives) do
-            local status = obj.finished and "✓" or "✗"
-            export = export .. "  " .. status .. " " .. i .. ". " .. (obj.text or "Unknown") .. "\n"
+            local status = obj.finished and "[x]" or "[ ]"
+            -- Debug: Show what we actually have
+            if not obj.text or obj.text == "" then
+                export = export .. "  " .. status .. " " .. i .. ". [NO TEXT CAPTURED - type: " .. (obj.type or "nil") .. "]\n"
+            else
+                export = export .. "  " .. status .. " " .. i .. ". " .. obj.text .. "\n"
+            end
             -- Show last known progress if available
             if obj.progress and #obj.progress > 0 then
                 local lastProgress = obj.progress[#obj.progress]
@@ -2449,11 +2610,13 @@ function QuestieDataCollector:FormatQuestExport(questId, questData)
             end
         end
         export = export .. "\n"
+    else
+        export = export .. "OBJECTIVES: [NONE CAPTURED]\n\n"
     end
     
     -- Turn-in NPC
     if questData.turnInNpc then
-        export = export .. "▶ TURN-IN NPC:\n"
+        export = export .. "TURN-IN NPC:\n"
         export = export .. "  NPC: " .. (questData.turnInNpc.name or "Unknown") .. " (ID: " .. (questData.turnInNpc.id or 0) .. ")\n"
         if questData.turnInNpc.coords then
             export = export .. "  Location: " .. (questData.turnInNpc.coords.zone or "Unknown") .. "\n"
@@ -2464,13 +2627,13 @@ function QuestieDataCollector:FormatQuestExport(questId, questData)
     
     -- XP reward
     if questData.xpReward then
-        export = export .. "▶ REWARDS:\n"
+        export = export .. "REWARDS:\n"
         export = export .. "  Experience: " .. questData.xpReward .. " XP\n\n"
     end
     
     -- Related mobs
     if questData.mobs and next(questData.mobs) then
-        export = export .. "▶ RELATED MOBS:\n"
+        export = export .. "RELATED MOBS:\n"
         for mobId, mobData in pairs(questData.mobs) do
             export = export .. "  " .. (mobData.name or "Unknown") .. " (ID: " .. mobId .. ", Level: " .. (mobData.level or "?") .. ")\n"
             if mobData.locations and #mobData.locations > 0 then
@@ -2493,7 +2656,7 @@ function QuestieDataCollector:FormatQuestExport(questId, questData)
                     end
                     export = export .. "\n"
                 else
-                    export = export .. "    ⚠️ Invalid coordinate data detected\n"
+                    export = export .. "    WARNING: Invalid coordinate data detected\n"
                 end
             end
         end
@@ -2502,7 +2665,7 @@ function QuestieDataCollector:FormatQuestExport(questId, questData)
     
     -- Quest items
     if questData.items and next(questData.items) then
-        export = export .. "▶ QUEST ITEMS:\n"
+        export = export .. "> QUEST ITEMS:\n"
         for itemId, itemData in pairs(questData.items) do
             export = export .. "  " .. (itemData.name or "Unknown") .. " (ID: " .. itemId .. ")\n"
             if itemData.sources and #itemData.sources > 0 then
@@ -2565,7 +2728,7 @@ function QuestieDataCollector:FormatQuestExport(questId, questData)
         export = export .. "UNLOCKS QUESTS:\n"
         export = export .. "  Completing this quest unlocked:\n"
         for _, questName in ipairs(questData.unlocksQuests) do
-            export = export .. "    • " .. questName .. "\n"
+            export = export .. "    * " .. questName .. "\n"
         end
         export = export .. "\n"
     end
@@ -2577,7 +2740,7 @@ function QuestieDataCollector:FormatQuestExport(questId, questData)
         if questData.playerProfessions and #questData.playerProfessions > 0 then
             export = export .. "  Player professions at time of acceptance:\n"
             for _, prof in ipairs(questData.playerProfessions) do
-                export = export .. "    • " .. prof.name .. " (" .. prof.skillLevel .. "/" .. prof.maxSkillLevel .. ")\n"
+                export = export .. "    * " .. prof.name .. " (" .. prof.skillLevel .. "/" .. prof.maxSkillLevel .. ")\n"
             end
         end
         export = export .. "\n"
@@ -2613,14 +2776,14 @@ function QuestieDataCollector:ExportQuest(questId)
     export = export .. "────────────────────────────────────────────────────────────────\n\n"
     
     if questData.wasAlreadyAccepted then
-        export = export .. "⚠️ WARNING: INCOMPLETE DATA ⚠️\n"
+        export = export .. "WARNING: WARNING: INCOMPLETE DATA WARNING:\n"
         export = export .. "This quest was already in your log when data collection started.\n"
         export = export .. "Quest giver information may be missing.\n\n"
     end
     
     -- Add quest giver info
     if questData.questGiver then
-        export = export .. "▶ QUEST GIVER:\n"
+        export = export .. "> QUEST GIVER:\n"
         export = export .. "  NPC: " .. (questData.questGiver.name or "Unknown") .. " (ID: " .. (questData.questGiver.id or 0) .. ")\n"
         if questData.questGiver.coords then
             export = export .. "  Location: " .. (questData.questGiver.coords.zone or "Unknown") .. "\n"
@@ -2631,7 +2794,7 @@ function QuestieDataCollector:ExportQuest(questId)
     
     -- Add objectives
     if questData.objectives and #questData.objectives > 0 then
-        export = export .. "▶ OBJECTIVES:\n"
+        export = export .. "> OBJECTIVES:\n"
         for i, obj in ipairs(questData.objectives) do
             export = export .. "  " .. i .. ". " .. (obj.text or "Unknown") .. "\n"
         end
@@ -2640,7 +2803,7 @@ function QuestieDataCollector:ExportQuest(questId)
     
     -- Add turn-in info
     if questData.turnInNpc then
-        export = export .. "▶ TURN-IN NPC:\n"
+        export = export .. "> TURN-IN NPC:\n"
         export = export .. "  NPC: " .. (questData.turnInNpc.name or "Unknown") .. " (ID: " .. (questData.turnInNpc.id or 0) .. ")\n"
         if questData.turnInNpc.coords then
             export = export .. "  Location: " .. (questData.turnInNpc.coords.zone or "Unknown") .. "\n"
@@ -2651,13 +2814,13 @@ function QuestieDataCollector:ExportQuest(questId)
     
     -- Add XP reward info
     if questData.xpReward then
-        export = export .. "▶ REWARDS:\n"
+        export = export .. "> REWARDS:\n"
         export = export .. "  Experience: " .. questData.xpReward .. " XP\n\n"
     end
     
     -- Add mobs
     if questData.mobs and next(questData.mobs) then
-        export = export .. "▶ RELATED MOBS:\n"
+        export = export .. "> RELATED MOBS:\n"
         for mobId, mobData in pairs(questData.mobs) do
             export = export .. "  " .. (mobData.name or "Unknown") .. " (ID: " .. mobId .. ", Level: " .. (mobData.level or "?") .. ")\n"
         end
@@ -2666,7 +2829,7 @@ function QuestieDataCollector:ExportQuest(questId)
     
     -- Add items
     if questData.items and next(questData.items) then
-        export = export .. "▶ QUEST ITEMS:\n"
+        export = export .. "> QUEST ITEMS:\n"
         for itemId, itemData in pairs(questData.items) do
             export = export .. "  " .. (itemData.name or "Unknown") .. " (ID: " .. itemId .. ")\n"
             if itemData.sources and #itemData.sources > 0 then
@@ -2711,7 +2874,7 @@ function QuestieDataCollector:ExportQuest(questId)
     end
     
     if next(zoneServiceNPCs) then
-        export = export .. "▶ SERVICE NPCs IN QUEST AREA:\n"
+        export = export .. "> SERVICE NPCs IN QUEST AREA:\n"
         for npcId, npcData in pairs(zoneServiceNPCs) do
             export = export .. "  " .. (npcData.name or "Unknown") .. " (ID: " .. npcId .. ")\n"
             export = export .. "    Services: " .. table.concat(npcData.services, ", ") .. "\n"
@@ -2736,7 +2899,7 @@ function QuestieDataCollector:ExportQuest(questId)
     end
     
     if next(allServiceNPCs) then
-        export = export .. "▶ OTHER SERVICE NPCs ENCOUNTERED:\n"
+        export = export .. "> OTHER SERVICE NPCs ENCOUNTERED:\n"
         for npcId, npcData in pairs(allServiceNPCs) do
             export = export .. "  " .. (npcData.name or "Unknown") .. " (ID: " .. npcId .. ")\n"
             export = export .. "    Services: " .. table.concat(npcData.services, ", ") .. "\n"
@@ -2756,7 +2919,7 @@ function QuestieDataCollector:ExportQuest(questId)
     for key, mismatch in pairs(_dataMismatches) do
         if mismatch.entityType == "quest" and mismatch.entityId == questId then
             if not hasMismatches then
-                export = export .. "▶ DATABASE MISMATCHES DETECTED:\n"
+                export = export .. "> DATABASE MISMATCHES DETECTED:\n"
                 hasMismatches = true
             end
             export = export .. "  Field: " .. mismatch.fieldName .. "\n"
@@ -2770,7 +2933,7 @@ function QuestieDataCollector:ExportQuest(questId)
         local npcKey = "npc_" .. questData.questGiver.id .. "_coords"
         if _dataMismatches[npcKey] then
             if not hasMismatches then
-                export = export .. "▶ DATABASE MISMATCHES DETECTED:\n"
+                export = export .. "> DATABASE MISMATCHES DETECTED:\n"
                 hasMismatches = true
             end
             export = export .. "  Quest Giver NPC " .. questData.questGiver.id .. " coordinates:\n"
@@ -2788,7 +2951,7 @@ function QuestieDataCollector:ExportQuest(questId)
         local npcKey = "npc_" .. questData.turnInNpc.id .. "_coords"
         if _dataMismatches[npcKey] then
             if not hasMismatches then
-                export = export .. "▶ DATABASE MISMATCHES DETECTED:\n"
+                export = export .. "> DATABASE MISMATCHES DETECTED:\n"
                 hasMismatches = true
             end
             export = export .. "  Turn-in NPC " .. questData.turnInNpc.id .. " coordinates:\n"
@@ -2979,7 +3142,7 @@ function QuestieDataCollector:ManualTurnIn(questId)
                 name = npcName,
                 coords = coords
             }
-            DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Data Collector]|r Turn-in NPC captured: " .. npcName .. " (ID: " .. npcId .. ")", 0, 1, 0)
+            DebugMessage("|cFF00FF00[Data Collector]|r Turn-in NPC captured: " .. npcName .. " (ID: " .. npcId .. ")", 0, 1, 0)
         end
     end
     
@@ -2991,14 +3154,14 @@ function QuestieDataCollector:ManualTurnIn(questId)
     -- If we have pending XP, assign it
     if _pendingXPReward and _pendingXPReward > 0 then
         questData.xpReward = _pendingXPReward
-        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Data Collector]|r XP reward captured: " .. _pendingXPReward, 0, 1, 0)
+        DebugMessage("|cFF00FF00[Data Collector]|r XP reward captured: " .. _pendingXPReward, 0, 1, 0)
         _pendingXPReward = nil
     end
     
     -- Remove from active tracking
     _activeTracking[questId] = nil
     
-    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Data Collector]|r Quest marked as turned in: " .. (questData.name or "Unknown"), 0, 1, 0)
+    DebugMessage("|cFF00FF00[Data Collector]|r Quest marked as turned in: " .. (questData.name or "Unknown"), 0, 1, 0)
 end
 
 function QuestieDataCollector:CaptureQuestGiver(questId)
@@ -3025,7 +3188,7 @@ function QuestieDataCollector:CaptureQuestGiver(questId)
             name = npcName,
             coords = coords
         }
-        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Data Collector]|r Quest giver captured: " .. npcName .. " (ID: " .. npcId .. ")", 0, 1, 0)
+        DebugMessage("|cFF00FF00[Data Collector]|r Quest giver captured: " .. npcName .. " (ID: " .. npcId .. ")", 0, 1, 0)
     else
         DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[Data Collector]|r Could not extract NPC ID from target", 1, 0, 0)
     end
@@ -3122,7 +3285,7 @@ function QuestieDataCollector:RescanQuestLog()
                 
                 if updated then
                     updatedCount = updatedCount + 1
-                    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DATA]|r Updated: " .. title .. " (ID: " .. questId .. ")", 0, 1, 0)
+                    DebugMessage("|cFF00FF00[DATA]|r Updated: " .. title .. " (ID: " .. questId .. ")", 0, 1, 0)
                 end
             end
         end
@@ -3301,7 +3464,7 @@ function QuestieDataCollector:ExportServiceNPCs()
     export = export .. "────────────────────────────────────────────────────────────────\n\n"
     
     -- Show counts by type
-    export = export .. "▶ SERVICE TYPES:\n"
+    export = export .. "> SERVICE TYPES:\n"
     for service, count in pairs(serviceTypes) do
         export = export .. "  " .. service .. ": " .. count .. "\n"
     end
@@ -3332,7 +3495,7 @@ function QuestieDataCollector:ExportServiceNPCs()
     -- Export each group
     for service, npcs in pairs(serviceGroups) do
         if #npcs > 0 then
-            export = export .. "▶ " .. string.upper(string.gsub(service, "_", " ")) .. "S:\n"
+            export = export .. "> " .. string.upper(string.gsub(service, "_", " ")) .. "S:\n"
             
             -- Sort by NPC ID
             table.sort(npcs, function(a, b) return a.id < b.id end)

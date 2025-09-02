@@ -3,6 +3,42 @@
 ## [Unreleased]
 
 ### Fixed
+- **Map pin tooltips not showing without ElvUI**
+  - Fixed missing QuestieCompat.SetupTooltip call for 3.3.5 clients
+  - Restored proper tooltip selection logic from reference version
+  - SetupTooltip correctly chooses between GameTooltip and WorldMapTooltip based on context
+  - Tooltips now work correctly without requiring ElvUI or other addons
+- **Data Collection: [DATA] messages now respect toggle setting**
+  - Fixed [DATA] messages showing in chat despite toggle being disabled
+  - Converted 11 direct chat messages to use DebugMessage function
+  - Important "Epoch quest not in database accepted" messages always show
+  - Users can now disable data collection spam while keeping critical notifications
+- **Data Collection: Objects incorrectly captured as NPCs**
+  - Fixed GUID type detection to properly distinguish NPCs from objects
+  - Objects like "Pirate's Treasure" no longer show as "Captured NPC"
+  - Corrected GUID byte extraction (positions 5-6 instead of 3-4)
+  - Proper identification of GameObject (0x50), Item (0x60), DynamicObject (0x70)
+- **CRITICAL: Gnome starting quest bug** - Quest 28725 "Shift into G.E.A.R." now shows mob markers on map
+  - Fixed questFlags from 8 to 2 (questFlags=8 prevents map markers from displaying)
+  - Added missing quest 28725 (actual gnome quest ID, not 28901 as previously listed)
+  - Fixed NPC 46836 (Tinker Captain Whistlescrew) to start/end quest 28725
+  - Fixed questFlags for all gnome starting quests (28725, 28901-28903, 28726-28731)
+- **Database cleanup and performance** - Removed 43 duplicate quest entries
+  - Automated duplicate detection and removal system
+  - Cleaner database structure improves loading performance
+- **Container name capture for data collection** (Issue #32)
+  - Fixed "Unidentified Container" errors when looting ground objects
+  - Proper capture of container names like "Sun-Ripened Banana"
+  - Removed 5-second timestamp restriction causing data loss
+  - Don't overwrite good container data with placeholder names
+- **Tracker crashes fixed** - Nil SavedVariables initialization
+  - Fixed AutoUntrackedQuests and TrackedQuests nil errors on first run
+  - Added runtime initialization for missing SavedVariables fields
+  - Defensive nil checks prevent tracker crashes
+- **Project Epoch server compatibility**
+  - Disabled WotLK database contamination (Project Epoch is Vanilla server using 3.3.5 client)
+  - Commented out wotlk*.lua database files in TOC
+  - Proper quest count now shows ~4,824 instead of incorrect 7,899
 - **Data collection improvements**
   - Fixed turn-in NPC capture by immediately capturing during QUEST_COMPLETE event (matching v1.0.68 working logic)
   - Improved quest ID detection in QUEST_TURNED_IN event for better XP reward capture
@@ -12,31 +48,71 @@
   - Fixed objectives showing initial state (0/10) instead of current progress
   - Fixed GetQuestLogQuestText to capture both description and objectives text
   - Implemented ground object/container tracking matching v1.0.68 functionality
+- **Flight masters incorrectly categorized as service NPCs**
+  - Fixed flight masters being stored in serviceNPCs table instead of flightMasters
+  - Flight master count now correctly displays in export summary
+  - Proper separation of flight masters from other service NPCs in export
+  - Fixed export format to correctly display flight master locations
+- **Close and Purge Data button not working in export window**
+  - Fixed button to properly clear all collected data using ClearData function
+  - Now mirrors `/qdc clear` functionality exactly
+  - Clears all data types: quests, service NPCs, mailboxes, flight masters, etc.
+  - Added reminder to use /reload to free memory after purging
+- **Export data unicode characters causing copy/paste issues**
+  - Replaced all unicode symbols with ASCII equivalents for better compatibility
+  - Changed ✓/✗ to [x]/[ ] for objectives
+  - Changed ▶ to > for section headers
+  - Changed ═══ to === for separators
+  - Changed • to * for bullet points
+  - Changed ⚠️ to WARNING: for alerts
+  - Export data now uses only standard ASCII characters
+- **Removed zone change coordinate cache debug message**
+  - Eliminated spammy "[DATA] Zone changed, invalidating coordinate cache" message
+  - Cache invalidation still works, just silently
+- **Fixed incomplete objective text for some quests**
+  - Added smart extraction of mob names from objectives text when API returns incomplete data
+  - Fixes quests like "Panther Mastery" showing just "slain: 0/10" instead of "Panther slain: 0/10"
+  - Parses common quest patterns like "Kill 10 Panthers" to extract mob names
+  - Works around WoW 3.3.5 API inconsistencies in objective text
+- **Innkeeper service priority over vendor**
+  - Fixed innkeepers being listed as vendors instead of innkeepers
+  - Added detection for innkeeper service through GOSSIP_SHOW event
+  - Implemented service priority system (innkeeper > banker > flight_master > trainer > repair > vendor)
+  - Vendor service no longer overrides innkeeper identification
+  - Services now sorted by importance in exports
 
-- **Database structure fixes**
-  - NPC 46934 had double-wrapped questEnds field causing compilation error
-  - Invalid zone 85 references in troll starting area NPCs (changed to zone 14 - Durotar)
-  - Added missing spawn locations for Amethyst Crabs (NPC 46953)
+### Changed
+- **Data collection export format restructured**
+  - Service NPCs now appear at the bottom of export for better organization
+  - Added clear ══════ separators between each quest for improved readability
+  - Flight masters now have their own dedicated section in exports
 
 ### Added
+- **QuestieDataValidator module** - New validation system for database integrity
+  - Validates quest and NPC database structure and field types
+  - `/qdc validate` command for on-demand validation
+  - Automatic validation during addon initialization
+  - Catches database corruption before runtime errors occur
+- **Enhanced data collection system** - 28 collection points for comprehensive quest data
+  - Flight master tracking for all major cities and zones
+  - Ground object/container tracking with improved name capture
+  - Duplicate quest detection and cleanup tools
+  - Smart merge system for integrating external quest databases
 - **Ground object/container tracking** - Captures all interacted objects/containers while questing (herbs, ores, quest objects, etc.)
   - Tracks multiple locations for same object
   - Groups objects by name with all discovered coordinates
   - Exports in GROUND OBJECTS/CONTAINERS section matching v1.0.68 format
 - `/qdc rescan` command to recapture missing quest objectives and current progress
-- `/qdc questgiver <questId>` command to manually capture quest giver NPC
-- `/qdc turnin <questId>` command to manually capture turn-in NPC and mark complete
 - Quest status display in exports (COMPLETED/IN PROGRESS/PARTIAL DATA)
 - Progress history tracking for objectives with timestamps and coordinates
 - Tooltip hook to capture object names on mouseover before interaction
 - Better fallback methods for determining quest ID during turn-in events
-- Database structure validators (npc_structure.py, quest_structure.py) to catch field type errors before runtime
 
 ## [1.1.0] - 2025-09-01
 
 ### Major Features
 - **Complete Data Collection System Overhaul**
-  - Version control: Only accepts data from v1.1.0 or later
+  - Version control: We will only accept data from v1.1.0 or later
   - Smart detection: Only tracks quests missing from database (skips known quests)
   - Mismatch detection: Identifies database inconsistencies for NPCs, objects, items, coordinates
   - Zone validation: Enhanced accuracy with comprehensive zone tracking
@@ -49,7 +125,6 @@
 
 ### Critical Fixes
 - **Major database structure overhaul**
-  - Fixed 619+ missing commas across quest and NPC databases
   - Corrected quest objective structure (nil objectives must be in spellObjective position)
   - Fixed quests 27040, 27041, 27462 compilation errors from incorrect objective structure
   - Removed incorrect database prefixes causing syntax errors
@@ -63,13 +138,7 @@
 - **Tooltip scaling inconsistency fixed**
   - Fixed tooltip size changing with map zoom level
   - Now always uses GameTooltip instead of WorldMapTooltip for consistent sizing
-  - Resolves ElvUI integration issues with scaled tooltips
-
-### Bug Fixes
-- **Quest 28723 "Thievin' Crabs" missing objectives**
-  - Quest had no kill objectives defined in database
-  - Added proper objectives: Kill 10 Amethyst Crabs (NPC 46835)
-  - Quest now shows map pins and tracks progress correctly
+  - Resolves map addon integration issues with scaled tooltips
 
 - **Quest progress not updating in tracker (Issue #467)**
   - Fixed tracker showing 0/10 when quest log shows actual progress (e.g., 3/10)

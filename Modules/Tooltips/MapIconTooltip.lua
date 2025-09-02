@@ -54,9 +54,9 @@ function MapIconTooltip:Show()
     end
     lastTooltipShowTimestamp = GetTime()
 
-    -- Always use GameTooltip for consistent sizing regardless of map state
-    -- WorldMapTooltip scales with the map, GameTooltip doesn't
-    local Tooltip = GameTooltip;
+    -- Use QuestieCompat.SetupTooltip for 3.3.5 clients (Project Epoch uses 3.3.5)
+    -- This properly handles tooltip selection between GameTooltip and WorldMapTooltip
+    local Tooltip = QuestieCompat.Is335 and QuestieCompat.SetupTooltip(self) or GameTooltip;
     Tooltip._owner = self;
     
     Tooltip:SetOwner(self, "ANCHOR_CURSOR"); --"ANCHOR_CURSOR" or (self, self)
