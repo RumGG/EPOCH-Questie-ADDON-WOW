@@ -2741,8 +2741,7 @@ function QuestieDataCollector:FormatQuestExport(questId, questData)
     -- Prerequisites tracking
     if questData.potentialPrerequisites and #questData.potentialPrerequisites > 0 then
         export = export .. "POTENTIAL PREREQUISITES:\n"
-        export = export .. "  " .. #questData.potentialPrerequisites .. " quests were completed before accepting this quest\n"
-        export = export .. "  (Full list available in raw data)\n\n"
+        export = export .. "  " .. #questData.potentialPrerequisites .. " quests were completed before accepting this quest\n\n"
     end
     
     if questData.unlocksQuests and #questData.unlocksQuests > 0 then
