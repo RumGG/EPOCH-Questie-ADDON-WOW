@@ -2747,6 +2747,9 @@ function QuestieDataCollector:FormatQuestExport(questId, questData)
         export = export .. "\n"
     end
     
+    -- Add database entries
+    export = export .. "\n" .. QuestieDataCollector:GenerateDatabaseEntries(questId, questData)
+    
     return export
 end
 
