@@ -524,7 +524,9 @@ function QuestieDataCollector:RegisterEvents()
     frame:RegisterEvent("ZONE_CHANGED_INDOORS")
     
     -- Combat and loot events for tracking mob kills and item sources
+    -- WoW 3.3.5a compatibility: Try both modern and legacy combat log events
     frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+    frame:RegisterEvent("COMBAT_LOG_EVENT")  -- Fallback for older clients
     frame:RegisterEvent("LOOT_OPENED")
     frame:RegisterEvent("CHAT_MSG_LOOT")
     frame:RegisterEvent("ITEM_PUSH")
@@ -660,7 +662,7 @@ function QuestieDataCollector:OnEvent(event, ...)
     elseif event == "UPDATE_MOUSEOVER_UNIT" then
         QuestieDataCollector:TrackMouseoverUnit()
         
-    elseif event == "COMBAT_LOG_EVENT_UNFILTERED" then
+    elseif event == "COMBAT_LOG_EVENT_UNFILTERED" or event == "COMBAT_LOG_EVENT" then
         QuestieDataCollector:HandleCombatEvent(...)
         
     elseif event == "LOOT_OPENED" then
@@ -1534,6 +1536,9 @@ end
 
 function QuestieDataCollector:HandleCombatEvent(...)
     local timestamp, event, hideCaster, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName = ...
+    
+    -- Debug: Show all combat events
+    DebugMessage("|cFFFF00FF[DATA]|r Combat event: " .. (event or "nil"), 1, 0, 1)
     
     if event == "UNIT_DIED" or event == "PARTY_KILL" then
         if destGUID and destName then
