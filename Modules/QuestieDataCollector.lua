@@ -1540,6 +1540,9 @@ function QuestieDataCollector:HandleCombatEvent(...)
             -- Extract NPC ID from GUID
             local npcId = tonumber(destGUID:sub(6, 12), 16)
             if npcId and npcId > 0 then
+                -- Debug: Show when we detect a kill
+                DebugMessage("|cFFFF6600[DATA]|r Kill detected: " .. destName .. " (ID: " .. npcId .. ")", 1, 0.4, 0)
+                
                 -- Store recent kill for item correlation and progress tracking
                 local coords = QuestieDataCollector:GetPlayerCoordinates()
                 _recentKills[npcId] = {
@@ -1571,8 +1574,13 @@ end
 
 -- Track a mob kill directly for all relevant quests
 function QuestieDataCollector:TrackMobKill(npcId, npcName, coords)
+    local activeCount = 0
+    for _ in pairs(_activeTracking) do activeCount = activeCount + 1 end
+    DebugMessage("|cFFFFFF00[DATA]|r Checking kill tracking for " .. npcName .. " (ID: " .. npcId .. ") against " .. activeCount .. " tracked quests", 1, 1, 0)
+    
     -- Check all tracked quests to see if this mob is relevant
     for questId in pairs(_activeTracking) do
+        DebugMessage("|cFFFFFF00[DATA]|r Checking quest " .. questId .. " - In DB: " .. tostring(IsQuestInDatabase(questId)), 1, 1, 0)
         if not IsQuestInDatabase(questId) then
             local questData = QuestieDataCollection.quests[questId]
             if questData then
