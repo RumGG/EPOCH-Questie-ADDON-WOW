@@ -90,14 +90,24 @@ NOTE: Data submissions prior to v1.1.1 will soon be deprecated.
 
 [View Full Changelog](CHANGELOG.md)
 
+## 📊 Database Statistics
+
+**Current Epoch Quest Coverage**: **757 quests** and growing!
+- 🎉 **Recent Achievement**: Integrated 173 legacy quest submissions from community
+- 📈 **30% Database Growth**: Thanks to 875 GitHub quest submissions from dedicated players
+- 🌟 **Community Success**: 97% validation success rate on legacy data processing
+
+*Special thanks to every player who took time to submit quest data - you've made Questie significantly better for everyone!*
+
 ## 🙏 Credits & Support
 
 ### **Special Thanks**
 - **@esurm**: Original Questie author and data collection system
 - **@desizt**: Data collection enhancements and testing
 - **@Bennylavaa**: Extensive testing and bug reporting
-- **Project Epoch Community**: Quest data submissions and feedback
-- **All Contributors**: Everyone who has submitted quest data via GitHub
+- **Project Epoch Community**: 875+ quest data submissions over the years - incredible dedication!
+- **All GitHub Contributors**: Every quest submission helped build our database of 757 quests
+- **Legacy Data Heroes**: Special recognition for v1.0.68 era players who provided foundational quest data
 
 ### **Support Development**
 [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-Support%20Development-orange?style=for-the-badge&logo=buy-me-a-coffee)](https://buymeacoffee.com/trav346)
