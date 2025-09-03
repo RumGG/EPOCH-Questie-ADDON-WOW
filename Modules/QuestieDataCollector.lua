@@ -85,31 +85,9 @@ local CreateQuestDataLink
 local function ExtractNpcIdFromGuid(guid)
     if not guid then return nil end
     -- WoW 3.3.5 GUID format: 0xF13000085800126C
-    -- DEBUG: Try multiple extraction methods to find the correct one
-    DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[GUID DEBUG]|r Full GUID: " .. tostring(guid), 1, 0, 0)
-    
-    -- Method 1: Original (6-12)
-    local method1 = tonumber(guid:sub(6, 12), 16)
-    DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[GUID DEBUG]|r Method 1 (6-12): " .. tostring(method1), 1, 0, 0)
-    
-    -- Method 2: Try 7-12 (skip one more char)
-    local method2 = tonumber(guid:sub(7, 12), 16)
-    DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[GUID DEBUG]|r Method 2 (7-12): " .. tostring(method2), 1, 0, 0)
-    
-    -- Method 3: Try different positions (8-13)
-    local method3 = tonumber(guid:sub(8, 13), 16)
-    DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[GUID DEBUG]|r Method 3 (8-13): " .. tostring(method3), 1, 0, 0)
-    
-    -- Method 4: Try last 4 hex digits
-    local method4 = tonumber(guid:sub(-4), 16)
-    DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[GUID DEBUG]|r Method 4 (last 4): " .. tostring(method4), 1, 0, 0)
-    
-    -- Method 5: Try positions 11-16
-    local method5 = tonumber(guid:sub(11, 16), 16)
-    DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[GUID DEBUG]|r Method 5 (11-16): " .. tostring(method5), 1, 0, 0)
-    
-    -- Return original method for now, but we'll see which one gives us the right ID
-    return method1
+    -- Bytes 6-12 contain the NPC ID in hex (confirmed working for quest-compatible IDs)
+    local npcId = tonumber(guid:sub(6, 12), 16)
+    return npcId
 end
 
 -- Helper function for debug messages
