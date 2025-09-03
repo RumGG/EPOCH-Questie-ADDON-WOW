@@ -2710,14 +2710,53 @@ function QuestieDataCollector:ShowExportWindow(questId)
         local data = QuestieDataCollection.quests[questId]
         exportText = self:FormatQuestExport(questId, data)
     else
-        -- Export ALL collected data (Batch submission)
-        exportText = "════════════════════════════════════════════════════════════════\n"
-        exportText = exportText .. "                  HOW TO SUBMIT YOUR REPORT                     \n"
-        exportText = exportText .. "════════════════════════════════════════════════════════════════\n\n"
+        -- Export ALL collected data (Batch submission with smart splitting detection)
+        
+        -- Count eligible quests (missing from database)
+        local eligibleQuests = 0
+        for questId, questData in pairs(QuestieDataCollection.quests) do
+            if not IsQuestInDatabase(questId) then
+                eligibleQuests = eligibleQuests + 1
+            end
+        end
+        
+        local maxQuestsPerSubmission = 20  -- Conservative GitHub limit
+        
+        if eligibleQuests > maxQuestsPerSubmission then
+            -- Large submission - recommend splitting
+            local totalParts = math.ceil(eligibleQuests / maxQuestsPerSubmission)
+            exportText = "════════════════════════════════════════════════════════════════\n"
+            exportText = exportText .. "                ⚠️  LARGE SUBMISSION DETECTED  ⚠️               \n"
+            exportText = exportText .. "════════════════════════════════════════════════════════════════\n\n"
+            exportText = exportText .. "You have " .. eligibleQuests .. " quests to submit, which may exceed GitHub's\n"
+            exportText = exportText .. "character limit and could be rejected or truncated.\n\n"
+            exportText = exportText .. "📋 RECOMMENDED: Use split submission instead\n\n"
+            exportText = exportText .. "SPLIT SUBMISSION COMMANDS:\n"
+            exportText = exportText .. "• /qdc export part 1    (First " .. maxQuestsPerSubmission .. " quests)\n"
+            exportText = exportText .. "• /qdc export part 2    (Next " .. maxQuestsPerSubmission .. " quests)\n"
+            for part = 3, totalParts do
+                exportText = exportText .. "• /qdc export part " .. part .. "    (Continue...)\n"
+            end
+            exportText = exportText .. "\nTotal: " .. totalParts .. " parts will be created\n"
+            exportText = exportText .. "Each part creates a separate GitHub issue\n\n"
+            exportText = exportText .. "══════════════════════════════════════════════════════════════════\n"
+            exportText = exportText .. "             Continue with full export? (NOT RECOMMENDED)          \n"
+            exportText = exportText .. "══════════════════════════════════════════════════════════════════\n\n"
+        else
+            -- Normal single submission
+            exportText = "════════════════════════════════════════════════════════════════\n"
+            exportText = exportText .. "                  HOW TO SUBMIT YOUR REPORT                     \n"
+            exportText = exportText .. "════════════════════════════════════════════════════════════════\n\n"
+        end
+        
         exportText = exportText .. "1. Copy all text below (Ctrl+C to copy)\n"
         exportText = exportText .. "2. Go to: https://github.com/trav346/Questie/issues\n"
         exportText = exportText .. "3. Click 'New Issue'\n"
-        exportText = exportText .. "4. Title: Batch submission\n"
+        if eligibleQuests > maxQuestsPerSubmission then
+            exportText = exportText .. "4. Title: Large Batch Submission (" .. eligibleQuests .. " quests - MAY BE TOO BIG)\n"
+        else
+            exportText = exportText .. "4. Title: Batch Submission (" .. eligibleQuests .. " quests)\n"
+        end
         exportText = exportText .. "5. Paste this entire report in the description\n"
         exportText = exportText .. "6. Click 'Submit new issue'\n\n"
         exportText = exportText .. "════════════════════════════════════════════════════════════════\n"
@@ -4121,6 +4160,92 @@ function QuestieDataCollector:RescanQuestLog()
     end
 end
 
+function QuestieDataCollector:ExportBatchPart(partNumber)
+    if not Questie.db.profile.enableDataCollection then
+        DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[Data Collector]|r Data collection is disabled", 1, 0, 0)
+        return
+    end
+    
+    -- Collect all quest IDs for export
+    local allQuests = {}
+    for questId, questData in pairs(QuestieDataCollection.quests) do
+        if not IsQuestInDatabase(questId) then
+            table.insert(allQuests, questId)
+        end
+    end
+    
+    -- Sort quest IDs for consistent output
+    table.sort(allQuests)
+    
+    local questCount = #allQuests
+    local maxQuestsPerSubmission = 20  -- Conservative limit for GitHub
+    local totalParts = math.ceil(questCount / maxQuestsPerSubmission)
+    
+    if partNumber < 1 or partNumber > totalParts then
+        DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[Data Collector]|r Invalid part number. Use 1-" .. totalParts, 1, 0, 0)
+        return
+    end
+    
+    -- Calculate quest range for this part
+    local startIndex = (partNumber - 1) * maxQuestsPerSubmission + 1
+    local endIndex = math.min(partNumber * maxQuestsPerSubmission, questCount)
+    local questsInThisPart = endIndex - startIndex + 1
+    
+    -- Create part-specific export
+    local exportText = "════════════════════════════════════════════════════════════════\n"
+    exportText = exportText .. "                  HOW TO SUBMIT THIS PART                       \n"
+    exportText = exportText .. "════════════════════════════════════════════════════════════════\n\n"
+    exportText = exportText .. "1. Copy all text below (Ctrl+C to copy)\n"
+    exportText = exportText .. "2. Go to: https://github.com/trav346/Questie/issues\n"
+    exportText = exportText .. "3. Click 'New Issue'\n"
+    exportText = exportText .. "4. Title: Batch Submission - Part " .. partNumber .. " of " .. totalParts .. "\n"
+    exportText = exportText .. "5. Paste this entire report in the description\n"
+    exportText = exportText .. "6. Click 'Submit new issue'\n"
+    exportText = exportText .. "7. Continue with '/qdc export part " .. (partNumber + 1) .. "' for next part\n\n"
+    
+    exportText = exportText .. "════════════════════════════════════════════════════════════════\n"
+    exportText = exportText .. "         QUESTIE DATA COLLECTION EXPORT - PART " .. partNumber .. " of " .. totalParts .. "         \n"
+    exportText = exportText .. "════════════════════════════════════════════════════════════════\n\n"
+    exportText = exportText .. "Version: " .. (QuestieDataCollection.version or "1.1.0") .. "\n"
+    exportText = exportText .. "Date: " .. date("%Y-%m-%d %H:%M:%S") .. "\n"
+    exportText = exportText .. "Part: " .. partNumber .. " of " .. totalParts .. " (" .. questsInThisPart .. " quests in this part)\n"
+    exportText = exportText .. "Total Quests: " .. questCount .. " across all parts\n\n"
+    
+    if Questie.db.profile.dataCollectionDevMode then
+        exportText = exportText .. "Collection Mode: DEV MODE - Capturing ALL data\n"
+        exportText = exportText .. "  * All quests tracked regardless of database status\n"
+        exportText = exportText .. "  * Service NPCs always captured\n"
+        exportText = exportText .. "  * Mailboxes & flight masters always logged\n"
+    else
+        exportText = exportText .. "Collection Mode: NORMAL - Missing quests only\n"
+        exportText = exportText .. "  * Only missing quests tracked\n"
+        exportText = exportText .. "  * Service NPCs always captured\n"
+        exportText = exportText .. "  * Mailboxes & flight masters always logged\n"
+    end
+    
+    exportText = exportText .. "═════════════════════════════════════════════════════════════════\n\n"
+    
+    -- Export quests for this part
+    for i = startIndex, endIndex do
+        local questId = allQuests[i]
+        local questData = QuestieDataCollection.quests[questId]
+        exportText = exportText .. self:FormatQuestExport(questId, questData)
+        if i < endIndex then
+            exportText = exportText .. "\n" .. string.rep("=", 72) .. "\n\n"
+        end
+    end
+    
+    -- Show export window
+    self:ShowExportText(exportText)
+    
+    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Data Collector]|r Exported part " .. partNumber .. " of " .. totalParts .. " (" .. questsInThisPart .. " quests)", 0, 1, 0)
+    if partNumber < totalParts then
+        DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00[Data Collector]|r Next: /qdc export part " .. (partNumber + 1), 1, 1, 0)
+    else
+        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Data Collector]|r All parts exported! Submit each as a separate GitHub issue.", 0, 1, 0)
+    end
+end
+
 function QuestieDataCollector:ExportAreaData(zoneName)
     if not zoneName then
         zoneName = GetRealZoneText() or "Current Area"
@@ -4431,6 +4556,10 @@ SlashCmdList["QUESTIEDATACOLLECTOR"] = function(msg)
         if questId then
             -- Export specific quest if ID provided
             QuestieDataCollector:ExportQuest(questId)
+        elseif args[2] == "part" and tonumber(args[3]) then
+            -- Export specific part of batch submission
+            local partNumber = tonumber(args[3])
+            QuestieDataCollector:ExportBatchPart(partNumber)
         else
             -- Show quest selection window for export
             QuestieDataCollector:ShowExportWindow()
@@ -4566,7 +4695,8 @@ SlashCmdList["QUESTIEDATACOLLECTOR"] = function(msg)
         DEFAULT_CHAT_FRAME:AddMessage("/qdc enable - Enable data collection", 1, 1, 1)
         DEFAULT_CHAT_FRAME:AddMessage("/qdc disable - Disable data collection", 1, 1, 1)
         DEFAULT_CHAT_FRAME:AddMessage("/qdc show - Show all tracked quests", 1, 1, 1)
-        DEFAULT_CHAT_FRAME:AddMessage("/qdc export <questId> - Export quest data", 1, 1, 1)
+        DEFAULT_CHAT_FRAME:AddMessage("/qdc export [questId] - Export quest data", 1, 1, 1)
+        DEFAULT_CHAT_FRAME:AddMessage("/qdc export part [X] - Export part X of large batch submission", 1, 1, 1)
         DEFAULT_CHAT_FRAME:AddMessage("/qdc service - Export all service NPCs", 1, 1, 1)
         DEFAULT_CHAT_FRAME:AddMessage("/qdc area [zoneName] - Export area data (service NPCs, gathering nodes, treasures)", 1, 1, 1)
         DEFAULT_CHAT_FRAME:AddMessage("/qdc questgiver <questId> - Manually capture quest giver (target NPC first)", 1, 1, 1)
