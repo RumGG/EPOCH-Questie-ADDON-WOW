@@ -763,6 +763,7 @@ function QuestieDataCollector:TrackQuestAccepted(questIndex, questId)
             mobs = {},
             items = {},
             objects = {},
+            kills = {},
             mismatches = {}
         }
     end
@@ -1547,6 +1548,9 @@ function QuestieDataCollector:HandleCombatEvent(...)
                     coords = coords  -- Include location of kill for progress tracking
                 }
                 
+                -- Also track this kill directly for all relevant quests
+                QuestieDataCollector:TrackMobKill(npcId, destName, coords)
+                
                 -- Debug message for kill tracking
                 if coords then
                     DebugMessage("|cFF8B4513[DATA]|r Tracked kill: " .. destName .. " at " .. 
@@ -1560,6 +1564,65 @@ function QuestieDataCollector:HandleCombatEvent(...)
                         _recentKills[id] = nil
                     end
                 end
+            end
+        end
+    end
+end
+
+-- Track a mob kill directly for all relevant quests
+function QuestieDataCollector:TrackMobKill(npcId, npcName, coords)
+    -- Check all tracked quests to see if this mob is relevant
+    for questId in pairs(_activeTracking) do
+        if not IsQuestInDatabase(questId) then
+            local questData = QuestieDataCollection.quests[questId]
+            if questData then
+                -- Ensure required tables exist
+                if not questData.mobs then
+                    questData.mobs = {}
+                end
+                if not questData.kills then
+                    questData.kills = {}
+                end
+                
+                -- Initialize mob data if needed
+                if not questData.mobs[npcId] then
+                    questData.mobs[npcId] = {
+                        id = npcId,
+                        name = npcName,
+                        level = nil, -- Will be filled from mouseover data
+                        locations = {}
+                    }
+                end
+                
+                -- Record the kill
+                local killEntry = {
+                    mobId = npcId,
+                    mobName = npcName,
+                    timestamp = time(),
+                    coords = coords
+                }
+                
+                table.insert(questData.kills, killEntry)
+                
+                -- Also add this location to mob locations if not duplicate
+                if coords and coords.x and coords.y and coords.x > 0 and coords.y > 0 then
+                    local isDuplicate = false
+                    for _, existingLoc in ipairs(questData.mobs[npcId].locations) do
+                        if existingLoc and existingLoc.x and existingLoc.y then
+                            local distance = math.abs(coords.x - existingLoc.x) + math.abs(coords.y - existingLoc.y)
+                            if distance < 2 then  -- 2 yard threshold for kill locations
+                                isDuplicate = true
+                                break
+                            end
+                        end
+                    end
+                    
+                    if not isDuplicate then
+                        table.insert(questData.mobs[npcId].locations, coords)
+                    end
+                end
+                
+                DebugMessage("|cFF90EE90[DATA]|r Recorded kill: " .. npcName .. " for quest " .. (questData.name or questId), 0.6, 0.9, 0.6)
             end
         end
     end
@@ -2148,6 +2211,7 @@ function QuestieDataCollector:CheckActiveQuests()
                         mobs = {},
                         items = {},
                         objects = {},
+                        kills = {},
                         mismatches = {}
                     }
                     
@@ -2957,7 +3021,21 @@ function QuestieDataCollector:FormatQuestExport(questId, questData)
     if questData.mobs and next(questData.mobs) then
         export = export .. "RELATED MOBS:\n"
         for mobId, mobData in pairs(questData.mobs) do
-            export = export .. "  " .. (mobData.name or "Unknown") .. " (ID: " .. mobId .. ", Level: " .. (mobData.level or "?") .. ")\n"
+            -- Count kills for this mob
+            local killCount = 0
+            if questData.kills then
+                for _, kill in ipairs(questData.kills) do
+                    if kill.mobId == mobId then
+                        killCount = killCount + 1
+                    end
+                end
+            end
+            
+            export = export .. "  " .. (mobData.name or "Unknown") .. " (ID: " .. mobId .. ", Level: " .. (mobData.level or "?") .. ")"
+            if killCount > 0 then
+                export = export .. " - KILLED " .. killCount .. " times"
+            end
+            export = export .. "\n"
             if mobData.locations and #mobData.locations > 0 then
                 local validCoords = {}
                 for i = 1, #mobData.locations do
