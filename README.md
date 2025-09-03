@@ -105,7 +105,7 @@ NOTE: Data submissions prior to v1.1.1 will soon be deprecated.
 - **@esurm**: Original Questie author and data collection system
 - **@desizt**: Data collection enhancements and testing
 - **@Bennylavaa**: Extensive testing and bug reporting
-- **Project Epoch Community**: 875+ quest data submissions over the years - incredible dedication!
+- **Project Epoch Community**: 875+ quest data submissions over the past week - incredible dedication!
 - **All GitHub Contributors**: Every quest submission helped build our database of 757 quests
 - **Legacy Data Heroes**: Special recognition for v1.0.68 era players who provided foundational quest data
 
