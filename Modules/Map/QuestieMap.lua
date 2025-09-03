@@ -581,11 +581,16 @@ function QuestieMap:DrawWorldIcon(data, areaID, x, y, showFlag)
         error("Questie" .. ": AddWorldMapIconMap: must have some data")
     end
     
-    -- Validate areaID - must be a number, not a string like frame names
+    -- Validate areaID - must be a number, not a string like frame names or NPC names
     if type(areaID) ~= "number" then
         -- Check if it's a known problematic frame name from modern WoW
         if type(areaID) == "string" and (areaID:find("Camera") or areaID:find("Selfie") or areaID:find("Solo")) then
             Questie:Debug(Questie.DEBUG_DEVELOP, "[QuestieMap] Ignoring modern WoW frame name passed as areaID:", areaID)
+            return nil, nil
+        end
+        -- Check if it looks like an NPC name/ID string (e.g., "22 - Magistrate Solomon")
+        if type(areaID) == "string" and areaID:find("^%d+ %- ") then
+            Questie:Debug(Questie.DEBUG_DEVELOP, "[QuestieMap] Ignoring NPC ID/name string passed as areaID:", areaID)
             return nil, nil
         end
         Questie:Warning("[QuestieMap] Invalid areaID type - expected number, got:", type(areaID), tostring(areaID))
@@ -638,8 +643,13 @@ function QuestieMap:DrawWorldIcon(data, areaID, x, y, showFlag)
             Questie:Debug(Questie.DEBUG_DEVELOP, "[QuestieMap] Skipping continent-level icon for zone:", areaID, data.Name)
             return nil, nil
         end
+        -- Check if this might be an NPC ID mistakenly used as zone ID (common low numbers)
+        if areaID < 100 and data.Name and type(data.Name) == "string" and not data.Name:find("Zone") then
+            Questie:Debug(Questie.DEBUG_DEVELOP, "[QuestieMap] Likely NPC ID used as zone ID, skipping:", areaID, data.Name)
+            return nil, nil
+        end
         --ZoneDB:GetUiMapIdByAreaId
-        error("No UiMapID or fitting uiMapId for areaId : " .. areaID .. " - " .. tostring(data.Name))
+        Questie:Warning("[QuestieMap] No UiMapID for areaId:", areaID, "- Name:", tostring(data.Name))
         return nil, nil
     end
 
