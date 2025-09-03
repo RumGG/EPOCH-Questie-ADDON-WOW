@@ -1,196 +1,231 @@
-### ☕ Support Development
+# Questie for Project Epoch
+
+[![Version](https://img.shields.io/badge/version-1.1.1-blue?style=for-the-badge)](https://github.com/trav346/Questie/releases)
+[![WoW Version](https://img.shields.io/badge/WoW-3.3.5a-green?style=for-the-badge)](https://github.com/trav346/Questie)
+[![Project Epoch](https://img.shields.io/badge/Project-Epoch-purple?style=for-the-badge)](https://project-epoch.net)
+
+**An actively maintained version of Questie for Project Epoch with enhanced data collection capabilities.**
+
+Questie is the ultimate quest helper addon for World of Warcraft 3.3.5a, specifically optimized for Project Epoch server. It shows quest objectives on your map and minimap, tracks quest progress, and helps you navigate the world efficiently.
+
+## ✨ Features
+
+### 🗺️ **Quest Map Integration**
+- **Map Markers**: Quest objectives, NPCs, and turn-in locations displayed on world map and minimap
+- **Dynamic Updates**: Real-time quest progress tracking with automatic marker updates
+- **Zone Coverage**: Support for all Project Epoch zones and custom content
+- **Smart Filtering**: Toggle quest types, levels, and completion status
+
+### 📋 **Quest Tracking**
+- **Auto-Tracker**: Automatically tracks new quests and updates progress
+- **Progress Display**: Shows current objective status (e.g., "Bloodtalon Scythemaw slain: 10/10")
+- **Multiple Quests**: Track multiple quests simultaneously with organized display
+- **Completion Detection**: Automatic detection of quest completion and turn-in opportunities
+
+### 🎯 **Data Collection System** *(Unique Feature)*
+- **Missing Quest Detection**: Automatically detects quests not in database
+- **Real-time Data Capture**: Records quest objectives, NPCs, items, and locations as you play
+- **Progress Tracking**: Captures detailed progress locations with mob kill information
+- **Community Contributions**: Easy export system for submitting data to improve the database
+
+### ⚙️ **Customization Options**
+- **Minimap Button**: Quick access to settings and data export
+- **Slash Commands**: `/questie` for settings, `/qdc` for data collection
+- **Visual Options**: Customize marker icons, colors, and display preferences
+- **Performance Tuning**: Adjustable update frequencies and memory optimization
+
+## 📦 Installation
+
+### **Automatic Installation (Recommended)**
+1. **Download**: Get the latest release from [GitHub Releases](https://github.com/trav346/Questie/releases)
+2. **Extract**: Unzip the downloaded file
+3. **Install**: Copy the `Questie` folder to your WoW AddOns directory:
+   ```
+   World of Warcraft 3.3.5/Interface/AddOns/Questie
+   ```
+4. **Restart**: Restart WoW completely (not just reload UI)
+
+### **Manual Installation**
+1. **Clone Repository**:
+   ```bash
+   git clone https://github.com/trav346/Questie.git
+   cd Questie
+   ```
+2. **Copy to AddOns**: Move the entire folder to your WoW AddOns directory
+3. **Enable Addon**: Make sure it's enabled in the addon list at character select
+
+### **Verify Installation**
+- Look for the Questie minimap button (green compass icon)
+- Type `/questie` to open settings
+- Check that version shows as **v1.1.1** in addon list
+
+## 🚀 Getting Started
+
+### **Basic Usage**
+1. **Log In**: Start the game and load your character
+2. **Enable Data Collection**: Type `/qdc enable` to help improve quest database
+3. **Accept Quests**: Quest objectives will automatically appear on map and minimap
+4. **Track Progress**: Watch your progress update in real-time as you complete objectives
+5. **Turn In**: Quest completion markers guide you to turn-in NPCs
+
+### **Essential Commands**
+```
+/questie                    - Open main settings
+/questie refreshcomplete    - Refresh completed quests from server
+/qdc enable                 - Enable data collection 
+/qdc show                   - View collected quest data
+/qdc export                 - Export data for GitHub submission
+```
+
+### **First-Time Setup**
+1. **Enable Data Collection**: `/qdc enable` - This helps expand the quest database
+2. **Configure Display**: Click minimap button → Settings to customize appearance
+3. **Test Functionality**: Accept a quest and verify markers appear on map
+
+## 🔧 Data Collection System
+
+**Help improve Questie for everyone by enabling data collection!**
+
+### **What It Does**
+- **Automatic Detection**: Identifies quests missing from the database
+- **Real-time Tracking**: Records quest objectives, NPCs, and locations as you play
+- **Progress Logging**: Captures where objectives are completed with detailed information
+- **No Performance Impact**: Lightweight system that doesn't affect gameplay
+
+### **How to Contribute**
+1. **Enable Collection**: `/qdc enable`
+2. **Play Normally**: Accept and complete quests as usual
+3. **Export Data**: Use `/qdc export <questId>` when quest is complete
+4. **Submit to GitHub**: Create issue at [GitHub Issues](https://github.com/trav346/Questie/issues)
+5. **Help the Community**: Your data helps everyone get better quest information
+
+### **Data Collection Commands**
+```
+/qdc enable                 - Start collecting data
+/qdc disable               - Stop collecting data  
+/qdc status                - Check collection status
+/qdc show                  - Display all tracked quests
+/qdc export <questId>      - Export quest data for submission
+/qdc clear                 - Clear all collected data
+/qdc validate <questId>    - Validate quest data quality
+```
+
+## ⚡ Performance & Compatibility
+
+### **System Requirements**
+- **WoW Version**: 3.3.5a (Wrath of the Lich King client)
+- **Server**: Optimized for Project Epoch
+- **Memory**: ~10MB RAM usage
+- **Dependencies**: None required (works standalone)
+
+### **Known Compatibility**
+- ✅ **ElvUI**: Full compatibility with custom themes
+- ✅ **Bartender**: Works with custom action bars
+- ✅ **Auctionator**: No conflicts with auction house features
+- ✅ **Details**: Compatible with damage meters
+- ⚠️ **Other Quest Addons**: May conflict - disable other quest helpers
+
+### **Performance Tips**
+- Use `/reload` after making major setting changes
+- Clear data collection periodically with `/qdc clear` if memory usage grows
+- Disable unused features in settings to improve performance
+
+## 🐛 Known Issues & Troubleshooting
+
+### **Common Issues**
+- **Quest Markers Missing**: Some Project Epoch quests have incomplete data - enable data collection to help fix this
+- **Map Icons Not Appearing**: Quest may need complete NPC/object data - submit data via `/qdc export`
+- **"Missing Quest" Alerts**: Modified vanilla quests may trigger false alerts due to Project Epoch changes
+
+### **Database Status**
+- **~4,800 Quests**: Current database size for Project Epoch content
+- **600+ Missing**: Estimated quests still needing data collection
+- **Active Development**: Regular updates with community-submitted data
+
+### **Getting Help**
+1. **Check Issues**: Browse [GitHub Issues](https://github.com/trav346/Questie/issues) for known problems
+2. **Enable Debug**: Use `/console scriptErrors 1` to see detailed error information  
+3. **Report Bugs**: Create detailed issue reports with steps to reproduce
+4. **Discord Support**: Join Project Epoch Discord for community help
+
+## 📈 Version History
+
+### **Latest: v1.1.1** *(Current)*
+- 🐛 Fixed coordinate formatting crashes
+- 🐛 Fixed QuestieSlash command errors  
+- 🚀 Enhanced objective tracking with mob kill correlation
+- 📍 Improved progress location display matching v1.0.68 quality
+
+### **Previous Releases**
+- **v1.1.0**: Data collection overhaul, completed quest sync
+- **v1.0.68**: Enhanced objective tracking, turn-in NPC fixes
+- **v1.0.63**: Initial Project Epoch compatibility
+
+[View Full Changelog](CHANGELOG.md)
+
+## 🤝 Contributing
+
+### **Ways to Help**
+1. **Submit Quest Data**: Use `/qdc enable` and submit exports via GitHub
+2. **Report Bugs**: Create detailed issue reports with reproduction steps  
+3. **Test Features**: Try new releases and provide feedback
+4. **Documentation**: Help improve guides and documentation
+5. **Spread the Word**: Tell other Project Epoch players about Questie
+
+### **Development**
+- **Repository**: https://github.com/trav346/Questie
+- **Issues**: https://github.com/trav346/Questie/issues
+- **Pull Requests**: Welcome for bug fixes and improvements
+- **Coding Style**: Follow existing Lua patterns and include tests
+
+### **Data Submission Process**
+1. Enable data collection: `/qdc enable`
+2. Complete quests normally (accept → complete → turn in)
+3. Export quest data: `/qdc export <questId>`
+4. Create GitHub issue with exported data
+5. Use title format: "Missing Quest: [Quest Name] (ID: #####)"
+
+## 🙏 Credits & Support
+
+### **Special Thanks**
+- **@esurm**: Original Questie author and data collection system
+- **@desizt**: Data collection enhancements and testing
+- **@Bennylavaa**: Extensive testing and bug reporting
+- **Project Epoch Community**: Quest data submissions and feedback
+- **All Contributors**: Everyone who has submitted quest data via GitHub
+
+### **Support Development**
 [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-Support%20Development-orange?style=for-the-badge&logo=buy-me-a-coffee)](https://buymeacoffee.com/trav346)
 
-If you find this version of Questie with data collection helpful, consider [buying me a coffee](https://buymeacoffee.com/trav346) to support continued development!
+If you find this enhanced version of Questie helpful, consider [buying me a coffee](https://buymeacoffee.com/trav346) to support continued development and maintenance!
 
 ---
 
-### How to Install
-1. Download the latest release here https://github.com/trav346/Questie-Epoch/releases
-2. Extract the Questie folder into your AddOns folder
+## 📋 Quick Reference
+
+### **Essential Commands**
+| Command | Description |
+|---------|-------------|
+| `/questie` | Open main settings |
+| `/questie refreshcomplete` | Refresh completed quests |
+| `/qdc enable` | Enable data collection |
+| `/qdc export <questId>` | Export quest data |
+| `/qdc show` | View collected data |
+
+### **Installation Checklist**
+- [ ] Downloaded latest release (v1.1.1)
+- [ ] Extracted to correct AddOns folder
+- [ ] Restarted WoW completely
+- [ ] Enabled addon at character select
+- [ ] Minimap button appears
+- [ ] Ran `/qdc enable` to help community
+
+### **Support Links**
+- **Download**: [GitHub Releases](https://github.com/trav346/Questie/releases)
+- **Bug Reports**: [GitHub Issues](https://github.com/trav346/Questie/issues)  
+- **Server Info**: [Project Epoch](https://project-epoch.net)
+- **Support Development**: [Buy Me A Coffee](https://buymeacoffee.com/trav346)
 
 ---
 
-## v1.0.70 - Object Quest Giver Support!
-
-### New Features
-- **Object ID Capture for Quest-Starting Objects**
-  - Automatically captures object IDs when accepting quests from wanted posters, books, signs, etc.
-  - Export format now includes proper object database entries
-  - Shows object information in quest tracking displays
-
----
-
-### 📝 Want to Help? Easy Data Collection!
-
-**⚠️ IMPORTANT: Only submit data collected with Questie v1.0.63 or newer!**
-- Older versions had collection bugs that produce incorrect data
-- Your export will show the version - if it's older than v1.0.63, please update first
-
-**Quick Start:**
-1. **Update to latest version** (v1.0.63+)
-2. Type `/qdc enable` to turn on collection - this should persist through log in/out
-3. Quest normally - Questie automatically detects if a quest is not in the database and begins collecting data for it!
-4. **NEW**: Left-click Questie minimap icon → "Export Quest Data" for quick access!
-5. Share on [GitHub](https://github.com/trav346/Questie-Epoch/issues/new)
-
-**Not feeling up to it?** No problem! Just use Questie normally. `/qdc disable`
-
-## v1.0.69 - Latest Release
-
-### New Quest Data
-
-**Added:**
-- **New Epoch quests from GitHub issues #241-244, #246**
-  - The Barrens: Exterminate the Brutes (26856) - Kill Razormane mobs
-  - The Barrens: Plainstrider Menace (26918) - Collect Greater Plainstrider Beaks
-  - Stormwind/Elwynn: Commission for Marshal Haggard (28350) - Delivery quest
-  - Darnassus/Westfall: An Old Man's Request (26597) - Kill Klaven Mortwake
-  - Eastern Plaguelands: Into the Scarlet Enclave (28905) - Kill Scarlet mobs
-- **Fixed duplicate quest ID conflicts**
-
-## v1.0.68
-
-### Quest Tracking Fixes
-
-**Fixed:**
-- **Shift-click quest tracking now works properly**
-  - Fixed issue where shift-clicking quests in quest log would only track quests with no objectives
-  - Fixed auto-tracking mode preventing shift-click from tracking (only untracking worked)
-  - Shift-click now correctly toggles tracking for ALL quests in both manual and auto-track modes
-  - Maintains shift-click to link quest in chat functionality
-
-## v1.0.67
-
-### Critical Bug Fixes
-
-**Fixed:**
-- **Critical Lua error with bitband function**
-  - Fixed "attempt to call global 'bitband' (a nil value)" error that occurred when accepting quests
-  - Added missing bitband imports to AvailableQuests.lua and QuestieQuest.lua
-
-## v1.0.66
-
-### Map Icons & Quest Data
-
-**Fixed:**
-- **Map icons displaying correctly with borders**
-  - Icons now show properly with background borders for better visibility
-  - Reverted icon handling to stable version
-
-**New Content:**
-- **11 new Epoch quests added** from GitHub issues #229-232
-  - Darkshore, Wetlands, Ashenvale, Hinterlands, Feralas, and Duskwood quests
-  - Added 9 corresponding NPCs with proper coordinates
-
-## v1.0.63
-
-### Critical Map Pin Fix
-
-**Major Fix:**
-- **Map pins now display properly in all major cities!** 
-  - Fixed coordinate conversion failure that prevented NPCs from showing on maps
-  - Added missing classic zone ID mappings for Stormwind, Ironforge, Orgrimmar, Thunder Bluff, Darnassus, and Undercity
-  - Innkeepers, trainers, vendors, and all other NPCs now properly appear on city maps
-
-## v1.0.61
-
-### Quality of Life Improvements & Bug Fixes
-
-**New Features:**
-- **Export Button in Minimap Menu**: Quick access to data export (left-click Questie icon)
-- **Cleaner Data Collection**: Single-line notifications instead of spam
-- **Silent Debug Mode**: All debug messages now respect your settings
-
-**Critical Fixes:**
-- Fixed IsComplete nil errors when accepting quests
-- Fixed debug messages bypassing toggle settings
-- Actually added the 18 troll starting zone quests that were "added" in v1.0.56
-- Added 5 more Epoch quests from issue #91
-
-## v1.0.60-hotfix2
-
-### Massive Update: 300+ Quests Added, and Critical Errors Fixed!
-
-**Hotfix2 Updates:**
-- Fixed quest 26768 "Barrel Down" compilation error
-- Fixed load order error causing crashes on startup
-- Added toggle for [DATA] messages - collect silently without chat spam! (`/qdc messages`)
-
-#### All Runtime Errors Fixed
-- **No More Crashes**: Fixed AvailableQuests and QuestieTracker nil errors
-- **Chat Filter Working**: QuestieShutUp now properly blocks party spam
-- **Map Errors Gone**: Custom Project Epoch zones no longer cause errors
-- **Data Collector Silent**: No more chat spam - silently tracks quest data
-
-####  All Service NPCs Now Working!
-- **WotLK Database Imported**: Fixed version detection for 3.3.5 client
-- **All Cities Fixed**: Innkeepers, bankers, auctioneers, trainers show everywhere
-- **Stormwind Fully Functional**: All service NPCs at correct Project Epoch locations. Let me know if I missed any.
-- **No More Placeholders**: Removed 274 "[Epoch] NPC XXXXX" entries
-
-####  300+ New Quests Added (GitHub Issues #32-87)
-This release combines all quest additions from versions 1.0.56 through 1.0.60:
-
-**Starting Zones Complete:**
-- **Gnome**: 18 quests with complete NPC data
-- **Troll/Orc**: 21 quests including "The Darkspear Tribe", "Banana Bonanza"
-- **Human**: Hunter training, Tattered Letter, Soaked Barrel chains
-
-**Major Quest Chains:**
-- **Duskwood**: Riders In The Night, Life In Death, Until Death Do Us Part chains
-- **Westfall**: Barroom Blitz chain, Hand of Azora chain, The Killing Fields
-- **Ironforge Airfield**: Complete 10-quest chain with proper NPCs
-- **The Hinterlands**: 11 Alliance quests including "A Sticky Situation" series
-- **Desolace**: "The Argus Wake" 5-quest chain (42-44)
-
-**PvP Content:**
-- **Ashenvale**: "Fight for Warsong Gulch" battleground introduction
-- **Multiple Zones**: 8 "Call to Skirmish" quests for world PvP
-
-**Level 1-60 Coverage:**
-- Elwynn Forest, Darkshore, Stranglethorn Vale, Hillsbrad Foothills
-- The Barrens, Stonetalon Mountains, Thousand Needles, Mulgore
-- Arathi Highlands, Badlands, Swamp of Sorrows, Tanaris
-- Winterspring, Eastern Plaguelands, Searing Gorge
-
-#### 🛠️ Major Fixes Since v1.0.56
-
-**Container Collection Fixed:**
-- Sun-Ripened Banana containers now properly identified
-- Ground object quests show accurate map pins
-- Auto-rescan after reload - no manual commands needed
-
-**Quest Tracking Improvements:**
-- TomTom no longer changes your tracker sort preference
-- Completed quests properly removed from tracker
-- Quest items don't cause tracking to break
-
-**Database Cleanup:**
-- Fixed duplicate quest entries
-- Removed conflicting stub entries
-- Updated 100+ quests with complete data
-
-#### 📝 Children's Week Removed
-- Seasonal quest no longer shows year-round
-- NPCs properly blacklisted
-
----
-
-## 💡 Known Issues
-
-- Some Epoch quests still have placeholder data - please use /qdc enable to help collect data
-- Map icons may not appear for quests with incomplete NPC/object data
-- Project Epoch has modified numerous vanilla quests to be cross-faction, causing conflicts with the original database
-- Modified vanilla quests may trigger "missing quest" alerts even though they exist (due to significant changes from original)
-
----
-
-  🙏 Contributors
-
-  Special thanks to:
-  - @Bennylavaa for testing and bug reports
-  - @desizt and @esurm for the original data collection system
-  - All players submitting quest data through GitHub
-
-  ---
+*Questie for Project Epoch - Making quest navigation effortless while building the most comprehensive quest database through community collaboration.*
