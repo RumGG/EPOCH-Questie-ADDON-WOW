@@ -63,6 +63,11 @@ Development Tools/
 Development_Tools/
 DevTools/
 
+# Bug Investigation Reports - Internal development only
+Bug Investigation Reports/
+Bug_Investigation_Reports/
+Investigation/
+
 # Submission Handling - Internal use only
 Submission Handling/
 Submission_Handling/

@@ -85,9 +85,31 @@ local CreateQuestDataLink
 local function ExtractNpcIdFromGuid(guid)
     if not guid then return nil end
     -- WoW 3.3.5 GUID format: 0xF13000085800126C
-    -- Bytes 6-12 contain the NPC ID in hex
-    local npcId = tonumber(guid:sub(6, 12), 16)
-    return npcId
+    -- DEBUG: Try multiple extraction methods to find the correct one
+    DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[GUID DEBUG]|r Full GUID: " .. tostring(guid), 1, 0, 0)
+    
+    -- Method 1: Original (6-12)
+    local method1 = tonumber(guid:sub(6, 12), 16)
+    DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[GUID DEBUG]|r Method 1 (6-12): " .. tostring(method1), 1, 0, 0)
+    
+    -- Method 2: Try 7-12 (skip one more char)
+    local method2 = tonumber(guid:sub(7, 12), 16)
+    DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[GUID DEBUG]|r Method 2 (7-12): " .. tostring(method2), 1, 0, 0)
+    
+    -- Method 3: Try different positions (8-13)
+    local method3 = tonumber(guid:sub(8, 13), 16)
+    DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[GUID DEBUG]|r Method 3 (8-13): " .. tostring(method3), 1, 0, 0)
+    
+    -- Method 4: Try last 4 hex digits
+    local method4 = tonumber(guid:sub(-4), 16)
+    DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[GUID DEBUG]|r Method 4 (last 4): " .. tostring(method4), 1, 0, 0)
+    
+    -- Method 5: Try positions 11-16
+    local method5 = tonumber(guid:sub(11, 16), 16)
+    DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[GUID DEBUG]|r Method 5 (11-16): " .. tostring(method5), 1, 0, 0)
+    
+    -- Return original method for now, but we'll see which one gives us the right ID
+    return method1
 end
 
 -- Helper function for debug messages
@@ -140,11 +162,14 @@ end
 local function IsQuestInDatabase(questId)
     -- If dev mode is enabled, pretend no quests are in database (collect everything)
     if Questie.db.profile.dataCollectionDevMode then
+        DebugMessage("|cFFFF0000[DEV MODE]|r Quest " .. questId .. " - dev mode active, returning false (collect all data)", 1, 0, 0)
         return false
     end
     
     local questData = QuestieDB.GetQuest(questId)
-    return questData and questData.name and questData.name ~= "[Epoch] Quest " .. questId
+    local inDB = questData and questData.name and questData.name ~= "[Epoch] Quest " .. questId
+    DebugMessage("|cFFFFAA00[DATA]|r Quest " .. questId .. " - database check: " .. tostring(inDB) .. " (name: '" .. (questData and questData.name or "nil") .. "')", 1, 0.7, 0)
+    return inDB
 end
 
 -- Helper function to check for database mismatches
@@ -1116,12 +1141,21 @@ end
 
 function QuestieDataCollector:CheckQuestProgress()
     for questId in pairs(_activeTracking) do
-        -- Skip if quest is now in database
-        if IsQuestInDatabase(questId) then
-            _activeTracking[questId] = nil
-            DebugMessage("|cFFFFAA00[DATA]|r Quest " .. questId .. " now in database, stopping collection", 1, 0.7, 0)
-        else
+        -- In dev mode, never stop tracking quests - collect all data regardless of database status
+        if Questie.db.profile.dataCollectionDevMode then
             QuestieDataCollector:UpdateQuestObjectives(questId)
+        else
+            -- Normal mode: Skip if quest is now in database
+            local inDB = IsQuestInDatabase(questId)
+            local dbQuest = QuestieDB.GetQuest(questId)
+            local dbQuestName = dbQuest and dbQuest.name or "nil"
+            
+            if inDB then
+                _activeTracking[questId] = nil
+                DebugMessage("|cFFFFAA00[DATA]|r Quest " .. questId .. " now in database ('" .. tostring(dbQuestName) .. "'), stopping collection", 1, 0.7, 0)
+            else
+                QuestieDataCollector:UpdateQuestObjectives(questId)
+            end
         end
     end
 end
@@ -1535,18 +1569,49 @@ function QuestieDataCollector:TrackMouseoverUnit()
 end
 
 function QuestieDataCollector:HandleCombatEvent(...)
-    local timestamp, event, hideCaster, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName = ...
+    local args = {...}
+    
+    -- Debug: Show all parameters for WoW 3.3.5a compatibility analysis
+    DebugMessage("|cFFFF00FF[DATA]|r Combat event args count: " .. #args, 1, 0, 1)
+    for i = 1, math.min(10, #args) do
+        DebugMessage("|cFFFF00FF[DATA]|r Arg[" .. i .. "]: " .. tostring(args[i]), 1, 0, 1)
+    end
+    
+    -- WoW 3.3.5a combat log parameter parsing
+    local timestamp = args[1]
+    local event = args[2] 
+    local sourceGUID = args[3]
+    local sourceName = args[4]
+    local sourceFlags = args[5]
+    local destGUID = args[6]  -- Real GUID is at position 6
+    local destName = args[7]  -- Name is at position 7
+    local destNPCId = args[8] -- Direct NPC ID at position 8
     
     -- Debug: Show all combat events
     DebugMessage("|cFFFF00FF[DATA]|r Combat event: " .. (event or "nil"), 1, 0, 1)
     
     if event == "UNIT_DIED" or event == "PARTY_KILL" then
+        -- Debug: Show what we got from combat log
+        DebugMessage("|cFFFFFFFF[DATA]|r Kill event details - destGUID: " .. (destGUID or "nil") .. ", destName: " .. (destName or "nil"), 1, 1, 1)
+        
         if destGUID and destName then
-            -- Extract NPC ID from GUID
-            local npcId = tonumber(destGUID:sub(6, 12), 16)
+            -- Debug: Show corrected parsing
+            DebugMessage("|cFFFFFFFF[DATA]|r Corrected - destGUID: " .. destGUID .. ", destName: " .. destName, 1, 1, 1)
+            
+            -- PRIORITY FIX: Use GUID extraction for data collection (more accurate for quest tracking)
+            -- Extract NPC ID from GUID first (this gives us the quest-compatible ID like 46835)
+            local npcId = ExtractNpcIdFromGuid(destGUID)
+            
+            -- Only fall back to direct combat log NPC ID if GUID extraction fails
+            if not npcId or npcId <= 0 then
+                npcId = destNPCId
+                DebugMessage("|cFFFFAA00[DATA]|r Using fallback combat log NPC ID: " .. (destNPCId or "nil"), 1, 0.7, 0)
+            end
+            DebugMessage("|cFFFFFFFF[DATA]|r Using NPC ID: " .. (npcId or "nil"), 1, 1, 1)
+            
             if npcId and npcId > 0 then
                 -- Debug: Show when we detect a kill
-                DebugMessage("|cFFFF6600[DATA]|r Kill detected: " .. destName .. " (ID: " .. npcId .. ")", 1, 0.4, 0)
+                DebugMessage("|cFFFF6600[DATA]|r Kill detected: " .. destName .. " (ID: " .. npcId .. ") from GUID: " .. tostring(destGUID), 1, 0.4, 0)
                 
                 -- Store recent kill for item correlation and progress tracking
                 local coords = QuestieDataCollector:GetPlayerCoordinates()
@@ -1583,9 +1648,28 @@ function QuestieDataCollector:TrackMobKill(npcId, npcName, coords)
     for _ in pairs(_activeTracking) do activeCount = activeCount + 1 end
     DebugMessage("|cFFFFFF00[DATA]|r Checking kill tracking for " .. npcName .. " (ID: " .. npcId .. ") against " .. activeCount .. " tracked quests", 1, 1, 0)
     
+    -- Debug: Show what's actually in _activeTracking
+    DebugMessage("|cFFFFFF00[DATA]|r _activeTracking contents:", 1, 1, 0)
+    for questId, value in pairs(_activeTracking) do
+        DebugMessage("|cFFFFFF00[DATA]|r   Quest " .. questId .. " = " .. tostring(value), 1, 1, 0)
+    end
+    
+    -- Debug: Show what's in QuestieDataCollection.quests
+    DebugMessage("|cFFFFFF00[DATA]|r QuestieDataCollection.quests contents:", 1, 1, 0)
+    if QuestieDataCollection and QuestieDataCollection.quests then
+        for questId, questData in pairs(QuestieDataCollection.quests) do
+            DebugMessage("|cFFFFFF00[DATA]|r   Quest " .. questId .. " exists with name: " .. (questData.name or "nil"), 1, 1, 0)
+        end
+    else
+        DebugMessage("|cFFFFFF00[DATA]|r QuestieDataCollection.quests is nil!", 1, 1, 0)
+    end
+    
     -- Check all tracked quests to see if this mob is relevant
     for questId in pairs(_activeTracking) do
-        DebugMessage("|cFFFFFF00[DATA]|r Checking quest " .. questId .. " - In DB: " .. tostring(IsQuestInDatabase(questId)), 1, 1, 0)
+        local inDB = IsQuestInDatabase(questId)
+        local dbQuest = QuestieDB.GetQuest(questId)
+        local dbQuestName = dbQuest and dbQuest.name or "nil"
+        DebugMessage("|cFFFFFF00[DATA]|r Checking quest " .. questId .. " - In DB: " .. tostring(inDB) .. " - DB Quest Name: " .. tostring(dbQuestName), 1, 1, 0)
         if not IsQuestInDatabase(questId) then
             local questData = QuestieDataCollection.quests[questId]
             if questData then
@@ -3927,10 +4011,17 @@ function QuestieDataCollector:RescanQuestLog()
     
     local scannedCount = 0
     local updatedCount = 0
+    local restoredCount = 0
+    
+    -- Debug quest log access
+    local numEntries = GetNumQuestLogEntries()
+    DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00[DEBUG]|r GetNumQuestLogEntries() returned: " .. numEntries, 1, 1, 0)
     
     -- Scan through the quest log
-    for i = 1, GetNumQuestLogEntries() do
+    for i = 1, numEntries do
         local title, level, tag, isHeader, _, _, _, _, questId = GetQuestLogTitle(i)
+        
+        DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00[DEBUG]|r Entry " .. i .. ": " .. (title or "nil") .. " (ID: " .. (questId or "nil") .. ", header: " .. tostring(isHeader), 1, 1, 0)
         
         if not isHeader and questId and questId > 0 then
             scannedCount = scannedCount + 1
@@ -4024,11 +4115,32 @@ function QuestieDataCollector:RescanQuestLog()
                     updatedCount = updatedCount + 1
                     DebugMessage("|cFF00FF00[DATA]|r Updated: " .. title .. " (ID: " .. questId .. ")", 0, 1, 0)
                 end
+                
+                -- CRITICAL: Restore quest to active tracking if it should be tracked
+                -- This fixes the issue where quests exist in collection but not in _activeTracking
+                if not _activeTracking[questId] and not questData.turnedIn then
+                    -- Check if quest should be actively tracked
+                    if not IsQuestInDatabase(questId) then  -- This respects dev mode
+                        _activeTracking[questId] = true
+                        restoredCount = restoredCount + 1
+                        DebugMessage("|cFF00FF00[DATA]|r Restored to active tracking: " .. title .. " (ID: " .. questId .. ")", 0, 1, 0)
+                    end
+                end
+            else
+                -- Quest is in log but we don't have data for it - start tracking if needed
+                if not IsQuestInDatabase(questId) then  -- This respects dev mode
+                    QuestieDataCollector:TrackQuestAccepted(i, questId)
+                    restoredCount = restoredCount + 1
+                end
             end
         end
     end
     
-    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FFFF[Data Collector]|r Rescan complete. Scanned " .. scannedCount .. " quests, updated " .. updatedCount, 0, 1, 1)
+    if numEntries == 0 then
+        DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[Data Collector]|r No quest log entries found! Make sure your QUEST LOG IS OPEN when running /qdc rescan", 1, 0, 0)
+    else
+        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FFFF[Data Collector]|r Rescan complete. Scanned " .. scannedCount .. " quests, updated " .. updatedCount .. ", restored " .. restoredCount .. " to active tracking", 0, 1, 1)
+    end
 end
 
 function QuestieDataCollector:ExportAreaData(zoneName)
@@ -4376,11 +4488,82 @@ SlashCmdList["QUESTIEDATACOLLECTOR"] = function(msg)
             DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[Data Collector]|r Usage: /qdc turnin <questId> (target NPC first)", 1, 0, 0)
         end
     elseif cmd == "debug" then
+        -- Check for specific quest ID
+        local questId = tonumber(args[2])
+        if questId then
+            DEFAULT_CHAT_FRAME:AddMessage("|cFF00FFFF=== Quest " .. questId .. " Debug ===|r", 0, 1, 1)
+            
+            -- Show dev mode status
+            local devMode = Questie.db.profile.dataCollectionDevMode
+            DEFAULT_CHAT_FRAME:AddMessage("Dev Mode: " .. (devMode and "|cFF00FF00ENABLED|r" or "|cFFFF0000DISABLED|r"), 1, 1, 1)
+            
+            -- Check if in database
+            local inDB = IsQuestInDatabase(questId)
+            DEFAULT_CHAT_FRAME:AddMessage("IsQuestInDatabase(): " .. tostring(inDB), 1, 1, 1)
+            
+            -- Check raw database quest
+            local dbQuest = QuestieDB.GetQuest(questId)
+            if dbQuest then
+                DEFAULT_CHAT_FRAME:AddMessage("Raw DB Quest Name: '" .. (dbQuest.name or "nil") .. "'", 1, 1, 1)
+            else
+                DEFAULT_CHAT_FRAME:AddMessage("Raw DB Quest: nil", 1, 1, 1)
+            end
+            
+            -- Check if actively tracking
+            local activelyTracking = _activeTracking[questId] and "YES" or "NO"
+            DEFAULT_CHAT_FRAME:AddMessage("In _activeTracking: " .. activelyTracking, 1, 1, 1)
+            
+            -- Check collected data
+            local questData = QuestieDataCollection.quests[questId]
+            if questData then
+                DEFAULT_CHAT_FRAME:AddMessage("Collected Data: YES ('" .. (questData.name or "no name") .. "')", 1, 1, 1)
+                DEFAULT_CHAT_FRAME:AddMessage("Kill Count: " .. (questData.kills and #questData.kills or 0), 1, 1, 1)
+                DEFAULT_CHAT_FRAME:AddMessage("Turned In: " .. (questData.turnedIn and "YES" or "NO"), 1, 1, 1)
+            else
+                DEFAULT_CHAT_FRAME:AddMessage("Collected Data: NO", 1, 1, 1)
+            end
+            
+            return
+        end
+        
+        -- Toggle debug messages
         Questie.db.profile.debugDataCollector = not Questie.db.profile.debugDataCollector
         if Questie.db.profile.debugDataCollector then
             DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Data Collector]|r Debug messages enabled", 0, 1, 0)
         else
             DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[Data Collector]|r Debug messages disabled", 1, 0, 0)
+        end
+        DEFAULT_CHAT_FRAME:AddMessage("Usage: /qdc debug [questId] - Debug specific quest", 0.7, 0.7, 0.7)
+    elseif cmd == "forcetrack" then
+        local questId = tonumber(args[2])
+        if questId then
+            -- Force add to active tracking regardless of conditions
+            _activeTracking[questId] = true
+            DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Data Collector]|r FORCED quest " .. questId .. " into active tracking", 0, 1, 0)
+        else
+            DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[Data Collector]|r Usage: /qdc forcetrack <questId>", 1, 0, 0)
+        end
+    elseif cmd == "restore" then
+        local questId = tonumber(args[2])
+        if questId and QuestieDataCollection.quests[questId] then
+            local questData = QuestieDataCollection.quests[questId]
+            if not questData.turnedIn and not IsQuestInDatabase(questId) then
+                _activeTracking[questId] = true
+                DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Data Collector]|r Restored quest " .. questId .. " (" .. (questData.name or "Unknown") .. ") to active tracking", 0, 1, 0)
+            else
+                DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[Data Collector]|r Cannot restore quest " .. questId .. " - either turned in or in database", 1, 0, 0)
+            end
+        else
+            DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[Data Collector]|r Quest " .. (questId or "invalid") .. " not found in collected data", 1, 0, 0)
+        end
+    elseif cmd == "devmode" then
+        Questie.db.profile.dataCollectionDevMode = not Questie.db.profile.dataCollectionDevMode
+        if Questie.db.profile.dataCollectionDevMode then
+            DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[DEV MODE ENABLED]|r Now collecting ALL quests (including database quests)", 1, 0, 0)
+            DEFAULT_CHAT_FRAME:AddMessage("|cFFFFAA00Note:|r Use /reload to apply to existing tracked quests", 1, 0.7, 0)
+        else
+            DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DEV MODE DISABLED]|r Now only collecting missing quests", 0, 1, 0)
+            DEFAULT_CHAT_FRAME:AddMessage("|cFFFFAA00Note:|r Use /reload to stop tracking database quests", 1, 0.7, 0)
         end
     elseif cmd == "validate" then
         local questId = tonumber(args[2])
@@ -4411,9 +4594,11 @@ SlashCmdList["QUESTIEDATACOLLECTOR"] = function(msg)
         DEFAULT_CHAT_FRAME:AddMessage("/qdc questgiver <questId> - Manually capture quest giver (target NPC first)", 1, 1, 1)
         DEFAULT_CHAT_FRAME:AddMessage("/qdc turnin <questId> - Manually capture turn-in NPC (target NPC first)", 1, 1, 1)
         DEFAULT_CHAT_FRAME:AddMessage("/qdc clear - Clear all collected data", 1, 1, 1)
-        DEFAULT_CHAT_FRAME:AddMessage("/qdc rescan - Re-scan quest log for missing data", 1, 1, 1)
+        DEFAULT_CHAT_FRAME:AddMessage("/qdc rescan - Re-scan quest log for missing data (QUEST LOG MUST BE OPEN)", 1, 1, 1)
+        DEFAULT_CHAT_FRAME:AddMessage("/qdc restore <questId> - Manually restore quest to active tracking", 1, 1, 1)
         DEFAULT_CHAT_FRAME:AddMessage("/qdc recompile - Force database recompile (reloads UI)", 1, 1, 1)
         DEFAULT_CHAT_FRAME:AddMessage("/qdc validate [questId] - Validate collected quest data", 1, 1, 1)
-        DEFAULT_CHAT_FRAME:AddMessage("/qdc debug - Toggle debug messages", 1, 1, 1)
+        DEFAULT_CHAT_FRAME:AddMessage("/qdc debug [questId] - Toggle debug messages or debug specific quest", 1, 1, 1)
+        DEFAULT_CHAT_FRAME:AddMessage("/qdc devmode - Toggle dev mode (collect ALL quest data)", 1, 1, 1)
     end
 end
