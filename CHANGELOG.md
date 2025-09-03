@@ -2,6 +2,24 @@
 
 ## [Unreleased]
 
+### Fixed
+- **QuestieSlash command error with ClearAllNotes**
+  - Fixed incorrect module reference: QuestieMap:ClearAllNotes() → QuestieQuest:ClearAllNotes()
+  - Resolves "attempt to call method 'ClearAllNotes' (a nil value)" error during quest refresh
+- **Data Collection coordinate formatting crashes**
+  - Fixed nil coordinate values causing string.format errors in export window
+  - Added SafeFormatCoords() helper function for defensive coordinate handling
+  - Prevents "bad argument #2 to 'format' (number expected, got nil)" crashes
+  - Graceful fallback messages for missing or invalid coordinate data
+- **Enhanced objective tracking improvements from v1.0.68 analysis**
+  - Improved progress location tracking with mob kill information
+  - Added "Progress locations:" section matching v1.0.68 format
+  - Progress entries now show "[55.4, 12.9] in Durotar - Killed Bloodtalon Scythemaw"
+  - Enhanced objective type detection: (monster), (item), (area)
+  - Better correlation between combat events and quest progress updates
+  - Added kill tracking with 5-second correlation window for progress updates
+  - Enhanced export format to display detailed objective progress like v1.0.68
+
 ### Added
 - **Automatic completed quest sync on version updates**
   - Questie now automatically refreshes completed quests from server when updated

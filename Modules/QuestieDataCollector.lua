@@ -1156,12 +1156,22 @@ function QuestieDataCollector:UpdateQuestObjectives(questId)
                 -- Capture location of progress
                 local coords = QuestieDataCollector:GetPlayerCoordinates()
                 if coords then
-                    table.insert(objective.progress, {
+                    -- Check if this progress update is related to a recent kill
+                    local recentKill = QuestieDataCollector:GetRecentKillInfo()
+                    local progressEntry = {
                         text = text,
                         finished = finished,
                         timestamp = time(),
                         coords = coords
-                    })
+                    }
+                    
+                    -- Add kill information if available
+                    if recentKill then
+                        progressEntry.killedMob = recentKill.name
+                        DebugMessage("|cFF00FF00[DATA]|r Progress update linked to kill: " .. recentKill.name, 0, 1, 0)
+                    end
+                    
+                    table.insert(objective.progress, progressEntry)
                     
                     DebugMessage("|cFF00FFFF[DATA]|r Objective progress: " .. text, 0, 1, 1)
                 end
@@ -1519,11 +1529,20 @@ function QuestieDataCollector:HandleCombatEvent(...)
             -- Extract NPC ID from GUID
             local npcId = tonumber(destGUID:sub(6, 12), 16)
             if npcId and npcId > 0 then
-                -- Store recent kill for item correlation
+                -- Store recent kill for item correlation and progress tracking
+                local coords = QuestieDataCollector:GetPlayerCoordinates()
                 _recentKills[npcId] = {
                     name = destName,
-                    timestamp = time()
+                    timestamp = time(),
+                    coords = coords  -- Include location of kill for progress tracking
                 }
+                
+                -- Debug message for kill tracking
+                if coords then
+                    DebugMessage("|cFF8B4513[DATA]|r Tracked kill: " .. destName .. " at " .. 
+                               string.format("%.1f, %.1f", coords.x or 0, coords.y or 0) .. " in " .. 
+                               (coords.zone or "Unknown"), 0.5, 0.3, 0.1)
+                end
                 
                 -- Clean up old kills (older than 10 seconds)
                 for id, data in pairs(_recentKills) do
@@ -1533,6 +1552,39 @@ function QuestieDataCollector:HandleCombatEvent(...)
                 end
             end
         end
+    end
+end
+
+-- Helper function to get the most recent kill info for progress tracking
+function QuestieDataCollector:GetRecentKillInfo()
+    local mostRecentKill = nil
+    local newestTimestamp = 0
+    
+    -- Find the most recent kill within the last 5 seconds
+    local currentTime = time()
+    for npcId, killData in pairs(_recentKills) do
+        if (currentTime - killData.timestamp) <= 5 and killData.timestamp > newestTimestamp then
+            newestTimestamp = killData.timestamp
+            mostRecentKill = killData
+        end
+    end
+    
+    return mostRecentKill
+end
+
+-- Helper function to safely format coordinates (prevents nil errors)
+function QuestieDataCollector:SafeFormatCoords(coords)
+    if not coords then
+        return "[No coordinates available]"
+    end
+    
+    local x = coords.x
+    local y = coords.y
+    
+    if x and y and type(x) == "number" and type(y) == "number" then
+        return string.format("%.1f, %.1f", x, y)
+    else
+        return "[Invalid coordinates]"
     end
 end
 
@@ -2504,8 +2556,19 @@ function QuestieDataCollector:ShowExportWindow(questId)
         local data = QuestieDataCollection.quests[questId]
         exportText = self:FormatQuestExport(questId, data)
     else
-        -- Export ALL collected data
-        exportText = "=== QUESTIE DATA COLLECTION EXPORT ===\n"
+        -- Export ALL collected data (Batch submission)
+        exportText = "════════════════════════════════════════════════════════════════\n"
+        exportText = exportText .. "                  HOW TO SUBMIT YOUR REPORT                     \n"
+        exportText = exportText .. "════════════════════════════════════════════════════════════════\n\n"
+        exportText = exportText .. "1. Copy all text below (Ctrl+C to copy)\n"
+        exportText = exportText .. "2. Go to: https://github.com/trav346/Questie/issues\n"
+        exportText = exportText .. "3. Click 'New Issue'\n"
+        exportText = exportText .. "4. Title: Batch submission\n"
+        exportText = exportText .. "5. Paste this entire report in the description\n"
+        exportText = exportText .. "6. Click 'Submit new issue'\n\n"
+        exportText = exportText .. "════════════════════════════════════════════════════════════════\n"
+        exportText = exportText .. "              QUESTIE DATA COLLECTION EXPORT                    \n"
+        exportText = exportText .. "════════════════════════════════════════════════════════════════\n\n"
         exportText = exportText .. "Version: " .. (QuestieDataCollection.version or "1.1.0") .. "\n"
         exportText = exportText .. "Date: " .. date("%Y-%m-%d %H:%M:%S") .. "\n"
         
@@ -2698,7 +2761,7 @@ function QuestieDataCollector:ShowExportWindow(questId)
             
             for locKey, locData in pairs(QuestieDataCollection.mailboxes) do
                 exportText = exportText .. "Location: " .. (locData.zone or "Unknown Zone") .. "\n"
-                exportText = exportText .. "Coords: " .. string.format("%.1f, %.1f", locData.x or 0, locData.y or 0) .. "\n\n"
+                exportText = exportText .. "Coords: " .. QuestieDataCollector:SafeFormatCoords(locData) .. "\n\n"
             end
         end
         
@@ -2789,7 +2852,7 @@ function QuestieDataCollector:FormatQuestExport(questId, questData)
         export = export .. "  NPC: " .. (questData.questGiver.name or "Unknown") .. " (ID: " .. (questData.questGiver.id or 0) .. ")\n"
         if questData.questGiver.coords then
             export = export .. "  Location: " .. (questData.questGiver.coords.zone or "Unknown") .. "\n"
-            export = export .. "  Coords: " .. string.format("%.1f, %.1f", questData.questGiver.coords.x or 0, questData.questGiver.coords.y or 0) .. "\n"
+            export = export .. "  Coords: " .. QuestieDataCollector:SafeFormatCoords(questData.questGiver.coords) .. "\n"
         end
         export = export .. "\n"
     end
@@ -2807,22 +2870,53 @@ function QuestieDataCollector:FormatQuestExport(questId, questData)
     
     -- Objectives
     if questData.objectives and #questData.objectives > 0 then
-        export = export .. "OBJECTIVES:\n"
+        export = export .. "OBJECTIVES:\n\n"
         for i, obj in ipairs(questData.objectives) do
             local status = obj.finished and "[x]" or "[ ]"
             -- Debug: Show what we actually have
             if not obj.text or obj.text == "" then
-                export = export .. "  " .. status .. " " .. i .. ". [NO TEXT CAPTURED - type: " .. (obj.type or "nil") .. "]\n"
+                export = export .. status .. " " .. i .. ". [NO TEXT CAPTURED - type: " .. (obj.type or "nil") .. "]\n"
             else
-                export = export .. "  " .. status .. " " .. i .. ". " .. obj.text .. "\n"
+                -- Enhanced display with objective type information like v1.0.68
+                local objText = obj.text
+                
+                -- Try to determine objective type based on text patterns
+                local objType = nil
+                if objText:find("slain:") or objText:find("killed") then
+                    objType = "monster"
+                elseif objText:find(": %d+/%d+ %(item%)") or objText:find("Collect") then
+                    objType = "item"
+                elseif objText:find("explored") or objText:find("Discover") then
+                    objType = "area"
+                end
+                
+                -- Format like v1.0.68: "Bloodtalon Scythemaw slain: 10/10 (monster)"
+                if objType and not objText:find("%(.-%)") then
+                    export = export .. objText .. " (" .. objType .. ")\n"
+                else
+                    export = export .. objText .. "\n"
+                end
             end
-            -- Show last known progress if available
+            
+            -- Show progress locations if available (matching v1.0.68 format)
             if obj.progress and #obj.progress > 0 then
-                local lastProgress = obj.progress[#obj.progress]
-                export = export .. "      Last update: " .. lastProgress.text .. "\n"
+                export = export .. "Progress locations:\n"
+                for _, progressEntry in ipairs(obj.progress) do
+                    if progressEntry.coords and progressEntry.coords.x and progressEntry.coords.y then
+                        local coordStr = string.format("[%.1f, %.1f]", progressEntry.coords.x, progressEntry.coords.y)
+                        local zoneStr = progressEntry.coords.zone or "Unknown"
+                        
+                        -- Add mob kill information if available
+                        if progressEntry.killedMob then
+                            export = export .. coordStr .. " in " .. zoneStr .. " - Killed " .. progressEntry.killedMob .. "\n"
+                        else
+                            export = export .. coordStr .. " in " .. zoneStr .. "\n"
+                        end
+                    end
+                end
             end
+            export = export .. "\n"
         end
-        export = export .. "\n"
     else
         export = export .. "OBJECTIVES: [NONE CAPTURED]\n\n"
     end
@@ -2833,7 +2927,7 @@ function QuestieDataCollector:FormatQuestExport(questId, questData)
         export = export .. "  NPC: " .. (questData.turnInNpc.name or "Unknown") .. " (ID: " .. (questData.turnInNpc.id or 0) .. ")\n"
         if questData.turnInNpc.coords then
             export = export .. "  Location: " .. (questData.turnInNpc.coords.zone or "Unknown") .. "\n"
-            export = export .. "  Coords: " .. string.format("%.1f, %.1f", questData.turnInNpc.coords.x or 0, questData.turnInNpc.coords.y or 0) .. "\n"
+            export = export .. "  Coords: " .. QuestieDataCollector:SafeFormatCoords(questData.turnInNpc.coords) .. "\n"
         end
         export = export .. "\n"
     end
@@ -2998,6 +3092,15 @@ function QuestieDataCollector:ExportQuest(questId)
     -- Generate export text with clear visual separators
     local export = "\n"
     export = export .. "════════════════════════════════════════════════════════════════\n"
+    export = export .. "                  HOW TO SUBMIT YOUR REPORT                     \n"
+    export = export .. "════════════════════════════════════════════════════════════════\n\n"
+    export = export .. "1. Copy all text below (Ctrl+C to copy)\n"
+    export = export .. "2. Go to: https://github.com/trav346/Questie/issues\n"
+    export = export .. "3. Click 'New Issue'\n"
+    export = export .. "4. Title: Missing Quest: " .. (questData.name or "Unknown") .. " (ID: " .. questId .. ")\n"
+    export = export .. "5. Paste this entire report in the description\n"
+    export = export .. "6. Click 'Submit new issue'\n\n"
+    export = export .. "════════════════════════════════════════════════════════════════\n"
     export = export .. "                     QUEST DATA EXPORT                          \n"
     export = export .. "════════════════════════════════════════════════════════════════\n\n"
     export = export .. "Quest ID: " .. questId .. "\n"
@@ -3019,7 +3122,7 @@ function QuestieDataCollector:ExportQuest(questId)
         export = export .. "  NPC: " .. (questData.questGiver.name or "Unknown") .. " (ID: " .. (questData.questGiver.id or 0) .. ")\n"
         if questData.questGiver.coords then
             export = export .. "  Location: " .. (questData.questGiver.coords.zone or "Unknown") .. "\n"
-            export = export .. "  Coords: " .. string.format("%.1f, %.1f", questData.questGiver.coords.x or 0, questData.questGiver.coords.y or 0) .. "\n"
+            export = export .. "  Coords: " .. QuestieDataCollector:SafeFormatCoords(questData.questGiver.coords) .. "\n"
         end
         export = export .. "\n"
     end
@@ -3039,7 +3142,7 @@ function QuestieDataCollector:ExportQuest(questId)
         export = export .. "  NPC: " .. (questData.turnInNpc.name or "Unknown") .. " (ID: " .. (questData.turnInNpc.id or 0) .. ")\n"
         if questData.turnInNpc.coords then
             export = export .. "  Location: " .. (questData.turnInNpc.coords.zone or "Unknown") .. "\n"
-            export = export .. "  Coords: " .. string.format("%.1f, %.1f", questData.turnInNpc.coords.x or 0, questData.turnInNpc.coords.y or 0) .. "\n"
+            export = export .. "  Coords: " .. QuestieDataCollector:SafeFormatCoords(questData.turnInNpc.coords) .. "\n"
         end
         export = export .. "\n"
     end
@@ -3777,12 +3880,21 @@ function QuestieDataCollector:RescanQuestLog()
                         end
                         
                         if not lastProgress or lastProgress.text ~= text then
-                            table.insert(questData.objectives[j].progress, {
+                            -- Check if this progress update is related to a recent kill
+                            local recentKill = QuestieDataCollector:GetRecentKillInfo()
+                            local progressEntry = {
                                 text = text,
                                 finished = finished,
                                 timestamp = time(),
                                 coords = QuestieDataCollector:GetPlayerCoordinates()
-                            })
+                            }
+                            
+                            -- Add kill information if available
+                            if recentKill then
+                                progressEntry.killedMob = recentKill.name
+                            end
+                            
+                            table.insert(questData.objectives[j].progress, progressEntry)
                             updated = true
                         end
                     end

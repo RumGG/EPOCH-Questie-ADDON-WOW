@@ -119,7 +119,7 @@ function QuestieSlash.HandleCommands(input)
             GetQuestsCompleted(Questie.db.char.complete)
             
             -- Remove all quest map icons first
-            QuestieMap:ClearAllNotes()
+            QuestieQuest:ClearAllNotes()
             
             -- Force a full quest refresh
             QuestieQuest:Initialize()
