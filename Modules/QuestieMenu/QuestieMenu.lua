@@ -359,7 +359,15 @@ function QuestieMenu:Show(hideDelay)
     if Questie.db.profile.enableDataCollection then
         tinsert(menuTable, { text= l10n('Export Quest Data'), func=function()
             if QuestieDataCollector and QuestieDataCollector.ShowExportWindow then
-                QuestieDataCollector:ShowExportWindow()
+                -- Wrap in pcall to prevent third-party addon conflicts (LibGroupTalents from Skada)
+                local success, err = pcall(function()
+                    QuestieDataCollector:ShowExportWindow()
+                end)
+                
+                if not success then
+                    DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[Questie]|r Export failed due to addon conflict. Try disabling Skada addon temporarily.", 1, 0, 0)
+                    DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFFFF[Questie]|r The error was: " .. tostring(err), 1, 1, 1)
+                end
             else
                 DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[Questie] Data collector not initialized. Use /qdc export|r", 1, 0, 0)
             end

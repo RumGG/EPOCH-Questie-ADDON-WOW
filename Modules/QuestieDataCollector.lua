@@ -4553,16 +4553,24 @@ SlashCmdList["QUESTIEDATACOLLECTOR"] = function(msg)
         QuestieDataCollector:ShowTrackedQuests()
     elseif cmd == "export" then
         local questId = tonumber(args[2])
-        if questId then
-            -- Export specific quest if ID provided
-            QuestieDataCollector:ExportQuest(questId)
-        elseif args[2] == "part" and tonumber(args[3]) then
-            -- Export specific part of batch submission
-            local partNumber = tonumber(args[3])
-            QuestieDataCollector:ExportBatchPart(partNumber)
-        else
-            -- Show quest selection window for export
-            QuestieDataCollector:ShowExportWindow()
+        -- Wrap export functions in pcall to prevent third-party addon conflicts
+        local success, err = pcall(function()
+            if questId then
+                -- Export specific quest if ID provided
+                QuestieDataCollector:ExportQuest(questId)
+            elseif args[2] == "part" and tonumber(args[3]) then
+                -- Export specific part of batch submission
+                local partNumber = tonumber(args[3])
+                QuestieDataCollector:ExportBatchPart(partNumber)
+            else
+                -- Show quest selection window for export
+                QuestieDataCollector:ShowExportWindow()
+            end
+        end)
+        
+        if not success then
+            DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[QUESTIE]|r Export failed due to addon conflict. Try disabling Skada addon temporarily.", 1, 0, 0)
+            DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFFFF[QUESTIE]|r The error was: " .. tostring(err), 1, 1, 1)
         end
     elseif cmd == "services" or cmd == "service" then
         -- Export all service NPCs

@@ -11,7 +11,14 @@
   - 97% validation success rate on legacy data processing pipeline
   - All quest data syntax-validated and compilation-tested before integration
   - Automated merge system ensures only quality improvements to existing data
-  - **Special thanks to every player who submitted quest data over the years!**
+  - **Special thanks to every player who submitted quest data over the past week!**
+
+### Fixed
+- **Data Collection Export Crashes** - Fixed LibGroupTalents conflict preventing `/qdc export` from working
+  - Added pcall protection around export functions to prevent third-party addon conflicts
+  - Skada addon's LibGroupTalents-1.0 was causing arithmetic errors when export window opened
+  - Export now gracefully handles conflicts and provides helpful error messages
+  - Both slash command `/qdc export` and minimap "Export Quest Data" button now protected
 
 ## [1.1.1] - 2025-01-03
 
