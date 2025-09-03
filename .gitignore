@@ -74,20 +74,21 @@ validators/
 Validation_Scripts/
 
 # Database Backups - Keep local only
-Database/Epoch/Backups/
-Database/Epoch/*.backup*
-Database/Epoch/*.bak
-Database/Epoch/*_original.*
-Database/Epoch/*_FIXED.*
-Database/Epoch/*_backup*
-Database/Epoch/ITERATIVE_BACKUPS/
-Database/Epoch/*_BEFORE_*
-Database/Epoch/*_COMPREHENSIVE_*
-Database/Epoch/*_SURGICAL_*
-Database/Epoch/*_CAREFUL_*
-Database/Epoch/*_FINAL_*
-Database/Epoch/*_FULLY_*
-Database/Epoch/FIX_SUMMARY.md
+Database/Backups/
+Database/*/Backups/
+Database/*/*.backup*
+Database/*/*.bak
+Database/*/*_original.*
+Database/*/*_FIXED.*
+Database/*/*_backup*
+Database/*/ITERATIVE_BACKUPS/
+Database/*/*_BEFORE_*
+Database/*/*_COMPREHENSIVE_*
+Database/*/*_SURGICAL_*
+Database/*/*_CAREFUL_*
+Database/*/*_FINAL_*
+Database/*/*_FULLY_*
+Database/*/FIX_SUMMARY.md
 
 # Python scripts - Development only
 *.py
@@ -111,3 +112,21 @@ Modules/*_PATCH.*
 
 # Git maintenance
 .git-rewrite/
+
+# Additional development exclusions
+config.json
+*.md5
+*_workspace/
+workspace/
+testing_*/
+test_*/
+output/
+archive/
+Archive/
+ready_to_apply/
+processed/
+*_converter.*
+*_validator.*
+audit_*.txt
+report_*.txt
+*.cfg
