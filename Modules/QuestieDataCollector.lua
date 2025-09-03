@@ -1146,6 +1146,11 @@ function QuestieDataCollector:UpdateQuestObjectives(questId)
     SelectQuestLogEntry(questIndex)
     local numObjectives = GetNumQuestLeaderBoards(questIndex)
     
+    -- Ensure objectives table exists (defensive check for old save data)
+    if not questData.objectives then
+        questData.objectives = {}
+    end
+    
     for i = 1, numObjectives do
         local text, objectiveType, finished = GetQuestLogLeaderBoard(i, questIndex)
         if text and questData.objectives[i] then
@@ -1448,6 +1453,11 @@ function QuestieDataCollector:TrackTargetedMob()
         if not IsQuestInDatabase(questId) then
             local questData = QuestieDataCollection.quests[questId]
             if questData then
+                -- Ensure mobs table exists (defensive check for old save data)
+                if not questData.mobs then
+                    questData.mobs = {}
+                end
+                
                 -- Store mob info
                 if not questData.mobs[npcId] then
                     questData.mobs[npcId] = {
@@ -1745,6 +1755,11 @@ function QuestieDataCollector:HandleLootMessage(message)
         if not IsQuestInDatabase(questId) then
             local questData = QuestieDataCollection.quests[questId]
             if questData then
+                -- Ensure items table exists (defensive check for old save data)
+                if not questData.items then
+                    questData.items = {}
+                end
+                
                 -- Store item info for any item looted while on this quest
                 if not questData.items[itemId] then
                     questData.items[itemId] = {
