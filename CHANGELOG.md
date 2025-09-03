@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+## [1.1.3] - 2025-09-03
+
+### Fixed
+- **Repository Cleanup** - Removed accidentally included temporary analysis files from release
+  - Cleaned up development files that were not intended for distribution
+  - Added additional patterns to .gitignore to prevent future inclusion
+  - Maintains clean addon package for users
+
 ## [1.1.2] - 2025-09-03
 
 ### Added
