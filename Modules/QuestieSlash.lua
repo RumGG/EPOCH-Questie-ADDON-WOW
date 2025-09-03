@@ -36,8 +36,10 @@ function QuestieSlash.HandleCommands(input)
         table.insert(commands, c)
     end
 
+    -- Parse primary/secondary command early for all handlers
     local mainCommand = commands[1]
     local subCommand = commands[2]
+
 
     -- /questie
     if mainCommand == "" or not mainCommand then
@@ -65,8 +67,6 @@ function QuestieSlash.HandleCommands(input)
         print(Questie:Colorize("/questie dumplog - " .. l10n("Export your quest log data for troubleshooting"), "yellow"));
         print(Questie:Colorize("/questie flex - " .. l10n("Flex the amount of quests you have completed so far"), "yellow"));
         print(Questie:Colorize("/questie doable [questID] - " .. l10n("Prints whether you are eligibile to do a quest"), "yellow"));
-        print(Questie:Colorize("/questie version - " .. l10n("Prints Questie and client version info"), "yellow"));
-        print(Questie:Colorize("/questie version check - " .. l10n("Compare EpogQuestie versions with all server users"), "yellow"));
         return;
     end
 
