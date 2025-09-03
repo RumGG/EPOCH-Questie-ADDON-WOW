@@ -795,6 +795,15 @@ function QuestieDataCollector:TrackQuestAccepted(questIndex, questId)
         end
     end
     
+    -- Store player class, race, and faction information (useful for class/race/faction specific quests)
+    local playerClass, playerClassLocal = UnitClass("player")
+    local playerRace, playerRaceLocal = UnitRace("player")
+    local playerFaction = UnitFactionGroup("player") -- Returns "Alliance" or "Horde"
+    questData.playerClass = playerClass
+    questData.playerRace = playerRace
+    questData.playerFaction = playerFaction
+    questData.playerLevel = UnitLevel("player")
+    
     -- Check if this is a commission (profession) quest
     if string.find(questName:upper(), "COMMISSION") then
         questData.isCommission = true
@@ -2764,6 +2773,22 @@ function QuestieDataCollector:ShowExportWindow(questId)
         exportText = exportText .. "════════════════════════════════════════════════════════════════\n\n"
         exportText = exportText .. "Version: " .. (QuestieDataCollection.version or "1.1.0") .. "\n"
         exportText = exportText .. "Date: " .. date("%Y-%m-%d %H:%M:%S") .. "\n"
+        
+        -- Player character information
+        local playerClass = UnitClass("player")
+        local playerRace = UnitRace("player") 
+        local playerFaction = UnitFactionGroup("player")
+        local playerLevel = UnitLevel("player")
+        if playerClass and playerRace then
+            exportText = exportText .. "Player: " .. playerRace .. " " .. playerClass
+            if playerFaction then
+                exportText = exportText .. " (" .. playerFaction .. ")"
+            end
+            if playerLevel then
+                exportText = exportText .. " Level " .. playerLevel
+            end
+            exportText = exportText .. "\n"
+        end
         
         -- Clearly explain the capture mode
         if _captureAllData then

@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+### Added
+- **Enhanced Quest Data Collection** - Now tracks player class, race, faction, and level information
+  - Records player class and race when accepting quests (useful for class/race specific quest analysis)
+  - Captures player faction (Alliance/Horde) for faction-specific quest identification
+  - Records player level at time of quest acceptance
+  - Information appears in exported quest data for GitHub submissions
+  - Helps identify quest requirements and availability patterns
+
 ## [1.1.3] - 2025-09-03
 
 ### Fixed
