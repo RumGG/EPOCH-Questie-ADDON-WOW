@@ -17,7 +17,7 @@ local C_Timer -- Will be assigned after initialization
 
 -- Version control - only accept data from this version or later
 local MINIMUM_VERSION = "1.1.0"
-local CURRENT_VERSION = "1.1.0"
+local CURRENT_VERSION = "1.1.2"
 
 -- WoW AreaID to Questie zone ID mapping for problematic zones
 local WOW_AREA_TO_QUESTIE_ZONE = {

@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [1.1.2] - 2025-09-03
+
 ### Added
 - **Legacy Quest Data Integration** - Massive community quest database expansion
   - Processed 875 GitHub quest submissions from dedicated Project Epoch players  
