@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [1.1.1] - 2025-01-03
+
 ### Fixed
 - **QuestieSlash command error with ClearAllNotes**
   - Fixed incorrect module reference: QuestieMap:ClearAllNotes() → QuestieQuest:ClearAllNotes()
