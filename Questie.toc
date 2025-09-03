@@ -101,6 +101,7 @@ Modules\Libs\RamerDouglasPeucker.lua
 
 # Modules
 Modules\QuestieValidateGameCache.lua
+Modules\Reminder\Reminder.lua
 Modules\QuestieVersionCheck.lua
 Modules\QuestieInit.lua
 Modules\Fixes\QuestRewardTooltipFix.lua

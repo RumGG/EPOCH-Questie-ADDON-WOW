@@ -154,6 +154,9 @@ function QuestieOptionsDefaults:Load()
             objectiveProgressSoundChoiceName = "ObjectiveProgress",
             iconTheme = "questie",
 
+            -- Update reminder
+            disableUpdateReminder = false,
+
             minimap = {
                 hide = false
             },
