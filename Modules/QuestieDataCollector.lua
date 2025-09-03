@@ -449,11 +449,10 @@ function QuestieDataCollector:GetPlayerCoordinates()
     
     -- Try QuestieCoords first
     if QuestieCoords and QuestieCoords.GetPlayerMapPosition then
-        x, y = QuestieCoords.GetPlayerMapPosition()
-        -- DEBUG: Check QuestieCoords return types
-        if x and y and (type(x) ~= "number" or type(y) ~= "number") then
-            DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[DEBUG]|r QuestieCoords.GetPlayerMapPosition returned bad types: x=" .. type(x) .. " y=" .. type(y), 1, 0.5, 0)
-            x, y = nil, nil -- Force fallback
+        -- FIX Issue #3: QuestieCoords returns (position_table, mapID), not (x, y)
+        local position, mapID = QuestieCoords.GetPlayerMapPosition()
+        if position and type(position) == "table" and position.x and position.y then
+            x, y = position.x, position.y
         end
     end
     

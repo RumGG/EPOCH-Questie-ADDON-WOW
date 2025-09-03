@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+### Added
+- **Update Reminder System** - Silent, one-time reminder to help users know about latest releases
+  - Shows once per session with 2-second delay to avoid intrusiveness
+  - Includes option to disable update reminders in Advanced Options
+  - Cleaned up version check and slash commands
+  - Helps users stay informed about important fixes and features
+
 ### Fixed
 - **CRITICAL: QuestieDB.lua StartedBy Nil Value Flood** - Fixed massive error spam in database processing threads
   - Added defensive nil check for `QO.startedBy` before accessing startedBy[1], startedBy[2], startedBy[3]
@@ -37,6 +44,23 @@
   - **This resolves the "QuestLogCache.lua:361" error chain shown in stack traces**
 
 ### Fixed
+- **CRITICAL: Coordinate System API Failures (Issue #3)** - Fixed coordinate type mismatches causing crashes and positioning errors
+  - **API Usage Fix**: Fixed QuestieDataCollector incorrectly calling QuestieCoords.GetPlayerMapPosition() expecting separate x,y values instead of position table
+  - **Type Safety**: Eliminated "x=table y=number" coordinate type mismatches that were causing crashes in data collection
+  - **Position Accuracy**: Quest objective markers now appear in correct locations instead of failing coordinate validation
+  - **Data Collection Stability**: Fixed coordinate comparison failures that were crashing QuestieDataCollector during quest tracking
+  - **Map Integration**: Restored proper coordinate handling for quest positioning and map waypoints
+  - **This eliminates the coordinate crashes affecting quest data collection and map integration**
+
+- **CRITICAL: Runtime Stub System Logic Errors (Issue #2)** - Fixed incorrect quest prefixes, zones, and levels
+  - **Quest Prefix Logic**: Fixed hardcoded ID range check causing Project Epoch's reused TBC quest IDs (11160, 11161) to get [Missing] prefix instead of [Epoch]
+  - **Zone Assignment**: Runtime stubs now use actual current zone ID instead of defaulting to 0 (unknown zone)
+  - **Quest Levels**: Fixed quest levels defaulting to 0 by extracting actual level from client quest log
+  - **Known Quest ID Reuses**: Added explicit handling for Project Epoch quests that reuse TBC quest IDs in different zones
+  - Quest 11160 "Banner of the Stonemaul" now correctly shows [Epoch] prefix and Dustwallow Marsh zone instead of [Missing] and Westfall
+  - Quest 11161 "The Essence of Enmity" now correctly shows [Epoch] prefix and proper zone/level information
+  - **This fixes the systematic misreporting of quest attributes (level, location, faction) for hundreds of quests**
+
 - **CRITICAL: Missing NPC Database Entries (Issue #1)** - Resolved database compilation failures
   - Fixed 10 missing NPC entries in epochNpcDB.lua causing `[CRITICAL] [QuestieDB:GetNPC] rawdata is nil` errors
   - Added NPCs: Mogern Blackeye (45069), Aeromir (45555), High Chief Ungarl (46009), Marwin Shrillwill (46094), Luyua Earthmoon (46130), Ordo Earthmoon (46131), Sasia Forestcrest (46165), Lorespeaker Vanza (46233), Dead Troll (46234), S.J. Erlgadin Jr. (46278)
