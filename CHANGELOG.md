@@ -19,6 +19,10 @@
   - Skada addon's LibGroupTalents-1.0 was causing arithmetic errors when export window opened
   - Export now gracefully handles conflicts and provides helpful error messages
   - Both slash command `/qdc export` and minimap "Export Quest Data" button now protected
+- **Coordinate Formatting Crashes in Export** - Fixed "bad argument #2 to 'format' (number expected, got nil)" errors
+  - Replaced unsafe string.format coordinate calls with SafeFormatCoords function
+  - Fixed multiple locations in FormatQuestExport that could crash with nil coordinates
+  - Export now gracefully handles missing coordinate data instead of crashing
 
 ## [1.1.1] - 2025-01-03
 

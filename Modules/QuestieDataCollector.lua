@@ -3096,7 +3096,7 @@ function QuestieDataCollector:FormatQuestExport(questId, questData)
                 export = export .. "Progress locations:\n"
                 for _, progressEntry in ipairs(obj.progress) do
                     if progressEntry.coords and progressEntry.coords.x and progressEntry.coords.y then
-                        local coordStr = string.format("[%.1f, %.1f]", progressEntry.coords.x, progressEntry.coords.y)
+                        local coordStr = "[" .. QuestieDataCollector:SafeFormatCoords(progressEntry.coords) .. "]"
                         local zoneStr = progressEntry.coords.zone or "Unknown"
                         
                         -- Add mob kill information if available
@@ -3163,7 +3163,7 @@ function QuestieDataCollector:FormatQuestExport(questId, questData)
                     export = export .. "    Spawn locations (" .. #validCoords .. " total): "
                     for i = 1, math.min(3, #validCoords) do
                         local loc = validCoords[i]
-                        export = export .. string.format("(%.1f, %.1f) ", loc.x, loc.y)
+                        export = export .. "(" .. QuestieDataCollector:SafeFormatCoords(loc) .. ") "
                     end
                     if #validCoords > 3 then
                         export = export .. "... and " .. (#validCoords - 3) .. " more"
@@ -3212,7 +3212,7 @@ function QuestieDataCollector:FormatQuestExport(questId, questData)
                     if objData.id then
                         export = export .. " (ID: " .. objData.id .. ")"
                     end
-                    export = export .. " at [" .. string.format("%.1f, %.1f", locData.x, locData.y) .. "]"
+                    export = export .. " at [" .. QuestieDataCollector:SafeFormatCoords(locData) .. "]"
                     if locData.zone then
                         export = export .. " in " .. locData.zone
                     end
@@ -3220,7 +3220,7 @@ function QuestieDataCollector:FormatQuestExport(questId, questData)
                     firstLocation = false
                 else
                     -- Additional locations
-                    export = export .. "    Additional location: [" .. string.format("%.1f, %.1f", locData.x, locData.y) .. "]"
+                    export = export .. "    Additional location: [" .. QuestieDataCollector:SafeFormatCoords(locData) .. "]"
                     if locData.zone then
                         export = export .. " in " .. locData.zone
                     end
