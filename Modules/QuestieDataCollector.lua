@@ -450,14 +450,25 @@ function QuestieDataCollector:GetPlayerCoordinates()
     -- Try QuestieCoords first
     if QuestieCoords and QuestieCoords.GetPlayerMapPosition then
         x, y = QuestieCoords.GetPlayerMapPosition()
+        -- DEBUG: Check QuestieCoords return types
+        if x and y and (type(x) ~= "number" or type(y) ~= "number") then
+            DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[DEBUG]|r QuestieCoords.GetPlayerMapPosition returned bad types: x=" .. type(x) .. " y=" .. type(y), 1, 0.5, 0)
+            x, y = nil, nil -- Force fallback
+        end
     end
     
     -- Fallback to standard API
     if not x or not y then
         x, y = GetPlayerMapPosition("player")
+        -- DEBUG: Check standard API return types
+        if x and y and (type(x) ~= "number" or type(y) ~= "number") then
+            DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[DEBUG]|r GetPlayerMapPosition('player') returned bad types: x=" .. type(x) .. " y=" .. type(y), 1, 0.5, 0)
+            x, y = nil, nil -- Clear bad data
+        end
     end
     
-    if x and y and x > 0 and y > 0 then
+    -- CRITICAL FIX: Defensive type checking - coordinate APIs can return unexpected types
+    if x and y and type(x) == "number" and type(y) == "number" and x > 0 and y > 0 then
         -- Convert coordinates once and cache them
         local coords = {
             x = math.floor(x * 1000) / 10, -- Convert to percentage with 1 decimal

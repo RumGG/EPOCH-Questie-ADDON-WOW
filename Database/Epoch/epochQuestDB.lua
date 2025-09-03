@@ -3,6 +3,8 @@ local QuestieDB = QuestieLoader:ImportModule("QuestieDB")
 
 epochQuestData = {
 [1288] = {"Vimes's Report",{{4944}},{{4967}},nil,38,nil,2,nil,nil,nil,nil,nil,nil,nil,nil,nil,15,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil},
+[11160] = {"Banner of the Stonemaul",{{23579}},{{23579}},35,39,0,nil,{"Retrieve the Stonemaul Banner and bring it to Brogg at Brogg's Hollow."},nil,{nil,nil,{{33086}}},nil,nil,{11158},nil,nil,nil,15,nil,nil,nil,nil,nil,8},
+[11161] = {"The Essence of Enmity",{{23579}},{{23579}},35,39,0,nil,{"Bring 10 Black Dragonkin Essences to Brogg at Brogg's Hollow."},nil,{nil,nil,{{33087}}},33088,nil,{11158},nil,nil,nil,15},
 [9469] = {"Featherbeard's Endorsement",{{45019}},{{45030}},nil,46,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,1519,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil},
 [9475] = {"Reclaiming the Eggs",nil,{{45019}},nil,46,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,1519,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil},
 [26126] = {"Springsocket Eels",{{45549}},{{45549}},nil,36,nil,nil,{"Collect 10 Raw Springsocket Eels."},nil,{nil,nil,{{110001,10}}},nil,nil,nil,nil,nil,nil,3,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil},

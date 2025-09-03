@@ -1269,6 +1269,10 @@ function QuestieDB.GetQuest(questId) -- /dump QuestieDB.GetQuest(867)
             local stubSuccess, stubData = pcall(function()
                 -- Use different prefix based on quest ID range
                 local prefix = questId >= 26000 and "[Epoch] " or "[Missing] "
+                -- DEBUG: Log prefix decision for troubleshooting (only for specific quests)
+                if questId == 11160 or questId == 11161 then
+                    DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000[DEBUG]|r Runtime stub for questId: " .. questId .. " prefix: '" .. prefix .. "' condition (questId >= 26000): " .. tostring(questId >= 26000), 1, 1, 0)
+                end
                 return {
                     prefix .. (questTitle or ("Quest " .. questId)), -- [1] name
                     {{}, {}, {}}, -- [2] startedBy (properly structured: {NPCs, GameObjects, Items})

@@ -52,6 +52,14 @@ SavedVariables/
 
 # Log files
 *.log
+chatlog.txt
+
+# Debug scripts and files
+debug_*.lua
+pfquest_*.txt
+
+# Accidental nested Questie directory
+Questie/
 
 # Build artifacts
 *.zip
