@@ -27,6 +27,9 @@ end
 ---@param folkTypes table<string, {mask: NpcFlags|integer, requireSubname: boolean, data: NpcId[]}>
 local function _PopulateTownsfolkTypes(folkTypes) -- populate the table with all npc ids based on the given bitmask
     local count = 0
+    local stableMasterCount = 0
+    local flightMasterCount = 0
+    
     for id, npcData in pairs(QuestieDB.npcData) do
         local flags = npcData[QuestieDB.npcKeys.npcFlags]
         for name, folkType in pairs(folkTypes) do
@@ -36,9 +39,23 @@ local function _PopulateTownsfolkTypes(folkTypes) -- populate the table with all
                 if npcName and sub(npcName, 1, 5) ~= "[DND]" then
                     if (not folkType.requireSubname) or (subName and strlen(subName) > 1) then
                         folkType.data[#folkType.data+1] = id
+                        
+                        -- Count categories
+                        if name == "Stable Master" then
+                            stableMasterCount = stableMasterCount + 1
+                            if id == 9988 then -- Xon'cha
+                                print("[POPULATE] Xon'cha ADDED to Stable Master list")
+                            end
+                        elseif name == "Flight Master" then
+                            flightMasterCount = flightMasterCount + 1
+                            if id == 9988 then
+                                print("[POPULATE ERROR] Xon'cha wrongly ADDED to Flight Master list!")
+                            end
+                        end
+                        
                         -- Debug specific NPCs
                         if id == 9988 then -- Xon'cha
-                            print("[XONCHA] Adding to " .. name .. " (flags=" .. flags .. ", mask=" .. folkType.mask .. ", bitband=" .. bitband(flags, folkType.mask) .. ")")
+                            print("[XONCHA] Adding to " .. name .. " (flags=" .. (flags or "nil") .. ", mask=" .. folkType.mask .. ", bitband=" .. bitband(flags, folkType.mask) .. ")")
                         end
                     end
                 end
@@ -50,6 +67,8 @@ local function _PopulateTownsfolkTypes(folkTypes) -- populate the table with all
         end
         count = count + 1
     end
+    
+    print("[POPULATE] Finished: Stable Masters=" .. stableMasterCount .. ", Flight Masters=" .. flightMasterCount)
     return folkTypes
 end
 
@@ -94,6 +113,9 @@ function Townsfolk.Initialize()
     end
     
     print("[TOWNSFOLK] Building townfolk lists...")
+    print("[TOWNSFOLK] Questie.IsWotlk = " .. tostring(Questie.IsWotlk))
+    print("[TOWNSFOLK] Questie.IsTBC = " .. tostring(Questie.IsTBC))
+    print("[TOWNSFOLK] Using " .. ((Questie.IsWotlk or Questie.IsTBC) and "TBC/WotLK" or "Classic") .. " flag values")
 
     --? This datastructure is used in PopulateTownsfolkTypes to fetch multiple townfolk data in the same npc loop cycle
     ---@type table<string, {mask: NpcFlags|integer, requireSubname: boolean, data: NpcId[]}>
@@ -139,6 +161,11 @@ function Townsfolk.Initialize()
             data = {}
         }
     }
+    
+    -- Debug: Show mask values
+    print("[TOWNSFOLK] Stable Master mask = " .. (townsfolkData["Stable Master"].mask or "nil"))
+    print("[TOWNSFOLK] Flight Master mask = " .. (townsfolkData["Flight Master"].mask or "nil"))
+    
     _PopulateTownsfolkTypes(townsfolkData)
 
     local townfolk = {
