@@ -15,9 +15,10 @@ local QuestieCompat = QuestieLoader:ImportModule("QuestieCompat")
 -- Compatibility reassignments (following codebase pattern)
 local C_Timer -- Will be assigned after initialization
 
--- Version control - only accept data from this version or later
-local MINIMUM_VERSION = "1.1.0"
-local CURRENT_VERSION = "1.1.3"
+-- Version control - use TOC file as single source of truth
+local CURRENT_VERSION = GetAddOnMetadata("Questie", "Version") or "Unknown"
+-- Accept data from previous stable versions or later
+local MINIMUM_VERSION = "1.1.0" -- Oldest compatible version for data collection
 
 -- WoW AreaID to Questie zone ID mapping for problematic zones
 local WOW_AREA_TO_QUESTIE_ZONE = {
@@ -792,7 +793,7 @@ function QuestieDataCollector:TrackQuestAccepted(questIndex, questId)
     end
     
     -- Always show this message for missing quests (bypass toggle)
-    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DATA]|r Epoch quest not in database accepted: " .. questName .. " (ID: " .. questId .. ")", 0, 1, 0)
+    DebugMessage("|cFF00FF00[DATA]|r Epoch quest not in database accepted: " .. questName .. " (ID: " .. questId .. ")", 0, 1, 0)
     
     -- Initialize quest data if needed
     if not QuestieDataCollection.quests[questId] then
@@ -1045,7 +1046,7 @@ function QuestieDataCollector:TrackQuestAccepted(questIndex, questId)
     DebugMessage("|cFF00FF00[DATA]|r Now tracking quest: " .. questName .. " (ID: " .. questId .. ")", 0, 1, 0)
     
     -- Always show this message for missing quests (bypass toggle)
-    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DATA]|r Quest tracked: " .. questName .. " (ID: " .. questId .. ")", 0, 1, 0)
+    DebugMessage("|cFF00FF00[DATA]|r Quest tracked: " .. questName .. " (ID: " .. questId .. ")", 0, 1, 0)
 end
 
 function QuestieDataCollector:TrackQuestComplete()
@@ -2171,7 +2172,7 @@ function QuestieDataCollector:CaptureServiceNPC(serviceType)
             end
         end
         
-        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[DATA]|r Captured flight master: " .. npcName .. " (ID: " .. npcId .. ")", 0, 1, 0)
+        DebugMessage("|cFF00FF00[DATA]|r Captured flight master: " .. npcName .. " (ID: " .. npcId .. ")", 0, 1, 0)
         return
     end
     
@@ -2884,7 +2885,7 @@ function QuestieDataCollector:ShowExportWindow(questId)
         exportText = exportText .. "════════════════════════════════════════════════════════════════\n"
         exportText = exportText .. "              QUESTIE DATA COLLECTION EXPORT                    \n"
         exportText = exportText .. "════════════════════════════════════════════════════════════════\n\n"
-        exportText = exportText .. "Version: " .. (QuestieDataCollection.version or "1.1.0") .. "\n"
+        exportText = exportText .. "Version: " .. (QuestieDataCollection.version or CURRENT_VERSION) .. "\n"
         exportText = exportText .. "Date: " .. date("%Y-%m-%d %H:%M:%S") .. "\n"
         
         -- Player character information
@@ -3470,7 +3471,7 @@ function QuestieDataCollector:GenerateStagedPageContent(pageNum, maxPerPage)
     exportText = exportText .. "7. Use Next button for remaining pages\n\n"
     
     -- Export metadata
-    exportText = exportText .. "Version: " .. (QuestieDataCollection.version or "1.1.0") .. "\n"
+    exportText = exportText .. "Version: " .. (QuestieDataCollection.version or CURRENT_VERSION) .. "\n"
     exportText = exportText .. "Date: " .. date("%Y-%m-%d %H:%M:%S") .. "\n"
     
     local playerClass = UnitClass("player")
@@ -4742,7 +4743,7 @@ function QuestieDataCollector:ExportBatchPart(partNumber)
     exportText = exportText .. "════════════════════════════════════════════════════════════════\n"
     exportText = exportText .. "         QUESTIE DATA COLLECTION EXPORT - PART " .. partNumber .. " of " .. totalParts .. "         \n"
     exportText = exportText .. "════════════════════════════════════════════════════════════════\n\n"
-    exportText = exportText .. "Version: " .. (QuestieDataCollection.version or "1.1.0") .. "\n"
+    exportText = exportText .. "Version: " .. (QuestieDataCollection.version or CURRENT_VERSION) .. "\n"
     exportText = exportText .. "Date: " .. date("%Y-%m-%d %H:%M:%S") .. "\n"
     exportText = exportText .. "Part: " .. partNumber .. " of " .. totalParts .. " (" .. questsInThisPart .. " quests in this part)\n"
     exportText = exportText .. "Total Quests: " .. questCount .. " across all parts\n\n"

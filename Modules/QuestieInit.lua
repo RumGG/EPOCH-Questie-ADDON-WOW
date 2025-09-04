@@ -163,8 +163,13 @@ QuestieInit.Stages[1] = function() -- run as a coroutine
     HBDHooks:Init()
 
     -- Migration: Fix users who have 'custom' theme selected (causes invisible pins)
-    if Questie.db.profile.iconTheme == 'custom' then
-        Questie:Debug(Questie.DEBUG_INFO, "[Init] Migrating from 'custom' icon theme to 'questie' to fix invisible pins")
+    -- Also handles any invalid/unknown theme names
+    if Questie.db.profile.iconTheme == 'custom' or 
+       (Questie.db.profile.iconTheme ~= 'questie' and 
+        Questie.db.profile.iconTheme ~= 'blizzard' and 
+        Questie.db.profile.iconTheme ~= 'pfquest') then
+        local oldTheme = Questie.db.profile.iconTheme
+        Questie:Debug(Questie.DEBUG_INFO, "[Init] Migrating from '" .. tostring(oldTheme) .. "' icon theme to 'questie' to fix invisible/invalid pins")
         Questie.db.profile.iconTheme = 'questie'
     end
 
@@ -639,8 +644,32 @@ function QuestieInit:Init()
     -- EpogQuestie: Clean startup message
     local currentVersion = GetAddOnMetadata("Questie", "Version") or
                           GetAddOnMetadata("EpogQuestie", "Version") or "Unknown"
-    print("|cFF00FF00[Questie-Epoch]|r Version " .. currentVersion ..
-          " | Check for updates at Github: https://github.com/trav346/Questie-Epoch")
+    
+    local versionMessage = "|cFF00FF00[Questie-Epoch]|r Version " .. currentVersion
+    
+    -- Check if user dismissed an update prompt, but clear it if they've updated
+    if Questie.db and Questie.db.profile and Questie.db.profile.updateDismissedVersion then
+        -- Parse versions to see if user has updated
+        local QuestieVersionCheck = QuestieLoader:ImportModule("QuestieVersionCheck")
+        if QuestieVersionCheck then
+            local currentParsed = QuestieVersionCheck:ParseVersion(currentVersion)
+            local dismissedParsed = QuestieVersionCheck:ParseVersion(Questie.db.profile.updateDismissedVersion)
+            
+            if QuestieVersionCheck:CompareVersions(currentParsed, dismissedParsed) >= 0 then
+                -- User has updated to or past the dismissed version, clear the flag
+                Questie.db.profile.updateDismissedVersion = nil
+            else
+                -- User is still on older version
+                versionMessage = versionMessage .. " |cFFFF6F22- out of date|r"
+            end
+        else
+            versionMessage = versionMessage .. " |cFFFF6F22- out of date|r"
+        end
+    end
+    
+    versionMessage = versionMessage .. " | Check for updates at Github: https://github.com/trav346/Questie-Epoch"
+    
+    print(versionMessage)
     
     -- Initialize version checker
     local QuestieVersionCheck = QuestieLoader:ImportModule("QuestieVersionCheck")

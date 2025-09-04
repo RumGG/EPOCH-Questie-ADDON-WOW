@@ -67,6 +67,7 @@ function QuestieSlash.HandleCommands(input)
         print(Questie:Colorize("/questie dumplog - " .. l10n("Export your quest log data for troubleshooting"), "yellow"));
         print(Questie:Colorize("/questie flex - " .. l10n("Flex the amount of quests you have completed so far"), "yellow"));
         print(Questie:Colorize("/questie doable [questID] - " .. l10n("Prints whether you are eligibile to do a quest"), "yellow"));
+        print(Questie:Colorize("/questie diagnose - " .. "Check why map pins might not be showing", "yellow"));
         return;
     end
 
@@ -1048,6 +1049,70 @@ function QuestieSlash.HandleCommands(input)
 
         Questie:Print("[Eligibility] " .. tostring(QuestieDB.IsDoableVerbose(tonumber(subCommand), false, true, false)))
 
+        return
+    end
+
+    if mainCommand == "diagnose" or mainCommand == "diagnostic" or mainCommand == "pins" then
+        print(Questie:Colorize("[Questie Diagnostic]", "yellow"))
+        print("═══════════════════════════════")
+        
+        -- Check main addon state
+        print("Questie Addon Status:")
+        if Questie.db.profile.enabled then
+            print("  ✓ " .. Questie:Colorize("Questie enabled", "green"))
+        else
+            print("  ✗ " .. Questie:Colorize("Questie DISABLED", "red") .. " - Use /questie toggle to enable")
+        end
+        
+        -- Check map icons
+        print("Map Icon Settings:")
+        if Questie.db.profile.enableMapIcons then
+            print("  ✓ " .. Questie:Colorize("World map icons enabled", "green"))
+        else
+            print("  ✗ " .. Questie:Colorize("World map icons DISABLED", "red") .. " - Enable in Questie → Icons tab")
+        end
+        
+        if Questie.db.profile.enableMiniMapIcons then
+            print("  ✓ " .. Questie:Colorize("Minimap icons enabled", "green"))
+        else
+            print("  ✗ " .. Questie:Colorize("Minimap icons DISABLED", "red") .. " - Enable in Questie → Icons tab")
+        end
+        
+        -- Check icon theme
+        local theme = Questie.db.profile.iconTheme
+        print("Icon Theme: " .. Questie:Colorize(theme, "yellow"))
+        if theme == "custom" then
+            print("  ⚠ " .. Questie:Colorize("WARNING: 'custom' theme causes INVISIBLE pins!", "orange"))
+            print("    Use /reload to fix automatically, or change theme in Questie → Icons")
+        elseif theme ~= "questie" and theme ~= "blizzard" and theme ~= "pfquest" then
+            print("  ⚠ " .. Questie:Colorize("WARNING: Unknown icon theme may cause issues", "orange"))
+            print("    Recommend changing to 'questie' theme in Questie → Icons")
+        end
+        
+        -- Check continent filtering
+        if Questie.db.profile.hideIconsOnContinents then
+            print("  ⚠ " .. Questie:Colorize("Continent filtering enabled", "orange") .. " - Some zones may have hidden pins")
+        end
+        
+        -- Check migration version (helps diagnose settings reset issues)
+        print("Migration Status:")
+        local Migration = QuestieLoader:ImportModule("Migration")
+        local currentMigrationVersion = Questie.db.profile.migrationVersion or 0
+        local targetMigrationVersion = Migration and Migration:GetCurrentMigrationVersion() or "unknown"
+        
+        if currentMigrationVersion == targetMigrationVersion then
+            print("  ✓ " .. Questie:Colorize("Migration up to date", "green") .. " (v" .. currentMigrationVersion .. ")")
+        else
+            print("  ⚠ " .. Questie:Colorize("Migration pending", "orange") .. " - Current: v" .. currentMigrationVersion .. ", Target: v" .. targetMigrationVersion)
+            if currentMigrationVersion == 0 then
+                print("    This may cause settings to reset on next login if migration v1 runs")
+            end
+        end
+        
+        print("═══════════════════════════════")
+        print("Use " .. Questie:Colorize("/questie toggle", "yellow") .. " to enable/disable Questie")
+        print("Use " .. Questie:Colorize("/questie", "yellow") .. " to open settings")
+        
         return
     end
 

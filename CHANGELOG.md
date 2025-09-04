@@ -53,6 +53,52 @@
   - Uses `GetNumSkillLines()` and `GetSkillLineInfo()` APIs that exist in WoW 3.3.5 instead of post-4.0.1 APIs
   - **Resolves "GetProfessions doesn't exist in QuestieDataCollector.lua" errors for ALL profession quests**
 
+- **Data Collection Debug Message Bypassing User Settings** - Fixed flight master and quest tracking messages showing even when [DATA] messages disabled
+  - Fixed `DEFAULT_CHAT_FRAME:AddMessage()` calls bypassing user's debug message preferences
+  - All [DATA] messages now properly respect the "Show data collection messages" setting
+  - Flight master capture messages now use `DebugMessage()` instead of direct chat output
+  - **Resolves users seeing unwanted [DATA] messages despite having them disabled in settings**
+
+- **CRITICAL: Settings Reset on Version Updates** - Fixed user settings reverting to defaults during addon updates
+  - Changed AceDB profile initialization to preserve user settings instead of resetting on compatibility issues
+  - Map icon disable settings now persist through version updates instead of being re-enabled
+  - All custom user preferences (tracker settings, icon scales, etc.) now survive addon updates
+  - **Resolves widespread user reports of having to reconfigure settings after each update**
+
+- **CRITICAL: Map Pins Not Showing** - Fixed invisible pins and added comprehensive diagnostics
+  - **Enhanced Migration**: Fixed 'custom' icon theme detection that was bypassed by profile resets during version updates
+  - **Invalid Theme Protection**: Now detects and fixes any invalid/unknown icon theme names that cause invisible pins
+  - **New Diagnostic Command**: Added `/questie diagnose` command to help users identify why pins aren't showing
+  - **Complete Settings Check**: Diagnoses addon enabled status, map/minimap icon settings, icon theme issues, and continent filtering
+  - **User-Friendly Guidance**: Provides clear instructions on how to fix each identified problem
+  - **Automatic Fix**: `/reload` now automatically fixes 'custom' theme and other invalid icon themes
+  - **Resolves all user reports of "map pins not showing" with easy troubleshooting**
+
+- **CRITICAL: Settings Reset Every Login (Issue #871)** - Fixed infinite migration loop causing settings to reset constantly
+  - **Root Cause**: "Reset Questie" button set migrationVersion=nil, causing migration v1 to run on every login and reset all settings
+  - **Fixed Reset Function**: Now properly sets migrationVersion to current version after reset instead of nil
+  - **Dynamic Version Tracking**: Added Migration:GetCurrentMigrationVersion() method to prevent hardcoded version numbers
+  - **Enhanced Diagnostics**: `/questie diagnose` now shows migration status and warns about pending migrations
+  - **User Warnings**: Migration system now detects and warns users stuck in migration loops
+  - **Persistent Settings**: User settings will no longer reset every login after using "Reset Questie"
+  - **Resolves widespread Issue #871 reports of having to reconfigure settings after every login**
+
+- **Enhanced Version Display & Update Tracking** - Added version visibility and out-of-date indicators
+  - **Settings Window Title**: Now shows "Questie v1.2.0" instead of just "Questie" 
+  - **Startup Message**: Chat login message now displays current version number
+  - **Out-of-Date Indicators**: When users dismiss update prompts, shows "- out of date" in both settings title and startup message
+  - **Smart Update Detection**: Automatically clears "out of date" status when user updates to newer version
+  - **Version Persistence**: Tracks which version user dismissed to avoid repeated prompts for same version
+  - **Improved User Awareness**: Users can easily see their current version and update status at a glance
+
+- **Centralized Version Management** - Eliminated hardcoded version numbers throughout codebase
+  - **Single Source of Truth**: All version references now read from Questie.toc file using GetAddOnMetadata()
+  - **Eliminated Hardcoded Versions**: Removed outdated hardcoded versions in QuestieVersionCheck (1.1.3) and QuestieDataCollector (1.1.3, 1.1.0)
+  - **Dynamic Version Detection**: Version checking, data collection exports, and diagnostics now automatically use current version
+  - **Simplified Maintenance**: Only need to update version in one place (TOC file) for releases
+  - **Clear Release Process**: Documented process for version management and update detection
+  - **Prevents Version Drift**: No more outdated hardcoded versions causing confusion or incorrect behavior
+
 ### Fixed
 - **CRITICAL: Coordinate System API Failures (Issue #3)** - Fixed coordinate type mismatches causing crashes and positioning errors
   - **API Usage Fix**: Fixed QuestieDataCollector incorrectly calling QuestieCoords.GetPlayerMapPosition() expecting separate x,y values instead of position table

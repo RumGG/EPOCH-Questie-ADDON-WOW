@@ -39,7 +39,7 @@ local availableQuests = {}
 
 local dungeons = ZoneDB:GetDungeons()
 
-local _CalculateAvailableQuests, _DrawChildQuests, _AddStarter, _DrawAvailableQuest, _GetQuestIcon, _GetIconScaleForAvailable, _HasProperDistanceToAlreadyAddedSpawns
+local _CalculateAvailableQuests, _DrawChildQuests, _AddStarter, _DrawAvailableQuest, _GetQuestIcon, _GetIconScaleForAvailable, _HasProperDistanceToAlreadyAddedSpawns, _HasMinimumViableData
 
 ---@param callback function | nil
 function AvailableQuests.CalculateAndDrawAll(callback)
@@ -222,7 +222,7 @@ _CalculateAvailableQuests = function()
 
         if (
             (not QuestieDB.IsLevelRequirementsFulfilled(questId, minLevel, maxLevel, playerLevel)) or
-            (not QuestieDB.IsDoable(questId, debugEnabled))
+            (not QuestieDB.IsDoable(questId, debugEnabled) and not _HasMinimumViableData(questId))
         ) then
             --If the quests are not within level range we want to unload them
             --(This is for when people level up or change settings etc)
@@ -435,4 +435,50 @@ end
 
 _GetIconScaleForAvailable = function()
     return Questie.db.profile.availableScale or 1.3
+end
+
+--- Check if quest has minimum viable data for display even if not fully doable
+--- Requirements: quest name, quest ID, quest giver NPC ID, NPC location in database
+---@param questId number
+---@return boolean
+_HasMinimumViableData = function(questId)
+    local quest = QuestieDB.GetQuest(questId)
+    if not quest then
+        return false
+    end
+    
+    -- Must have a real quest name (not a runtime stub)
+    if not quest.name or string.find(quest.name, "%[Epoch%]") then
+        return false
+    end
+    
+    -- Must have quest giver NPC
+    local questGiver = quest.startedBy and quest.startedBy[1] and quest.startedBy[1][1]
+    if not questGiver then
+        return false
+    end
+    
+    -- NPC must exist in database
+    local npc = QuestieDB.GetNPC(questGiver)
+    if not npc then
+        return false
+    end
+    
+    -- NPC must have spawn locations
+    if not npc.spawns then
+        return false
+    end
+    
+    -- Check if NPC has valid spawn coordinates in at least one zone
+    for zone, spawns in pairs(npc.spawns) do
+        if spawns and #spawns > 0 then
+            for _, coords in ipairs(spawns) do
+                if coords[1] and coords[2] and coords[1] > 0 and coords[2] > 0 then
+                    return true  -- Found valid coordinates
+                end
+            end
+        end
+    end
+    
+    return false  -- No valid spawn coordinates found
 end

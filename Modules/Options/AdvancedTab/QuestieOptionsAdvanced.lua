@@ -246,7 +246,14 @@ function QuestieOptions.tabs.advanced:Initialize()
                     Questie.db.profile.enabled = optionsDefaults.profile.enabled;
                     Questie.db.profile.lowLevelStyle = optionsDefaults.profile.lowLevelStyle;
 
-                    Questie.db.profile.migrationVersion = nil
+                    -- Set migrationVersion to current version to prevent migrations from running after reset
+                    local Migration = QuestieLoader:ImportModule("Migration")
+                    if Migration and Migration.GetCurrentMigrationVersion then
+                        Questie.db.profile.migrationVersion = Migration:GetCurrentMigrationVersion()
+                    else
+                        -- Fallback: if Migration module fails, set to a high number to avoid re-migrations
+                        Questie.db.profile.migrationVersion = 999
+                    end
 
                     Questie.db.profile.minimap.hide = optionsDefaults.profile.minimap.hide;
 
