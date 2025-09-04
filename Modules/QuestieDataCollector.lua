@@ -2467,7 +2467,7 @@ function QuestieDataCollector:EnableTooltipIDs()
     if not _originalTooltipSettings then
         _originalTooltipSettings = {
             questId = Questie.db.profile.enableTooltipsQuestID,
-            npcId = Questie.db.profile.enableTooltipsNpcID,
+            npcId = Questie.db.profile.enableTooltipsNPCID,
             objectId = Questie.db.profile.enableTooltipsObjectID,
             itemId = Questie.db.profile.enableTooltipsItemID
         }
@@ -2475,7 +2475,7 @@ function QuestieDataCollector:EnableTooltipIDs()
     
     -- Enable all IDs in tooltips for better data collection
     Questie.db.profile.enableTooltipsQuestID = true
-    Questie.db.profile.enableTooltipsNpcID = true
+    Questie.db.profile.enableTooltipsNPCID = true
     Questie.db.profile.enableTooltipsObjectID = true
     Questie.db.profile.enableTooltipsItemID = true
 end
