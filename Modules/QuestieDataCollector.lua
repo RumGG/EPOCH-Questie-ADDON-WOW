@@ -838,12 +838,27 @@ function QuestieDataCollector:TrackQuestAccepted(questIndex, questId)
     questData.playerFaction = playerFaction
     questData.playerLevel = UnitLevel("player")
     
-    -- Check if this is a commission (profession) quest
+    -- Check if this quest has profession requirements (not just commission quests)
+    local questDB = QuestieDB.GetQuest(questId)
+    local hasSkillRequirement = false
+    
+    if questDB and questDB.requiredSkill then
+        hasSkillRequirement = true
+        questData.requiredSkill = questDB.requiredSkill
+        DebugMessage("|cFFFFFF00[DATA]|r Quest requires profession skill: " .. tostring(questDB.requiredSkill[1] or "unknown") .. " (" .. tostring(questDB.requiredSkill[2] or "0") .. ")", 1, 1, 0)
+    end
+    
+    -- Also check for commission quests by name (fallback for quests not in database)
     if string.find(questName:upper(), "COMMISSION") then
         questData.isCommission = true
-        -- Capture player's professions
+        hasSkillRequirement = true
+        DebugMessage("|cFFFFFF00[DATA]|r Commission quest detected by name pattern", 1, 1, 0)
+    end
+    
+    -- Capture player's professions for ANY quest with skill requirements
+    if hasSkillRequirement then
         questData.playerProfessions = QuestieDataCollector:GetPlayerProfessions()
-        DebugMessage("|cFFFFFF00[DATA]|r Commission quest detected! Tracking professions.", 1, 1, 0)
+        DebugMessage("|cFF00FFFF[DATA]|r Tracking professions for skill-required quest", 0, 1, 1)
     end
     
     -- Get quest level and objectives text
@@ -1441,36 +1456,56 @@ function QuestieDataCollector:CaptureAvailableQuests(npcId, npcName)
     return availableQuests
 end
 
--- Get player's professions and skill levels
+-- Get player's professions and skill levels (WoW 3.3.5 compatible)
 function QuestieDataCollector:GetPlayerProfessions()
     local professions = {}
     
-    -- Get primary professions
-    local prof1, prof2, archaeology, fishing, cooking, firstAid = GetProfessions()
-    
-    local function AddProfession(index, profType)
-        if index then
-            local name, icon, skillLevel, maxSkillLevel, numAbilities, spelloffset, skillLine, skillModifier = GetProfessionInfo(index)
-            if name then
-                table.insert(professions, {
-                    name = name,
-                    type = profType,
-                    skillLevel = skillLevel,
-                    maxSkillLevel = maxSkillLevel,
-                    skillLine = skillLine
-                })
-                DebugMessage("|cFF00FFFF[DATA]|r Profession: " .. name .. " (" .. skillLevel .. "/" .. maxSkillLevel .. ")", 0, 1, 1)
-            end
-        end
+    -- Use QuestieProfessions module for 3.3.5 compatibility (GetProfessions doesn't exist in 3.3.5)
+    local QuestieProfessions = QuestieLoader:ImportModule("QuestieProfessions")
+    if not QuestieProfessions then
+        DebugMessage("|cFFFF0000[DATA]|r QuestieProfessions module not available", 1, 0, 0)
+        return professions -- Return empty table if module not available
     end
     
-    -- Add all professions
-    AddProfession(prof1, "primary")
-    AddProfession(prof2, "primary")
-    AddProfession(archaeology, "archaeology")
-    AddProfession(fishing, "fishing")
-    AddProfession(cooking, "cooking")
-    AddProfession(firstAid, "firstAid")
+    local playerProfessions = QuestieProfessions:GetPlayerProfessions()
+    if not playerProfessions then
+        DebugMessage("|cFFFFFF00[DATA]|r No profession data available", 1, 1, 0)
+        return professions
+    end
+    
+    -- Convert QuestieProfessions format to our expected format
+    for professionId, professionData in pairs(playerProfessions) do
+        if professionData and professionData[1] and professionData[2] then
+            local name = professionData[1]  -- Profession name
+            local skillLevel = professionData[2]  -- Current skill level
+            
+            -- Determine profession type based on name (simplified classification)
+            local profType = "secondary"
+            if name == "Herbalism" or name == "Mining" or name == "Skinning" or 
+               name == "Alchemy" or name == "Blacksmithing" or name == "Enchanting" or
+               name == "Engineering" or name == "Leatherworking" or name == "Tailoring" or
+               name == "Jewelcrafting" or name == "Inscription" then
+                profType = "primary"
+            elseif name == "Cooking" then
+                profType = "cooking"
+            elseif name == "First Aid" then
+                profType = "firstAid"
+            elseif name == "Fishing" then
+                profType = "fishing"
+            elseif name == "Archaeology" then
+                profType = "archaeology"
+            end
+            
+            table.insert(professions, {
+                name = name,
+                type = profType,
+                skillLevel = skillLevel,
+                maxSkillLevel = 450, -- WoW 3.3.5 max skill level
+                skillLine = professionId
+            })
+            DebugMessage("|cFF00FFFF[DATA]|r Profession: " .. name .. " (" .. skillLevel .. "/450)", 0, 1, 1)
+        end
+    end
     
     return professions
 end
@@ -3806,6 +3841,20 @@ function QuestieDataCollector:ExportQuest(questId)
     export = export .. "Quest Name: " .. (questData.name or "Unknown") .. "\n"
     export = export .. "Level: " .. (questData.level or "Unknown") .. "\n"
     export = export .. "Player Level: " .. (questData.playerLevel or "Unknown") .. "\n"
+    
+    -- Add profession data for skill-required quests  
+    if questData.playerProfessions and #questData.playerProfessions > 0 then
+        export = export .. "Player Professions:\n"
+        for _, prof in ipairs(questData.playerProfessions) do
+            export = export .. "  * " .. prof.name .. " (" .. prof.skillLevel .. "/" .. prof.maxSkillLevel .. ")\n"
+        end
+    end
+    
+    -- Add required skill info if available
+    if questData.requiredSkill then
+        export = export .. "Required Skill: " .. (questData.requiredSkill[1] or "Unknown") .. " (" .. (questData.requiredSkill[2] or "0") .. ")\n"
+    end
+    
     export = export .. "Version: " .. (QuestieDataCollection.version or "Unknown") .. "\n"
     export = export .. "────────────────────────────────────────────────────────────────\n\n"
     

@@ -44,6 +44,15 @@
   - Prevents error spam during quest acceptance for quests not yet in database or cache
   - **Resolves "GetQuest: The quest doesn't exist in QuestLogCache. 0" errors reported in Hinterlands**
 
+- **CRITICAL: WoW 3.3.5 Profession Tracking (Issue #1093)** - Fixed "GetProfessions doesn't exist" crash during profession quest acceptance
+  - Replaced incompatible `GetProfessions()` API call with QuestieProfessions module for 3.3.5 compatibility
+  - **EXPANDED SCOPE**: Now tracks professions for ALL skill-required quests, not just commission quests
+  - Uses `questDB.requiredSkill` database field to detect ANY quest requiring profession skills
+  - Fixed crash when accepting herbalism/mining/crafting quests and ALL profession-based quest types
+  - Data collector now captures player professions for proper quest requirement validation
+  - Uses `GetNumSkillLines()` and `GetSkillLineInfo()` APIs that exist in WoW 3.3.5 instead of post-4.0.1 APIs
+  - **Resolves "GetProfessions doesn't exist in QuestieDataCollector.lua" errors for ALL profession quests**
+
 ### Fixed
 - **CRITICAL: Coordinate System API Failures (Issue #3)** - Fixed coordinate type mismatches causing crashes and positioning errors
   - **API Usage Fix**: Fixed QuestieDataCollector incorrectly calling QuestieCoords.GetPlayerMapPosition() expecting separate x,y values instead of position table
