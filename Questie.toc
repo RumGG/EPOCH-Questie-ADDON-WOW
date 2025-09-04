@@ -168,6 +168,7 @@ Modules\QuestieCoordinates.lua
 
 # Data Collection (Developer Feature)
 Modules\QuestieDataValidator.lua
+DevTools\LegacyZoneValidator.lua
 Modules\QuestieDataCollector.lua
 
 # Network

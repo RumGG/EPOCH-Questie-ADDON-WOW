@@ -285,11 +285,22 @@ function QuestieDataCollector:Initialize()
             if GameTooltip:IsVisible() then
                 local name = GameTooltipTextLeft1:GetText()
                 if name and name ~= "" then
+                    -- Get coordinates when tooltip shows (this is likely when we interact with objects)
+                    local coords = QuestieDataCollector:GetPlayerCoordinates()
+                    
                     -- Store as potential object we might interact with
                     _lastInteractedObject = {
                         name = name,
-                        timestamp = time()
+                        timestamp = time(),
+                        coords = coords -- Add coordinates here too!
                     }
+                    
+                    -- DEBUG: Show tooltip interaction with coordinate status
+                    if coords then
+                        DebugMessage("|cFFFF9900[DATA]|r Tooltip shown for: " .. name .. " at [" .. QuestieDataCollector:SafeFormatCoords(coords) .. "] in " .. (coords.zone or "Unknown Zone"), 1, 0.6, 0)
+                    else
+                        DebugMessage("|cFFFF9900[DATA]|r Tooltip shown for: " .. name .. " - WARNING: No coordinates captured!", 1, 0.6, 0)
+                    end
                 end
             end
         end)
@@ -918,6 +929,14 @@ function QuestieDataCollector:TrackQuestAccepted(questIndex, questId)
         else
             debugMsg = debugMsg .. " (ID: Server not providing - GUID: " .. (_lastInteractedObject.guid or "nil") .. ")"
         end
+        
+        -- DEBUG: Check coordinate capture
+        if _lastInteractedObject.coords then
+            debugMsg = debugMsg .. " at [" .. QuestieDataCollector:SafeFormatCoords(_lastInteractedObject.coords) .. "] in " .. (_lastInteractedObject.coords.zone or "Unknown Zone")
+        else
+            debugMsg = debugMsg .. " - WARNING: No coordinates captured!"
+        end
+        
         DebugMessage("|cFF00FF00[DATA]|r " .. debugMsg, 0, 1, 0)
         questStarterCaptured = true
     end
@@ -1610,10 +1629,18 @@ function QuestieDataCollector:TrackMouseoverUnit()
                 coords = coords
             }
             
-            if objectId and objectId > 0 then
-                DebugMessage("|cFF00AAFF[DATA]|r Moused over object: " .. objectName .. " (ID: " .. objectId .. ")", 0, 0.67, 1)
+            -- DEBUG: Show coordinate capture status
+            local coordsDebug = ""
+            if coords then
+                coordsDebug = " at [" .. QuestieDataCollector:SafeFormatCoords(coords) .. "] in " .. (coords.zone or "Unknown Zone")
             else
-                DebugMessage("|cFF00AAFF[DATA]|r Moused over object: " .. objectName .. " (ID unknown, GUID: " .. (guid or "nil") .. ")", 0, 0.67, 1)
+                coordsDebug = " - WARNING: Failed to get coordinates!"
+            end
+            
+            if objectId and objectId > 0 then
+                DebugMessage("|cFF00AAFF[DATA]|r Moused over object: " .. objectName .. " (ID: " .. objectId .. ")" .. coordsDebug, 0, 0.67, 1)
+            else
+                DebugMessage("|cFF00AAFF[DATA]|r Moused over object: " .. objectName .. " (ID unknown, GUID: " .. (guid or "nil") .. ")" .. coordsDebug, 0, 0.67, 1)
             end
         end
     else
@@ -3124,7 +3151,7 @@ function QuestieDataCollector:ShowStagedExportWindow(totalQuests, maxPerPage)
         -- Friendly message
         local notice = f:CreateFontString(nil, "OVERLAY", "GameFontNormal")
         notice:SetPoint("TOP", 0, -45)
-        notice:SetText("|cFF66FF66My, you've been busy. Github has length limits, let's do this upload in stages.|r")
+        notice:SetText("|cFF66FF66You've been busy! GitHub has length limits for submissions, so let's do this in stages.|r")
         f.notice = notice
         
         -- Current page indicator

@@ -36,12 +36,13 @@
   - **Removed scary warning messages** - fallback system now operates silently to avoid user panic
   - **This resolves "questKeys.reputationReward is nil (0 total)", "classicQuestFixes.lua:143", and "classicQuestFixes.lua:4128" errors**
 
-- **CRITICAL: QuestLogCache Race Condition Errors** - Fixed "quest doesn't exist in QuestLogCache" errors during quest acceptance
-  - Modified `QuestLogCache.GetQuest()` to return nil gracefully instead of throwing errors when quest not in cache
-  - Modified `QuestLogCache.GetQuestObjectives()` to return nil gracefully instead of throwing errors
+- **QuestLogCache Race Condition Errors** - Fixed "quest doesn't exist in QuestLogCache" errors during quest acceptance  
+  - Modified `QuestLogCache.GetQuest()` to return nil gracefully instead of throwing user-visible errors
+  - Modified `QuestLogCache.GetQuestObjectives()` to return nil gracefully instead of throwing user-visible errors  
+  - Added intelligent logging: only shows debug messages for questId=0 (invalid) or when debug mode enabled
   - Fixed race condition where quest acceptance tries to access cache before it's populated
-  - Prevents crashes during quest acceptance for quests not yet in database or cache
-  - **This resolves the "QuestLogCache.lua:361" error chain shown in stack traces**
+  - Prevents error spam during quest acceptance for quests not yet in database or cache
+  - **Resolves "GetQuest: The quest doesn't exist in QuestLogCache. 0" errors reported in Hinterlands**
 
 ### Fixed
 - **CRITICAL: Coordinate System API Failures (Issue #3)** - Fixed coordinate type mismatches causing crashes and positioning errors
