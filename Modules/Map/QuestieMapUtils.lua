@@ -89,6 +89,15 @@ function QuestieMap.utils:CalcHotzones(points, rangeR, count)
         hotzones[i] = { points[i] }
     end
     return hotzones
+end
+
+-- ORIGINAL CODE COMMENTED OUT FOR DEBUGGING
+--[[ 
+function QuestieMap.utils:CalcHotzones_ORIGINAL(points, rangeR, count)
+--    if(points == nil) then return nil; end
+
+    local hotzones = {}
+    local pointsCount = #points
 
     if pointsCount == 1 then
         -- This is execution shortcut to skip loop in case table size == 1
@@ -139,6 +148,7 @@ function QuestieMap.utils:CalcHotzones(points, rangeR, count)
     end
     return hotzones
 end
+--]]
 
 function QuestieMap.utils:IsExplored(uiMapId, x, y)
     local IsExplored = false
