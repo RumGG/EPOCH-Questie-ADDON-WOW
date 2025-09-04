@@ -36,15 +36,9 @@ local function _PopulateTownsfolkTypes(folkTypes) -- populate the table with all
                 if npcName and sub(npcName, 1, 5) ~= "[DND]" then
                     if (not folkType.requireSubname) or (subName and strlen(subName) > 1) then
                         folkType.data[#folkType.data+1] = id
-                        -- Debug: Check if stable masters are being added to flight masters
-                        if name == "Flight Master" and subName == "Stable Master" then
-                            print("[DEBUG] Wrong categorization: NPC " .. id .. " (" .. npcName .. ") with subName '" .. (subName or "nil") .. "' added to Flight Master (flags=" .. flags .. ", mask=" .. folkType.mask .. ", band=" .. bitband(flags, folkType.mask) .. ")")
-                        end
-                        if name == "Stable Master" and id == 9988 then
-                            print("[DEBUG] Correct! Xon'cha added to Stable Master (flags=" .. flags .. ", mask=" .. folkType.mask .. ", band=" .. bitband(flags, folkType.mask) .. ")")
-                        end
-                        if name == "Spirit Healer" and (subName == "Vendor" or subName == "Repair") then
-                            print("[DEBUG] Wrong categorization: NPC " .. id .. " (" .. npcName .. ") with subName '" .. (subName or "nil") .. "' added to Spirit Healer (flags=" .. flags .. ")")
+                        -- Debug specific NPCs
+                        if id == 9988 then -- Xon'cha
+                            print("[XONCHA] Adding to " .. name .. " (flags=" .. flags .. ", mask=" .. folkType.mask .. ", bitband=" .. bitband(flags, folkType.mask) .. ")")
                         end
                     end
                 end
@@ -61,9 +55,34 @@ end
 
 
 function Townsfolk.Initialize()
-    -- Clear cached lists if they're missing critical categories (fix for miscategorization)
-    if Questie.db.global.townsfolk and (not Questie.db.global.townsfolk["Stable Master"] or not Questie.db.global.townsfolk["Spirit Healer"]) then
-        Questie:Debug(Questie.DEBUG_INFO, "[TOWNSFOLK] Clearing cache - missing service NPC categories")
+    -- Check if lists already exist and have all categories
+    if Questie.db.global.townsfolk then
+        -- Check for missing categories
+        local missingCategories = false
+        if not Questie.db.global.townsfolk["Stable Master"] then
+            print("[TOWNSFOLK] Missing Stable Master category - will rebuild")
+            missingCategories = true
+        end
+        if not Questie.db.global.townsfolk["Spirit Healer"] then
+            print("[TOWNSFOLK] Missing Spirit Healer category - will rebuild")
+            missingCategories = true
+        end
+        
+        -- If we have all categories and they're not empty, we can skip rebuild
+        if not missingCategories then
+            local stableCount = Questie.db.global.townsfolk["Stable Master"] and #Questie.db.global.townsfolk["Stable Master"] or 0
+            local spiritCount = Questie.db.global.townsfolk["Spirit Healer"] and #Questie.db.global.townsfolk["Spirit Healer"] or 0
+            print("[TOWNSFOLK] Categories exist: Stable Masters=" .. stableCount .. ", Spirit Healers=" .. spiritCount)
+            
+            -- Skip rebuild only if we have actual data
+            if stableCount > 0 and spiritCount > 0 then
+                print("[TOWNSFOLK] All categories present with data - skipping rebuild")
+                return
+            end
+        end
+        
+        -- Clear everything for rebuild
+        print("[TOWNSFOLK] Clearing all cached data for complete rebuild")
         Questie.db.global.townsfolk = nil
         Questie.db.global.professionTrainers = nil
         Questie.db.global.classSpecificTownsfolk = nil
@@ -73,6 +92,8 @@ function Townsfolk.Initialize()
         Questie.db.char.townsfolkClass = nil
         Questie.db.char.townsfolkFaction = nil
     end
+    
+    print("[TOWNSFOLK] Building townfolk lists...")
 
     --? This datastructure is used in PopulateTownsfolkTypes to fetch multiple townfolk data in the same npc loop cycle
     ---@type table<string, {mask: NpcFlags|integer, requireSubname: boolean, data: NpcId[]}>
@@ -150,13 +171,14 @@ function Townsfolk.Initialize()
         [professionKeys.SKINNING] = {}
     }
 
-    if Questie.IsTBC or Questie.IsWotlk then
-        professionTrainers[professionKeys.JEWELCRAFTING] = {}
-    end
-
-    if Questie.IsWotlk then
-        professionTrainers[professionKeys.INSCRIPTION] = {}
-    end
+    -- Project Epoch doesn't have Jewelcrafting or Inscription
+    -- if Questie.IsTBC or Questie.IsWotlk then
+    --     professionTrainers[professionKeys.JEWELCRAFTING] = {}
+    -- end
+    --
+    -- if Questie.IsWotlk then
+    --     professionTrainers[professionKeys.INSCRIPTION] = {}
+    -- end
 
     local count = 0
     local validProfessionTrainers = Townsfolk.GetProfessionTrainers()
@@ -313,6 +335,13 @@ function Townsfolk.Initialize()
     coroutine.yield()
 
     --- Set the globals
+    print("[TOWNSFOLK] Setting global townfolk lists...")
+    
+    -- Debug: Show what's in each category
+    for key, npcs in pairs(townfolk) do
+        print("[TOWNSFOLK] " .. key .. " has " .. #npcs .. " NPCs")
+    end
+    
     Questie.db.global.townsfolk = townfolk
     Questie.db.global.townsfolkNeedsUpdatedGlobalVendors = true
 

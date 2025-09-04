@@ -83,13 +83,44 @@ QuestieMenu.private.townsfolk_texturemap = _townsfolk_texturemap
 local _spawned = {} -- used to check if we have already spawned an icon for this npc
 
 local function toggle(key, forceRemove) -- /run QuestieLoader:ImportModule("QuestieMap"):ShowNPC(525, nil, 1, "teaste", {}, true)
-    local ids = Questie.db.global.townsfolk[key] or
-            Questie.db.char.townsfolk[key] or
-            Questie.db.global.professionTrainers[key] or
-            Questie.db.char.vendorList[key]
+    -- Debug: Show where lists are coming from
+    local source = "unknown"
+    local ids = nil
+    
+    if Questie.db.global.townsfolk and Questie.db.global.townsfolk[key] then
+        ids = Questie.db.global.townsfolk[key]
+        source = "global.townsfolk"
+    elseif Questie.db.char.townsfolk and Questie.db.char.townsfolk[key] then
+        ids = Questie.db.char.townsfolk[key]
+        source = "char.townsfolk"
+    elseif Questie.db.global.professionTrainers and Questie.db.global.professionTrainers[key] then
+        ids = Questie.db.global.professionTrainers[key]
+        source = "global.professionTrainers"
+    elseif Questie.db.char.vendorList and Questie.db.char.vendorList[key] then
+        ids = Questie.db.char.vendorList[key]
+        source = "char.vendorList"
+    end
+    
+    if key == "Stable Master" or key == "Flight Master" then
+        print("[TOGGLE] " .. key .. " from " .. source .. " with " .. (ids and #ids or 0) .. " NPCs")
+        if ids and key == "Stable Master" then
+            -- Check if Xon'cha is in the list
+            local hasXoncha = false
+            for _, id in ipairs(ids) do
+                if id == 9988 then
+                    hasXoncha = true
+                    break
+                end
+            end
+            print("[TOGGLE] Stable Master list " .. (hasXoncha and "CONTAINS" or "MISSING") .. " Xon'cha (9988)")
+        end
+    end
 
     if (not ids) then
         Questie:Debug(Questie.DEBUG_INFO, "Invalid townsfolk key", tostring(key))
+        if key == "Stable Master" then
+            print("[ERROR] No Stable Master list found in any source!")
+        end
         return
     end
 
