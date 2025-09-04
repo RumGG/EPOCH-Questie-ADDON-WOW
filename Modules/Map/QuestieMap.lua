@@ -738,8 +738,19 @@ function QuestieMap:DrawWorldIcon(data, areaID, x, y, showFlag)
         -- iconMinimap:SetScript("OnUpdate", )
     end
 
-    QuestieMap:QueueDraw(QuestieMap.ICON_MINIMAP_TYPE, Questie, iconMinimap, uiMapId, x / 100, y / 100, true, floatOnEdge)
-    QuestieMap:QueueDraw(QuestieMap.ICON_MAP_TYPE, Questie, iconMap, uiMapId, x / 100, y / 100, showFlag)
+    -- Check separate settings for minimap vs world map available quests
+    local profile = Questie.db.profile
+    local isAvailableQuest = (data.Type == "available")
+    
+    -- Queue minimap icon if setting allows (or not an available quest)
+    if not isAvailableQuest or profile.enableAvailableMinimap or profile.enableAvailable then
+        QuestieMap:QueueDraw(QuestieMap.ICON_MINIMAP_TYPE, Questie, iconMinimap, uiMapId, x / 100, y / 100, true, floatOnEdge)
+    end
+    
+    -- Queue world map icon if setting allows (or not an available quest) 
+    if not isAvailableQuest or profile.enableAvailableWorldMap or profile.enableAvailable then
+        QuestieMap:QueueDraw(QuestieMap.ICON_MAP_TYPE, Questie, iconMap, uiMapId, x / 100, y / 100, showFlag)
+    end
     local r, g, b = iconMinimap.texture:GetVertexColor()
     QuestieDBMIntegration:RegisterHudQuestIcon(tostring(iconMap), data.Icon, uiMapId, x, y, r, g, b)
 

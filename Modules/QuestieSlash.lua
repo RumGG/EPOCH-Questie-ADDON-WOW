@@ -977,6 +977,101 @@ function QuestieSlash.HandleCommands(input)
         return
     end
 
+    -- Debug command to check quest availability
+    if mainCommand == "questcheck" then
+        if not subCommand then
+            print(Questie:Colorize("[Questie] ", "yellow") .. "Usage: /questie questcheck <questID>")
+            return
+        end
+        
+        local questId = tonumber(subCommand)
+        if not questId then
+            print(Questie:Colorize("[Questie] ", "yellow") .. "Invalid quest ID: " .. tostring(subCommand))
+            return
+        end
+        
+        print(Questie:Colorize("=== QUEST AVAILABILITY DEBUG: " .. questId .. " ===", "yellow"))
+        
+        -- Check if quest exists in database
+        local questName = QuestieDB.QueryQuestSingle(questId, "name")
+        if not questName then
+            print("|cFFFF0000CRITICAL: Quest " .. questId .. " NOT FOUND in database!|r")
+            return
+        end
+        print("|cFF00FF00Quest found:|r " .. questName)
+        
+        -- Check IsDoable with debug enabled
+        print("\n|cFFFFFF00Testing IsDoable function:|r")
+        local isDoable = QuestieDB.IsDoable(questId, true)
+        print("IsDoable result: " .. (isDoable and "|cFF00FF00TRUE|r" or "|cFFFF0000FALSE|r"))
+        
+        -- Check detailed verbose result
+        print("\n|cFFFFFF00Verbose analysis:|r")
+        local verboseResult = QuestieDB.IsDoableVerbose(questId, true, true, false)
+        if verboseResult then
+            print("Reason: " .. verboseResult)
+        end
+        
+        -- Check if quest is currently active (3.3.5 compatible)
+        local isActive = false
+        for i = 1, GetNumQuestLogEntries() do
+            local _, _, _, _, _, _, _, questLogId = GetQuestLogTitle(i)
+            if questLogId == questId then
+                isActive = true
+                break
+            end
+        end
+        print("Currently active: " .. (isActive and "|cFF00FF00TRUE|r" or "|cFFFF0000FALSE|r"))
+        
+        -- Check quest starter NPCs
+        local starters = QuestieDB.QueryQuestSingle(questId, "startedBy")
+        if starters and starters[1] then
+            print("\n|cFFFFFF00Quest Starters:|r")
+            for i, npcId in ipairs(starters[1]) do
+                local npc = QuestieDB:GetNPC(npcId)
+                if npc then
+                    print("  NPC " .. npcId .. ": " .. npc.name)
+                    print("    NPC Flags: " .. (npc.npcFlags or "nil"))
+                    if npc.spawns then
+                        for zoneId, coords in pairs(npc.spawns) do
+                            print("    Zone " .. zoneId .. ": " .. #coords .. " spawn points")
+                            -- Show first few coordinates
+                            for j = 1, math.min(3, #coords) do
+                                print("      [" .. coords[j][1] .. ", " .. coords[j][2] .. "]")
+                            end
+                        end
+                    else
+                        print("    |cFFFF0000NO SPAWN DATA!|r")
+                    end
+                else
+                    print("  |cFFFF0000NPC " .. npcId .. ": NOT FOUND in database!|r")
+                end
+            end
+        else
+            print("\n|cFFFF0000No quest starters found!|r")
+        end
+        
+        -- Check if quest is in available quests cache
+        print("\n|cFFFFFF00Available Quest Check:|r")
+        local AvailableQuests = QuestieLoader:ImportModule("AvailableQuests")
+        print("AvailableQuests module loaded: " .. (AvailableQuests and "TRUE" or "FALSE"))
+        
+        return
+    end
+
+    -- Manual available quest refresh command
+    if mainCommand == "refreshquests" then
+        print(Questie:Colorize("[Questie] ", "yellow") .. "Manually refreshing available quests...")
+        local AvailableQuests = QuestieLoader:ImportModule("AvailableQuests")
+        if AvailableQuests then
+            AvailableQuests.CalculateAndDrawAll()
+            print(Questie:Colorize("[Questie] ", "yellow") .. "Available quest refresh completed!")
+        else
+            print(Questie:Colorize("[Questie] ", "yellow") .. "ERROR: Could not load AvailableQuests module!")
+        end
+        return
+    end
+
     if mainCommand == "tomap" then
         if not subCommand then
             subCommand = UnitName("target")

@@ -181,9 +181,11 @@ function QuestieLib:GetColoredQuestName(questId, showLevel, showState, blizzLike
             hasIncompleteData = true
         end
         
-        -- Add [Epoch] prefix if incomplete and doesn't already have it
-        if hasIncompleteData and not string.find(name, "%[Epoch%]") then
-            name = "[Epoch] " .. name
+        -- Use completeness scorer for appropriate prefix
+        if hasIncompleteData and not string.find(name, "%[EpochDB") and not string.find(name, "%[Epoch%]") then
+            local QuestCompletenessScorer = QuestieLoader:ImportModule("QuestCompletenessScorer")
+            local completenessInfo = QuestCompletenessScorer:AnalyzeQuestCompleteness(questId)
+            name = completenessInfo.prefix .. name
         end
     end
 
@@ -239,10 +241,12 @@ function QuestieLib:GetColoredQuestName(questId, showLevel, showState, blizzLike
         end
     end
 
-    -- Prefix Epoch marker for runtime stubs so players know pins won’t exist
+    -- Use completeness scorer for runtime stub prefixes
     local q = QuestieDB.GetQuest(questId)
-    if q and q.__isRuntimeStub and not string.find(name, "^%[Epoch%]") then
-        name = "[Epoch] " .. name
+    if q and q.__isRuntimeStub and not string.find(name, "^%[EpochDB") and not string.find(name, "^%[Epoch%]") then
+        local QuestCompletenessScorer = QuestieLoader:ImportModule("QuestCompletenessScorer")
+        local completenessInfo = QuestCompletenessScorer:AnalyzeQuestCompleteness(questId)
+        name = completenessInfo.prefix .. name
     end
 
     return QuestieLib:PrintDifficultyColor(level, name, QuestieDB.IsRepeatable(questId), QuestieDB.IsActiveEventQuest(questId), QuestieDB.IsPvPQuest(questId))

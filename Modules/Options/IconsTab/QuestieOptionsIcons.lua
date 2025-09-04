@@ -149,16 +149,43 @@ function QuestieOptions.tabs.icons:Initialize()
                         name = function() return l10n('Quests'); end,
                     },
                     showNormalQuests = {
-                        type = "toggle",
+                        type = "toggle", 
                         order = 2.01,
-                        name = function() return l10n('Available Normal Quests'); end,
-                        desc = function() return l10n('When this is enabled, the locations of available quests will be shown on the map/minimap.'); end,
+                        name = function() return l10n('Available Quests (Legacy)'); end,
+                        desc = function() return l10n('Legacy setting for backward compatibility. Use the separate World Map and Minimap toggles below instead.'); end,
                         width = 1.595,
                         disabled = function() return (not Questie.db.profile.enabled); end,
                         get = function() return Questie.db.profile.enableAvailable; end,
                         set = function(info, value)
                             Questie.db.profile.enableAvailable = value
                             QuestieQuest:ToggleNotes(value)
+                        end,
+                        hidden = true,  -- Hide the legacy setting
+                    },
+                    enableAvailableWorldMap = {
+                        type = "toggle",
+                        order = 2.011,
+                        name = function() return l10n('Available Quests (World Map)'); end,
+                        desc = function() return l10n('When enabled, available quest locations will be shown on the world map.'); end,
+                        width = 1.595,
+                        disabled = function() return (not Questie.db.profile.enabled); end,
+                        get = function() return Questie.db.profile.enableAvailableWorldMap; end,
+                        set = function(info, value)
+                            Questie.db.profile.enableAvailableWorldMap = value
+                            QuestieQuest:ToggleNotes()
+                        end,
+                    },
+                    enableAvailableMinimap = {
+                        type = "toggle",
+                        order = 2.012,
+                        name = function() return l10n('Available Quests (Minimap)'); end,
+                        desc = function() return l10n('When enabled, available quest locations will be shown on the minimap. Disable to reduce minimap clutter.'); end,
+                        width = 1.595,
+                        disabled = function() return (not Questie.db.profile.enabled); end,
+                        get = function() return Questie.db.profile.enableAvailableMinimap; end,
+                        set = function(info, value)
+                            Questie.db.profile.enableAvailableMinimap = value
+                            QuestieQuest:ToggleNotes()
                         end,
                     },
                     showEventQuests = {

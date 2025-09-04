@@ -146,7 +146,7 @@ local function IsQuestInDatabase(questId)
     end
     
     local questData = QuestieDB.GetQuest(questId)
-    local inDB = questData and questData.name and questData.name ~= "[Epoch] Quest " .. questId
+    local inDB = questData and questData.name and questData.name ~= "[EpochDB Missing] Quest " .. questId and questData.name ~= "[Epoch] Quest " .. questId
     
     -- Only debug log for genuinely missing quests or placeholders, not valid existing quests
     if not inDB then

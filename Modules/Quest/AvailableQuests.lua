@@ -57,6 +57,15 @@ end
 function AvailableQuests.DrawAvailableQuest(quest) -- prevent recursion
     --? Some quests can be started by both an NPC and a GameObject
     Questie:Debug(Questie.DEBUG_INFO, "[DrawAvailableQuest] Drawing quest " .. quest.Id)
+    
+    if quest.Id == 783 then
+        Questie:Print("DEBUG 783: DrawAvailableQuest called - drawing quest 783")
+        Questie:Print("DEBUG 783: Quest.Starts: " .. (quest.Starts and tostring(type(quest.Starts)) or "nil"))
+        if quest.Starts then
+            Questie:Print("DEBUG 783: NPC starters: " .. (quest.Starts.NPC and "YES" or "NO"))
+            Questie:Print("DEBUG 783: GameObject starters: " .. (quest.Starts.GameObject and "YES" or "NO"))
+        end
+    end
 
     if quest.Starts["GameObject"] then
         local gameObjects = quest.Starts["GameObject"]
@@ -77,8 +86,18 @@ function AvailableQuests.DrawAvailableQuest(quest) -- prevent recursion
         if type(npcs) ~= "table" then
             npcs = {npcs}  -- Convert single ID to table
         end
+        if quest.Id == 783 then
+            Questie:Print("DEBUG 783: Processing NPC starters - count: " .. #npcs)
+        end
         for i = 1, #npcs do
             local npc = QuestieDB:GetNPC(npcs[i])
+            if quest.Id == 783 then
+                Questie:Print("DEBUG 783: NPC " .. npcs[i] .. " found: " .. (npc and "YES" or "NO"))
+                if npc then
+                    Questie:Print("DEBUG 783: NPC name: " .. (npc.name or "nil"))
+                    Questie:Print("DEBUG 783: Calling _AddStarter for NPC " .. npc.id)
+                end
+            end
             if npc then
                 _AddStarter(npc, quest, "m_" .. npc.id)
             else
@@ -153,13 +172,25 @@ _CalculateAvailableQuests = function()
     -- We create a local function here to improve readability but use the localized variables above.
     -- The order of checks is important here to bring the speed to a max
     local function _DrawQuestIfAvailable(questId)
+        -- Debug specific quest 783
+        local debugQuest783 = (questId == 783)
+        if debugQuest783 then
+            Questie:Print("DEBUG 783: Checking quest 783 in _DrawQuestIfAvailable")
+        end
         if (autoBlacklist[questId] or       -- Don't show autoBlacklist quests marked as such by IsDoable
             completedQuests[questId] or     -- Don't show completed quests
             hiddenQuests[questId] or        -- Don't show blacklisted quests
             hidden[questId] or              -- Don't show quests hidden by the player
             activeChildQuests[questId]      -- We already drew this quest in a previous loop iteration
         ) then
+            if debugQuest783 then
+                Questie:Print("DEBUG 783: Quest blocked - autoBlacklist:" .. tostring(autoBlacklist[questId]) .. " completed:" .. tostring(completedQuests[questId]) .. " hidden:" .. tostring(hiddenQuests[questId]) .. " playerHidden:" .. tostring(hidden[questId]) .. " activeChild:" .. tostring(activeChildQuests[questId]))
+            end
             return
+        end
+        
+        if debugQuest783 then
+            Questie:Print("DEBUG 783: Passed initial filters, checking IsDoable...")
         end
         
         -- DISABLED: This was preventing ALL quests from showing after finding one placeholder
@@ -220,18 +251,35 @@ _CalculateAvailableQuests = function()
             return
         end
 
+        -- Check level requirements first
+        local levelOk = QuestieDB.IsLevelRequirementsFulfilled(questId, minLevel, maxLevel, playerLevel)
+        local isDoableResult = QuestieDB.IsDoable(questId, debugEnabled)
+        local hasMinViableData = _HasMinimumViableData(questId)
+        
+        if debugQuest783 then
+            Questie:Print("DEBUG 783: levelOk:" .. tostring(levelOk) .. " isDoable:" .. tostring(isDoableResult) .. " hasMinViableData:" .. tostring(hasMinViableData))
+        end
+        
         if (
-            (not QuestieDB.IsLevelRequirementsFulfilled(questId, minLevel, maxLevel, playerLevel)) or
-            (not QuestieDB.IsDoable(questId, debugEnabled) and not _HasMinimumViableData(questId))
+            (not levelOk) or
+            (not isDoableResult and not hasMinViableData)
         ) then
             --If the quests are not within level range we want to unload them
             --(This is for when people level up or change settings etc)
+            
+            if debugQuest783 then
+                Questie:Print("DEBUG 783: Quest filtered out - levelOk:" .. tostring(levelOk) .. " isDoable:" .. tostring(isDoableResult) .. " hasMinViableData:" .. tostring(hasMinViableData))
+            end
 
             if availableQuests[questId] then
                 QuestieMap:UnloadQuestFrames(questId)
                 QuestieTooltips:RemoveQuest(questId)
             end
             return
+        end
+        
+        if debugQuest783 then
+            Questie:Print("DEBUG 783: Passed all filters! Adding to availableQuests and drawing...")
         end
 
         availableQuests[questId] = true
@@ -303,8 +351,18 @@ end
 
 ---@param questId number
 _DrawAvailableQuest = function(questId)
+    if questId == 783 then
+        Questie:Print("DEBUG 783: _DrawAvailableQuest called for quest 783")
+    end
     NewThread(function()
         local quest = QuestieDB.GetQuest(questId)
+        if questId == 783 then
+            Questie:Print("DEBUG 783: Got quest object: " .. (quest and "YES" or "NO"))
+            if quest then
+                Questie:Print("DEBUG 783: Quest name: " .. (quest.name or "nil"))
+                Questie:Print("DEBUG 783: Quest starts: " .. (quest.Starts and "YES" or "NO"))
+            end
+        end
         if (not quest.tagInfoWasCached) then
             QuestieDB.GetQuestTagInfo(questId) -- cache to load in the tooltip
 
