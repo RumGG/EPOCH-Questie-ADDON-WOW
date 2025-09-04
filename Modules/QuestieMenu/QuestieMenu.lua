@@ -317,7 +317,7 @@ function QuestieMenu:Show(hideDelay)
     tinsert(menuTable, { text= l10n("Available Quest"), func = function()
         local value = not Questie.db.profile.enableAvailable
         Questie.db.profile.enableAvailable = value
-        QuestieQuest:ToggleNotes(value)
+        -- Don't toggle ALL notes, just reset to redraw available quests
         QuestieQuest:SmoothReset()
     end, icon=QuestieLib.AddonPath.."Icons\\available.blp", notCheckable=false, checked=Questie.db.profile.enableAvailable, isNotRadio=true, keepShownOnClick=true})
     tinsert(menuTable, { text= l10n("Trivial Quest"), func = function()
@@ -332,7 +332,7 @@ function QuestieMenu:Show(hideDelay)
     tinsert(menuTable, { text= l10n("Objective"), func = function()
         local value = not Questie.db.profile.enableObjectives
         Questie.db.profile.enableObjectives = value
-        QuestieQuest:ToggleNotes(value)
+        -- Don't toggle ALL notes based on objective state
         QuestieQuest:SmoothReset()
     end, icon=QuestieLib.AddonPath.."Icons\\event.blp", notCheckable=false, checked=Questie.db.profile.enableObjectives, isNotRadio=true, keepShownOnClick=true})
     tinsert(menuTable, {text= l10n("Profession Trainer"), func = function() end, keepShownOnClick=true, hasArrow=true, menuList=QuestieMenu.buildProfessionMenu(), notCheckable=true})

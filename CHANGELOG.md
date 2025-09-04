@@ -10,6 +10,13 @@
   - Affected all zones, not just specific areas
   - This fixes the confusing behavior where quest data appeared on unrelated map pins
 
+- **CRITICAL: Minimap Menu Toggles Breaking All Icons** - Fixed Available Quest and Objective toggles disabling ALL map icons
+  - Available Quest toggle was incorrectly calling `ToggleNotes()` with its own state, affecting all icons globally
+  - Objective toggle had the same bug, turning off all icons when disabled
+  - Removed incorrect `ToggleNotes()` calls from both toggles
+  - This fixes the issue where toggling these options would completely break icon display
+  - Also fixes interaction with Trivial Quest toggle that was causing all icons to disappear
+
 ## [1.2.0-prerelease2] - 2025-01-04
 
 ### Added
