@@ -55,6 +55,11 @@ end
 --Draw a single available quest, it is used by the CalculateAndDrawAll function.
 ---@param quest Quest
 function AvailableQuests.DrawAvailableQuest(quest) -- prevent recursion
+    -- Check if available quests are enabled before drawing
+    if not Questie.db.profile.enableAvailable then
+        return
+    end
+    
     --? Some quests can be started by both an NPC and a GameObject
     Questie:Debug(Questie.DEBUG_INFO, "[DrawAvailableQuest] Drawing quest " .. quest.Id)
     
@@ -154,6 +159,7 @@ _CalculateAvailableQuests = function()
     -- We create a local function here to improve readability but use the localized variables above.
     -- The order of checks is important here to bring the speed to a max
     local function _DrawQuestIfAvailable(questId)
+        
         if (autoBlacklist[questId] or       -- Don't show autoBlacklist quests marked as such by IsDoable
             completedQuests[questId] or     -- Don't show completed quests
             hiddenQuests[questId] or        -- Don't show blacklisted quests
@@ -227,7 +233,6 @@ _CalculateAvailableQuests = function()
         local isDoableResult = QuestieDB.IsDoable(questId, debugEnabled)
         local hasMinViableData = _HasMinimumViableData(questId)
         
-        
         if (
             (not levelOk) or
             (not isDoableResult and not hasMinViableData)
@@ -265,6 +270,7 @@ _CalculateAvailableQuests = function()
 
     local questCount = 0
     local drawnCount = 0
+    
     for questId in pairs(questData) do
         local wasDrawn = availableQuests[questId] or false
         _DrawQuestIfAvailable(questId)

@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+### Fixed
+- **CRITICAL: Available Quest Toggle Broken** - Fixed issue where disabling Available Quests caused icons to cluster at service NPCs
+  - Quest icons were being drawn but redirected to flight masters, mailboxes, and spirit healers when toggle was off
+  - Added proper check in `DrawAvailableQuest` to prevent drawing when `enableAvailable` is false
+  - Icons now properly hide when Available Quests is disabled instead of clustering at wrong locations
+  - Affected all zones, not just specific areas
+  - This fixes the confusing behavior where quest data appeared on unrelated map pins
+
 ## [1.2.0-prerelease2] - 2025-01-04
 
 ### Added
