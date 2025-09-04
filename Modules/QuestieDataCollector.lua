@@ -146,7 +146,17 @@ local function IsQuestInDatabase(questId)
     
     local questData = QuestieDB.GetQuest(questId)
     local inDB = questData and questData.name and questData.name ~= "[Epoch] Quest " .. questId
-    DebugMessage("|cFFFFAA00[DATA]|r Quest " .. questId .. " - database check: " .. tostring(inDB) .. " (name: '" .. (questData and questData.name or "nil") .. "')", 1, 0.7, 0)
+    
+    -- Only debug log for genuinely missing quests or placeholders, not valid existing quests
+    if not inDB then
+        local questName = questData and questData.name or "nil"
+        if questName == "nil" then
+            DebugMessage("|cFFFFAA00[DEBUG]|r Quest " .. questId .. " - not in database", 1, 0.7, 0)
+        else
+            DebugMessage("|cFFFFAA00[DEBUG]|r Quest " .. questId .. " - placeholder entry (" .. questName .. ")", 1, 0.7, 0)
+        end
+    end
+    
     return inDB
 end
 
@@ -592,11 +602,14 @@ function QuestieDataCollector:OnEvent(event, ...)
             return
         end
         
-        -- Skip if quest is already in database
-        if IsQuestInDatabase(questId) then
-            DebugMessage("|cFFFFAA00[DATA]|r Quest " .. questId .. " already in database, skipping collection", 1, 0.7, 0)
-            return
+        -- Collect data for ALL quests (including existing ones) to validate/improve database
+        -- Only warn players about genuinely missing quests, not placeholder/corrupted ones
+        if not IsQuestInDatabase(questId) then
+            -- Only show warning for truly missing quests (not in any database)
+            local questTitle = GetQuestLogTitle(questIndex) or ("Quest " .. questId)
+            DebugMessage("|cFFFFFF00[DATA]|r Collecting data for missing quest " .. questId .. " (" .. questTitle .. ")", 1, 1, 0)
         end
+        -- Silently collect data for existing quests (for validation/corruption detection)
         
         QuestieDataCollector:TrackQuestAccepted(questIndex, questId)
         
@@ -857,7 +870,10 @@ function QuestieDataCollector:TrackQuestAccepted(questIndex, questId)
     end
     
     -- Capture quest giver info (if we have it)
-    -- Increased time window to 10 seconds for better capture reliability
+    -- Check for both NPC quest givers and item/object quest starters
+    local questStarterCaptured = false
+    
+    -- First check for NPC quest giver (traditional quest acceptance)
     if _lastQuestGiver and (_lastQuestGiver.timestamp and (time() - _lastQuestGiver.timestamp) < 10) then
         questData.questGiver = {
             id = _lastQuestGiver.id,
@@ -884,9 +900,31 @@ function QuestieDataCollector:TrackQuestAccepted(questIndex, questId)
             end
         end
         
-        DebugMessage("|cFF00FF00[DATA]|r Quest Giver: " .. (_lastQuestGiver.name or "Unknown") .. " (ID: " .. (_lastQuestGiver.id or 0) .. ")", 0, 1, 0)
-    else
-        DebugMessage("|cFFFFFF00[DATA]|r Warning: Quest giver not captured for quest " .. questId, 1, 1, 0)
+        questStarterCaptured = true
+        
+    -- Check for item/object quest starter (quest items found on ground, in chests, etc)
+    elseif _lastInteractedObject and (_lastInteractedObject.timestamp and (time() - _lastInteractedObject.timestamp) < 15) then
+        questData.questStarter = {
+            type = "object",
+            name = _lastInteractedObject.name,
+            id = _lastInteractedObject.id, -- May be nil if server doesn't provide it
+            guid = _lastInteractedObject.guid, -- Store for debugging/analysis
+            coords = _lastInteractedObject.coords
+        }
+        
+        local debugMsg = "Quest started from object: " .. (_lastInteractedObject.name or "Unknown Object")
+        if _lastInteractedObject.id and _lastInteractedObject.id > 0 then
+            debugMsg = debugMsg .. " (ID: " .. _lastInteractedObject.id .. ")"
+        else
+            debugMsg = debugMsg .. " (ID: Server not providing - GUID: " .. (_lastInteractedObject.guid or "nil") .. ")"
+        end
+        DebugMessage("|cFF00FF00[DATA]|r " .. debugMsg, 0, 1, 0)
+        questStarterCaptured = true
+    end
+    
+    -- Only show warning if we didn't capture any quest starter
+    if not questStarterCaptured then
+        DebugMessage("|cFFFFFF00[DATA]|r Warning: Quest starter not captured for quest " .. questId .. " (neither NPC nor object)", 1, 1, 0)
     end
     
     -- Clear objectives to prevent duplicates if re-accepting
@@ -1546,18 +1584,37 @@ function QuestieDataCollector:TrackMouseoverUnit()
         local objectName = UnitName("mouseover")
         if objectName then
             local coords = QuestieDataCollector:GetPlayerCoordinates()
+            
+            -- Try to extract object ID from GUID (WoW 3.3.5 format attempt)
+            -- GameObject GUIDs in 3.3.5: Different format than NPCs, but let's try to extract what we can
+            local objectId = nil
+            if guid then
+                -- Try different GUID parsing approaches for GameObjects
+                -- Method 1: Try the same approach as NPCs (bytes 6-12)
+                objectId = tonumber(guid:sub(6, 12), 16)
+                -- Method 2: If that doesn't work, try other byte ranges
+                if not objectId or objectId == 0 then
+                    objectId = tonumber(guid:sub(10, 16), 16)
+                end
+                -- Method 3: Extract from different position  
+                if not objectId or objectId == 0 then
+                    objectId = tonumber(guid:sub(14, 20), 16)
+                end
+            end
+            
             _lastInteractedObject = {
                 name = objectName,
+                id = objectId, -- Will be nil if we can't extract it
+                guid = guid,   -- Store full GUID for debugging
                 timestamp = time(),
                 coords = coords
             }
             
-            -- Try to find object in database and check for mismatches
-            -- Objects are harder to match by name since they often have generic names
-            -- We'd need the object ID from the GUID, but GameObject GUIDs don't contain IDs in 3.3.5
-            -- So we'll just track the location for now
-            
-            DebugMessage("|cFF00AAFF[DATA]|r Moused over object: " .. objectName, 0, 0.67, 1)
+            if objectId and objectId > 0 then
+                DebugMessage("|cFF00AAFF[DATA]|r Moused over object: " .. objectName .. " (ID: " .. objectId .. ")", 0, 0.67, 1)
+            else
+                DebugMessage("|cFF00AAFF[DATA]|r Moused over object: " .. objectName .. " (ID unknown, GUID: " .. (guid or "nil") .. ")", 0, 0.67, 1)
+            end
         end
     else
         -- It's an NPC, track it similar to targeted mob
@@ -2742,25 +2799,9 @@ function QuestieDataCollector:ShowExportWindow(questId)
         local maxQuestsPerSubmission = 20  -- Conservative GitHub limit
         
         if eligibleQuests > maxQuestsPerSubmission then
-            -- Large submission - recommend splitting
-            local totalParts = math.ceil(eligibleQuests / maxQuestsPerSubmission)
-            exportText = "════════════════════════════════════════════════════════════════\n"
-            exportText = exportText .. "                ⚠️  LARGE SUBMISSION DETECTED  ⚠️               \n"
-            exportText = exportText .. "════════════════════════════════════════════════════════════════\n\n"
-            exportText = exportText .. "You have " .. eligibleQuests .. " quests to submit, which may exceed GitHub's\n"
-            exportText = exportText .. "character limit and could be rejected or truncated.\n\n"
-            exportText = exportText .. "📋 RECOMMENDED: Use split submission instead\n\n"
-            exportText = exportText .. "SPLIT SUBMISSION COMMANDS:\n"
-            exportText = exportText .. "• /qdc export part 1    (First " .. maxQuestsPerSubmission .. " quests)\n"
-            exportText = exportText .. "• /qdc export part 2    (Next " .. maxQuestsPerSubmission .. " quests)\n"
-            for part = 3, totalParts do
-                exportText = exportText .. "• /qdc export part " .. part .. "    (Continue...)\n"
-            end
-            exportText = exportText .. "\nTotal: " .. totalParts .. " parts will be created\n"
-            exportText = exportText .. "Each part creates a separate GitHub issue\n\n"
-            exportText = exportText .. "══════════════════════════════════════════════════════════════════\n"
-            exportText = exportText .. "             Continue with full export? (NOT RECOMMENDED)          \n"
-            exportText = exportText .. "══════════════════════════════════════════════════════════════════\n\n"
+            -- Large submission detected - use staged export window instead
+            self:ShowStagedExportWindow(eligibleQuests, maxQuestsPerSubmission)
+            return
         else
             -- Normal single submission
             exportText = "════════════════════════════════════════════════════════════════\n"
@@ -3020,7 +3061,8 @@ function QuestieDataCollector:ShowExportWindow(questId)
             
             for npcId, npcData in pairs(QuestieDataCollection.serviceNPCs) do
                 exportText = exportText .. "NPC: " .. (npcData.name or "Unknown") .. " (ID: " .. npcId .. ")\n"
-                exportText = exportText .. "Services: " .. table.concat(npcData.services, ", ") .. "\n"
+                local services = npcData.services or {"Unknown"}
+                exportText = exportText .. "Services: " .. table.concat(services, ", ") .. "\n"
                 
                 if npcData.locations and #npcData.locations > 0 then
                     exportText = exportText .. "Locations:\n"
@@ -3054,6 +3096,373 @@ function QuestieDataCollector:ShowExportWindow(questId)
     DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[QUESTIE]|r Export window opened. Follow the 3 steps to submit your data!", 0, 1, 0)
 end
 -- Format a single quest for export
+function QuestieDataCollector:ShowStagedExportWindow(totalQuests, maxPerPage)
+    local totalPages = math.ceil(totalQuests / maxPerPage)
+    
+    -- Create staged export frame if it doesn't exist
+    if not QuestieStagedExportFrame then
+        local f = CreateFrame("Frame", "QuestieStagedExportFrame", UIParent)
+        f:SetFrameStrata("DIALOG")
+        f:SetWidth(700)
+        f:SetHeight(500)
+        f:SetPoint("CENTER")
+        
+        -- Use Questie's frame style
+        f:SetBackdrop({
+            bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background",
+            edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Border",
+            tile = true, tileSize = 32, edgeSize = 32,
+            insets = { left = 11, right = 12, top = 12, bottom = 11 }
+        })
+        
+        -- Title
+        local title = f:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+        title:SetPoint("TOP", 0, -20)
+        title:SetText("|cFFFFAA00Questie Export|r")
+        f.title = title
+        
+        -- Friendly message
+        local notice = f:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+        notice:SetPoint("TOP", 0, -45)
+        notice:SetText("|cFF66FF66My, you've been busy. Github has length limits, let's do this upload in stages.|r")
+        f.notice = notice
+        
+        -- Current page indicator
+        local pageInfo = f:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+        pageInfo:SetPoint("TOP", 0, -70)
+        f.pageInfo = pageInfo
+        
+        -- Scroll frame for quest data
+        local scrollFrame = CreateFrame("ScrollFrame", "QuestieStagedScrollFrame", f, "UIPanelScrollFrameTemplate")
+        scrollFrame:SetPoint("TOPLEFT", 20, -95)
+        scrollFrame:SetPoint("BOTTOMRIGHT", -40, 100)
+        
+        local editBox = CreateFrame("EditBox", "QuestieStagedEditBox", scrollFrame)
+        editBox:SetMultiLine(true)
+        editBox:SetFontObject(ChatFontNormal)
+        editBox:SetWidth(640)
+        editBox:SetAutoFocus(false)
+        editBox:EnableMouse(true)
+        editBox:SetScript("OnEditFocusGained", function(self) 
+            self:HighlightText()
+        end)
+        editBox:SetScript("OnEscapePressed", function() f:Hide() end)
+        editBox:SetScript("OnTextChanged", function(self, userInput)
+            if userInput then
+                self:SetText(self.originalText or "")
+                self:HighlightText()
+            end
+        end)
+        editBox:SetHeight(2000)
+        
+        scrollFrame:EnableMouseWheel(true)
+        scrollFrame:SetScript("OnMouseWheel", function(self, delta)
+            local current = self:GetVerticalScroll()
+            local maxScroll = self:GetVerticalScrollRange()
+            local scrollStep = 30
+            
+            if delta > 0 then
+                self:SetVerticalScroll(math.max(0, current - scrollStep))
+            else
+                self:SetVerticalScroll(math.min(maxScroll, current + scrollStep))
+            end
+        end)
+        
+        scrollFrame:SetScrollChild(editBox)
+        f.editBox = editBox
+        f.scrollFrame = scrollFrame
+        
+        -- Navigation buttons row
+        local navFrame = CreateFrame("Frame", nil, f)
+        navFrame:SetPoint("BOTTOMLEFT", 20, 50)
+        navFrame:SetPoint("BOTTOMRIGHT", -20, 50)
+        navFrame:SetHeight(30)
+        f.navFrame = navFrame
+        
+        -- Previous page button
+        local prevButton = CreateFrame("Button", nil, navFrame, "UIPanelButtonTemplate")
+        prevButton:SetPoint("LEFT", 0, 0)
+        prevButton:SetWidth(80)
+        prevButton:SetHeight(25)
+        prevButton:SetText("Previous")
+        f.prevButton = prevButton
+        
+        -- Page indicator in nav bar
+        local navPageInfo = navFrame:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+        navPageInfo:SetPoint("CENTER", 0, 0)
+        f.navPageInfo = navPageInfo
+        
+        -- Next page button
+        local nextButton = CreateFrame("Button", nil, navFrame, "UIPanelButtonTemplate")
+        nextButton:SetPoint("RIGHT", 0, 0)
+        nextButton:SetWidth(80)
+        nextButton:SetHeight(25)
+        nextButton:SetText("Next")
+        f.nextButton = nextButton
+        
+        -- Action buttons row
+        local actionFrame = CreateFrame("Frame", nil, f)
+        actionFrame:SetPoint("BOTTOMLEFT", 20, 15)
+        actionFrame:SetPoint("BOTTOMRIGHT", -20, 15)
+        actionFrame:SetHeight(30)
+        f.actionFrame = actionFrame
+        
+        -- Select All button
+        local selectAllButton = CreateFrame("Button", nil, actionFrame, "UIPanelButtonTemplate")
+        selectAllButton:SetPoint("LEFT", 0, 0)
+        selectAllButton:SetWidth(100)
+        selectAllButton:SetHeight(25)
+        selectAllButton:SetText("Select All")
+        selectAllButton:SetScript("OnClick", function()
+            editBox:SetFocus()
+            editBox:HighlightText()
+            DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00Page data selected! Press Ctrl+C to copy.|r", 0, 1, 0)
+        end)
+        
+        -- Go to GitHub button
+        local githubButton = CreateFrame("Button", nil, actionFrame, "UIPanelButtonTemplate")
+        githubButton:SetPoint("LEFT", selectAllButton, "RIGHT", 10, 0)
+        githubButton:SetWidth(120)
+        githubButton:SetHeight(25)
+        githubButton:SetText("Go to GitHub")
+        githubButton:SetScript("OnClick", function()
+            -- Use same GitHub popup as main export window
+            if not GitHubURLFrame then
+                local popup = CreateFrame("Frame", "GitHubURLFrame", UIParent)
+                popup:SetFrameStrata("TOOLTIP")
+                popup:SetWidth(450)
+                popup:SetHeight(120)
+                popup:SetPoint("CENTER")
+                popup:SetBackdrop({
+                    bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background",
+                    edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Border",
+                    tile = true, tileSize = 32, edgeSize = 16,
+                    insets = { left = 5, right = 5, top = 5, bottom = 5 }
+                })
+                
+                local titleText = popup:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+                titleText:SetPoint("TOP", 0, -15)
+                titleText:SetText("|cFFFFFFFFCopy this URL to your browser:|r")
+                
+                local urlBox = CreateFrame("EditBox", nil, popup)
+                urlBox:SetPoint("CENTER", 0, 5)
+                urlBox:SetWidth(400)
+                urlBox:SetHeight(20)
+                urlBox:SetFontObject(GameFontHighlight)
+                urlBox:SetText("https://github.com/trav346/Questie/issues")
+                urlBox:SetAutoFocus(false)
+                urlBox:SetScript("OnEditFocusGained", function(self)
+                    self:HighlightText()
+                end)
+                urlBox:SetScript("OnEscapePressed", function(self)
+                    self:ClearFocus()
+                    popup:Hide()
+                end)
+                urlBox:SetScript("OnTextChanged", function(self, userInput)
+                    if userInput then
+                        self:SetText("https://github.com/trav346/Questie/issues")
+                        self:HighlightText()
+                    end
+                end)
+                
+                local urlBorder = CreateFrame("Frame", nil, popup)
+                urlBorder:SetPoint("CENTER", urlBox, "CENTER", 0, 0)
+                urlBorder:SetWidth(410)
+                urlBorder:SetHeight(30)
+                urlBorder:SetBackdrop({
+                    bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
+                    edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+                    tile = true, tileSize = 16, edgeSize = 16,
+                    insets = { left = 4, right = 4, top = 4, bottom = 4 }
+                })
+                urlBorder:SetBackdropColor(0, 0, 0, 0.5)
+                
+                local closeBtn = CreateFrame("Button", nil, popup, "UIPanelButtonTemplate")
+                closeBtn:SetPoint("BOTTOM", 0, 10)
+                closeBtn:SetWidth(80)
+                closeBtn:SetHeight(22)
+                closeBtn:SetText("Close")
+                closeBtn:SetScript("OnClick", function() popup:Hide() end)
+                
+                popup.urlBox = urlBox
+            end
+            GitHubURLFrame:Show()
+            GitHubURLFrame.urlBox:SetFocus()
+            GitHubURLFrame.urlBox:HighlightText()
+        end)
+        
+        -- Close & Purge button (only on final page)
+        local purgeButton = CreateFrame("Button", nil, actionFrame, "UIPanelButtonTemplate")
+        purgeButton:SetPoint("RIGHT", 0, 0)
+        purgeButton:SetWidth(140)
+        purgeButton:SetHeight(25)
+        purgeButton:SetText("Close & Purge Data")
+        purgeButton:SetScript("OnClick", function()
+            QuestieDataCollector:ClearData()
+            DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[QUESTIE]|r Thank you for contributing! All data has been purged.", 0, 1, 0)
+            DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00Use /reload to ensure all memory is freed.|r", 1, 1, 0)
+            f:Hide()
+        end)
+        f.purgeButton = purgeButton
+        
+        -- Close button (X)
+        local closeButton = CreateFrame("Button", nil, f, "UIPanelCloseButton")
+        closeButton:SetPoint("TOPRIGHT", -5, -5)
+        closeButton:SetScript("OnClick", function() f:Hide() end)
+        
+        f:Hide()
+        
+        -- Store pagination state
+        f.currentPage = 1
+        f.totalPages = totalPages
+        f.maxPerPage = maxPerPage
+        f.totalQuests = totalQuests
+    end
+    
+    local frame = QuestieStagedExportFrame
+    frame.currentPage = 1
+    frame.totalPages = totalPages
+    frame.maxPerPage = maxPerPage
+    frame.totalQuests = totalQuests
+    
+    -- Set up navigation button handlers
+    frame.prevButton:SetScript("OnClick", function()
+        if frame.currentPage > 1 then
+            frame.currentPage = frame.currentPage - 1
+            QuestieDataCollector:UpdateStagedExportPage()
+        end
+    end)
+    
+    frame.nextButton:SetScript("OnClick", function()
+        if frame.currentPage < frame.totalPages then
+            frame.currentPage = frame.currentPage + 1
+            QuestieDataCollector:UpdateStagedExportPage()
+        end
+    end)
+    
+    -- Load first page and show
+    self:UpdateStagedExportPage()
+    frame:Show()
+end
+
+function QuestieDataCollector:UpdateStagedExportPage()
+    local frame = QuestieStagedExportFrame
+    if not frame then return end
+    
+    local currentPage = frame.currentPage
+    local maxPerPage = frame.maxPerPage
+    local totalPages = frame.totalPages
+    local startIndex = (currentPage - 1) * maxPerPage + 1
+    local endIndex = math.min(currentPage * maxPerPage, frame.totalQuests)
+    
+    -- Update page indicators
+    frame.pageInfo:SetText("|cFFAAFFAAPage " .. currentPage .. " of " .. totalPages .. " |cFFFFFFFF(" .. (endIndex - startIndex + 1) .. " quests)|r")
+    frame.navPageInfo:SetText("Page " .. currentPage .. " of " .. totalPages)
+    
+    -- Update navigation buttons (WoW 3.3.5 compatible)
+    if currentPage > 1 then
+        frame.prevButton:Enable()
+    else
+        frame.prevButton:Disable()
+    end
+    
+    if currentPage < totalPages then
+        frame.nextButton:Enable()
+    else
+        frame.nextButton:Disable()
+    end
+    
+    -- Only show purge button on final page
+    if currentPage == totalPages then
+        frame.purgeButton:Show()
+    else
+        frame.purgeButton:Hide()
+    end
+    
+    -- Generate export data for current page
+    local exportText = self:GenerateStagedPageContent(currentPage, maxPerPage)
+    
+    frame.editBox.originalText = exportText
+    frame.editBox:SetText(exportText)
+    frame.editBox:SetCursorPosition(0)
+    frame.scrollFrame:SetVerticalScroll(0)
+end
+
+function QuestieDataCollector:GenerateStagedPageContent(pageNum, maxPerPage)
+    local startIndex = (pageNum - 1) * maxPerPage
+    local endIndex = startIndex + maxPerPage - 1
+    
+    -- Header
+    local exportText = "════════════════════════════════════════════════════════════════\n"
+    exportText = exportText .. "                    QUESTIE STAGED EXPORT                       \n" 
+    exportText = exportText .. "                      Page " .. pageNum .. " of " .. QuestieStagedExportFrame.totalPages .. "                           \n"
+    exportText = exportText .. "════════════════════════════════════════════════════════════════\n\n"
+    
+    exportText = exportText .. "HOW TO SUBMIT THIS PAGE:\n"
+    exportText = exportText .. "1. Select All Data (button below)\n"
+    exportText = exportText .. "2. Copy with Ctrl+C\n"
+    exportText = exportText .. "3. Go to GitHub (button below)\n"
+    exportText = exportText .. "4. Create New Issue\n"
+    exportText = exportText .. "5. Title: 'Batch Submission - Page " .. pageNum .. " of " .. QuestieStagedExportFrame.totalPages .. "'\n"
+    exportText = exportText .. "6. Paste this data and submit\n"
+    exportText = exportText .. "7. Use Next button for remaining pages\n\n"
+    
+    -- Export metadata
+    exportText = exportText .. "Version: " .. (QuestieDataCollection.version or "1.1.0") .. "\n"
+    exportText = exportText .. "Date: " .. date("%Y-%m-%d %H:%M:%S") .. "\n"
+    
+    local playerClass = UnitClass("player")
+    local playerRace = UnitRace("player") 
+    local playerFaction = UnitFactionGroup("player")
+    local playerLevel = UnitLevel("player")
+    if playerClass and playerRace then
+        exportText = exportText .. "Player: " .. playerRace .. " " .. playerClass
+        if playerFaction then
+            exportText = exportText .. " (" .. playerFaction .. ")"
+        end
+        if playerLevel then
+            exportText = exportText .. " Level " .. playerLevel
+        end
+        exportText = exportText .. "\n"
+    end
+    exportText = exportText .. "\n"
+    
+    -- Get eligible quests for this page
+    local eligibleQuests = {}
+    for questId, questData in pairs(QuestieDataCollection.quests) do
+        if not IsQuestInDatabase(questId) then
+            table.insert(eligibleQuests, {id = questId, data = questData})
+        end
+    end
+    
+    -- Sort by quest ID for consistent pagination
+    table.sort(eligibleQuests, function(a, b) return a.id < b.id end)
+    
+    -- Export quests for this page
+    local questsOnPage = 0
+    for i = startIndex + 1, math.min(endIndex + 1, #eligibleQuests) do
+        local quest = eligibleQuests[i]
+        if quest then
+            questsOnPage = questsOnPage + 1
+            exportText = exportText .. self:FormatQuestExport(quest.id, quest.data)
+            
+            if questsOnPage < maxPerPage and i < #eligibleQuests then
+                exportText = exportText .. "\n════════════════════════════════════════════════════════════════\n\n"
+            else
+                exportText = exportText .. "\n"
+            end
+        end
+    end
+    
+    -- Page footer
+    exportText = exportText .. "════════════════════════════════════════════════════════════════\n"
+    exportText = exportText .. "                    END OF PAGE " .. pageNum .. " of " .. QuestieStagedExportFrame.totalPages .. "                         \n"
+    exportText = exportText .. "         Submitted " .. questsOnPage .. " quests from this page           \n"
+    exportText = exportText .. "════════════════════════════════════════════════════════════════\n"
+    
+    return exportText
+end
+
 function QuestieDataCollector:FormatQuestExport(questId, questData)
     local export = "Quest ID: " .. questId .. "\n"
     export = export .. "Quest Name: " .. (questData.name or "Unknown") .. "\n"
@@ -3074,13 +3483,34 @@ function QuestieDataCollector:FormatQuestExport(questId, questData)
         export = export .. "Quest was already in log when collection started.\n\n"
     end
     
-    -- Quest giver
+    -- Quest giver (NPC) or quest starter (object/item)
     if questData.questGiver then
         export = export .. "QUEST GIVER:\n"
         export = export .. "  NPC: " .. (questData.questGiver.name or "Unknown") .. " (ID: " .. (questData.questGiver.id or 0) .. ")\n"
         if questData.questGiver.coords then
             export = export .. "  Location: " .. (questData.questGiver.coords.zone or "Unknown") .. "\n"
             export = export .. "  Coords: " .. QuestieDataCollector:SafeFormatCoords(questData.questGiver.coords) .. "\n"
+        end
+        export = export .. "\n"
+    elseif questData.questStarter then
+        export = export .. "QUEST STARTER:\n"
+        export = export .. "  Type: " .. (questData.questStarter.type or "Unknown") .. "\n"
+        export = export .. "  Object Name: " .. (questData.questStarter.name or "Unknown") .. "\n"
+        
+        -- Include object ID if available
+        if questData.questStarter.id and questData.questStarter.id > 0 then
+            export = export .. "  Object ID: " .. questData.questStarter.id .. "\n"
+        else
+            export = export .. "  Object ID: Not available from server\n"
+            -- Include GUID for debugging purposes
+            if questData.questStarter.guid then
+                export = export .. "  Object GUID: " .. questData.questStarter.guid .. "\n"
+            end
+        end
+        
+        if questData.questStarter.coords then
+            export = export .. "  Location: " .. (questData.questStarter.coords.zone or "Unknown") .. "\n"
+            export = export .. "  Coords: " .. QuestieDataCollector:SafeFormatCoords(questData.questStarter.coords) .. "\n"
         end
         export = export .. "\n"
     end
@@ -3883,11 +4313,6 @@ function QuestieDataCollector:GenerateDatabaseEntries(questId, questData)
         end
     end
     
-    output = output .. "\n-- Note: These are basic entries. Review and adjust:\n"
-    output = output .. "-- * Add proper objectives from the quest data\n"
-    output = output .. "-- * Verify NPC levels and coordinates\n"
-    output = output .. "-- * Add quest chains and prerequisites if known\n"
-    output = output .. "-- * Set proper faction flags (A/H/AH)\n"
     
     return output
 end
