@@ -18,6 +18,10 @@
 - **Options and UI Improvements** - Refined tracker and options interface behavior
 
 ### Fixed
+- **CRITICAL: QuestieMap.lua Nil Value Error** - Fixed "attempt to index local 'minimapDrawCall' (a nil value)" crash at line 341
+  - Moved draw call post-processing inside proper if blocks to prevent nil access
+  - Prevents crashes when map drawing queues are empty or partially processed
+  - Affects both map and minimap icon rendering systems
 - **Quest Event Handling** - Improved quest state tracking and event processing
 - **Data Collection Accuracy** - Better capture of quest giver and turn-in information
 - **Epoch Database Corrections** - Updated quest and NPC data for Project Epoch server
