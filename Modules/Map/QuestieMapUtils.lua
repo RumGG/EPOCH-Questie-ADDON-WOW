@@ -83,6 +83,13 @@ function QuestieMap.utils:CalcHotzones(points, rangeR, count)
     local hotzones = {}
     local pointsCount = #points
 
+    -- TEMPORARY: Bypass clustering to debug invisible icons  
+    -- Convert each point to its own hotzone (no clustering)
+    for i = 1, pointsCount do
+        hotzones[i] = { points[i] }
+    end
+    return hotzones
+
     if pointsCount == 1 then
         -- This is execution shortcut to skip loop in case table size == 1
 
