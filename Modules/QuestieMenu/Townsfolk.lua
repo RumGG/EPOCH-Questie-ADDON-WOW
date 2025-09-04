@@ -36,6 +36,16 @@ local function _PopulateTownsfolkTypes(folkTypes) -- populate the table with all
                 if npcName and sub(npcName, 1, 5) ~= "[DND]" then
                     if (not folkType.requireSubname) or (subName and strlen(subName) > 1) then
                         folkType.data[#folkType.data+1] = id
+                        -- Debug: Check if stable masters are being added to flight masters
+                        if name == "Flight Master" and subName == "Stable Master" then
+                            print("[DEBUG] Wrong categorization: NPC " .. id .. " (" .. npcName .. ") with subName '" .. (subName or "nil") .. "' added to Flight Master (flags=" .. flags .. ", mask=" .. folkType.mask .. ", band=" .. bitband(flags, folkType.mask) .. ")")
+                        end
+                        if name == "Stable Master" and id == 9988 then
+                            print("[DEBUG] Correct! Xon'cha added to Stable Master (flags=" .. flags .. ", mask=" .. folkType.mask .. ", band=" .. bitband(flags, folkType.mask) .. ")")
+                        end
+                        if name == "Spirit Healer" and (subName == "Vendor" or subName == "Repair") then
+                            print("[DEBUG] Wrong categorization: NPC " .. id .. " (" .. npcName .. ") with subName '" .. (subName or "nil") .. "' added to Spirit Healer (flags=" .. flags .. ")")
+                        end
                     end
                 end
             end
@@ -51,6 +61,18 @@ end
 
 
 function Townsfolk.Initialize()
+    -- Clear cached lists if they're missing critical categories (fix for miscategorization)
+    if Questie.db.global.townsfolk and (not Questie.db.global.townsfolk["Stable Master"] or not Questie.db.global.townsfolk["Spirit Healer"]) then
+        Questie:Debug(Questie.DEBUG_INFO, "[TOWNSFOLK] Clearing cache - missing service NPC categories")
+        Questie.db.global.townsfolk = nil
+        Questie.db.global.professionTrainers = nil
+        Questie.db.global.classSpecificTownsfolk = nil
+        Questie.db.global.factionSpecificTownsfolk = nil
+        Questie.db.global.petFoodVendorTypes = nil
+        Questie.db.char.townsfolk = nil
+        Questie.db.char.townsfolkClass = nil
+        Questie.db.char.townsfolkFaction = nil
+    end
 
     --? This datastructure is used in PopulateTownsfolkTypes to fetch multiple townfolk data in the same npc loop cycle
     ---@type table<string, {mask: NpcFlags|integer, requireSubname: boolean, data: NpcId[]}>
@@ -105,6 +127,8 @@ function Townsfolk.Initialize()
         ["Battlemaster"] = townsfolkData["Battlemaster"].data,
         ["Flight Master"] = townsfolkData["Flight Master"].data,
         ["Innkeeper"] = townsfolkData["Innkeeper"].data,
+        ["Stable Master"] = townsfolkData["Stable Master"].data,  -- Now in global list for all classes
+        ["Spirit Healer"] = townsfolkData["Spirit Healer"].data,  -- Now in global list
         ["Weapon Master"] = {}, -- populated below
     }
 
@@ -196,7 +220,8 @@ function Townsfolk.Initialize()
         classSpecificTownsfolk[class]["Class Trainer"] = newTrainers
     end
 
-    -- These are filtered later, when the player class does not match
+    -- Hunters still get stable master in their class list (convenience)
+    -- Stable masters are now also in the general townfolk list for all classes to see
     classSpecificTownsfolk["HUNTER"]["Stable Master"] = townsfolkData["Stable Master"].data
     classSpecificTownsfolk["MAGE"]["Portal Trainer"] = {4165,2485,2489,5958,5957,2492,16654,16755,19340,20791,27703,27705}
 
@@ -222,6 +247,10 @@ function Townsfolk.Initialize()
     
     factionSpecificTownsfolk["Horde"]["Flight Master"] = townfolk["Flight Master"]
     factionSpecificTownsfolk["Alliance"]["Flight Master"] = townfolk["Flight Master"]
+    
+    -- Add Stable Masters to faction lists so all classes can see them
+    factionSpecificTownsfolk["Horde"]["Stable Master"] = townfolk["Stable Master"]
+    factionSpecificTownsfolk["Alliance"]["Stable Master"] = townfolk["Stable Master"]
     
     factionSpecificTownsfolk["Horde"]["Weapon Master"] = townfolk["Weapon Master"]
     factionSpecificTownsfolk["Alliance"]["Weapon Master"] = townfolk["Weapon Master"]

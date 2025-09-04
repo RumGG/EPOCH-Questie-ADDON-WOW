@@ -17,6 +17,16 @@
   - This fixes the issue where toggling these options would completely break icon display
   - Also fixes interaction with Trivial Quest toggle that was causing all icons to disappear
 
+- **CRITICAL: Service NPCs Miscategorized** - Fixed service NPCs displaying with wrong icons and in wrong categories
+  - Stable Masters were completely missing from global townfolk list, only available to Hunters
+  - Spirit Healers were missing from global list, causing them to display as vendors/merchants
+  - Added Stable Masters and Spirit Healers to global townfolk categories for all classes
+  - Added automatic cache clearing when missing categories are detected
+  - Fixed SavedVariables caching preventing proper category rebuilds
+  - All stable masters now show with correct stable master icons
+  - Spirit healers now show with correct spirit healer icons
+  - This fixes the long-standing issue of service NPCs being displayed incorrectly on the map
+
 ## [1.2.0-prerelease2] - 2025-01-04
 
 ### Added
