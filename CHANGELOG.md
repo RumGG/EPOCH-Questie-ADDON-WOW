@@ -2,6 +2,26 @@
 
 ## [Unreleased]
 
+## [1.2.0-prerelease2] - 2025-01-04
+
+### Added
+- **QuestCompletenessScorer Module** - New data quality validation system for quest submissions
+  - Comprehensive scoring algorithm for quest data completeness
+  - Validates quest giver, turn-in, objectives, and coordinate accuracy
+  - Supports both legacy and live data collection formats
+- **Enhanced Data Collection** - Improved quest data capture and validation
+- **DATABASE_REFERENCE.md Integration** - Complete database structure documentation for development
+
+### Changed
+- **Version Update** - Bumped to 1.2.0-prerelease2 for expanded testing
+- **Database Structure Validation** - Enhanced validation for Epoch quest and NPC entries
+- **Options and UI Improvements** - Refined tracker and options interface behavior
+
+### Fixed
+- **Quest Event Handling** - Improved quest state tracking and event processing
+- **Data Collection Accuracy** - Better capture of quest giver and turn-in information
+- **Epoch Database Corrections** - Updated quest and NPC data for Project Epoch server
+
 ### Added
 - **Update Reminder System** - Silent, one-time reminder to help users know about latest releases
   - Shows once per session with 2-second delay to avoid intrusiveness
