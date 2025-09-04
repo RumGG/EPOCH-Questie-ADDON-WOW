@@ -83,22 +83,6 @@ function QuestieMap.utils:CalcHotzones(points, rangeR, count)
     local hotzones = {}
     local pointsCount = #points
 
-    -- TEMPORARY: Bypass clustering to debug invisible icons  
-    -- Convert each point to its own hotzone (no clustering)
-    for i = 1, pointsCount do
-        hotzones[i] = { points[i] }
-    end
-    return hotzones
-end
-
--- ORIGINAL CODE COMMENTED OUT FOR DEBUGGING
---[[ 
-function QuestieMap.utils:CalcHotzones_ORIGINAL(points, rangeR, count)
---    if(points == nil) then return nil; end
-
-    local hotzones = {}
-    local pointsCount = #points
-
     if pointsCount == 1 then
         -- This is execution shortcut to skip loop in case table size == 1
 
@@ -148,7 +132,6 @@ function QuestieMap.utils:CalcHotzones_ORIGINAL(points, rangeR, count)
     end
     return hotzones
 end
---]]
 
 function QuestieMap.utils:IsExplored(uiMapId, x, y)
     local IsExplored = false
