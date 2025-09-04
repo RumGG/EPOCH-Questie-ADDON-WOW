@@ -162,11 +162,11 @@ QuestieInit.Stages[1] = function() -- run as a coroutine
 
     HBDHooks:Init()
 
-    -- Migration: Fix users who have 'custom' theme selected (causes invisible pins)
-    -- Also handles any invalid/unknown theme names
+    -- Migration: Fix users who have deprecated themes selected (causes invisible pins or unavailable options)
+    -- Migrates 'custom', 'blizzard' (disabled for Epoch), or any invalid/unknown theme names to 'questie'
     if Questie.db.profile.iconTheme == 'custom' or 
+       Questie.db.profile.iconTheme == 'blizzard' or
        (Questie.db.profile.iconTheme ~= 'questie' and 
-        Questie.db.profile.iconTheme ~= 'blizzard' and 
         Questie.db.profile.iconTheme ~= 'pfquest') then
         local oldTheme = Questie.db.profile.iconTheme
         Questie:Debug(Questie.DEBUG_INFO, "[Init] Migrating from '" .. tostring(oldTheme) .. "' icon theme to 'questie' to fix invisible/invalid pins")
@@ -625,7 +625,7 @@ function _QuestieInit.StartStageCoroutine()
         Questie:Debug(Questie.DEBUG_INFO, "[QuestieInit:StartStageCoroutine] Stage " .. i .. " done.")
     end
     -- Show ready message after all initialization stages complete
-    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Questie]|r Ready! Quest tracking and map icons are now active.", 0, 1, 0)
+    DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Questie]|r Ready!", 0, 1, 0)
 end
 
 -- called by the PLAYER_LOGIN event handler

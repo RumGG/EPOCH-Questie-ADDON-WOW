@@ -5255,3 +5255,48 @@ SlashCmdList["QUESTIEDATACOLLECTOR"] = function(msg)
         DEFAULT_CHAT_FRAME:AddMessage("/qdc devmode - Toggle dev mode (collect ALL quest data)", 1, 1, 1)
     end
 end
+
+--- Check if data collection is currently enabled
+function QuestieDataCollector:IsDataCollectionEnabled()
+    return Questie.db and Questie.db.profile and Questie.db.profile.enableDataCollection or false
+end
+
+--- Prompt user to enable data collection (only shows once per character)
+--- @param questId number The quest ID that triggered this prompt
+--- @param questName string The quest name for context
+function QuestieDataCollector:PromptForDataCollection(questId, questName)
+    -- Check if user has already been prompted and made a choice
+    if Questie.db.profile.dataCollectionPrompted ~= nil then
+        return -- User already made a choice, don't prompt again
+    end
+    
+    -- Mark that we've prompted so it only happens once
+    Questie.db.profile.dataCollectionPrompted = true
+    
+    -- Create popup frame for data collection prompt
+    StaticPopup_Show("QUESTIE_DATA_COLLECTION_PROMPT", questName or "this quest", questId or "")
+end
+
+-- Static popup definition for data collection prompt
+StaticPopupDialogs["QUESTIE_DATA_COLLECTION_PROMPT"] = {
+    text = "You just accepted '%s' which has incomplete data!\n\nWould you like to enable data collection to help complete quest data for the community?\n\n• Your progress will be tracked\n• No personal information is shared\n• Data helps improve Questie for everyone\n• You can disable this anytime with /qdc disable",
+    button1 = "Yes, Enable Collection",
+    button2 = "No Thanks", 
+    OnAccept = function()
+        -- Enable data collection
+        Questie.db.profile.enableDataCollection = true
+        if QuestieDataCollector and QuestieDataCollector.Initialize then
+            QuestieDataCollector:Initialize()
+        end
+        DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Questie] Data collection enabled! Thank you for contributing to the community.|r")
+        DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00[Questie] Use '/qdc status' to check collection status, '/qdc disable' to turn off.|r")
+    end,
+    OnCancel = function()
+        -- User declined - we won't prompt again due to dataCollectionPrompted being set to true
+        DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00[Questie] Data collection remains disabled. You can enable it anytime with '/qdc enable'.|r")
+    end,
+    timeout = 0, -- No auto-timeout
+    whileDead = true,
+    hideOnEscape = false, -- Force user to make a choice
+    showAlert = true, -- Make it more prominent
+}

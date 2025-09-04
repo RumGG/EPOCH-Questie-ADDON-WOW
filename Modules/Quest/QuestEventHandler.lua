@@ -491,11 +491,17 @@ function _QuestEventHandler:HandleQuestAccepted(questId)
             -- Warn the player they accepted incomplete quest data
             DEFAULT_CHAT_FRAME:AddMessage("|cFFFFAA00WARNING: You accepted a quest with incomplete data! Quest objectives and turn-in location may be missing.|r")
             
-            -- Enable data collection for this quest if it's not already enabled
+            -- Check if data collection is enabled, or prompt user (one-time only)
             if QuestieDataCollector and QuestieDataCollector.IsDataCollectionEnabled and QuestieDataCollector.IsDataCollectionEnabled() then
                 DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00Data collection is enabled - your progress will help complete this quest's data!|r")
             else
-                DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00Type '/qdc enable' to help collect complete data for this quest!|r")
+                -- Show one-time prompt if user hasn't been asked before
+                if QuestieDataCollector and QuestieDataCollector.PromptForDataCollection then
+                    QuestieDataCollector:PromptForDataCollection(questId, quest.name)
+                else
+                    -- Fallback if prompt system not available
+                    DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00Type '/qdc enable' to help collect complete data for this quest!|r")
+                end
             end
         end
     end
