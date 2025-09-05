@@ -900,9 +900,18 @@ function QuestieDataCollector:TrackQuestAccepted(questIndex, questId)
     end
     
     -- Capture player's professions for ANY quest with skill requirements
-    if hasSkillRequirement then
-        questData.playerProfessions = QuestieDataCollector:GetPlayerProfessions()
-        DebugMessage("|cFF00FFFF[DATA]|r Tracking professions for skill-required quest", 0, 1, 1)
+    -- ALWAYS capture for commission quests to ensure we have the data
+    if hasSkillRequirement or questData.isCommission then
+        local profs = QuestieDataCollector:GetPlayerProfessions()
+        questData.playerProfessions = profs
+        if profs and #profs > 0 then
+            DebugMessage("|cFF00FF00[DATA]|r Captured " .. #profs .. " professions for quest", 0, 1, 0)
+            for _, prof in ipairs(profs) do
+                DebugMessage("|cFF00FFFF[DATA]|r   - " .. prof.name .. ": " .. prof.skillLevel .. "/" .. prof.maxSkillLevel, 0, 1, 1)
+            end
+        else
+            DebugMessage("|cFFFF0000[DATA]|r No professions captured - player may not have any!", 1, 0, 0)
+        end
     end
     
     -- Get quest level and objectives text
@@ -1561,6 +1570,14 @@ function QuestieDataCollector:GetPlayerProfessions()
         return professions -- Return empty table if module not available
     end
     
+    -- Initialize if not already done
+    if not QuestieProfessions.professionTable then
+        QuestieProfessions:Init()
+    end
+    
+    -- CRITICAL: Must call Update() first to populate the professions table!
+    QuestieProfessions:Update()
+    
     local playerProfessions = QuestieProfessions:GetPlayerProfessions()
     if not playerProfessions then
         DebugMessage("|cFFFFFF00[DATA]|r No profession data available", 1, 1, 0)
@@ -1599,6 +1616,12 @@ function QuestieDataCollector:GetPlayerProfessions()
             })
             DebugMessage("|cFF00FFFF[DATA]|r Profession: " .. name .. " (" .. skillLevel .. "/450)", 0, 1, 1)
         end
+    end
+    
+    if #professions > 0 then
+        DebugMessage("|cFF00FF00[DATA]|r Found " .. #professions .. " professions for player", 0, 1, 0)
+    else
+        DebugMessage("|cFFFFFF00[DATA]|r No professions found - player may not have any professions", 1, 1, 0)
     end
     
     return professions

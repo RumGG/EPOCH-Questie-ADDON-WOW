@@ -48,6 +48,13 @@
   - Changed "DEVELOPER FEATURE ONLY" to friendly "Thank you for contributing!" message
   - Users now clearly understand why tooltip ID options are greyed out when data collection is active
 
+- **Profession Data Not Being Captured for Commission Quests** - Fixed missing profession data in quest submissions
+  - QuestieProfessions:Update() must be called before GetPlayerProfessions() to populate the data
+  - Added initialization check to ensure QuestieProfessions module is ready
+  - Enhanced debug output to show when professions are successfully captured
+  - Commission quests (IDs 27596-28660+) now properly include player profession data
+  - Critical for validating profession requirements for these special quests
+
 - **GitHub Issue Templates Not Working** - Fixed templates not appearing when creating new issues (PR #1110)
   - Renamed `.github/issue_Template` folder to `.github/ISSUE_TEMPLATE` (all uppercase)  
   - GitHub requires exact uppercase naming for issue templates to be recognized
