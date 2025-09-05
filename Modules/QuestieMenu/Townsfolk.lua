@@ -36,6 +36,31 @@ local function _PopulateTownsfolkTypes(folkTypes) -- populate the table with all
         return folkTypes
     end
     
+    -- Debug: Check a specific NPC we know should be a stable master
+    print("[DEBUG] QuestieDB.npcKeys.npcFlags = " .. (QuestieDB.npcKeys.npcFlags or "nil"))
+    print("[DEBUG] QuestieDB.npcKeys.name = " .. (QuestieDB.npcKeys.name or "nil"))
+    print("[DEBUG] QuestieDB.npcKeys.subName = " .. (QuestieDB.npcKeys.subName or "nil"))
+    
+    local xonchaData = QuestieDB.npcData[9988]
+    if xonchaData then
+        print("[DEBUG] Xon'cha data type: " .. type(xonchaData))
+        if type(xonchaData) == "table" then
+            print("[DEBUG] Xon'cha data length: " .. #xonchaData)
+            local xonchaFlags = xonchaData[QuestieDB.npcKeys.npcFlags]
+            print("[DEBUG] Xon'cha (9988) flags = " .. (xonchaFlags or "nil"))
+            print("[DEBUG] Xon'cha bitband with STABLEMASTER (4194304) = " .. (xonchaFlags and bitband(xonchaFlags, 4194304) or "nil"))
+            print("[DEBUG] Xon'cha bitband with FLIGHT_MASTER (8192) = " .. (xonchaFlags and bitband(xonchaFlags, 8192) or "nil"))
+        end
+    else
+        print("[DEBUG] Xon'cha (9988) not found in QuestieDB.npcData!")
+    end
+    
+    local totalNpcs = 0
+    for _ in pairs(QuestieDB.npcData) do
+        totalNpcs = totalNpcs + 1
+    end
+    print("[DEBUG] Total NPCs in database: " .. totalNpcs)
+    
     for id, npcData in pairs(QuestieDB.npcData) do
         local flags = npcData[QuestieDB.npcKeys.npcFlags]
         for name, folkType in pairs(folkTypes) do
