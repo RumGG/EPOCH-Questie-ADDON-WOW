@@ -26,6 +26,13 @@ end
 ---Uses a table to fetch multiple townfolk types at the same time.
 ---@param folkTypes table<string, {mask: NpcFlags|integer, requireSubname: boolean, data: NpcId[]}>
 local function _PopulateTownsfolkTypes(folkTypes) -- populate the table with all npc ids based on the given bitmask
+    -- Check if npcData exists (it's deleted after compilation)
+    if not QuestieDB.npcData then
+        print("[TOWNSFOLK ERROR] Cannot build lists - QuestieDB.npcData has been cleaned up")
+        print("[TOWNSFOLK] Lists can only be built during database compilation")
+        return folkTypes
+    end
+    
     local count = 0
     for id, npcData in pairs(QuestieDB.npcData) do
         local flags = npcData[QuestieDB.npcKeys.npcFlags]
@@ -108,8 +115,8 @@ end
 SLASH_QUESTIETOWNSFOLK1 = "/qtf"
 SlashCmdList["QUESTIETOWNSFOLK"] = function(msg)
     if msg == "rebuild" then
-        print("[TOWNSFOLK] Attempting manual initialization...")
-        Townsfolk.Initialize()
+        print("[TOWNSFOLK] Manual rebuild not available after database compilation")
+        print("[TOWNSFOLK] To force rebuild: Delete WTF SavedVariables and restart WoW")
     elseif msg == "debug" then
         print("[TOWNSFOLK DEBUG]")
         
@@ -150,6 +157,24 @@ SlashCmdList["QUESTIETOWNSFOLK"] = function(msg)
                 print("  Char: " .. key .. ": " .. #npcs .. " NPCs")
             end
         end
+    elseif msg == "forcecompile" then
+        print("[TOWNSFOLK] Forcing database recompilation...")
+        print("[TOWNSFOLK] This will rebuild all lists from scratch")
+        
+        -- Clear the compilation flag to force recompile on next reload
+        Questie.db.global.dbIsCompiled = false
+        Questie.db.global.dbCompiled = false
+        
+        -- Clear townsfolk data
+        Questie.db.global.townsfolk = nil
+        Questie.db.global.professionTrainers = nil
+        Questie.db.global.classSpecificTownsfolk = nil
+        Questie.db.global.factionSpecificTownsfolk = nil
+        Questie.db.global.petFoodVendorTypes = nil
+        Questie.db.char.townsfolk = nil
+        
+        print("[TOWNSFOLK] Flags cleared. Type /reload to recompile database")
+        print("[TOWNSFOLK] This will take 30-60 seconds and may cause lag")
     elseif msg == "check" then
         -- Check specific NPCs
         print("[TOWNSFOLK] Checking specific NPCs...")
@@ -172,6 +197,7 @@ SlashCmdList["QUESTIETOWNSFOLK"] = function(msg)
         print("Questie Townsfolk Commands:")
         print("  /qtf debug - Show current list counts")
         print("  /qtf check - Check specific NPCs")
+        print("  /qtf forcecompile - Force database recompilation (fixes missing lists)")
     end
 end
 
