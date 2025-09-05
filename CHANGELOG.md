@@ -11,8 +11,14 @@
   - Ensures submitted NPC data has proper flag values to prevent service NPC miscategorization
 
 ### Fixed
+- **Data Collection UI/UX Improvements** - Made data collection feature more user-friendly and approachable
+  - Added clear red notice text when data collection is enabled explaining that tooltip IDs are automatically forced on
+  - Removed intimidating "WARNING" text from developer mode options
+  - Changed "DEVELOPER FEATURE ONLY" to friendly "Thank you for contributing!" message
+  - Users now clearly understand why tooltip ID options are greyed out when data collection is active
+
 - **GitHub Issue Templates Not Working** - Fixed templates not appearing when creating new issues (PR #1110)
-  - Renamed `.github/issue_Template` folder to `.github/ISSUE_TEMPLATE` (all uppercase)
+  - Renamed `.github/issue_Template` folder to `.github/ISSUE_TEMPLATE` (all uppercase)  
   - GitHub requires exact uppercase naming for issue templates to be recognized
   - Templates now properly appear when users create new issues
 
