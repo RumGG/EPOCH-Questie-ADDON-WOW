@@ -489,15 +489,9 @@ function QuestieInit:LoadBaseDB()
             -- Check if it's a service NPC (vendor, trainer, innkeeper, etc.)
             local npcFlags = data[15] -- npcFlags field
             if npcFlags and npcFlags > 0 then
-                -- Service NPCs have flags like vendor (128), trainer (16), innkeeper (65536), etc.
-                -- But only merge if it doesn't exist in Classic or is in Northrend
-                local zoneID = data[9] -- zoneID field
-                if zoneID and zoneID >= 65 then -- Northrend zones
-                    shouldMerge = true
-                elseif QuestieDB.npcData[id] == nil then
-                    -- Add new WotLK NPCs that don't exist in Classic
-                    shouldMerge = true
-                end
+                -- ALWAYS use WotLK data for service NPCs to get correct flag values
+                -- Classic has different flag values that are wrong for WotLK
+                shouldMerge = true
             elseif id > 23000 then -- Northrend NPCs generally have higher IDs
                 shouldMerge = true
             end
