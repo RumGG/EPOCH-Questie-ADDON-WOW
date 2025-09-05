@@ -11,6 +11,12 @@
   - Ensures submitted NPC data has proper flag values to prevent service NPC miscategorization
 
 ### Fixed
+- **Runtime Stub Quest Colors Not Respecting User Settings** - Fixed [Epoch] quests always showing white/gray objectives regardless of color preference
+  - Objectives without progress counts (exploration, events) were bypassing user's "Red to Green" color setting
+  - Safety checks added for Epoch runtime stubs were incorrectly returning gray instead of respecting tracker color preferences
+  - Now properly shows red for incomplete objectives and green for completed when "Red to Green" is selected
+  - Fixes GitHub Issue #1135 where users reported white objectives despite having gradient colors enabled
+
 - **CRITICAL: Available Quest Toggle Broken** - Fixed issue where disabling Available Quests caused icons to cluster at service NPCs
   - Quest icons were being drawn but redirected to flight masters, mailboxes, and spirit healers when toggle was off
   - Added proper check in `DrawAvailableQuest` to prevent drawing when `enableAvailable` is false
