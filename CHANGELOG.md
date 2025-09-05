@@ -11,6 +11,18 @@
   - Ensures submitted NPC data has proper flag values to prevent service NPC miscategorization
 
 ### Fixed
+- **GitHub Issue Templates Not Working** - Fixed templates not appearing when creating new issues (PR #1110)
+  - Renamed `.github/issue_Template` folder to `.github/ISSUE_TEMPLATE` (all uppercase)
+  - GitHub requires exact uppercase naming for issue templates to be recognized
+  - Templates now properly appear when users create new issues
+
+- **Data Collector Not Initializing and Tooltip Settings** - Fixed data collector initialization and tooltip ID handling (PR #1168)
+  - Fixed case sensitivity bug: `enableTooltipsNpcID` changed to `enableTooltipsNPCID` throughout codebase
+  - Data collector now properly saves and restores NPC tooltip settings
+  - Data collector now initializes immediately when enabled in options
+  - Tooltip ID options are now grayed out when data collection is enabled (prevents confusion since data collection forces all IDs on)
+  - Added missing QuestieDataCollector module import in options panel
+
 - **Runtime Stub Quest Colors Not Respecting User Settings** - Fixed [Epoch] quests always showing white/gray objectives regardless of color preference
   - Objectives without progress counts (exploration, events) were bypassing user's "Red to Green" color setting
   - Safety checks added for Epoch runtime stubs were incorrectly returning gray instead of respecting tracker color preferences
