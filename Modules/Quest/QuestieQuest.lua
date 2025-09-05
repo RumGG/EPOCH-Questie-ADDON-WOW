@@ -1504,10 +1504,17 @@ function QuestieQuest:PopulateObjective(quest, objectiveIndex, objective, blockI
         local zones = {}
         local objectiveZone
 
-        for _, spawnData in pairs(objective.spawnList) do
-            for zone in pairs(spawnData.Spawns) do
-                zones[zone] = true
+        -- Defensive check for spawnList
+        if objective.spawnList then
+            for _, spawnData in pairs(objective.spawnList) do
+                if spawnData and spawnData.Spawns then
+                    for zone in pairs(spawnData.Spawns) do
+                        zones[zone] = true
+                    end
+                end
             end
+        else
+            Questie:Debug(Questie.DEBUG_DEVELOP, "[QuestieQuest] Objective has no spawnList for quest", quest.Id)
         end
 
         for zone in pairs(zones) do

@@ -11,6 +11,12 @@
   - Ensures submitted NPC data has proper flag values to prevent service NPC miscategorization
 
 ### Fixed
+- **QuestieQuest nil spawnList Crash** - Fixed "bad argument #1 to 'next' (table expected, got nil)" error at line 1513
+  - Added defensive checks for nil or missing spawnList data in quest objectives
+  - Prevents crash when quest objectives have incomplete or corrupted spawn data
+  - Fixes SavedVariables generation failure reported by v1.1.4 users
+  - Safely handles objectives without spawn locations instead of crashing
+
 - **Data Collection UI/UX Improvements** - Made data collection feature more user-friendly and approachable
   - Added clear red notice text when data collection is enabled explaining that tooltip IDs are automatically forced on
   - Removed intimidating "WARNING" text from developer mode options
