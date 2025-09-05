@@ -26,15 +26,18 @@ end
 ---Uses a table to fetch multiple townfolk types at the same time.
 ---@param folkTypes table<string, {mask: NpcFlags|integer, requireSubname: boolean, data: NpcId[]}>
 local function _PopulateTownsfolkTypes(folkTypes) -- populate the table with all npc ids based on the given bitmask
+    print("[POPULATE] Function called!")
     local count = 0
     local stableMasterCount = 0
     local flightMasterCount = 0
     
     -- Check if database is loaded
     if not QuestieDB.npcData then
-        print("[TOWNSFOLK ERROR] QuestieDB.npcData is nil - database not loaded!")
+        print("[POPULATE ERROR] QuestieDB.npcData is nil - database not loaded!")
         return folkTypes
     end
+    
+    print("[POPULATE] QuestieDB.npcData exists, type = " .. type(QuestieDB.npcData))
     
     -- Debug: Check a specific NPC we know should be a stable master
     print("[DEBUG] QuestieDB.npcKeys.npcFlags = " .. (QuestieDB.npcKeys.npcFlags or "nil"))
@@ -289,7 +292,9 @@ function Townsfolk.Initialize()
     print("[TOWNSFOLK] Stable Master mask = " .. (townsfolkData["Stable Master"].mask or "nil"))
     print("[TOWNSFOLK] Flight Master mask = " .. (townsfolkData["Flight Master"].mask or "nil"))
     
+    print("[TOWNSFOLK] Calling _PopulateTownsfolkTypes...")
     _PopulateTownsfolkTypes(townsfolkData)
+    print("[TOWNSFOLK] _PopulateTownsfolkTypes returned")
 
     local townfolk = {
         ["Repair"] = townsfolkData["Repair"].data,
