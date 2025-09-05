@@ -73,9 +73,46 @@ local function _PopulateTownsfolkTypes(folkTypes) -- populate the table with all
 end
 
 
+-- Manual rebuild function for debugging
+function Townsfolk.ForceRebuild()
+    print("[TOWNSFOLK] Manual rebuild triggered")
+    Questie.db.global.townsfolk = nil
+    Questie.db.global.professionTrainers = nil
+    Questie.db.global.classSpecificTownsfolk = nil
+    Questie.db.global.factionSpecificTownsfolk = nil
+    Questie.db.global.petFoodVendorTypes = nil
+    Questie.db.char.townsfolk = nil
+    Questie.db.char.townsfolkClass = nil
+    Questie.db.char.townsfolkFaction = nil
+    Townsfolk.Initialize()
+    Townsfolk:BuildCharacterTownsfolk()
+    print("[TOWNSFOLK] Rebuild complete")
+end
+
+-- Register slash command for debugging
+SLASH_QUESTIETOWNSFOLK1 = "/qtf"
+SlashCmdList["QUESTIETOWNSFOLK"] = function(msg)
+    if msg == "rebuild" then
+        Townsfolk.ForceRebuild()
+    elseif msg == "debug" then
+        print("[TOWNSFOLK DEBUG]")
+        if Questie.db.global.townsfolk then
+            for key, npcs in pairs(Questie.db.global.townsfolk) do
+                print("  " .. key .. ": " .. #npcs .. " NPCs")
+            end
+        else
+            print("  No global townsfolk data")
+        end
+    else
+        print("Questie Townsfolk Commands:")
+        print("  /qtf rebuild - Force rebuild all townsfolk lists")
+        print("  /qtf debug - Show current list counts")
+    end
+end
+
 function Townsfolk.Initialize()
     -- FORCE REBUILD FOR DEBUGGING
-    local FORCE_REBUILD = true
+    local FORCE_REBUILD = false  -- Set back to false, use command instead
     
     if FORCE_REBUILD then
         print("[TOWNSFOLK] FORCE REBUILD ENABLED - Clearing all lists")
