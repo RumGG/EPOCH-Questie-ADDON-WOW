@@ -296,13 +296,6 @@ function Townsfolk.Initialize()
     coroutine.yield()
 
     --- Set the globals
-    print("[TOWNSFOLK] Setting global townfolk lists...")
-    
-    -- Debug: Show what's in each category
-    for key, npcs in pairs(townfolk) do
-        print("[TOWNSFOLK] " .. key .. " has " .. #npcs .. " NPCs")
-    end
-    
     Questie.db.global.townsfolk = townfolk
     Questie.db.global.townsfolkNeedsUpdatedGlobalVendors = true
 
@@ -367,12 +360,10 @@ function Townsfolk:BuildCharacterTownsfolk()
 
     -- Check if global data exists before trying to use it
     if not Questie.db.global.factionSpecificTownsfolk then
-        print("[TOWNSFOLK ERROR] factionSpecificTownsfolk is nil - Initialize may have failed")
         return
     end
     
     if not Questie.db.global.classSpecificTownsfolk then
-        print("[TOWNSFOLK ERROR] classSpecificTownsfolk is nil - Initialize may have failed")
         return
     end
 
