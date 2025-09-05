@@ -1490,7 +1490,7 @@ function QuestieQuest:PopulateObjective(quest, objectiveIndex, objective, blockI
         objective.Color = QuestieLib:ColorWheel()
     end
 
-    if objective.spawnList and next(objective.spawnList) then
+    if objective.spawnList and type(objective.spawnList) == "table" and next(objective.spawnList) then
         local maxPerType = 300
 
         if Questie.db.profile.enableIconLimit and Questie.db.profile.iconLimit < maxPerType then
@@ -1505,7 +1505,7 @@ function QuestieQuest:PopulateObjective(quest, objectiveIndex, objective, blockI
         local objectiveZone
 
         -- Defensive check for spawnList
-        if objective.spawnList then
+        if objective.spawnList and type(objective.spawnList) == "table" then
             for _, spawnData in pairs(objective.spawnList) do
                 if spawnData and spawnData.Spawns then
                     for zone in pairs(spawnData.Spawns) do
@@ -1517,9 +1517,12 @@ function QuestieQuest:PopulateObjective(quest, objectiveIndex, objective, blockI
             Questie:Debug(Questie.DEBUG_DEVELOP, "[QuestieQuest] Objective has no spawnList for quest", quest.Id)
         end
 
-        for zone in pairs(zones) do
-            objectiveZone = zone
-            zoneCount = zoneCount + 1
+        -- Extra defensive check for zones table
+        if zones then
+            for zone in pairs(zones) do
+                objectiveZone = zone
+                zoneCount = zoneCount + 1
+            end
         end
 
         if zoneCount == 1 then -- this objective happens in 1 zone, clustering should be relative to that zone
@@ -1536,7 +1539,7 @@ end
 _RegisterObjectiveTooltips = function(objective, questId, blockItemTooltips)
     Questie:Debug(Questie.DEBUG_INFO, "Registering objective tooltips for", objective.Description)
 
-    if objective.spawnList then
+    if objective.spawnList and type(objective.spawnList) == "table" then
         if (not objective.hasRegisteredTooltips) then
             for id, spawnData in pairs(objective.spawnList) do
                 if spawnData.TooltipKey and (not objective.AlreadySpawned[id]) then
