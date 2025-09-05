@@ -16,6 +16,13 @@
   - Users can still disable it if they prefer
 
 ### Added
+- **First-Run Data Collection Popup** - New players are prompted on first login to help improve Questie
+  - One-time popup asks if players want to contribute by enabling data collection
+  - Popup reappears if SavedVariables are reset/purged
+  - Users can opt-in to help fix missing and incorrect quest data
+  - Setting can be changed anytime in Advanced → Developer Tools
+  - Helps build community contribution from day one
+
 - **NPC Service Flag Detection in Data Collection** - Automatic detection and capture of NPC service types
   - Detects service NPCs through game events (MERCHANT_SHOW, TAXIMAP_OPENED, PET_STABLE_SHOW, etc.)
   - Automatically calculates correct WotLK flag values for detected services
