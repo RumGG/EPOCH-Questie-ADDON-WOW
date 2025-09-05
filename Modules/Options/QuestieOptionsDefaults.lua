@@ -47,7 +47,7 @@ function QuestieOptionsDefaults:Load()
             questMinimapObjectiveColors = false,
             enableObjectives = true,
             enableTurnins = false,
-            enableAvailable = false,  -- Legacy setting for backward compatibility
+            enableAvailable = true,  -- Show available quests on map (core Questie feature)
             enableAvailableWorldMap = true,  -- Available quests on world map (enabled by default)
             enableAvailableMinimap = false,  -- Available quests on minimap (disabled to reduce clutter)
             enableTooltips = true,
