@@ -30,6 +30,14 @@
   - Supports detection of: Quest Giver, Vendor, Repair, Trainer, Flight Master, Innkeeper, Banker, Auctioneer, Stable Master, Battlemaster
   - Ensures submitted NPC data has proper flag values to prevent service NPC miscategorization
 
+- **Enhanced Quest Prerequisite and Chain Tracking** - Improved detection of quest relationships and chains
+  - Detects sequential quest IDs (within 5 of current quest) for potential chains
+  - Identifies similar quest names (Part 1/2, Chapter 1/2, etc.) as chain members
+  - Captures turn-in NPC details with coordinates and zone information
+  - Tracks which quests become available after completing a quest (prerequisites satisfied)
+  - Detects exclusive quests that disappear after accepting another quest
+  - Exports complete chain/prerequisite relationships for better quest flow understanding
+
 ### Fixed
 - **Available Quests Toggle Not Working** - Fixed issue where unchecking "Show Available Quests" didn't hide quest exclamation marks
   - The new split settings (enableAvailableWorldMap/enableAvailableMinimap) weren't being checked in ShouldBeHidden()
@@ -54,6 +62,14 @@
   - Enhanced debug output to show when professions are successfully captured
   - Commission quests (IDs 27596-28660+) now properly include player profession data
   - Critical for validating profession requirements for these special quests
+
+- **Complete Quest Icons Hidden Behind Available Quest Icons** - Fixed rendering priority for quest turn-in markers
+  - Complete quest icons now render at highest priority (frame level 9, draw layer 7)
+  - Available quest icons render at lower priority (frame level 7, draw layer 3)
+  - Complete quest icons are 20% larger than available quests for better visibility
+  - Added Priority field to icon data (100 for complete, 50 for available)
+  - When an NPC has both complete and available quests, the turn-in icon always shows on top
+  - Ensures players see their most important action (quest turn-in) first
 
 - **GitHub Issue Templates Not Working** - Fixed templates not appearing when creating new issues (PR #1110)
   - Renamed `.github/issue_Template` folder to `.github/ISSUE_TEMPLATE` (all uppercase)  
