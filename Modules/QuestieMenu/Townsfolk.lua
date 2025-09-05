@@ -39,6 +39,12 @@ local function _PopulateTownsfolkTypes(folkTypes) -- populate the table with all
     
     print("[POPULATE] QuestieDB.npcData exists, type = " .. type(QuestieDB.npcData))
     
+    -- Check if it's a string (compressed) or table
+    if type(QuestieDB.npcData) == "string" then
+        print("[POPULATE ERROR] npcData is still compressed! Need to decompress first.")
+        return folkTypes
+    end
+    
     -- Debug: Check a specific NPC we know should be a stable master
     print("[DEBUG] QuestieDB.npcKeys.npcFlags = " .. (QuestieDB.npcKeys.npcFlags or "nil"))
     print("[DEBUG] QuestieDB.npcKeys.name = " .. (QuestieDB.npcKeys.name or "nil"))
@@ -121,15 +127,22 @@ function Townsfolk.ForceRebuild()
     print("[TOWNSFOLK] Manual rebuild triggered")
     
     -- Check if database is loaded
-    if type(QuestieDB.npcData) == "string" then
-        print("[TOWNSFOLK ERROR] Database is still compressed. Loading...")
-        -- Need to load the database first
-        local QuestieInit = QuestieLoader:ImportModule("QuestieInit")
-        QuestieInit:LoadBaseDB()
-        print("[TOWNSFOLK] Database loaded.")
-    elseif not QuestieDB.npcData then
-        print("[TOWNSFOLK ERROR] QuestieDB.npcData is nil!")
+    if not QuestieDB.QueryNPC then
+        print("[TOWNSFOLK ERROR] QuestieDB not initialized. Cannot rebuild.")
         return
+    end
+    
+    -- Make sure NPC data is decompressed
+    if type(QuestieDB.npcData) == "string" or not QuestieDB.npcData then
+        print("[TOWNSFOLK] Decompressing NPC database...")
+        -- Query a known NPC to force decompression
+        local testNpc = QuestieDB:QueryNPC(9988, "all") -- Query Xon'cha
+        if testNpc then
+            print("[TOWNSFOLK] Database decompressed successfully")
+        else
+            print("[TOWNSFOLK ERROR] Failed to decompress database")
+            return
+        end
     end
     
     -- Clear all cached data
@@ -558,6 +571,17 @@ function Townsfolk:BuildCharacterTownsfolk()
     Questie.db.char.townsfolk = {}
     Questie.db.char.vendorList = {}
     Questie.db.char.townsfolkClass = UnitClass("player")
+
+    -- Check if global data exists before trying to use it
+    if not Questie.db.global.factionSpecificTownsfolk then
+        print("[TOWNSFOLK ERROR] factionSpecificTownsfolk is nil - Initialize may have failed")
+        return
+    end
+    
+    if not Questie.db.global.classSpecificTownsfolk then
+        print("[TOWNSFOLK ERROR] classSpecificTownsfolk is nil - Initialize may have failed")
+        return
+    end
 
     for key, npcs in pairs(Questie.db.global.factionSpecificTownsfolk[playerFaction]) do
         Questie.db.char.townsfolk[key] = npcs
