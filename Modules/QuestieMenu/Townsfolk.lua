@@ -159,9 +159,21 @@ SlashCmdList["QUESTIETOWNSFOLK"] = function(msg)
 end
 
 function Townsfolk.Initialize()
-    -- TEMPORARY FIX: Force clear if stable masters list is empty
-    if Questie.db.global.townsfolk and Questie.db.global.townsfolk["Stable Master"] and #Questie.db.global.townsfolk["Stable Master"] == 0 then
-        print("[TOWNSFOLK] Stable Master list is empty - forcing complete rebuild")
+    print("[TOWNSFOLK] Initialize() called")
+    
+    -- Check if we need to rebuild
+    local needsRebuild = false
+    
+    if not Questie.db.global.townsfolk then
+        needsRebuild = true
+        print("[TOWNSFOLK] No townsfolk data found - will build")
+    elseif not Questie.db.global.townsfolk["Stable Master"] or #Questie.db.global.townsfolk["Stable Master"] == 0 then
+        needsRebuild = true
+        print("[TOWNSFOLK] Stable Master list is missing or empty - forcing rebuild")
+    end
+    
+    if needsRebuild then
+        -- Clear everything for a clean rebuild
         Questie.db.global.townsfolk = nil
         Questie.db.global.professionTrainers = nil
         Questie.db.global.classSpecificTownsfolk = nil
@@ -170,11 +182,9 @@ function Townsfolk.Initialize()
         Questie.db.char.townsfolk = nil
         Questie.db.char.townsfolkClass = nil
         Questie.db.char.townsfolkFaction = nil
-    end
-    
-    -- Check if lists already exist
-    if Questie.db.global.townsfolk then
-        return -- Lists already built
+    else
+        -- Lists exist and have data, skip rebuild
+        return
     end
     
     -- Building townfolk lists
