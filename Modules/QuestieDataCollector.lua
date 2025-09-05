@@ -582,6 +582,9 @@ function QuestieDataCollector:RegisterEvents()
     frame:RegisterEvent("GUILDBANKFRAME_OPENED")
     frame:RegisterEvent("GUILDBANKFRAME_CLOSED")
     frame:RegisterEvent("TAXIMAP_OPENED")
+    frame:RegisterEvent("AUCTION_HOUSE_SHOW")  -- Auctioneer
+    frame:RegisterEvent("PET_STABLE_SHOW")     -- Stable Master
+    frame:RegisterEvent("BATTLEFIELDS_SHOW")   -- Battlemaster
     
     -- XP tracking events
     frame:RegisterEvent("CHAT_MSG_COMBAT_XP_GAIN")
@@ -716,15 +719,22 @@ function QuestieDataCollector:OnEvent(event, ...)
         
     elseif event == "MERCHANT_SHOW" then
         QuestieDataCollector:CaptureServiceNPC("vendor")
+        QuestieDataCollector:DetectNPCService("VENDOR")
+        -- Check if merchant can repair
+        if CanMerchantRepair() then
+            QuestieDataCollector:DetectNPCService("REPAIR")
+        end
         
     elseif event == "TRAINER_SHOW" then
         QuestieDataCollector:CaptureServiceNPC("trainer")
+        QuestieDataCollector:DetectNPCService("TRAINER")
         
     elseif event == "MAIL_SHOW" then
         QuestieDataCollector:CaptureMailbox()
         
     elseif event == "BANKFRAME_OPENED" then
         QuestieDataCollector:CaptureServiceNPC("banker")
+        QuestieDataCollector:DetectNPCService("BANKER")
         
     elseif event == "GUILDBANKFRAME_OPENED" then
         QuestieDataCollector:CaptureServiceNPC("guild_banker")
@@ -743,12 +753,26 @@ function QuestieDataCollector:OnEvent(event, ...)
                     id = npcId,
                     name = npcName,
                     timestamp = time(),
-                    coords = QuestieDataCollector:GetPlayerCoordinates()
+                    coords = QuestieDataCollector:GetPlayerCoordinates(),
+                    detectedServices = {}
                 }
                 DebugMessage("|cFF00FFFF[DATA]|r Captured flight master from TAXIMAP_OPENED: " .. npcName, 0, 1, 1)
             end
+            QuestieDataCollector:DetectNPCService("FLIGHT_MASTER")
         end
         QuestieDataCollector:CaptureServiceNPC("flight_master")
+        
+    elseif event == "AUCTION_HOUSE_SHOW" then
+        QuestieDataCollector:CaptureNPCInfo()
+        QuestieDataCollector:DetectNPCService("AUCTIONEER")
+        
+    elseif event == "PET_STABLE_SHOW" then
+        QuestieDataCollector:CaptureNPCInfo()
+        QuestieDataCollector:DetectNPCService("STABLEMASTER")
+        
+    elseif event == "BATTLEFIELDS_SHOW" then
+        QuestieDataCollector:CaptureNPCInfo()
+        QuestieDataCollector:DetectNPCService("BATTLEMASTER")
         
     elseif event == "CHAT_MSG_COMBAT_XP_GAIN" then
         local message = ...
@@ -1293,6 +1317,36 @@ function QuestieDataCollector:UpdateQuestObjectives(questId)
                 objective.finished = finished
             end
         end
+    end
+end
+
+function QuestieDataCollector:DetectNPCService(serviceType)
+    -- Store detected service type for the last interacted NPC
+    if _lastInteractedNPC and _lastInteractedNPC.id then
+        if not _lastInteractedNPC.detectedServices then
+            _lastInteractedNPC.detectedServices = {}
+        end
+        _lastInteractedNPC.detectedServices[serviceType] = true
+        
+        -- Also store in our tracked NPCs data
+        local npcId = _lastInteractedNPC.id
+        if not QuestieDataCollection.npcs then
+            QuestieDataCollection.npcs = {}
+        end
+        if not QuestieDataCollection.npcs[npcId] then
+            QuestieDataCollection.npcs[npcId] = {
+                id = npcId,
+                name = _lastInteractedNPC.name,
+                coords = {},
+                detectedServices = {}
+            }
+        end
+        if not QuestieDataCollection.npcs[npcId].detectedServices then
+            QuestieDataCollection.npcs[npcId].detectedServices = {}
+        end
+        QuestieDataCollection.npcs[npcId].detectedServices[serviceType] = true
+        
+        DebugMessage("|cFFFFFF00[DATA]|r Detected service: " .. serviceType .. " for NPC " .. (_lastInteractedNPC.name or "Unknown"), 1, 1, 0)
     end
 end
 
@@ -4360,10 +4414,56 @@ function QuestieDataCollector:GenerateDatabaseEntries(questId, questData)
             questEnds = "{" .. table.concat(npc.questEnds, ",") .. "}"
         end
         
+        -- Calculate NPC flags based on detected services (WotLK values)
+        local npcFlags = 0
+        
+        -- Check if we have detected services for this NPC
+        local detectedServices = {}
+        if QuestieDataCollection.npcs and QuestieDataCollection.npcs[npcId] and QuestieDataCollection.npcs[npcId].detectedServices then
+            detectedServices = QuestieDataCollection.npcs[npcId].detectedServices
+        end
+        
+        -- Add appropriate flags based on detected services
+        if detectedServices["QUEST_GIVER"] or #npc.questStarts > 0 or #npc.questEnds > 0 then
+            npcFlags = npcFlags + 2  -- QUEST_GIVER
+        end
+        if detectedServices["VENDOR"] then
+            npcFlags = npcFlags + 128  -- VENDOR
+        end
+        if detectedServices["TRAINER"] then
+            npcFlags = npcFlags + 16  -- TRAINER
+        end
+        if detectedServices["FLIGHT_MASTER"] then
+            npcFlags = npcFlags + 8192  -- FLIGHT_MASTER
+        end
+        if detectedServices["INNKEEPER"] then
+            npcFlags = npcFlags + 65536  -- INNKEEPER
+        end
+        if detectedServices["BANKER"] then
+            npcFlags = npcFlags + 131072  -- BANKER
+        end
+        if detectedServices["REPAIR"] then
+            npcFlags = npcFlags + 4096  -- REPAIR
+        end
+        if detectedServices["AUCTIONEER"] then
+            npcFlags = npcFlags + 2097152  -- AUCTIONEER
+        end
+        if detectedServices["STABLEMASTER"] then
+            npcFlags = npcFlags + 4194304  -- STABLEMASTER
+        end
+        if detectedServices["BATTLEMASTER"] then
+            npcFlags = npcFlags + 1048576  -- BATTLEMASTER
+        end
+        
+        -- Default to QUEST_GIVER if no services detected but NPC gives/ends quests
+        if npcFlags == 0 and (#npc.questStarts > 0 or #npc.questEnds > 0) then
+            npcFlags = 2
+        end
+        
         -- Build NPC entry with exact 15 fields
         -- [npcId] = {name, minHP, maxHP, minLvl, maxLvl, rank, spawns, waypoints, zoneID, questStarts, questEnds, factionID, friendlyTo, subName, npcFlags}
         npcEntries[npcId] = string.format(
-            '[%d] = {"%s",nil,nil,%s,%s,0,%s,nil,%d,%s,%s,nil,nil,nil,2},',
+            '[%d] = {"%s",nil,nil,%s,%s,0,%s,nil,%d,%s,%s,nil,nil,nil,%d},',
             npcId,            -- NPC ID
             npc.name,         -- Field 1: name
             npc.level,        -- Field 4: minLevel
@@ -4371,13 +4471,30 @@ function QuestieDataCollector:GenerateDatabaseEntries(questId, questData)
             coords,           -- Field 7: spawns
             zoneId,           -- Field 9: zoneID
             questStarts,      -- Field 10: questStarts
-            questEnds         -- Field 11: questEnds
+            questEnds,        -- Field 11: questEnds
+            npcFlags          -- Field 15: npcFlags (calculated based on detected services)
         )
     end
     
     -- Output NPC entries (sorted for consistency)
     if next(npcEntries) then
         output = output .. "-- Add to epochNpcDB.lua:\n"
+        output = output .. "-- Note: NPC flags are automatically calculated based on detected services\n"
+        
+        -- List detected services for each NPC as a comment
+        for npcId, npc in pairs(npcData) do
+            if QuestieDataCollection.npcs and QuestieDataCollection.npcs[npcId] and QuestieDataCollection.npcs[npcId].detectedServices then
+                local services = {}
+                for service, _ in pairs(QuestieDataCollection.npcs[npcId].detectedServices) do
+                    table.insert(services, service)
+                end
+                if #services > 0 then
+                    output = output .. string.format("-- NPC %d (%s): %s\n", npcId, npc.name, table.concat(services, ", "))
+                end
+            end
+        end
+        output = output .. "\n"
+        
         -- Sort NPC IDs for consistent output
         local sortedNpcIds = {}
         for npcId in pairs(npcEntries) do
