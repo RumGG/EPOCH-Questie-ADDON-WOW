@@ -108,10 +108,27 @@ end
 SLASH_QUESTIETOWNSFOLK1 = "/qtf"
 SlashCmdList["QUESTIETOWNSFOLK"] = function(msg)
     if msg == "rebuild" then
-        print("[TOWNSFOLK] Rebuild not possible - QuestieDB.npcData has been cleaned up")
-        print("[TOWNSFOLK] Lists can only be built during initial startup")
+        print("[TOWNSFOLK] Attempting manual initialization...")
+        Townsfolk.Initialize()
     elseif msg == "debug" then
         print("[TOWNSFOLK DEBUG]")
+        
+        -- Check if Questie.db exists
+        if not Questie.db then
+            print("  ERROR: Questie.db doesn't exist!")
+            return
+        end
+        
+        -- Check global
+        if not Questie.db.global then
+            print("  ERROR: Questie.db.global doesn't exist!")
+            return
+        end
+        
+        -- Check for database compilation
+        print("  DB Compiled: " .. tostring(Questie.db.global.dbCompiled or false))
+        print("  DB IsCompiled: " .. tostring(Questie.db.global.dbIsCompiled or false))
+        
         if Questie.db.global.townsfolk then
             for key, npcs in pairs(Questie.db.global.townsfolk) do
                 print("  Global: " .. key .. ": " .. #npcs .. " NPCs")
