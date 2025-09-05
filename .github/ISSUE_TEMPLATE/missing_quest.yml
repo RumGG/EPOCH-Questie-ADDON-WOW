@@ -1,77 +1,38 @@
-name: Missing Quest
-description: Report a quest missing from Questie-Epoch in addon data format
-labels: ["missing quest"]
+name: Missing Quest Data Submission
+description: Submit quest data collected from QuestieDataCollector
+title: "[Quest Data]: "
+labels: ["quest-data", "data-collection"]
 
 body:
-  - type: input
-    id: quest_id
+  - type: markdown
     attributes:
-      label: Quest ID
-      placeholder: e.g. 26505
-    validations:
-      required: true
-  - type: input
-    id: quest_name
-    attributes:
-      label: Quest Name
-      placeholder: e.g. Letter to Ravenholdt
-    validations:
-      required: true
-  - type: dropdown
-    id: quest_type
-    attributes:
-      label: Quest Type
-      description: Is this a commission quest or regular quest?
-      options:
-        - Regular Quest
-        - Commission Quest
-        - Unknown
-    validations:
-      required: true
-  - type: textarea
-    id: qdc_export
-    attributes:
-      label: QuestieDataCollector Export
-      description: |
-        If you have QuestieDataCollector enabled, paste the output from `/qdc export <questId>` here.
-        This provides the most accurate quest data.
-      placeholder: |
-        Paste the complete output from /qdc export here...
+      value: |
+        ## Quest Data Submission
+        Thank you for helping improve Questie-Epoch! Please use the `/qdc export <questId>` command in-game to generate quest data and paste it below.
   - type: textarea
     id: quest_data
     attributes:
-      label: Manual Quest Data (if no QDC export)
+      label: Quest Data Export
       description: |
-        If you don't have QDC data, you can manually provide quest information in Questie format.
-        Include quest giver/finisher NPCs with IDs and coordinates if known.
+        Paste the complete output from `/qdc export <questId>` here.
+        You can submit multiple quests in a single issue - just paste multiple exports.
       placeholder: |
-        [QUEST_ID] = {
-          [questKeys.name] = "QUEST_NAME",
-          [questKeys.startedBy] = { {QUEST_GIVER_ID}, },
-          [questKeys.finishedBy] = { {QUEST_ENDER_ID}, },
-          [questKeys.requiredLevel] = LEVEL_REQ,
-          [questKeys.questLevel] = LEVEL,
-          [questKeys.requiredSkill] = {PROFESSION_ID, SKILL_LEVEL}, -- For commission quests
-          [questKeys.objectivesText] = {"..."},
-          [questKeys.objectives] = {
-            [objectiveKeys.npc] = { {NPC_ID, ZONE_ID, {X, Y}}, },
-            [objectiveKeys.item] = { {ITEM_ID, ZONE_ID, {X, Y}}, },
-            [objectiveKeys.object] = { {OBJECT_ID, ZONE_ID, {X, Y}}, },
-          },
-        },
-  - type: input
-    id: quest_chain
-    attributes:
-      label: Quest Chain Information
-      description: If this quest is part of a chain, provide previous/next quest IDs
-      placeholder: e.g. Previous: 26504, Next: 26506
+        === QUEST DATA COLLECTION EXPORT ===
+        Addon Version: v1.2.0
+        Quest ID: 12345
+        Quest Name: Example Quest
+        ...
+      render: text
+    validations:
+      required: true
   - type: textarea
-    id: notes
+    id: additional_info
     attributes:
-      label: Additional Notes
+      label: Additional Information (Optional)
       description: |
         Any extra details such as:
-        - Zone where quest is given/completed
-        - Screenshots of quest text
-        - Wowhead or other database links
-        - Special requirements or conditions
+        - Issues encountered during the quest
+        - Missing NPCs or objects
+        - Quest chain information
+      placeholder: |
+        Add any additional notes here...
