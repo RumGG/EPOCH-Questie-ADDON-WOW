@@ -33,7 +33,23 @@ local function _PopulateTownsfolkTypes(folkTypes) -- populate the table with all
         return folkTypes
     end
     
+    -- Debug: Check specific stable master
+    local xoncha = QuestieDB.npcData[9988]
+    if xoncha then
+        local xonchaFlags = xoncha[QuestieDB.npcKeys.npcFlags]
+        print("[DEBUG] Xon'cha (9988) found in npcData")
+        print("[DEBUG]   Flags value: " .. (xonchaFlags or "nil"))
+        print("[DEBUG]   STABLEMASTER mask: 4194304")
+        if xonchaFlags then
+            print("[DEBUG]   bitband result: " .. bitband(xonchaFlags, 4194304))
+            print("[DEBUG]   Should match: " .. (bitband(xonchaFlags, 4194304) == 4194304 and "YES" or "NO"))
+        end
+    else
+        print("[DEBUG] Xon'cha (9988) NOT in npcData!")
+    end
+    
     local count = 0
+    local debugCount = 0
     for id, npcData in pairs(QuestieDB.npcData) do
         local flags = npcData[QuestieDB.npcKeys.npcFlags]
         for name, folkType in pairs(folkTypes) do
@@ -43,6 +59,12 @@ local function _PopulateTownsfolkTypes(folkTypes) -- populate the table with all
                 if npcName and sub(npcName, 1, 5) ~= "[DND]" then
                     if (not folkType.requireSubname) or (subName and strlen(subName) > 1) then
                         folkType.data[#folkType.data+1] = id
+                        
+                        -- Debug stable masters
+                        if name == "Stable Master" and debugCount < 3 then
+                            debugCount = debugCount + 1
+                            print("[DEBUG] Added Stable Master: " .. id .. " (" .. npcName .. ") flags=" .. flags)
+                        end
                     end
                 end
             end
