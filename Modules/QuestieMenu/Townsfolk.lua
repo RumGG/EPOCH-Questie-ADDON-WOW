@@ -187,6 +187,16 @@ SlashCmdList["QUESTIETOWNSFOLK"] = function(msg)
         Questie.db.global.dbIsCompiled = false
         Questie.db.global.dbCompiled = false
         
+        -- CRITICAL: Clear the compiled binary data so it rebuilds from raw files
+        Questie.db.global.questBin = nil
+        Questie.db.global.questPtrs = nil
+        Questie.db.global.npcBin = nil
+        Questie.db.global.npcPtrs = nil
+        Questie.db.global.objBin = nil
+        Questie.db.global.objPtrs = nil
+        Questie.db.global.itemBin = nil
+        Questie.db.global.itemPtrs = nil
+        
         -- Clear townsfolk data
         Questie.db.global.townsfolk = nil
         Questie.db.global.professionTrainers = nil
@@ -195,8 +205,9 @@ SlashCmdList["QUESTIETOWNSFOLK"] = function(msg)
         Questie.db.global.petFoodVendorTypes = nil
         Questie.db.char.townsfolk = nil
         
-        print("[TOWNSFOLK] Flags cleared. Type /reload to recompile database")
-        print("[TOWNSFOLK] This will take 30-60 seconds and may cause lag")
+        print("[TOWNSFOLK] Compiled database cleared!")
+        print("[TOWNSFOLK] Type /reload to rebuild from raw database files")
+        print("[TOWNSFOLK] This will apply the WotLK merge fix properly")
     elseif msg == "check" then
         -- Check specific NPCs
         print("[TOWNSFOLK] Checking specific NPCs...")
