@@ -2187,7 +2187,7 @@ function QuestieDataCollector:CaptureServiceNPC(serviceType)
     -- Get coordinates
     local coords = QuestieDataCollector:GetPlayerCoordinates()
     
-    -- Handle flight masters separately
+    -- Handle flight masters separately (but also add to serviceNPCs)
     if serviceType == "flight_master" then
         -- Initialize flight master data if needed
         if not QuestieDataCollection.flightMasters[npcId] then
@@ -2227,10 +2227,10 @@ function QuestieDataCollector:CaptureServiceNPC(serviceType)
         end
         
         DebugMessage("|cFF00FF00[DATA]|r Captured flight master: " .. npcName .. " (ID: " .. npcId .. ")", 0, 1, 0)
-        return
+        -- Don't return here - also add to serviceNPCs collection
     end
     
-    -- Initialize service NPC data if needed (for non-flight masters)
+    -- Initialize service NPC data if needed (for all service NPCs including flight masters)
     if not QuestieDataCollection.serviceNPCs[npcId] then
         QuestieDataCollection.serviceNPCs[npcId] = {
             id = npcId,
@@ -3159,6 +3159,34 @@ function QuestieDataCollector:ShowExportWindow(questId)
             
             for npcId, fmData in pairs(QuestieDataCollection.flightMasters) do
                 exportText = exportText .. "Flight Master: " .. (fmData.name or "Unknown") .. " (ID: " .. npcId .. ")\n"
+                
+                -- Include detected services and calculated flag value
+                if QuestieDataCollection.npcs and QuestieDataCollection.npcs[npcId] and QuestieDataCollection.npcs[npcId].detectedServices then
+                    local services = {}
+                    local flagValue = 0
+                    for service, _ in pairs(QuestieDataCollection.npcs[npcId].detectedServices) do
+                        table.insert(services, service)
+                        -- Calculate flag value based on detected services
+                        if service == "FLIGHT_MASTER" then flagValue = flagValue + 8192 end
+                        if service == "QUEST_GIVER" then flagValue = flagValue + 2 end
+                        if service == "VENDOR" then flagValue = flagValue + 128 end
+                        if service == "TRAINER" then flagValue = flagValue + 16 end
+                        if service == "INNKEEPER" then flagValue = flagValue + 65536 end
+                        if service == "BANKER" then flagValue = flagValue + 131072 end
+                        if service == "REPAIR" then flagValue = flagValue + 4096 end
+                        if service == "AUCTIONEER" then flagValue = flagValue + 2097152 end
+                        if service == "STABLEMASTER" then flagValue = flagValue + 4194304 end
+                        if service == "BATTLEMASTER" then flagValue = flagValue + 1048576 end
+                    end
+                    if #services > 0 then
+                        exportText = exportText .. "Detected Services: " .. table.concat(services, ", ") .. "\n"
+                        exportText = exportText .. "NPC Flags: " .. flagValue .. " (WotLK value)\n"
+                    end
+                else
+                    -- Flight master without detected services - default to FLIGHT_MASTER flag
+                    exportText = exportText .. "NPC Flags: 8192 (FLIGHT_MASTER - default)\n"
+                end
+                
                 if fmData.locations and #fmData.locations > 0 then
                     for _, loc in ipairs(fmData.locations) do
                         if loc.x and loc.y then
