@@ -501,12 +501,10 @@ function QuestieInit:LoadBaseDB()
                     QuestieDB.npcData[id] = data
                     added = added + 1
                 else
-                    -- Only overwrite if it's a Northrend NPC
-                    local zoneID = data[9]
-                    if zoneID and zoneID >= 65 then
-                        QuestieDB.npcData[id] = data
-                        overwritten = overwritten + 1
-                    end
+                    -- Overwrite Classic data with WotLK data for service NPCs
+                    -- This is critical for correct flag values
+                    QuestieDB.npcData[id] = data
+                    overwritten = overwritten + 1
                 end
             end
         end
