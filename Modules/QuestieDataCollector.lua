@@ -2483,7 +2483,7 @@ end
 function QuestieDataCollector:RestoreTooltipSettings()
     if _originalTooltipSettings then
         Questie.db.profile.enableTooltipsQuestID = _originalTooltipSettings.questId
-        Questie.db.profile.enableTooltipsNpcID = _originalTooltipSettings.npcId
+        Questie.db.profile.enableTooltipsNPCID = _originalTooltipSettings.npcId
         Questie.db.profile.enableTooltipsObjectID = _originalTooltipSettings.objectId
         Questie.db.profile.enableTooltipsItemID = _originalTooltipSettings.itemId
         

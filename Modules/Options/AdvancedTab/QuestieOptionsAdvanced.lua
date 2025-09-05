@@ -460,8 +460,8 @@ function QuestieOptions.tabs.advanced:Initialize()
                         end
                     else
                         -- Restore original tooltip settings
-                        if QuestieDataCollector and QuestieDataCollector.RestoreTooltipIDs then
-                            QuestieDataCollector:RestoreTooltipIDs()
+                        if QuestieDataCollector and QuestieDataCollector.RestoreTooltipSettings then
+                            QuestieDataCollector:RestoreTooltipSettings()
                             DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00[Questie] Quest Data Collection disabled|r", 0, 1, 0)
                         end
                     end
