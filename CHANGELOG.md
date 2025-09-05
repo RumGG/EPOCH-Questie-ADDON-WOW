@@ -22,9 +22,10 @@
   - GitHub requires exact uppercase naming for issue templates to be recognized
   - Templates now properly appear when users create new issues
 
-- **Data Collector Not Initializing and Tooltip Settings** - Fixed data collector initialization and tooltip ID handling (PR #1168)
-  - Fixed case sensitivity bug: `enableTooltipsNpcID` changed to `enableTooltipsNPCID` throughout codebase
-  - Data collector now properly saves and restores NPC tooltip settings
+- **Data Collector Tooltip Settings Issues** - Fixed multiple tooltip restoration bugs (PR #1168, PR #1190)
+  - Fixed case sensitivity bug: `enableTooltipsNpcID` changed to `enableTooltipsNPCID` throughout codebase  
+  - Fixed incorrect function call: `RestoreTooltipIDs()` → `RestoreTooltipSettings()` (PR #1190)
+  - Data collector now properly saves and restores NPC tooltip settings when disabled
   - Data collector now initializes immediately when enabled in options
   - Tooltip ID options are now grayed out when data collection is enabled (prevents confusion since data collection forces all IDs on)
   - Added missing QuestieDataCollector module import in options panel
