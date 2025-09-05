@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+### Added
+- **NPC Service Flag Detection in Data Collection** - Automatic detection and capture of NPC service types
+  - Detects service NPCs through game events (MERCHANT_SHOW, TAXIMAP_OPENED, PET_STABLE_SHOW, etc.)
+  - Automatically calculates correct WotLK flag values for detected services
+  - Includes detected services in export comments for verification
+  - Supports detection of: Quest Giver, Vendor, Repair, Trainer, Flight Master, Innkeeper, Banker, Auctioneer, Stable Master, Battlemaster
+  - Ensures submitted NPC data has proper flag values to prevent service NPC miscategorization
+
 ### Fixed
 - **CRITICAL: Available Quest Toggle Broken** - Fixed issue where disabling Available Quests caused icons to cluster at service NPCs
   - Quest icons were being drawn but redirected to flight masters, mailboxes, and spirit healers when toggle was off
