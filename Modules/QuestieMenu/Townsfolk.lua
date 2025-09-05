@@ -30,6 +30,12 @@ local function _PopulateTownsfolkTypes(folkTypes) -- populate the table with all
     local stableMasterCount = 0
     local flightMasterCount = 0
     
+    -- Check if database is loaded
+    if not QuestieDB.npcData then
+        print("[TOWNSFOLK ERROR] QuestieDB.npcData is nil - database not loaded!")
+        return folkTypes
+    end
+    
     for id, npcData in pairs(QuestieDB.npcData) do
         local flags = npcData[QuestieDB.npcKeys.npcFlags]
         for name, folkType in pairs(folkTypes) do
@@ -46,10 +52,19 @@ local function _PopulateTownsfolkTypes(folkTypes) -- populate the table with all
                             if id == 9988 then -- Xon'cha
                                 print("[POPULATE] Xon'cha ADDED to Stable Master list")
                             end
+                            -- Debug first few stable masters
+                            if stableMasterCount <= 3 then
+                                print("[STABLE MASTER] Added NPC " .. id .. " (" .. (npcName or "unknown") .. ") flags=" .. (flags or 0))
+                            end
                         elseif name == "Flight Master" then
                             flightMasterCount = flightMasterCount + 1
                             if id == 9988 then
                                 print("[POPULATE ERROR] Xon'cha wrongly ADDED to Flight Master list!")
+                            end
+                        elseif name == "Spirit Healer" then
+                            -- Debug why we have 265 spirit healers
+                            if folkType.data[#folkType.data] <= 3 then
+                                print("[SPIRIT HEALER] Added NPC " .. id .. " (" .. (npcName or "unknown") .. ") flags=" .. (flags or 0) .. ", subName=" .. (subName or "nil"))
                             end
                         end
                         
@@ -76,6 +91,19 @@ end
 -- Manual rebuild function for debugging
 function Townsfolk.ForceRebuild()
     print("[TOWNSFOLK] Manual rebuild triggered")
+    
+    -- Check if database is loaded
+    if type(QuestieDB.npcData) == "string" then
+        print("[TOWNSFOLK ERROR] Database is still compressed. Loading...")
+        -- Need to load the database first
+        local QuestieInit = QuestieLoader:ImportModule("QuestieInit")
+        QuestieInit:LoadBaseDB()
+        print("[TOWNSFOLK] Database loaded.")
+    elseif not QuestieDB.npcData then
+        print("[TOWNSFOLK ERROR] QuestieDB.npcData is nil!")
+        return
+    end
+    
     Questie.db.global.townsfolk = nil
     Questie.db.global.professionTrainers = nil
     Questie.db.global.classSpecificTownsfolk = nil
