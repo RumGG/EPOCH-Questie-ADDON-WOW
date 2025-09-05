@@ -129,6 +129,7 @@ function Townsfolk.ForceRebuild()
         return
     end
     
+    -- Clear all cached data
     Questie.db.global.townsfolk = nil
     Questie.db.global.professionTrainers = nil
     Questie.db.global.classSpecificTownsfolk = nil
@@ -137,9 +138,26 @@ function Townsfolk.ForceRebuild()
     Questie.db.char.townsfolk = nil
     Questie.db.char.townsfolkClass = nil
     Questie.db.char.townsfolkFaction = nil
-    Townsfolk.Initialize()
-    Townsfolk:BuildCharacterTownsfolk()
-    print("[TOWNSFOLK] Rebuild complete")
+    
+    -- Run in a coroutine since Initialize uses coroutine.yield
+    local co = coroutine.create(function()
+        Townsfolk.Initialize()
+    end)
+    
+    -- Run the coroutine until complete
+    local ok, err = true, nil
+    while ok and coroutine.status(co) ~= "dead" do
+        ok, err = coroutine.resume(co)
+        if not ok then
+            print("[TOWNSFOLK ERROR] Coroutine error: " .. tostring(err))
+            break
+        end
+    end
+    
+    if ok then
+        Townsfolk:BuildCharacterTownsfolk()
+        print("[TOWNSFOLK] Rebuild complete")
+    end
 end
 
 -- Register slash command for debugging
