@@ -26,50 +26,7 @@ end
 ---Uses a table to fetch multiple townfolk types at the same time.
 ---@param folkTypes table<string, {mask: NpcFlags|integer, requireSubname: boolean, data: NpcId[]}>
 local function _PopulateTownsfolkTypes(folkTypes) -- populate the table with all npc ids based on the given bitmask
-    print("[POPULATE] Function called!")
     local count = 0
-    local stableMasterCount = 0
-    local flightMasterCount = 0
-    
-    -- Check if database is loaded
-    if not QuestieDB.npcData then
-        print("[POPULATE ERROR] QuestieDB.npcData is nil - database not loaded!")
-        return folkTypes
-    end
-    
-    print("[POPULATE] QuestieDB.npcData exists, type = " .. type(QuestieDB.npcData))
-    
-    -- Check if it's a string (compressed) or table
-    if type(QuestieDB.npcData) == "string" then
-        print("[POPULATE ERROR] npcData is still compressed! Need to decompress first.")
-        return folkTypes
-    end
-    
-    -- Debug: Check a specific NPC we know should be a stable master
-    print("[DEBUG] QuestieDB.npcKeys.npcFlags = " .. (QuestieDB.npcKeys.npcFlags or "nil"))
-    print("[DEBUG] QuestieDB.npcKeys.name = " .. (QuestieDB.npcKeys.name or "nil"))
-    print("[DEBUG] QuestieDB.npcKeys.subName = " .. (QuestieDB.npcKeys.subName or "nil"))
-    
-    local xonchaData = QuestieDB.npcData[9988]
-    if xonchaData then
-        print("[DEBUG] Xon'cha data type: " .. type(xonchaData))
-        if type(xonchaData) == "table" then
-            print("[DEBUG] Xon'cha data length: " .. #xonchaData)
-            local xonchaFlags = xonchaData[QuestieDB.npcKeys.npcFlags]
-            print("[DEBUG] Xon'cha (9988) flags = " .. (xonchaFlags or "nil"))
-            print("[DEBUG] Xon'cha bitband with STABLEMASTER (4194304) = " .. (xonchaFlags and bitband(xonchaFlags, 4194304) or "nil"))
-            print("[DEBUG] Xon'cha bitband with FLIGHT_MASTER (8192) = " .. (xonchaFlags and bitband(xonchaFlags, 8192) or "nil"))
-        end
-    else
-        print("[DEBUG] Xon'cha (9988) not found in QuestieDB.npcData!")
-    end
-    
-    local totalNpcs = 0
-    for _ in pairs(QuestieDB.npcData) do
-        totalNpcs = totalNpcs + 1
-    end
-    print("[DEBUG] Total NPCs in database: " .. totalNpcs)
-    
     for id, npcData in pairs(QuestieDB.npcData) do
         local flags = npcData[QuestieDB.npcKeys.npcFlags]
         for name, folkType in pairs(folkTypes) do
@@ -79,33 +36,6 @@ local function _PopulateTownsfolkTypes(folkTypes) -- populate the table with all
                 if npcName and sub(npcName, 1, 5) ~= "[DND]" then
                     if (not folkType.requireSubname) or (subName and strlen(subName) > 1) then
                         folkType.data[#folkType.data+1] = id
-                        
-                        -- Count categories
-                        if name == "Stable Master" then
-                            stableMasterCount = stableMasterCount + 1
-                            if id == 9988 then -- Xon'cha
-                                print("[POPULATE] Xon'cha ADDED to Stable Master list")
-                            end
-                            -- Debug first few stable masters
-                            if stableMasterCount <= 3 then
-                                print("[STABLE MASTER] Added NPC " .. id .. " (" .. (npcName or "unknown") .. ") flags=" .. (flags or 0))
-                            end
-                        elseif name == "Flight Master" then
-                            flightMasterCount = flightMasterCount + 1
-                            if id == 9988 then
-                                print("[POPULATE ERROR] Xon'cha wrongly ADDED to Flight Master list!")
-                            end
-                        elseif name == "Spirit Healer" then
-                            -- Debug why we have 265 spirit healers
-                            if folkType.data[#folkType.data] <= 3 then
-                                print("[SPIRIT HEALER] Added NPC " .. id .. " (" .. (npcName or "unknown") .. ") flags=" .. (flags or 0) .. ", subName=" .. (subName or "nil"))
-                            end
-                        end
-                        
-                        -- Debug specific NPCs
-                        if id == 9988 then -- Xon'cha
-                            print("[XONCHA] Adding to " .. name .. " (flags=" .. (flags or "nil") .. ", mask=" .. folkType.mask .. ", bitband=" .. bitband(flags, folkType.mask) .. ")")
-                        end
                     end
                 end
             end
@@ -116,8 +46,6 @@ local function _PopulateTownsfolkTypes(folkTypes) -- populate the table with all
         end
         count = count + 1
     end
-    
-    print("[POPULATE] Finished: Stable Masters=" .. stableMasterCount .. ", Flight Masters=" .. flightMasterCount)
     return folkTypes
 end
 
@@ -180,29 +108,60 @@ end
 SLASH_QUESTIETOWNSFOLK1 = "/qtf"
 SlashCmdList["QUESTIETOWNSFOLK"] = function(msg)
     if msg == "rebuild" then
-        Townsfolk.ForceRebuild()
+        print("[TOWNSFOLK] Rebuild not possible - QuestieDB.npcData has been cleaned up")
+        print("[TOWNSFOLK] Lists can only be built during initial startup")
     elseif msg == "debug" then
         print("[TOWNSFOLK DEBUG]")
         if Questie.db.global.townsfolk then
             for key, npcs in pairs(Questie.db.global.townsfolk) do
-                print("  " .. key .. ": " .. #npcs .. " NPCs")
+                print("  Global: " .. key .. ": " .. #npcs .. " NPCs")
+                -- Show first few NPCs in each category
+                if key == "Stable Master" or key == "Flight Master" then
+                    for i = 1, math.min(3, #npcs) do
+                        local npcId = npcs[i]
+                        print("    - NPC " .. npcId)
+                    end
+                end
             end
         else
             print("  No global townsfolk data")
         end
+        
+        if Questie.db.char.townsfolk then
+            print("[TOWNSFOLK Character Lists]")
+            for key, npcs in pairs(Questie.db.char.townsfolk) do
+                print("  Char: " .. key .. ": " .. #npcs .. " NPCs")
+            end
+        end
+    elseif msg == "check" then
+        -- Check specific NPCs
+        print("[TOWNSFOLK] Checking specific NPCs...")
+        
+        -- Check Xon'cha using QueryNPC
+        if QuestieDB.QueryNPC then
+            local xoncha = QuestieDB:QueryNPC(9988, "all")
+            if xoncha then
+                print("  Xon'cha (9988): Found")
+                print("    Name: " .. (xoncha.name or "nil"))
+                print("    SubName: " .. (xoncha.subName or "nil"))
+                print("    Flags: " .. (xoncha.npcFlags or "nil"))
+            else
+                print("  Xon'cha (9988): Not found")
+            end
+        else
+            print("  QueryNPC not available")
+        end
     else
         print("Questie Townsfolk Commands:")
-        print("  /qtf rebuild - Force rebuild all townsfolk lists")
         print("  /qtf debug - Show current list counts")
+        print("  /qtf check - Check specific NPCs")
     end
 end
 
 function Townsfolk.Initialize()
-    -- FORCE REBUILD FOR DEBUGGING
-    local FORCE_REBUILD = false  -- Set back to false, use command instead
-    
-    if FORCE_REBUILD then
-        print("[TOWNSFOLK] FORCE REBUILD ENABLED - Clearing all lists")
+    -- TEMPORARY FIX: Force clear if stable masters list is empty
+    if Questie.db.global.townsfolk and Questie.db.global.townsfolk["Stable Master"] and #Questie.db.global.townsfolk["Stable Master"] == 0 then
+        print("[TOWNSFOLK] Stable Master list is empty - forcing complete rebuild")
         Questie.db.global.townsfolk = nil
         Questie.db.global.professionTrainers = nil
         Questie.db.global.classSpecificTownsfolk = nil
@@ -213,48 +172,12 @@ function Townsfolk.Initialize()
         Questie.db.char.townsfolkFaction = nil
     end
     
-    -- Check if lists already exist and have all categories
-    if Questie.db.global.townsfolk and not FORCE_REBUILD then
-        -- Check for missing categories
-        local missingCategories = false
-        if not Questie.db.global.townsfolk["Stable Master"] then
-            print("[TOWNSFOLK] Missing Stable Master category - will rebuild")
-            missingCategories = true
-        end
-        if not Questie.db.global.townsfolk["Spirit Healer"] then
-            print("[TOWNSFOLK] Missing Spirit Healer category - will rebuild")
-            missingCategories = true
-        end
-        
-        -- If we have all categories and they're not empty, we can skip rebuild
-        if not missingCategories then
-            local stableCount = Questie.db.global.townsfolk["Stable Master"] and #Questie.db.global.townsfolk["Stable Master"] or 0
-            local spiritCount = Questie.db.global.townsfolk["Spirit Healer"] and #Questie.db.global.townsfolk["Spirit Healer"] or 0
-            print("[TOWNSFOLK] Categories exist: Stable Masters=" .. stableCount .. ", Spirit Healers=" .. spiritCount)
-            
-            -- Skip rebuild only if we have actual data
-            if stableCount > 0 and spiritCount > 0 then
-                print("[TOWNSFOLK] All categories present with data - skipping rebuild")
-                return
-            end
-        end
-        
-        -- Clear everything for rebuild
-        print("[TOWNSFOLK] Clearing all cached data for complete rebuild")
-        Questie.db.global.townsfolk = nil
-        Questie.db.global.professionTrainers = nil
-        Questie.db.global.classSpecificTownsfolk = nil
-        Questie.db.global.factionSpecificTownsfolk = nil
-        Questie.db.global.petFoodVendorTypes = nil
-        Questie.db.char.townsfolk = nil
-        Questie.db.char.townsfolkClass = nil
-        Questie.db.char.townsfolkFaction = nil
+    -- Check if lists already exist
+    if Questie.db.global.townsfolk then
+        return -- Lists already built
     end
     
-    print("[TOWNSFOLK] Building townfolk lists...")
-    print("[TOWNSFOLK] Questie.IsWotlk = " .. tostring(Questie.IsWotlk))
-    print("[TOWNSFOLK] Questie.IsTBC = " .. tostring(Questie.IsTBC))
-    print("[TOWNSFOLK] Using " .. ((Questie.IsWotlk or Questie.IsTBC) and "TBC/WotLK" or "Classic") .. " flag values")
+    -- Building townfolk lists
 
     --? This datastructure is used in PopulateTownsfolkTypes to fetch multiple townfolk data in the same npc loop cycle
     ---@type table<string, {mask: NpcFlags|integer, requireSubname: boolean, data: NpcId[]}>
@@ -301,13 +224,7 @@ function Townsfolk.Initialize()
         }
     }
     
-    -- Debug: Show mask values
-    print("[TOWNSFOLK] Stable Master mask = " .. (townsfolkData["Stable Master"].mask or "nil"))
-    print("[TOWNSFOLK] Flight Master mask = " .. (townsfolkData["Flight Master"].mask or "nil"))
-    
-    print("[TOWNSFOLK] Calling _PopulateTownsfolkTypes...")
     _PopulateTownsfolkTypes(townsfolkData)
-    print("[TOWNSFOLK] _PopulateTownsfolkTypes returned")
 
     local townfolk = {
         ["Repair"] = townsfolkData["Repair"].data,
