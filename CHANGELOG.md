@@ -3,6 +3,13 @@
 ## [Unreleased]
 
 ### Changed
+- **Data Collection Now Always Captures All Quests** - Simplified data collection to always gather complete data
+  - When data collection is enabled, ALL quests are tracked (not just missing ones)
+  - Ensures maximum data quality for validation and fixing corrupted database entries
+  - "Collect All Quests" option is now permanently enabled and greyed out
+  - Renamed "Show Collection Messages" to "Enable Debug Messages" for clarity
+  - This helps identify and fix placeholder/corrupted quest data in the database
+
 - **Quest Turn-in Icons Now Enabled by Default** - Changed `enableTurnins` default from false to true
   - Users expect to see where to turn in completed quests
   - This is a core feature that should be on by default

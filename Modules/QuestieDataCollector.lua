@@ -170,26 +170,9 @@ end
 
 -- Helper function to check if quest exists in database
 local function IsQuestInDatabase(questId)
-    -- If dev mode is enabled, pretend no quests are in database (collect everything)
-    if Questie.db.profile.dataCollectionDevMode then
-        DebugMessage("|cFFFF0000[DEV MODE]|r Quest " .. questId .. " - dev mode active, returning false (collect all data)", 1, 0, 0)
-        return false
-    end
-    
-    local questData = QuestieDB.GetQuest(questId)
-    local inDB = questData and questData.name and questData.name ~= "[EpochDB Missing] Quest " .. questId and questData.name ~= "[Epoch] Quest " .. questId
-    
-    -- Only debug log for genuinely missing quests or placeholders, not valid existing quests
-    if not inDB then
-        local questName = questData and questData.name or "nil"
-        if questName == "nil" then
-            DebugMessage("|cFFFFAA00[DEBUG]|r Quest " .. questId .. " - not in database", 1, 0.7, 0)
-        else
-            DebugMessage("|cFFFFAA00[DEBUG]|r Quest " .. questId .. " - placeholder entry (" .. questName .. ")", 1, 0.7, 0)
-        end
-    end
-    
-    return inDB
+    -- Always return false to collect ALL quests when data collection is enabled
+    -- This ensures we get complete data for validation and fixing corrupted entries
+    return false  -- Always collect everything for maximum data quality
 end
 
 -- Helper function to check for database mismatches
@@ -658,14 +641,9 @@ function QuestieDataCollector:OnEvent(event, ...)
             return
         end
         
-        -- Collect data for ALL quests (including existing ones) to validate/improve database
-        -- Only warn players about genuinely missing quests, not placeholder/corrupted ones
-        if not IsQuestInDatabase(questId) then
-            -- Only show warning for truly missing quests (not in any database)
-            local questTitle = GetQuestLogTitle(questIndex) or ("Quest " .. questId)
-            DebugMessage("|cFFFFFF00[DATA]|r Collecting data for missing quest " .. questId .. " (" .. questTitle .. ")", 1, 1, 0)
-        end
-        -- Silently collect data for existing quests (for validation/corruption detection)
+        -- Always collect data for ALL quests to validate/improve database
+        local questTitle = GetQuestLogTitle(questIndex) or ("Quest " .. questId)
+        DebugMessage("|cFFFFFF00[DATA]|r Collecting quest data: " .. questId .. " (" .. questTitle .. ")", 1, 1, 0)
         
         QuestieDataCollector:TrackQuestAccepted(questIndex, questId)
         
