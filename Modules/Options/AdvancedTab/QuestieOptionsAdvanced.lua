@@ -309,6 +309,19 @@ function QuestieOptions.tabs.advanced:Initialize()
                 order = 5,
                 name = l10n('Developer Options'),
             },
+            tooltipIDsNotice = {
+                type = "description",
+                order = 5.005,
+                name = function()
+                    if Questie.db.profile.enableDataCollection then
+                        return "|cFFFF0000Tooltip IDs are automatically enabled for data collection.\nDisable data collection to manually control these settings.|r\n"
+                    else
+                        return ""
+                    end
+                end,
+                fontSize = "medium",
+                hidden = function() return not Questie.db.profile.enableDataCollection end,
+            },
             bugWorkarounds = {
                 type = "toggle",
                 order = 5.01,
@@ -448,7 +461,7 @@ function QuestieOptions.tabs.advanced:Initialize()
                 type = "toggle",
                 order = 6.02,
                 name = function() return "Enable Quest Data Collection"; end,
-                desc = function() return "When enabled, automatically captures quest data for missing Epoch quests. |cFFFF0000DEVELOPER FEATURE ONLY|r\n\nThis will alert you when accepting quests not in the database and capture NPC IDs, coordinates, and objectives."; end,
+                desc = function() return "When enabled, automatically captures quest data for missing Epoch quests. |cFF00FF00Thank you for contributing!|r\n\nThis will alert you when accepting quests not in the database and capture NPC IDs, coordinates, and objectives."; end,
                 descStyle = "inline",
                 width = "full",
                 get = function() return Questie.db.profile.enableDataCollection; end,
@@ -496,7 +509,7 @@ function QuestieOptions.tabs.advanced:Initialize()
                 type = "toggle",
                 order = 6.04,
                 name = function() return "|cFFFF0000[DEV MODE]|r Collect All Quests"; end,
-                desc = function() return "|cFFFF0000Developer Mode:|r Collect data for ALL quests, not just missing ones.\n\n|cFFFFFF00WARNING: This will collect data for quests already in the database!\nOnly use this for testing the collection system.|r"; end,
+                desc = function() return "|cFFFF0000Developer Mode:|r Collect data for ALL quests, not just missing ones."; end,
                 descStyle = "inline",
                 width = "full",
                 disabled = function() return not Questie.db.profile.enableDataCollection; end,
