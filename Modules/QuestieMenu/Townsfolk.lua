@@ -74,8 +74,23 @@ end
 
 
 function Townsfolk.Initialize()
+    -- FORCE REBUILD FOR DEBUGGING
+    local FORCE_REBUILD = true
+    
+    if FORCE_REBUILD then
+        print("[TOWNSFOLK] FORCE REBUILD ENABLED - Clearing all lists")
+        Questie.db.global.townsfolk = nil
+        Questie.db.global.professionTrainers = nil
+        Questie.db.global.classSpecificTownsfolk = nil
+        Questie.db.global.factionSpecificTownsfolk = nil
+        Questie.db.global.petFoodVendorTypes = nil
+        Questie.db.char.townsfolk = nil
+        Questie.db.char.townsfolkClass = nil
+        Questie.db.char.townsfolkFaction = nil
+    end
+    
     -- Check if lists already exist and have all categories
-    if Questie.db.global.townsfolk then
+    if Questie.db.global.townsfolk and not FORCE_REBUILD then
         -- Check for missing categories
         local missingCategories = false
         if not Questie.db.global.townsfolk["Stable Master"] then
