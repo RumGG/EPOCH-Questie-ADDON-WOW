@@ -101,20 +101,6 @@ local function toggle(key, forceRemove) -- /run QuestieLoader:ImportModule("Ques
         source = "char.vendorList"
     end
     
-    if key == "Stable Master" or key == "Flight Master" then
-        print("[TOGGLE] " .. key .. " from " .. source .. " with " .. (ids and #ids or 0) .. " NPCs")
-        if ids and key == "Stable Master" then
-            -- Check if Xon'cha is in the list
-            local hasXoncha = false
-            for _, id in ipairs(ids) do
-                if id == 9988 then
-                    hasXoncha = true
-                    break
-                end
-            end
-            print("[TOGGLE] Stable Master list " .. (hasXoncha and "CONTAINS" or "MISSING") .. " Xon'cha (9988)")
-        end
-    end
 
     if (not ids) then
         Questie:Debug(Questie.DEBUG_INFO, "Invalid townsfolk key", tostring(key))
