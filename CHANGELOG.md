@@ -19,15 +19,24 @@
 
 - **CRITICAL: Classic Database Using Wrong NPC Flag Values** - Fixed entire Classic database using Classic WoW 1.x flags instead of WotLK 3.3.5 flags
   - Classic and WotLK use completely different flag values for service NPCs (e.g., STABLEMASTER: Classic=8192 vs WotLK=4194304)
-  - Fixed 131 service NPCs with wrong flag values:
+  - Fixed ~480 service NPCs with wrong flag values:
     - 43 Stable Masters (8193 -> 4194305) - were showing as flight masters
     - 14 Spirit Healers (0 -> 16385) - were completely missing
     - 61 Flight Masters (11 -> 8195) - including Gryphon Masters, Wind Rider Masters, Bat Handlers
     - 45 Innkeepers (133/135 -> 65669/65671)
     - 27 Bankers (256-259 -> 131072-131075)
+    - 28 Auctioneers (4096 -> 2097152) - were completely missing from lists
+    - 24 Battlemasters (2049 -> 1048577) - were not showing properly
+    - 258 Repair NPCs (16388/16391 -> 4224/4227) - had wrong categorization
     - 22+ Vendors (6/7 -> 130/131)
   - This fixes stable masters showing as flight masters, spirit healers as vendors, and service NPCs missing entirely
   - Required complete database recompilation after flag fixes
+  - Service NPC counts after fixes: 240 Repair, 40 Innkeepers, 35 Spirit Healers, 58 Flight Masters, 41 Stable Masters, 28 Auctioneers, 15 Battlemasters, 27 Bankers
+
+- **Available Quests Disabled by Default** - Fixed Available Quests being OFF by default after fresh install
+  - Available quests on map is a core Questie feature and should be enabled by default
+  - Changed `enableAvailable` from false to true in QuestieOptionsDefaults
+  - New users will now see available quests immediately after installation
 
 ## [1.2.0-prerelease2] - 2025-01-04
 
