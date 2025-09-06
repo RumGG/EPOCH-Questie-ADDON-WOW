@@ -1,0 +1,90 @@
+name: Sync Questie-Epoch Updates
+
+on:
+  schedule:
+    - cron: '0 */3 * * *' # Every 3 hours
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout your private repo
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }} # GITHUB_TOKEN should suffice for read/write
+
+      # 2. Configure Git
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      # 3. Add upstream remote
+      - name: Add upstream
+        run: |
+          git remote add upstream https://github.com/trav346/Questie-Epoch.git || true
+          git fetch upstream master --quiet || { echo "Failed to fetch upstream"; exit 1; }
+
+      # 4. Preserve existing workflow files
+      - name: Preserve existing workflow files
+        run: |
+          mkdir -p .github/workflows-backup
+          git ls-files .github/workflows/*.yml | while read -r file; do
+            cp "$file" ".github/workflows-backup/$(basename "$file")"
+          done
+        # Copy all existing .yml files from origin/main to a backup directory
+
+      # 5. Sync main with upstream master, excluding new upstream workflow files
+      - name: Sync main with upstream master
+        id: sync
+        run: |
+          git checkout main || { echo "Failed to checkout main"; exit 1; }
+          git reset --hard upstream/master || { echo "Failed to reset to upstream/master"; exit 1; }
+
+          # Remove any new workflow files introduced by upstream
+          find .github/workflows -type f -name "*.yml" -not -name "sync-questie-epoch.yml" -delete || true
+
+          # Restore your original workflow files from backup
+          if [ -d .github/workflows-backup ]; then
+            mv .github/workflows-backup/*.yml .github/workflows/ || true
+            rm -rf .github/workflows-backup
+          fi
+
+          # Stage and commit changes
+          git add .github/workflows || true
+          git commit -m "Sync with upstream and preserve existing workflow files" || true
+
+          # Only push if changes exist
+          if [ "$(git rev-parse HEAD)" != "$(git rev-parse origin/main)" ]; then
+            TAG="v$(date +'%Y.%m.%d-%H%M')"
+            if git tag "$TAG" 2>/dev/null; then
+              git push origin main --force --tags || { echo "Failed to push changes"; exit 1; }
+              echo "SYNCED=true" >> $GITHUB_ENV
+              echo "TAG=$TAG" >> $GITHUB_ENV
+            else
+              echo "Tag $TAG already exists, skipping push"
+              echo "SYNCED=false" >> $GITHUB_ENV
+            fi
+          else
+            echo "No changes to sync"
+            echo "SYNCED=false" >> $GITHUB_ENV
+          fi
+
+      # 6. Send Discord notification if synced
+      - name: Send Discord Notification
+        if: env.SYNCED == 'true'
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        run: |
+          if [ -z "$DISCORD_WEBHOOK" ]; then
+            echo "Discord webhook URL is not set"
+            exit 1
+          fi
+          curl -H "Content-Type: application/json" \
+               -X POST \
+               -d "{\"username\":\"Addon Sync Bot\",\"embeds\":[{\"title\":\"Questie-Epoch Updates Detected\",\"description\":\"Private repo main branch synced to [trav346/Questie-Epoch](https://github.com/trav346/Questie-Epoch) master branch.\",\"color\":3066993,\"fields\":[{\"name\":\"New Tag\",\"value\":\"${{ env.TAG }}\"}]}]}" \
+               "$DISCORD_WEBHOOK" || { echo "Failed to send Discord notification"; exit 1; }
