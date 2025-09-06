@@ -336,13 +336,6 @@ function QuestieDataCollector:Initialize()
         end
         
         DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00Mismatch detection enabled for improved accuracy|r", 1, 1, 0)
-        
-        if questCount > 0 then
-            DEFAULT_CHAT_FRAME:AddMessage("|cFF00FFFF" .. questCount .. " missing quests being tracked|r", 0, 1, 1)
-        end
-        if inDatabaseCount > 0 and not Questie.db.profile.dataCollectionDevMode then
-            DEFAULT_CHAT_FRAME:AddMessage("|cFFFFAA00Note: " .. inDatabaseCount .. " tracked quests are now in database and won't be collected|r", 1, 0.7, 0)
-        end
         DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00Type /qdc for commands|r", 1, 1, 0)
     end
     
@@ -4915,9 +4908,9 @@ function QuestieDataCollector:ShowTrackedQuests()
     end
     
     if count == 0 then
-        DEFAULT_CHAT_FRAME:AddMessage("No missing quests being tracked.", 1, 1, 1)
+        DEFAULT_CHAT_FRAME:AddMessage("No quests currently being tracked.", 1, 1, 1)
     else
-        DEFAULT_CHAT_FRAME:AddMessage("Total: " .. count .. " missing quests", 1, 1, 0)
+        DEFAULT_CHAT_FRAME:AddMessage("Total: " .. count .. " quests being tracked", 1, 1, 0)
     end
 end
 

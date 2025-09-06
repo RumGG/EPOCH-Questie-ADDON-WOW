@@ -2,6 +2,28 @@
 
 ## [Unreleased]
 
+### Fixed
+- **Re-enabled Quest 26936 "Northshore Mine"** - Fixed tracking issue after database recompile
+  - Quest was disabled for data collection but is now properly configured
+  - Added exploration objective "Explore Northshore Mine" at coordinates [24.5, 49.5]
+  - Correctly configured to turn in to Jasper Greene (NPC 45885) in Tirisfal Glades
+  - Resolves issue where quest couldn't be tracked after database recompilation
+
+- **Fixed Quest Chain for 26187 "Parts From Afar"** - Added missing prerequisite quest link
+  - Quest 26187 now properly requires completion of quest 26186
+  - Fixes GitHub issue #389 where quest wasn't available despite being part 2 of chain
+  - Druid players at level 47 can now properly obtain the quest after completing part 1
+
+- **Removed Quest 25229 "A Few Good Gnomes"** - Deleted pre-Cataclysm event quest
+  - Quest was part of Operation: Gnomeregan event that doesn't exist on Project Epoch
+  - Removed from both database and blacklist as it's not available on WotLK 3.3.5 servers
+  - Fixes GitHub issue #863
+
+- **Data Collector Message Cleanup** - Removed outdated "missing quests" message
+  - Removed confusing "X missing quests being tracked" startup message
+  - Updated `/qdc show` command to say "quests being tracked" instead of "missing quests"
+  - Better reflects current behavior where all quests are collected by default
+
 ### Changed
 - **Data Collection Now Always Captures All Quests** - Simplified data collection to always gather complete data
   - When data collection is enabled, ALL quests are tracked (not just missing ones)
