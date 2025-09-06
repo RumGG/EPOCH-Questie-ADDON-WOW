@@ -9,6 +9,12 @@
   - Fixed quests being incorrectly marked as MINIMAL when they had sufficient data to function
   - Resolves issues where functional quests showed "[EpochDB Minimal]" prefix unnecessarily
 
+- **Data Aggregator Zone Validation** - Added date-based validation for quest zone IDs
+  - Submissions before December 6, 2025 captured parent zone IDs instead of subzone IDs
+  - Aggregator now detects submission date and attempts NPC-based zone correction
+  - Prevents incorrect zone assignments from historical data submissions
+  - New submissions with proper subzone IDs are processed correctly
+
 - **Re-enabled Quest 26936 "Northshore Mine"** - Fixed tracking issue after database recompile
   - Quest was disabled for data collection but is now properly configured
   - Added exploration objective "Explore Northshore Mine" at coordinates [24.5, 49.5]
