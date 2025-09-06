@@ -1,5 +1,10 @@
 name: Sync Questie-Epoch Updates
 
+# Grant the workflow permission to modify workflows
+permissions:
+  contents: write
+  workflows: write
+
 on:
   schedule:
     - cron: '0 */3 * * *'  # Every 3 hours
