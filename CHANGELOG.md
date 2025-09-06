@@ -10,6 +10,7 @@
   - Fixed incorrect gray icon logic - quests now only show gray if 6+ levels above player
   - Orange/red difficulty quests now correctly show with yellow icons instead of gray
   - Fixes issue where obtainable higher-level quests were incorrectly shown as unavailable
+  - CONFIRMED WORKING: Northshore Mine quest now correctly shows yellow icon for level 5 players
 
 - **Redesigned Quest Completeness Scoring System** - Fixed incorrect categorization of functional quests
   - Quests without objectives (simple delivery/talk quests) now only need NPCs to be marked COMPLETE
