@@ -3,6 +3,12 @@
 ## [Unreleased]
 
 ### Fixed
+- **Redesigned Quest Completeness Scoring System** - Fixed incorrect categorization of functional quests
+  - Quests without objectives (simple delivery/talk quests) now only need NPCs to be marked COMPLETE
+  - Quests with objectives require both NPCs and objectives for COMPLETE status
+  - Fixed quests being incorrectly marked as MINIMAL when they had sufficient data to function
+  - Resolves issues where functional quests showed "[EpochDB Minimal]" prefix unnecessarily
+
 - **Re-enabled Quest 26936 "Northshore Mine"** - Fixed tracking issue after database recompile
   - Quest was disabled for data collection but is now properly configured
   - Added exploration objective "Explore Northshore Mine" at coordinates [24.5, 49.5]
