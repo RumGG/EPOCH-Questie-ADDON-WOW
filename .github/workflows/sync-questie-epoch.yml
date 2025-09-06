@@ -29,52 +29,55 @@ jobs:
           git remote add upstream https://github.com/trav346/Questie-Epoch.git || true
           git fetch upstream master --quiet || { echo "Failed to fetch upstream"; exit 1; }
 
-      # 4. Preserve existing workflow files
-      - name: Preserve existing workflow files
-        run: |
-          mkdir -p .github/workflows-backup
-          git ls-files .github/workflows/*.yml | while read -r file; do
-            cp "$file" ".github/workflows-backup/$(basename "$file")"
-          done
-        # Copy all existing .yml files from origin/main to a backup directory
-
-      # 5. Sync main with upstream master, excluding new upstream workflow files
+      # 4. Sync main with upstream master, excluding .github directory
       - name: Sync main with upstream master
         id: sync
         run: |
           git checkout main || { echo "Failed to checkout main"; exit 1; }
+
+          # Create a temporary branch to apply upstream changes
+          git checkout -b temp-sync || { echo "Failed to create temp branch"; exit 1; }
           git reset --hard upstream/master || { echo "Failed to reset to upstream/master"; exit 1; }
 
-          # Remove any new workflow files introduced by upstream
-          find .github/workflows -type f -name "*.yml" -not -name "sync-questie-epoch.yml" -delete || true
+          # Remove .github directory from upstream
+          rm -rf .github || true
 
-          # Restore your original workflow files from backup
-          if [ -d .github/workflows-backup ]; then
-            mv .github/workflows-backup/*.yml .github/workflows/ || true
-            rm -rf .github/workflows-backup
-          fi
+          # Restore .github from origin/main
+          git checkout origin/main -- .github || true
 
-          # Stage and commit changes
-          git add .github/workflows || true
-          git commit -m "Sync with upstream and preserve existing workflow files" || true
+          # Stage all changes
+          git add . || true
 
-          # Only push if changes exist
-          if [ "$(git rev-parse HEAD)" != "$(git rev-parse origin/main)" ]; then
-            TAG="v$(date +'%Y.%m.%d-%H%M')"
-            if git tag "$TAG" 2>/dev/null; then
-              git push origin main --force --tags || { echo "Failed to push changes"; exit 1; }
-              echo "SYNCED=true" >> $GITHUB_ENV
-              echo "TAG=$TAG" >> $GITHUB_ENV
+          # Check for meaningful changes (excluding .github)
+          if git diff --cached -- . ':!.github' | grep -q .; then
+            git commit -m "Sync with upstream, excluding .github directory" || { echo "Failed to commit changes"; exit 1; }
+            git checkout main || { echo "Failed to checkout main"; exit 1; }
+            git merge temp-sync --no-edit || { echo "Failed to merge temp branch"; exit 1; }
+
+            # Push changes if they exist
+            if [ "$(git rev-parse HEAD)" != "$(git rev-parse origin/main)" ]; then
+              TAG="v$(date +'%Y.%m.%d-%H%M')"
+              if git tag "$TAG" 2>/dev/null; then
+                git push origin main --force --tags || { echo "Failed to push changes"; exit 1; }
+                echo "SYNCED=true" >> $GITHUB_ENV
+                echo "TAG=$TAG" >> $GITHUB_ENV
+              else
+                echo "Tag $TAG already exists, skipping push"
+                echo "SYNCED=false" >> $GITHUB_ENV
+              fi
             else
-              echo "Tag $TAG already exists, skipping push"
+              echo "No changes to sync"
               echo "SYNCED=false" >> $GITHUB_ENV
             fi
           else
-            echo "No changes to sync"
+            echo "No meaningful changes to sync (excluding .github)"
             echo "SYNCED=false" >> $GITHUB_ENV
           fi
 
-      # 6. Send Discord notification if synced
+          # Clean up temporary branch
+          git branch -D temp-sync || true
+
+      # 5. Send Discord notification if synced
       - name: Send Discord Notification
         if: env.SYNCED == 'true'
         env:
