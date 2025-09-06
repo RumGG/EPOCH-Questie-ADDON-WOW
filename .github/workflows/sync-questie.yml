@@ -29,31 +29,18 @@ jobs:
           git remote add upstream https://github.com/trav346/Questie-Epoch.git
           git fetch upstream
 
-      # 4. Check for new commits
-      - name: Check for new commits
-        id: check
+      # 4. Merge upstream changes and create version tag
+      - name: Merge updates & tag
         run: |
           git checkout main
-          git log upstream/main --not main --oneline > new_commits.txt || true
-          if [ -s new_commits.txt ]; then
-            echo "new_updates=true" >> $GITHUB_ENV
-          else
-            echo "new_updates=false" >> $GITHUB_ENV
-          fi
-
-      # 5. Merge upstream changes and create version tag
-      - name: Merge updates & tag
-        if: env.new_updates == 'true'
-        run: |
-          git merge upstream/main --allow-unrelated-histories -m "Merge upstream updates"
+          git merge upstream/main --allow-unrelated-histories -m "Merge upstream updates" || echo "No new commits"
           TAG=v$(date +'%Y.%m.%d-%H%M')
           git tag $TAG
           git push origin main --tags
           echo "TAG=$TAG" >> $GITHUB_ENV
 
-      # 6. Send Discord notification with upstream link
+      # 5. Send Discord notification with upstream link
       - name: Send Discord Notification
-        if: env.new_updates == 'true'
         run: |
           curl -H "Content-Type: application/json" \
                -X POST \
