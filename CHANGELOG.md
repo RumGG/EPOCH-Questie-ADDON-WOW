@@ -71,6 +71,12 @@
   - Added proper fallback handling for older WoW clients lacking SetResizeBounds
   - Fixes initialization error: "Usage: <unnamed>:SetMaxResize(maxWidth, maxHeight)"
 
+- **Fixed ExportBatchPart ShowExportText nil Error** - Fixes issue #1277
+  - ExportBatchPart was calling non-existent ShowExportText function
+  - Replaced with proper export window display code matching ExportQuest
+  - Export window now correctly shows when using "/qdc export part X" command
+  - Resolves error: "attempt to call method 'ShowExportText' (a nil value)"
+
 ### Changed
 - **Data Collection Now Always Captures All Quests** - Simplified data collection to always gather complete data
   - When data collection is enabled, ALL quests are tracked (not just missing ones)
