@@ -45,6 +45,19 @@
   - Updated `/qdc show` command to say "quests being tracked" instead of "missing quests"
   - Better reflects current behavior where all quests are collected by default
 
+- **Implemented Character-Based Slicing for GitHub Submissions** - Fixes issue #1257
+  - Added intelligent slicing based on GitHub's 65,536 character limit
+  - Automatically splits large submissions into multiple pages by character count
+  - Shows real-time character usage (e.g., "45.2k/59.0k chars") in export UI
+  - Uses 90% safety buffer (~59,000 chars) to ensure submissions never exceed limits
+  - Replaces arbitrary 20-quest limit with smart content-aware slicing
+  - Preserves quest boundaries - never splits a quest across pages
+
+- **Restored GitHub Issue Templates** - Fixed accidental deletion from commit 46af950
+  - Restored config.yml (disables blank issues, directs to Discord)
+  - Restored missing_quest.yml (template for quest data submissions)
+  - Restored feature_request.yml (template for feature requests)
+
 ### Changed
 - **Data Collection Now Always Captures All Quests** - Simplified data collection to always gather complete data
   - When data collection is enabled, ALL quests are tracked (not just missing ones)
