@@ -7,7 +7,9 @@
   - Gray (unavailable) quest icons now have lower draw layer priority than yellow (available) icons
   - When multiple quest NPCs are at the same location, the available quest icon displays on top
   - Quest objective clusters now select the highest priority icon to display
-  - Fixes issue where gray quests would hide yellow quests in map clusters
+  - Fixed incorrect gray icon logic - quests now only show gray if 6+ levels above player
+  - Orange/red difficulty quests now correctly show with yellow icons instead of gray
+  - Fixes issue where obtainable higher-level quests were incorrectly shown as unavailable
 
 - **Redesigned Quest Completeness Scoring System** - Fixed incorrect categorization of functional quests
   - Quests without objectives (simple delivery/talk quests) now only need NPCs to be marked COMPLETE
