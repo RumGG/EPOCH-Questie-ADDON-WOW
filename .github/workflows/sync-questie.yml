@@ -10,12 +10,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout your private repo with write access using PAT
+      # 1. Checkout your private repo with write access
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          token: ${{ secrets.PAT_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       # 2. Configure Git
       - name: Configure Git
@@ -29,18 +29,31 @@ jobs:
           git remote add upstream https://github.com/trav346/Questie-Epoch.git
           git fetch upstream
 
-      # 4. Merge upstream changes and create version tag
-      - name: Merge updates & tag
+      # 4. Check for new commits
+      - name: Check for new commits
+        id: check
         run: |
           git checkout main
-          git merge upstream/main --allow-unrelated-histories -m "Merge upstream updates" || echo "No new commits"
+          git log upstream/main --not main --oneline > new_commits.txt || true
+          if [ -s new_commits.txt ]; then
+            echo "new_updates=true" >> $GITHUB_ENV
+          else
+            echo "new_updates=false" >> $GITHUB_ENV
+          fi
+
+      # 5. Merge upstream changes and create version tag
+      - name: Merge updates & tag
+        if: env.new_updates == 'true'
+        run: |
+          git merge upstream/main --allow-unrelated-histories -m "Merge upstream updates"
           TAG=v$(date +'%Y.%m.%d-%H%M')
           git tag $TAG
           git push origin main --tags
           echo "TAG=$TAG" >> $GITHUB_ENV
 
-      # 5. Send Discord notification with upstream link
+      # 6. Send Discord notification with upstream link
       - name: Send Discord Notification
+        if: env.new_updates == 'true'
         run: |
           curl -H "Content-Type: application/json" \
                -X POST \
