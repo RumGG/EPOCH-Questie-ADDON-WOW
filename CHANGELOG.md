@@ -77,6 +77,12 @@
   - Export window now correctly shows when using "/qdc export part X" command
   - Resolves error: "attempt to call method 'ShowExportText' (a nil value)"
 
+- **Fixed Quest Tracker Not Showing 0/1 Progress** - Fixes issue #1271
+  - Quest objectives with count of 1 now properly display "0/1" or "1/1"
+  - Changed condition from `Needed > 1` to `Needed >= 1` to include single-count objectives
+  - Previously only objectives with 2+ required items showed progress counts
+  - Now all countable objectives display their progress consistently
+
 ### Changed
 - **Data Collection Now Always Captures All Quests** - Simplified data collection to always gather complete data
   - When data collection is enabled, ALL quests are tracked (not just missing ones)
