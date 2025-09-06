@@ -1224,6 +1224,8 @@ local epochNpcData = {
 [46234] = {"Dead Troll",nil,nil,46,46,0,{[85]={{59.6,81.4}}},nil,85,{27453},{27452,27453},nil,nil,nil,0},
 [46278] = {"S.J. Erlgadin Jr.",nil,nil,52,52,0,{[85]={{44.8,9.1}}},nil,85,{27509,27510},{27510},nil,nil,nil,0},
 [46293] = {"[Missing] NPC 46293",nil,nil,60,60,0,nil,nil,85,{26771},nil,nil,nil,"NEEDS DATA COLLECTION",0},
+-- Baron Valimar Mordis for quest 26538
+[45543] = {"Baron Valimar Mordis",nil,nil,42,42,1,{[36]={{47.3,19.8},{47.0,22.0},{47.8,22.8}}},nil,36,nil,nil,nil,nil,nil,0},
 }
 
 QuestieDB._epochNpcData = epochNpcData

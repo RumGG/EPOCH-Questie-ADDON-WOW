@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Project Epoch Discord
+    url: https://discord.gg/projectepoch
+    about: Please ask general support questions on Discord instead of filing an issue.

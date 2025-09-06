@@ -1,0 +1,38 @@
+name: Missing Quest Data Submission
+description: Submit quest data collected from QuestieDataCollector
+title: "[Quest Data]: "
+labels: ["quest-data", "data-collection"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Quest Data Submission
+        Thank you for helping improve Questie-Epoch! Please use the `/qdc export <questId>` command in-game to generate quest data and paste it below.
+  - type: textarea
+    id: quest_data
+    attributes:
+      label: Quest Data Export
+      description: |
+        Paste the complete output from `/qdc export <questId>` here.
+        You can submit multiple quests in a single issue - just paste multiple exports.
+      placeholder: |
+        === QUEST DATA COLLECTION EXPORT ===
+        Addon Version: v1.2.0
+        Quest ID: 12345
+        Quest Name: Example Quest
+        ...
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: additional_info
+    attributes:
+      label: Additional Information (Optional)
+      description: |
+        Any extra details such as:
+        - Issues encountered during the quest
+        - Missing NPCs or objects
+        - Quest chain information
+      placeholder: |
+        Add any additional notes here...

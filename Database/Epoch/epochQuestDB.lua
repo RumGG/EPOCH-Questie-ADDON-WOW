@@ -176,7 +176,7 @@ epochQuestData = {
 [26532] = {"The Argus Wake",{{45528}},{{45528}},nil,44,nil,nil,{"Felicity Perenolde wants you to interrogate Zala'thria."},nil,{{{45530,"Zala'thria interrogated"}}},nil,nil,{26531},{26533},nil,nil,405,nil,nil,nil,nil,26533,8,0,26531,nil,nil,nil,nil,nil},
 [26533] = {"The End of the Argus Wake",{{45528}},{{45539}},nil,44,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,1519,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil},
 [26537] = {"The Mordis Key",nil,{{2278}},nil,40,nil,nil,{"Deliver the Mordis Key to Melisara."},nil,nil,nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil},
-[26538] = {"The Barony Mordis",{{2378}},nil,nil,40,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil},
+[26538] = {"The Barony Mordis",{{2378}},{{2378}},40,40,nil,nil,{"Baron Valimar Mordis slain"},nil,{{{45543,1,"Baron Valimar Mordis"}}},nil,nil,nil,nil,nil,nil,267,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil},
 -- DISABLED FOR DATA COLLECTION - Missing starter AND finisher NPCs
 -- [26539] = {"The Barony Mordis",nil,nil,nil,40,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,36,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil},
 [26540] = {"Threats from Abroad",{{45546}},{{6579}},nil,32,nil,2,{"Slay 10 Murloc Lake Hunters and 8 Murloc Lake Oracles."},nil,{{{45544,10,"Murloc Lake Hunter slain"},{45545,8,"Murloc Lake Oracle slain"}}},nil,nil,nil,nil,nil,nil,36,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil},
