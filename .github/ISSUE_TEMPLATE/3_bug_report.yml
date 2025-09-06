@@ -1,0 +1,175 @@
+name: 🐛 Bug Report
+description: Report a bug or issue with Questie-Epoch
+title: "[Bug]: "
+labels: ["bug", "needs-triage"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Bug Report
+        Thank you for taking the time to report a bug! Please fill out as much information as possible to help us identify and fix the issue.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: Please provide a clear and detailed description of what the bug is.
+      placeholder: |
+        Example: When I accept the quest "Northshore Mine", the quest tracker shows "Unknown Zone" and no map markers appear...
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      description: |
+        Please provide detailed steps on how to reproduce this issue. The more specific you are, the faster we can fix it!
+      placeholder: |
+        1. Go to Tirisfal Glades
+        2. Accept quest "Northshore Mine" from NPC
+        3. Open the map
+        4. Notice that no quest markers appear
+      value: |
+        1. 
+        2. 
+        3. 
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What did you expect to happen?
+      placeholder: |
+        The quest should show markers on the map and display "Tirisfal Glades" in the tracker
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      description: What actually happened instead?
+      placeholder: |
+        The quest shows "Unknown Zone" in the tracker and has no map markers
+    validations:
+      required: true
+
+  - type: textarea
+    id: lua_errors
+    attributes:
+      label: Lua Errors
+      description: |
+        If you received any Lua errors, please paste them here.
+        To enable error display in-game: `/console scriptErrors 1`
+      placeholder: |
+        Message: Interface\AddOns\Questie\Modules\QuestieQuest.lua:1513: bad argument #1 to 'next' (table expected, got nil)
+        Time: Thu Sep  5 10:23:45 2025
+        Count: 1
+        Stack: Interface\AddOns\Questie\Modules\QuestieQuest.lua:1513: bad argument #1 to 'next'...
+      render: text
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: |
+        If applicable, add screenshots to help explain your problem.
+        You can drag and drop images directly into this text box.
+        Helpful screenshots might include: the quest tracker, map view, error messages, etc.
+      placeholder: Drag and drop images here or paste links to screenshots
+
+  - type: dropdown
+    id: frequency
+    attributes:
+      label: How often does this happen?
+      description: How frequently do you encounter this bug?
+      options:
+        - Every time (100% reproducible)
+        - Most of the time
+        - Sometimes (intermittent)
+        - Rarely
+        - Only happened once
+    validations:
+      required: true
+
+  - type: input
+    id: questie_version
+    attributes:
+      label: Questie Version
+      description: |
+        What version of Questie are you running?
+        You can find this in the addon list or by typing `/questie version`
+      placeholder: "v1.2.0-prerelease2"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: class_race
+    attributes:
+      label: Character Class/Race
+      description: What class and race is your character? (Some bugs are class/race specific)
+      options:
+        - Not relevant to this bug
+        - Death Knight
+        - Druid
+        - Hunter
+        - Mage
+        - Paladin
+        - Priest
+        - Rogue
+        - Shaman
+        - Warlock
+        - Warrior
+    validations:
+      required: true
+
+  - type: input
+    id: character_level
+    attributes:
+      label: Character Level
+      description: What level is your character?
+      placeholder: "42"
+
+  - type: textarea
+    id: addons
+    attributes:
+      label: Other Addons
+      description: |
+        List any other addons you have installed that might be relevant.
+        Some bugs are caused by addon conflicts.
+      placeholder: |
+        ElvUI v12.23
+        Details! Damage Meter v9.0.1
+        TomTom v3.3.5
+
+  - type: textarea
+    id: additional_context
+    attributes:
+      label: Additional Context
+      description: |
+        Add any other context about the problem here. For example:
+        - When did this start happening?
+        - Did it work before?
+        - Have you tried any troubleshooting steps?
+        - Is this specific to certain zones/quests?
+      placeholder: |
+        This started happening after the last update. I've tried disabling all other addons and the issue persists.
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      description: Please confirm the following
+      options:
+        - label: I have searched existing issues to make sure this hasn't been reported already
+          required: true
+        - label: I have tried `/reload` to see if it fixes the issue
+          required: false
+        - label: I have tried disabling all other addons to rule out conflicts
+          required: false
+        - label: I am using the latest version of Questie-Epoch
+          required: false

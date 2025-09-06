@@ -1,5 +1,5 @@
-name: Feature Request
-description: Suggest a feature or enhancement
+name: ✨ Feature Request
+description: Suggest a new feature or enhancement for Questie-Epoch
 labels: ["enhancement"]
 body:
   - type: textarea

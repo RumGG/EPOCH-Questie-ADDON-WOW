@@ -1,5 +1,5 @@
-name: Missing Quest Data Submission
-description: Submit quest data collected from QuestieDataCollector
+name: 📊 Quest Data Submission
+description: Submit quest data collected from QuestieDataCollector (/qdc export)
 title: "[Quest Data]: "
 labels: ["quest-data", "data-collection"]
 
