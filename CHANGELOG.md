@@ -3,6 +3,13 @@
 ## [Unreleased]
 
 ### Fixed
+
+- **Fixed Remaining spawnList nil Error** - Fixes GitHub issue #1279
+  - Added defensive check to `_UnloadAlreadySpawnedIcons` function at line 1579
+  - Prevents "bad argument #1 to 'next' (table expected, got nil)" error
+  - This was the last remaining unprotected spawnList access in the codebase
+  - Users on v1.1.4 experiencing this crash should update to latest version
+
 - **Fixed Quest Icon Priority on Map** - Available quests now properly display over unavailable ones
   - Gray (unavailable) quest icons now have lower draw layer priority than yellow (available) icons
   - When multiple quest NPCs are at the same location, the available quest icon displays on top
@@ -57,6 +64,12 @@
   - Restored config.yml (disables blank issues, directs to Discord)
   - Restored missing_quest.yml (template for quest data submissions)
   - Restored feature_request.yml (template for feature requests)
+
+- **Fixed SharedXML SetMaxResize Error in AceGUI** - Fixed WoW 3.3.5 compatibility issue
+  - AceGUI TreeGroup widget was calling SetMaxResize without SetMinResize
+  - In WoW 3.3.5, both SetMinResize and SetMaxResize must be called separately
+  - Added proper fallback handling for older WoW clients lacking SetResizeBounds
+  - Fixes initialization error: "Usage: <unnamed>:SetMaxResize(maxWidth, maxHeight)"
 
 ### Changed
 - **Data Collection Now Always Captures All Quests** - Simplified data collection to always gather complete data
