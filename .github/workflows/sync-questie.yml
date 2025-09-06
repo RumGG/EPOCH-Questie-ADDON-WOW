@@ -1,10 +1,5 @@
 name: Sync Questie-Epoch Updates
 
-# Grant the workflow permission to modify workflows
-permissions:
-  contents: write
-  workflows: write
-
 on:
   schedule:
     - cron: '0 */3 * * *'  # Every 3 hours
@@ -15,12 +10,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout your private repo with write access
+      # 1. Checkout your private repo with write access using PAT
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PAT_TOKEN }}
 
       # 2. Configure Git
       - name: Configure Git
