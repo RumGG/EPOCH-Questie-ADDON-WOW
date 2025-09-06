@@ -430,7 +430,7 @@ epochQuestData = {
 [26933] = {"Etched Scroll",{{1569}},{{45894}},nil,1,nil,nil,{"Read the Etched Scroll and speak to your class trainer, Apolos Deathshot."},nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,2,0,nil,nil,nil,nil,nil,nil},
 -- DISABLED FOR DATA COLLECTION - Missing starter AND finisher NPCs
 -- [26934] = {"Filling the Armory",nil,nil,nil,9,nil,1,{"Collect 6 Case of Ore."},nil,{nil,nil,{{60446,6,"Case of Ore"}}},nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,1,0,nil,nil,nil,nil,nil,nil},
-[26936] = {"Northshore Mine",nil,{{45885},nil},9,9,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,159,nil,nil,nil,nil,nil,8,0,nil,nil,nil,nil,nil,nil},
+[26936] = {"Northshore Mine",nil,{{45885},nil},9,9,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,159,nil,nil,nil,nil,nil,0,0,nil,nil,nil,nil,nil,nil},
 [26937] = {"Missing Courier",{{1500}},{{38895}},nil,10,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,85,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil},
 -- DISABLED FOR DATA COLLECTION - Missing starter AND finisher NPCs
 -- [26938] = {"[Epoch] Quest 26938",nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,0,nil,nil,nil,nil,nil,nil},
